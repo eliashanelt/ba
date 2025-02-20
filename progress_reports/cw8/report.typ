@@ -2,17 +2,18 @@
 #set page(
 	margin: (inside: 2.5cm, outside: 2cm, y: 1.75cm),
 	header: [
-	  _Lisa Strassner's Thesis_
+	  _Bachelor Thesis Progress Report CW8_
 	  #h(1fr)
-	  National Academy of Sciences
+	  Elias Hanelt
 	],
 	footer: [
 		#align(right, [#counter(page).display()])
   	]
 )
 #counter(page).update(1)
-
-
+#v(1%)
+= Progress Report CW8
+#v(3%)
 // Example figure
 #figure(
   image("res/img/fig1.png", width: 70%),
