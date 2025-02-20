@@ -1,0 +1,88 @@
+[package]
+name = "synthesizer"
+version = "0.1.0"
+edition = "2021"
+authors = ["Elias Hanelt <ehanelt@ethz.ch>"]
+
+[dependencies]
+defmt = { version = "0.3.8", optional = true }
+defmt-rtt = { version = "0.4.1", optional = true }
+panic-probe = { version = "0.3.2", optional = true }
+panic-halt = "1.0.0"
+cortex-m-rt = "0.7.5"
+cortex-m = { version = "0.7.7", features = ["inline-asm", "critical-section-single-core"] }
+
+[dependencies.embassy-executor]
+features = ["arch-cortex-m", "executor-thread", "integrated-timers", "task-arena-size-8192"]
+git = "https://github.com/embassy-rs/embassy"
+rev = "c9abff5"
+optional = true
+
+[dependencies.embassy-stm32]
+features = ["time-driver-any", "stm32h747xi-cm7", "memory-x", "unstable-pac", "exti"]
+git = "https://github.com/embassy-rs/embassy.git"
+rev = "c9abff5" 
+optional = true
+
+[dependencies.embassy-sync]
+git = "https://github.com/embassy-rs/embassy"
+rev = "c9abff5"
+optional = true
+
+[dependencies.embassy-time]
+features = ["tick-hz-32_768"]
+git = "https://github.com/embassy-rs/embassy"
+rev = "c9abff5"
+optional = true
+
+[dependencies.embassy-embedded-hal]
+git = "https://github.com/embassy-rs/embassy"
+rev = "c9abff5"
+optional = true
+
+[dependencies.embassy-futures]
+git = "https://github.com/embassy-rs/embassy"
+rev = "c9abff5"
+optional = true
+
+[dependencies.embedded-hal-async]
+version = "1.0.0"
+
+[dependencies.embedded-hal-bus]
+version = "0.2.0"
+
+[dependencies.panic-reset]
+version = "0.1.1"
+
+[features]
+default = ["debug"]
+debug = [
+    "defmt",
+    "defmt-rtt",
+    "panic-probe",
+    "embassy-executor/defmt",
+    "embassy-sync/defmt",
+    "embassy-futures/defmt",
+    "embassy-time/defmt",
+    "embassy-time/defmt-timestamp-uptime",
+    "embassy-stm32/defmt",
+    "panic-probe/print-defmt",
+]
+
+[profile.dev]
+codegen-units = 1
+debug = 2
+debug-assertions = true
+incremental = true
+opt-level = 'z'
+overflow-checks = true
+
+[profile.release]
+codegen-units = 1
+debug = 2
+debug-assertions = false
+incremental = false
+lto = 'fat'
+opt-level = 3
+overflow-checks = false
+

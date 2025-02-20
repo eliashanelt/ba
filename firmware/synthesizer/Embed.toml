@@ -1,0 +1,3 @@
+[default.general]
+chip = "STM32H747XIHx"
+connect_under_reset = true
