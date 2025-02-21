@@ -4,5 +4,5 @@ This is the official repo of my bachelor thesis. I will be working on improving 
 _ETZ E 60.1_
 
 #### Important Links
-
+[nas setup](https://wiki.lbb.ethz.ch/it/backup)
 [lbb wiki](https://people.ee.ethz.ch/~lbbwiki/doku.php?id=start)

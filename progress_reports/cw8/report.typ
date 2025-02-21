@@ -17,6 +17,11 @@
 
 start of the bachelor thesis
 
+working on improving LBB's self-excited FluidFM cantilever system
+
+
+== What is a Fluid-FM
+
 
 == Introduction to the Problem
 Getting the Fluid-FM to resonate at its first order resonant frequency. When trying to excite the
@@ -64,7 +69,7 @@ problems:
   ],
 )
 == Technical requirements
-
+high sampling rate, high resolution DAC, ADC, two cores, networking, coxial input
 == Hardware Selection
 + Arduino Pro™ Portenta H7 REV2
 + Arduino Pro™ Portenta Max Carrier
@@ -72,8 +77,35 @@ problems:
 
 
 
-== Technical Requirements
+== Issues
+Altough programming with the Arduino IDE was possible the whole Arduino Ecosystems lacks a lot of
+great features such as a debugger and uses their own version of C which i found to tedious to work
+with.
+Trying to program/flash the Portenta with rust seemed like a good idea at first
+(advantages of rust embedded) so I wrote a simple program, but flashing the program seemed
+impossible dfu-util and the amazon zyphr tutorial were helpful here
 
-Some technical details here...
+But since we need to design a pcb anyway to mount the coxial connector since the portenta master
+carrier coxial connectors are only connected to the Lora chip and the gsm module.
+
+On top of that both the max carrier board and even the portenta h7 come with a lot of components
+we dont use.
+So if we want to develop an actual useable solution for this problem it would be wise to create an
+own pcb where we can place all and only the neccessary components
 
 
+Since the stm32h7xx family is a great choice for our tasks since the adcs have quite a high
+resolution at a high sampling rate. Additionally the two cores allow us to simultaneously run the
+logic that transforms the signal the we get from the Fluid-FM and the networking and and interae to
+the control unit and in the future maybe even an labview interface.
+
+Making our own board would probably even cheaper, especially for people who want to use this device
+as well
+
+
+Also looking at jlcpcbs parts stock, we can see that assembly at their plant is feasible which
+makes the whole process easier
+
+
+== Test results
+using the arduino protenta h7 with my oscilloscope
