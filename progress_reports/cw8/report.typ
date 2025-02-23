@@ -48,23 +48,26 @@ and density the resonance frequency is not always the same and differs from drop
 thus from experiment to experiment
 
 == Problem Statement
-Why exactly is this a problem?
+While FluidFM (Fluidic Force Microscopy) offers many advantages, it also has some challenges and limitations, especially when dealing with different oil drop sizes in microfluidic and nanofluidic applications.
+
+Difficult Droplet Formation: Generating consistent oil droplet sizes can be challenging due to:
+Surface tension effects.
+Variability in fluidic pressure control.
+Differences in substrate interaction.
+Size Variation: Even slight variations in pressure, temperature, or fluid viscosity can cause unexpected differences in droplet size.
+Breakup & Coalescence: Oil droplets can merge or break apart unintentionally, leading to uncontrolled dispersion.
+This is all results in a different resonance frequency and different swing modes
+
 
 == Research Motivation
-What would be the advantages if we solve these
-
+FluidFM is a powerful tool for nanotechnology, biophysics, and single-cell biology. Its ability to manipulate cells non-invasively, perform highly controlled liquid dispensing, and conduct force spectroscopy makes it superior to traditional AFM in many biomedical applications.
 
 == Current Approach
-
 problems: 
 + higher resonance frequencies, using a low pass filter
 + unstable system, (goes to infinity or maximum) amplitude threshold filter 
 + excitement, the threshold filter introduces a new problem it prevents excitement of the
   oscillation in the beginning. Just applying a step function does not solve it
-
-
-
-
 
 #figure(
   image("res/img/fig1.png", width: 70%),
@@ -75,7 +78,7 @@ problems:
 )
 
 == Towards a Solution: Developing a logical Filter
-
+digital (logical) filters provide higher accuracy, flexibility, and stability, making them the preferred choice in most modern applications, especially where precision and adaptability are required.
 
 #figure(
   image("res/img/fig2.png", width: 70%),
