@@ -89,6 +89,9 @@ digital (logical) filters provide higher accuracy, flexibility, and stability, m
 )
 == Technical requirements
 high sampling rate, high resolution DAC, ADC, two cores, networking, coxial input
+power = usb c => data to computer
+ethernet
+maybe sd-card?
 == Hardware Selection
 + Arduino Pro™ Portenta H7 REV2
 + Arduino Pro™ Portenta Max Carrier
@@ -97,6 +100,10 @@ high sampling rate, high resolution DAC, ADC, two cores, networking, coxial inpu
 
 
 == Issues
+Issues I ran into using the Portenta H7
+
+
+
 = Proposed Section for Bachelor Thesis
 
 One of the initial ideas for prototyping involved using the Arduino Portenta H7 board. Although this board can be programmed with the Arduino IDE, it poses several challenges for professional embedded development. First, the Arduino ecosystem lacks a robust debugging interface, making it difficult to perform efficient troubleshooting during the development phase. Moreover, Arduino uses its own variant of C/C++, which can be tedious to work with when implementing more advanced features.
