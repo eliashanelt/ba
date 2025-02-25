@@ -19,7 +19,7 @@ rev = "c9abff5"
 optional = true
 
 [dependencies.embassy-stm32]
-features = ["time-driver-any", "stm32h747xi-cm7", "memory-x", "unstable-pac", "exti"]
+features = ["time-driver-any", "stm32h723vg", "memory-x", "unstable-pac", "exti"]
 git = "https://github.com/embassy-rs/embassy.git"
 rev = "c9abff5" 
 optional = true
