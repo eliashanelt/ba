@@ -3792,6 +3792,24 @@
 		(at 237.49 62.23)
 		(uuid "9b5df03f-6eea-4f6c-9ec0-aa28070175a1")
 	)
+	(bus_entry
+		(at 157.48 67.31)
+		(size 2.54 2.54)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "6ecbf622-ef8c-46a3-846a-007e65cb9661")
+	)
+	(bus_entry
+		(at 157.48 64.77)
+		(size 2.54 2.54)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "f0df4601-a849-4f3e-a0bc-b21da1c2f7b1")
+	)
 	(wire
 		(pts
 			(xy 254 54.61) (xy 254 68.58)
@@ -3801,6 +3819,16 @@
 			(type default)
 		)
 		(uuid "055d3771-3c02-401d-8248-2f2fdfa018fc")
+	)
+	(bus
+		(pts
+			(xy 160.02 69.85) (xy 160.02 72.39)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "25cf049b-dc77-44dc-8550-39116e8c6cbc")
 	)
 	(wire
 		(pts
@@ -3842,6 +3870,16 @@
 		)
 		(uuid "63c48afe-37d4-4d68-bd97-41b77e4d8622")
 	)
+	(bus
+		(pts
+			(xy 160.02 67.31) (xy 160.02 69.85)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "64980ae9-06d1-43fe-870a-5820efed322b")
+	)
 	(wire
 		(pts
 			(xy 237.49 49.53) (xy 256.54 49.53)
@@ -3881,6 +3919,16 @@
 			(type default)
 		)
 		(uuid "9194efe7-9c39-4112-805d-8bf59c44ff07")
+	)
+	(wire
+		(pts
+			(xy 132.08 67.31) (xy 157.48 67.31)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "95c43af9-a09d-4012-8c4a-59093125034d")
 	)
 	(wire
 		(pts
@@ -3972,6 +4020,16 @@
 		)
 		(uuid "fc352b88-e4e0-4652-84aa-7c3de5354fe4")
 	)
+	(wire
+		(pts
+			(xy 132.08 64.77) (xy 157.48 64.77)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "ff64903b-fb44-4455-b0da-a295b1accfc1")
+	)
 	(label "SWCLK"
 		(at 139.7 72.39 0)
 		(effects
@@ -3982,6 +4040,16 @@
 		)
 		(uuid "219a96a8-478a-4833-8fbb-185158222a6e")
 	)
+	(label "USB+"
+		(at 139.7 67.31 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "41dd5db5-d6af-4494-a5eb-e53a42eb2886")
+	)
 	(label "SWDIO"
 		(at 242.57 57.15 0)
 		(effects
@@ -3991,6 +4059,16 @@
 			(justify left bottom)
 		)
 		(uuid "509c5bed-a690-4826-81ac-3616973667fe")
+	)
+	(label "USB-"
+		(at 139.7 64.77 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "512047bb-24b7-4a36-90db-5cb1afdc6693")
 	)
 	(label "SWDIO"
 		(at 139.7 69.85 0)
@@ -4031,6 +4109,17 @@
 			(justify left bottom)
 		)
 		(uuid "f50d0432-63f0-4b10-8e36-3a7bec9b51f5")
+	)
+	(hierarchical_label "{USB+, USB-}"
+		(shape input)
+		(at 160.02 72.39 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "6419ef2c-b362-44c2-99c8-6e27b62a2f8a")
 	)
 	(symbol
 		(lib_id "Connector:Conn_ARM_JTAG_SWD_10")
