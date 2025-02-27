@@ -429,7 +429,7 @@
       "no_connect_dangling": "warning",
       "pin_not_connected": "error",
       "pin_not_driven": "error",
-      "pin_to_pin": "warning",
+      "pin_to_pin": "error",
       "power_pin_not_driven": "error",
       "same_local_global_label": "warning",
       "similar_label_and_power": "warning",
@@ -611,6 +611,18 @@
     [
       "f8740766-88d0-4c4d-b661-742f36f22c7b",
       "Root"
+    ],
+    [
+      "de80d734-43e5-40df-9d02-b9d5a97df006",
+      "Microcontroller"
+    ],
+    [
+      "9334189d-3538-4d48-bdb6-b549e4e68e82",
+      "Power"
+    ],
+    [
+      "70b9532c-c710-4ea4-8ea8-ed8989840f51",
+      "USB Connector"
     ]
   ],
   "text_variables": {}

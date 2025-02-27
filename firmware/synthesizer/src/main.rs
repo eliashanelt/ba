@@ -34,7 +34,5 @@ async fn main(_spawner: Spawner) {
         .await;
         defmt::info!("measurements: {}", measurements);
         delay.delay_ms(500).await;
-        info!("Hello World!");
-        delay.delay_ms(500).await;
     }
 }

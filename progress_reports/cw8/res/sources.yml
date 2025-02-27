@@ -5,3 +5,11 @@ datasheet-stm32h747xI:
     year: 2023
     institution: STMicroelectronics
     url: "https://www.st.com/resource/en/datasheet/stm32h747ag.pdf"
+
+datasheet-stm32h723vg:
+    type: reference
+    title: Datasheet - STM32H723VG
+    author: STMicroelectronics
+    year: 2023
+    institution: STMicroelectronics
+    url: "https://www.st.com/resource/en/datasheet/stm32h723vg.pdf"

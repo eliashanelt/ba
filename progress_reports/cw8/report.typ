@@ -41,10 +41,17 @@ Fluidic Force Microscopy (FluidFM) is an advanced technology that combines the p
 #figure(
   image("res/img/fig1.png", width: 70%),
   caption: [
-    Informal schematic oversimplified representation of a Fluid-FM and the device requirements
-    which are to be designed in the bachelor thesis.
+    Schematic Representation of the FluidFM Setup.
   ],
-)
+) <fluidfm-setup>
+
+== Working principles of FluidFM
+@fluidfm-setup illustrates the working principle of the FluidFM system, which integrates microfluidics with an atomic force microscope (AFM) for precise force measurements and liquid manipulation. The system consists of a FluidFM microfluidics control unit, which supplies fluid through tubing to a cantilever with an internal microchannel. The carrier clip holds the cantilever, which is connected to a fluid reservoir that enables controlled dispensing of liquids.
+
+The AFM scan head contains a cantilever holder and a laser detection system. The laser beam reflects off the cantilever and is used to measure its deflection, providing force-sensitive feedback. The cantilever is positioned above a substrate, which can be a biological sample or another surface of interest. The inset zooms into the cantilever tip, highlighting the internal fluid channel that allows precise liquid handling.
+
+This setup enables applications such as single-cell manipulation, nanolithography, and force spectroscopy, making FluidFM a powerful tool in nanotechnology and biophysics.
+
 
 == Advantages of FluidFM
 
@@ -64,20 +71,14 @@ In summary, FluidFM offers a powerful and versatile platform for both researcher
 == Introduction to the Problem
 Achieving first-order resonance in the Fluid-FM cantilever is crucial because it generally provides the highest amplitude response, enhancing measurement sensitivity and control in fluidic environments. However, the resonance frequency depends strongly on the droplet’s mass at the tip, which varies by size and density from one experiment to another. As a result, the cantilever may inadvertently excite higher-order modes instead of the intended first-order resonance. This variability necessitates recalibrating the resonance frequency for each droplet configuration to ensure optimal performance.
 
-== Problem Statement
-While FluidFM (Fluidic Force Microscopy) offers many advantages, it also has some challenges and limitations, especially when dealing with different oil drop sizes in microfluidic and nanofluidic applications.
-
-Difficult Droplet Formation: Generating consistent oil droplet sizes can be challenging due to:
-Surface tension effects.
-Variability in fluidic pressure control.
-Differences in substrate interaction.
-Size Variation: Even slight variations in pressure, temperature, or fluid viscosity can cause unexpected differences in droplet size.
-Breakup & Coalescence: Oil droplets can merge or break apart unintentionally, leading to uncontrolled dispersion.
-This is all results in a different resonance frequency and different swing modes
-
 
 == Research Motivation
-FluidFM is a powerful tool for nanotechnology, biophysics, and single-cell biology. Its ability to manipulate cells non-invasively, perform highly controlled liquid dispensing, and conduct force spectroscopy makes it superior to traditional AFM in many biomedical applications.
+FluidFM is a powerful tool for nanotechnology, biophysics, and single-cell biology. Its ability to
+manipulate cells non-invasively, perform highly controlled liquid dispensing, and conduct force
+spectroscopy makes it superior to traditional AFM in many biomedical applications. Addressing
+this issue would significantly enhance FluidFM’s reliability and effectiveness,
+ amplifying its impact across biomedical applications.
+
 
 == Current Approach
 problems: 
@@ -168,6 +169,16 @@ first schemetic proposal
 
 In conclusion, while the Arduino Portenta H7 can serve as a convenient development platform for preliminary tests, its limitations in debugging, the complexity of customizing it for Rust, and extraneous hardware components make it less suitable for this project’s professional and specialized requirements. A custom STM32H747XIHx-based PCB addresses these drawbacks by providing a tailored, cost-effective, and high-performance solution.
 
+
+#figure(
+  image("res/img/fig4.png", width: 100%),
+  caption: [
+    First schematics of the synthesizer
+  ],
+)
+
+
+
 #code(
   lang: "C",
   ```C
@@ -198,5 +209,8 @@ In conclusion, while the Arduino Portenta H7 can serve as a convenient developme
 )
 
 In this report, I used the @datasheet-stm32h747xI extensively to design the circuit.
+In this report, I used the @datasheet-stm32h723vg extensively to design the circuit.
+
+
 
 #bibliography("res/sources.yml")
