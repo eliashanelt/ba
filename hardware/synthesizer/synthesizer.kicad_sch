@@ -1931,7 +1931,7 @@
 		(uuid "b00d9340-8922-45eb-8cd3-8bc52d5cb11b")
 	)
 	(no_connect
-		(at 157.48 166.37)
+		(at 144.78 134.62)
 		(uuid "730eeb85-c64c-4808-a5ae-890b9b6abbae")
 	)
 	(wire
@@ -2227,6 +2227,24 @@
 			"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
 			"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
 			"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD/AQAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+			"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+			"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+			"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+			"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+			"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+			"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+			"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+			"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+			"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+			"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+			"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+			"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+			"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+			"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+			"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+			"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+			"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+			"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
 			"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
 			"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
 			"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
@@ -2933,12 +2951,30 @@
 			"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
 			"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
 			"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-			"AAAAAAAAAA=="
+			"AAAAAAAAAFUEBhMCVVMxEzARBgNVBAgMCkNhbGlmb3JuaWExETAPBgNVBAcMCFNhbiBKb3NlMRYw"
+			"FAYDVQQKDA1BZG9iZSBTeXN0ZW1zMRkwFwYDVQQLDBBDbG91ZCBUZWNobm9sb2d5MSMwIQYDVQQD"
+			"DBpBZG9iZSBJbnRlcm1lZGlhdGUgQ0EgMTAtMzAeFw0xODA4MjAxMzE4NDJaFw0yNTA4MTgxMzE4"
+			"NDJaMIGRMQswCQYDVQQGEwJVUzETMBEGA1UECAwKQ2FsaWZvcm5pYTERMA8GA1UEBwwIU2FuIEpv"
+			"c2UxFjAUBgNVBAoMDUFkb2JlIFN5c3RlbXMxGTAXBgNVBAsMEENsb3VkIFRlY2hub2xvZ3kxJzAl"
+			"BgNVBAMMHkFkb2JlIENvbnRlbnQgQ2VydGlmaWNhdGUgMTAtNTCCAiIwDQYJKoZIhvcNAQEBBQAD"
+			"ggIPADCCAgoCggIBAMtLOHVVhlS/inUWJNxCVZygntoibXj1gsmxvsZhKK73vqmc4bFETqaqvpAz"
+			"2YJFUf+vGgElcAWXikYstRHlzcxEw8QGXwnv45RIztsWmwBNo5W6b0zHlJTZoTwC5LdHGrsnO5JL"
+			"VEWwq+SYWMfRDgmJ5kYqRYwQkQ14qpe0w7r1j2iy2QC/4AHM4/aj/5EDUEj8sHQ0gll30q2i8QRD"
+			"aTTLAdlmQ0m7W477tbZRljs/4a6j9m++O+VCQ7wLobFNtZYTGyrRS5ABMTHyMWkd+Pgew8HiIrsO"
+			"fx2ZfoKOPaJN++QnRA9nOUKnbrhp2MdV2Os2s+pi6sdwI/p61C+qaIV4xYj+LpH9d5tLiiycC4l0"
+			"SXHY53Kr8loUMtrvat6EOb/0nAufHhUDont1cAPbdxnVpJY+M/up4LLGDE64uiDEJBPGf9hRAmcH"
+			"QbW49AFw+wtQpf8UWH1JccTjeiTp/tzXtXjiNQ+72AOEqt86iyQMYxGPWgP5aktS0SLz7GyQggNZ"
+			"GSqW/LWmVUfVNqXLQPgsVAp8KZrnkwCAYFIZFmo5odJCLtXsgr8UK6aYJDTCLnkFwG1dPf20kNm+"
+			"HOCOZmVOiVYKnfqeiseaJ83bhCL+A+B7qiYXiB7s7xAUYaWosZXeoI157+nGkczhKWJmQBHXQCy0"
+			"9UJ7V1HwKdmUnrjBAgMBAAGjIDAeMA4GA1UdDwEB/wQEAwIHgDAMBgNVHRMBAf8EAjAAMA0GCSqG"
+			"SIb3DQEBDQUAA4ICAQCIpEoxHQmM1a/cHooG48XTTaf0CRIeCV53UGt9pH4/gXB23dZr9U57iXhU"
+			"2N8xLdLOICEnH/nTXoK8eiGxW/E3pAzW/nBcab/wd4MIIiYRogcLhAO5DWVYXGiBF9fqBbtGkwLX"
+			"ma71Lj9Mfg=="
 		)
 	)
 	(symbol
 		(lib_id "Connector:RJ45_Abracon_ARJP11A-MASA-B-A-EMU2")
-		(at 142.24 153.67 0)
+		(at 129.54 121.92 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -2947,7 +2983,7 @@
 		(fields_autoplaced yes)
 		(uuid "1fb43375-5276-4260-8c5c-510295b4fcbe")
 		(property "Reference" "J7"
-			(at 143.51 137.16 0)
+			(at 130.81 105.41 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2955,7 +2991,7 @@
 			)
 		)
 		(property "Value" "RJ45_Abracon_ARJP11A-MASA-B-A-EMU2"
-			(at 143.51 139.7 0)
+			(at 130.81 107.95 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2963,7 +2999,7 @@
 			)
 		)
 		(property "Footprint" "Connector_RJ:RJ45_Abracon_ARJP11A-MA_Horizontal"
-			(at 142.24 138.43 0)
+			(at 129.54 106.68 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2972,7 +3008,7 @@
 			)
 		)
 		(property "Datasheet" "https://abracon.com/Magnetics/lan/ARJP11A.PDF"
-			(at 142.24 135.89 0)
+			(at 129.54 104.14 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2981,7 +3017,7 @@
 			)
 		)
 		(property "Description" "RJ45 PoE 10/100 Base-TX Jack with Magnetic Module"
-			(at 142.24 153.67 0)
+			(at 129.54 121.92 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3185,7 +3221,7 @@
 	)
 	(symbol
 		(lib_id "Connector:Conn_Coaxial")
-		(at 91.44 147.32 0)
+		(at 67.31 147.32 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -3194,7 +3230,7 @@
 		(fields_autoplaced yes)
 		(uuid "bde2d897-d81a-482c-890b-adab86370fbe")
 		(property "Reference" "J4"
-			(at 93.98 146.3431 0)
+			(at 69.85 146.3431 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3203,7 +3239,7 @@
 			)
 		)
 		(property "Value" "Output 1"
-			(at 93.98 148.8831 0)
+			(at 69.85 148.8831 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3212,7 +3248,7 @@
 			)
 		)
 		(property "Footprint" "Connector_Coaxial:BNC_TEConnectivity_1478035_Horizontal"
-			(at 91.44 147.32 0)
+			(at 67.31 147.32 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3221,7 +3257,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 91.44 147.32 0)
+			(at 67.31 147.32 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3230,7 +3266,7 @@
 			)
 		)
 		(property "Description" "coaxial connector (BNC, SMA, SMB, SMC, Cinch/RCA, LEMO, ...)"
-			(at 91.44 147.32 0)
+			(at 67.31 147.32 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3255,7 +3291,7 @@
 	)
 	(symbol
 		(lib_id "Connector:Conn_Coaxial")
-		(at 91.44 158.75 0)
+		(at 67.31 158.75 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -3264,7 +3300,7 @@
 		(fields_autoplaced yes)
 		(uuid "f4cbcc2f-1e77-4899-a452-947623741428")
 		(property "Reference" "J5"
-			(at 93.98 157.7731 0)
+			(at 69.85 157.7731 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3273,7 +3309,7 @@
 			)
 		)
 		(property "Value" "Output 2"
-			(at 93.98 160.3131 0)
+			(at 69.85 160.3131 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3282,7 +3318,7 @@
 			)
 		)
 		(property "Footprint" "Connector_Coaxial:BNC_TEConnectivity_1478035_Horizontal"
-			(at 91.44 158.75 0)
+			(at 67.31 158.75 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3291,7 +3327,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 91.44 158.75 0)
+			(at 67.31 158.75 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3300,7 +3336,7 @@
 			)
 		)
 		(property "Description" "coaxial connector (BNC, SMA, SMB, SMC, Cinch/RCA, LEMO, ...)"
-			(at 91.44 158.75 0)
+			(at 67.31 158.75 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3376,8 +3412,8 @@
 		)
 	)
 	(sheet
-		(at 107.95 62.865)
-		(size 38.735 15.24)
+		(at 110.49 64.135)
+		(size 33.02 14.605)
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
@@ -3392,7 +3428,7 @@
 		)
 		(uuid "9334189d-3538-4d48-bdb6-b549e4e68e82")
 		(property "Sheetname" "Power"
-			(at 107.95 62.1534 0)
+			(at 110.49 63.4234 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3401,7 +3437,7 @@
 			)
 		)
 		(property "Sheetfile" "power.kicad_sch"
-			(at 107.95 78.6896 0)
+			(at 110.49 79.3246 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3418,8 +3454,8 @@
 		)
 	)
 	(sheet
-		(at 110.49 104.775)
-		(size 33.02 9.525)
+		(at 191.77 107.95)
+		(size 26.035 9.525)
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
@@ -3434,7 +3470,7 @@
 		)
 		(uuid "b2b162f9-d354-4f12-b96e-cc775f5e80e4")
 		(property "Sheetname" "Screw Holes"
-			(at 110.49 104.0634 0)
+			(at 191.77 107.2384 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3443,7 +3479,7 @@
 			)
 		)
 		(property "Sheetfile" "screw_holes.kicad_sch"
-			(at 110.49 114.8846 0)
+			(at 191.77 118.0596 0)
 			(effects
 				(font
 					(size 1.27 1.27)
