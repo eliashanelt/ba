@@ -644,7 +644,7 @@
 			)
 			(embedded_fonts no)
 		)
-		(symbol "Device:D"
+		(symbol "Device:D_Schottky"
 			(pin_numbers
 				(hide yes)
 			)
@@ -663,7 +663,7 @@
 					)
 				)
 			)
-			(property "Value" "D"
+			(property "Value" "D_Schottky"
 				(at 0 -2.54 0)
 				(effects
 					(font
@@ -689,7 +689,7 @@
 					(hide yes)
 				)
 			)
-			(property "Description" "Diode"
+			(property "Description" "Schottky diode"
 				(at 0 0 0)
 				(effects
 					(font
@@ -698,25 +698,7 @@
 					(hide yes)
 				)
 			)
-			(property "Sim.Device" "D"
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "Sim.Pins" "1=K 2=A"
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "ki_keywords" "diode"
+			(property "ki_keywords" "diode Schottky"
 				(at 0 0 0)
 				(effects
 					(font
@@ -734,10 +716,10 @@
 					(hide yes)
 				)
 			)
-			(symbol "D_0_1"
+			(symbol "D_Schottky_0_1"
 				(polyline
 					(pts
-						(xy -1.27 1.27) (xy -1.27 -1.27)
+						(xy -1.905 0.635) (xy -1.905 1.27) (xy -1.27 1.27) (xy -1.27 -1.27) (xy -0.635 -1.27) (xy -0.635 -0.635)
 					)
 					(stroke
 						(width 0.254)
@@ -772,7 +754,7 @@
 					)
 				)
 			)
-			(symbol "D_1_1"
+			(symbol "D_Schottky_1_1"
 				(pin passive line
 					(at -3.81 0 0)
 					(length 2.54)
@@ -1760,6 +1742,12 @@
 		)
 	)
 	(junction
+		(at 133.35 60.96)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "0abca6d7-a12d-4dfb-827b-8c2626df1692")
+	)
+	(junction
 		(at 114.3 85.09)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -1812,6 +1800,16 @@
 			(type default)
 		)
 		(uuid "2fa8cf79-7854-492b-9fc5-7fa9c57c7255")
+	)
+	(wire
+		(pts
+			(xy 124.46 60.96) (xy 124.46 67.31)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "342f9674-ad09-4b7c-8aac-69e470413d1e")
 	)
 	(wire
 		(pts
@@ -1945,6 +1943,16 @@
 	)
 	(wire
 		(pts
+			(xy 124.46 60.96) (xy 133.35 60.96)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "995867f2-dfb4-4ad8-ab36-b8193d26ecdb")
+	)
+	(wire
+		(pts
 			(xy 113.03 85.09) (xy 114.3 85.09)
 		)
 		(stroke
@@ -1982,16 +1990,6 @@
 			(type default)
 		)
 		(uuid "b53f1733-761b-4a99-95c1-3dce5273433b")
-	)
-	(wire
-		(pts
-			(xy 128.27 67.31) (xy 133.35 67.31)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "b795b18c-f71d-4876-9fb1-da01bda8b5bc")
 	)
 	(wire
 		(pts
@@ -2035,6 +2033,16 @@
 	)
 	(wire
 		(pts
+			(xy 133.35 60.96) (xy 137.16 60.96)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "d0f1fe21-f54f-4ba4-95a8-3a6fe595cfb6")
+	)
+	(wire
+		(pts
 			(xy 151.13 74.93) (xy 151.13 76.2)
 		)
 		(stroke
@@ -2072,6 +2080,16 @@
 			(type default)
 		)
 		(uuid "ea08feb5-ef5c-4c5a-b435-a35b4f888880")
+	)
+	(wire
+		(pts
+			(xy 120.65 67.31) (xy 124.46 67.31)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "ec82a507-2fbd-45cd-a421-77c6f76d6bf1")
 	)
 	(wire
 		(pts
@@ -2114,7 +2132,7 @@
 		(uuid "8fc1c39b-394b-4348-a5de-59f4221a8836")
 	)
 	(hierarchical_label "{USB+, USB-}"
-		(shape input)
+		(shape output)
 		(at 152.4 114.3 0)
 		(effects
 			(font
@@ -2337,6 +2355,76 @@
 			(project "synthesizer"
 				(path "/f8740766-88d0-4c4d-b661-742f36f22c7b/70b9532c-c710-4ea4-8ea8-ed8989840f51"
 					(reference "U6")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:D_Schottky")
+		(at 133.35 64.77 270)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "3d03110b-3db5-46e5-a5a9-d2a6480157bd")
+		(property "Reference" "D?"
+			(at 135.89 63.1824 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "5.0V"
+			(at 135.89 65.7224 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" ""
+			(at 133.35 64.77 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 133.35 64.77 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Schottky diode"
+			(at 133.35 64.77 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "822c2380-33c5-4326-9fe5-20cbd21b5ce2")
+		)
+		(pin "2"
+			(uuid "bc189e94-e433-440d-90ae-d373bcb4240b")
+		)
+		(instances
+			(project ""
+				(path "/f8740766-88d0-4c4d-b661-742f36f22c7b/70b9532c-c710-4ea4-8ea8-ed8989840f51"
+					(reference "D?")
 					(unit 1)
 				)
 			)
@@ -2747,6 +2835,71 @@
 		)
 	)
 	(symbol
+		(lib_id "power:GND")
+		(at 133.35 68.58 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "d5d100ba-ec05-492f-875c-8a6ae222b8cf")
+		(property "Reference" "#PWR018"
+			(at 133.35 74.93 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "GND"
+			(at 136.398 70.612 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 133.35 68.58 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 133.35 68.58 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
+			(at 133.35 68.58 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "64fce26d-0df5-4dd3-91ea-ea7f690f575c")
+		)
+		(instances
+			(project ""
+				(path "/f8740766-88d0-4c4d-b661-742f36f22c7b/70b9532c-c710-4ea4-8ea8-ed8989840f51"
+					(reference "#PWR018")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "Connector:USB_C_Receptacle_USB2.0_14P")
 		(at 97.79 82.55 0)
 		(unit 1)
@@ -2854,94 +3007,8 @@
 		)
 	)
 	(symbol
-		(lib_id "Device:D")
-		(at 124.46 67.31 180)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "fa1e9395-e54a-4dd3-bb3b-e12cde21068c")
-		(property "Reference" "D2"
-			(at 124.46 60.96 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "D"
-			(at 124.46 63.5 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" "Diode_SMD:D_0201_0603Metric"
-			(at 124.46 67.31 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 124.46 67.31 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Diode"
-			(at 124.46 67.31 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Sim.Device" "D"
-			(at 124.46 67.31 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Sim.Pins" "1=K 2=A"
-			(at 124.46 67.31 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "c0f6f479-328c-4f13-a7aa-467c456863a0")
-		)
-		(pin "2"
-			(uuid "aa228c8b-8ba7-4cbc-9cc6-cf2e210251f1")
-		)
-		(instances
-			(project "synthesizer"
-				(path "/f8740766-88d0-4c4d-b661-742f36f22c7b/70b9532c-c710-4ea4-8ea8-ed8989840f51"
-					(reference "D2")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
 		(lib_id "power:VBUS")
-		(at 133.35 67.31 0)
+		(at 137.16 60.96 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -2950,7 +3017,7 @@
 		(fields_autoplaced yes)
 		(uuid "faf66d2d-28de-415c-9fc1-873b94d19290")
 		(property "Reference" "#PWR07"
-			(at 133.35 71.12 0)
+			(at 137.16 64.77 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2959,7 +3026,7 @@
 			)
 		)
 		(property "Value" "VBUS"
-			(at 133.35 62.23 0)
+			(at 137.16 55.88 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2967,7 +3034,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 133.35 67.31 0)
+			(at 137.16 60.96 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2976,7 +3043,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 133.35 67.31 0)
+			(at 137.16 60.96 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2985,7 +3052,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"VBUS\""
-			(at 133.35 67.31 0)
+			(at 137.16 60.96 0)
 			(effects
 				(font
 					(size 1.27 1.27)
