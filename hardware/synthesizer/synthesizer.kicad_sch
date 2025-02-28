@@ -206,11 +206,17 @@
 		)
 		(uuid "b00d9340-8922-45eb-8cd3-8bc52d5cb11b")
 	)
-	(no_connect
-		(at 144.78 134.62)
-		(uuid "730eeb85-c64c-4808-a5ae-890b9b6abbae")
-	)
 	(wire
+		(pts
+			(xy 74.93 110.49) (xy 110.49 110.49)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "1d57990b-f882-4cd7-aa58-7f0d45b82c34")
+	)
+	(bus
 		(pts
 			(xy 74.93 92.71) (xy 110.49 92.71)
 		)
@@ -218,7 +224,17 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "f7759b2a-e292-452a-bf3a-b381bd9481c0")
+		(uuid "9cccd03a-b42e-4707-88d0-90646706c690")
+	)
+	(bus
+		(pts
+			(xy 74.93 74.93) (xy 110.49 74.93)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "ec68f049-d934-465a-a509-d7d09ed6943f")
 	)
 	(image
 		(at 223.52 176.53)
@@ -1598,7 +1614,7 @@
 				(justify left top)
 			)
 		)
-		(pin "{USB+, USB-}" input
+		(pin "{USB+, USB-}" bidirectional
 			(at 110.49 92.71 180)
 			(uuid "ecb74c8c-b5b7-40b7-bbcd-72d04dba8428")
 			(effects
@@ -1692,6 +1708,16 @@
 				(justify left top)
 			)
 		)
+		(pin "ETH" bidirectional
+			(at 110.49 74.93 180)
+			(uuid "0dbb7f29-190e-452a-8d78-f6a5459a1d79")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
 		(instances
 			(project "synthesizer"
 				(path "/f8740766-88d0-4c4d-b661-742f36f22c7b"
@@ -1701,7 +1727,7 @@
 		)
 	)
 	(sheet
-		(at 109.855 107.315)
+		(at 179.07 74.295)
 		(size 26.035 9.525)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -1717,7 +1743,7 @@
 		)
 		(uuid "b2b162f9-d354-4f12-b96e-cc775f5e80e4")
 		(property "Sheetname" "Screw Holes"
-			(at 109.855 106.6034 0)
+			(at 179.07 73.5834 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1726,7 +1752,7 @@
 			)
 		)
 		(property "Sheetfile" "screw_holes.kicad_sch"
-			(at 109.855 117.4246 0)
+			(at 179.07 84.4046 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1743,8 +1769,60 @@
 		)
 	)
 	(sheet
+		(at 110.49 106.045)
+		(size 33.02 8.89)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 200 252 188 1.0000)
+		)
+		(uuid "db00042c-9b68-4b8b-be80-9105a7955251")
+		(property "Sheetname" "Clocks"
+			(at 110.49 105.3334 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "clocks.kicad_sch"
+			(at 110.49 115.5196 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(pin "25MHz" output
+			(at 110.49 110.49 180)
+			(uuid "257ba2a3-aa0b-4bde-a547-2b30a0d7fde2")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(instances
+			(project "synthesizer"
+				(path "/f8740766-88d0-4c4d-b661-742f36f22c7b"
+					(page "7")
+				)
+			)
+		)
+	)
+	(sheet
 		(at 45.72 59.69)
-		(size 29.21 39.37)
+		(size 29.21 72.39)
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
@@ -1768,7 +1846,7 @@
 			)
 		)
 		(property "Sheetfile" "microcontroller.kicad_sch"
-			(at 45.72 99.6446 0)
+			(at 45.72 132.6646 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1776,7 +1854,7 @@
 				(justify left top)
 			)
 		)
-		(pin "{USB+, USB-}" input
+		(pin "{USB+, USB-}" bidirectional
 			(at 74.93 92.71 0)
 			(uuid "508278a5-efa4-4fd1-bb19-530df0c48755")
 			(effects
@@ -1787,7 +1865,7 @@
 			)
 		)
 		(pin "25MHz" input
-			(at 74.93 87.63 0)
+			(at 74.93 110.49 0)
 			(uuid "f74dd0c9-38d3-4194-b6b3-407d4368e48c")
 			(effects
 				(font
@@ -1796,7 +1874,7 @@
 				(justify right)
 			)
 		)
-		(pin "ETH" output
+		(pin "ETH" bidirectional
 			(at 74.93 74.93 0)
 			(uuid "0f0984b6-1093-43f2-9462-daf646ea6186")
 			(effects

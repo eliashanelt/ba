@@ -227,7 +227,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "ba24ec52-b9e2-4859-9033-3b300d380540")
-		(property "Reference" "H?"
+		(property "Reference" "H4"
 			(at 121.92 76.1999 0)
 			(effects
 				(font
@@ -275,7 +275,7 @@
 		(instances
 			(project ""
 				(path "/f8740766-88d0-4c4d-b661-742f36f22c7b/b2b162f9-d354-4f12-b96e-cc775f5e80e4"
-					(reference "H?")
+					(reference "H4")
 					(unit 1)
 				)
 			)

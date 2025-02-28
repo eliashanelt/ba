@@ -631,6 +631,10 @@
     [
       "98a3b8d5-251d-4b16-9dfb-e44e2f098f21",
       "Ethernet Jack"
+    ],
+    [
+      "db00042c-9b68-4b8b-be80-9105a7955251",
+      "Clocks"
     ]
   ],
   "text_variables": {}
