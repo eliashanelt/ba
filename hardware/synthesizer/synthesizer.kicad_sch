@@ -4,279 +4,7 @@
 	(generator_version "9.0")
 	(uuid "f8740766-88d0-4c4d-b661-742f36f22c7b")
 	(paper "A4")
-	(lib_symbols
-		(symbol "Connector:Conn_Coaxial"
-			(pin_names
-				(offset 1.016)
-				(hide yes)
-			)
-			(exclude_from_sim no)
-			(in_bom yes)
-			(on_board yes)
-			(property "Reference" "J"
-				(at 0.254 3.048 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "Value" "Conn_Coaxial"
-				(at 2.921 0 90)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "Footprint" ""
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "Datasheet" "~"
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "Description" "coaxial connector (BNC, SMA, SMB, SMC, Cinch/RCA, LEMO, ...)"
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "ki_keywords" "BNC SMA SMB SMC LEMO coaxial connector CINCH RCA MCX MMCX U.FL UMRF"
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "ki_fp_filters" "*BNC* *SMA* *SMB* *SMC* *Cinch* *LEMO* *UMRF* *MCX* *U.FL*"
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(symbol "Conn_Coaxial_0_1"
-				(polyline
-					(pts
-						(xy -2.54 0) (xy -0.508 0)
-					)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(arc
-					(start 1.778 0)
-					(mid 0.222 -1.8079)
-					(end -1.778 -0.508)
-					(stroke
-						(width 0.254)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(arc
-					(start -1.778 0.508)
-					(mid 0.2221 1.8084)
-					(end 1.778 0)
-					(stroke
-						(width 0.254)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(circle
-					(center 0 0)
-					(radius 0.508)
-					(stroke
-						(width 0.2032)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy 0 -2.54) (xy 0 -1.778)
-					)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-			)
-			(symbol "Conn_Coaxial_1_1"
-				(pin passive line
-					(at -5.08 0 0)
-					(length 2.54)
-					(name "In"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "1"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin passive line
-					(at 0 -5.08 90)
-					(length 2.54)
-					(name "Ext"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "2"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-			)
-			(embedded_fonts no)
-		)
-		(symbol "power:GND"
-			(power)
-			(pin_numbers
-				(hide yes)
-			)
-			(pin_names
-				(offset 0)
-				(hide yes)
-			)
-			(exclude_from_sim no)
-			(in_bom yes)
-			(on_board yes)
-			(property "Reference" "#PWR"
-				(at 0 -6.35 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "Value" "GND"
-				(at 0 -3.81 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "Footprint" ""
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "Datasheet" ""
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "ki_keywords" "global power"
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(symbol "GND_0_1"
-				(polyline
-					(pts
-						(xy 0 0) (xy 0 -1.27) (xy 1.27 -1.27) (xy 0 -2.54) (xy -1.27 -1.27) (xy 0 -1.27)
-					)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-			)
-			(symbol "GND_1_1"
-				(pin power_in line
-					(at 0 0 270)
-					(length 0)
-					(name "~"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "1"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-			)
-			(embedded_fonts no)
-		)
-	)
+	(lib_symbols)
 	(text "LBB FluidFm Synthesizer"
 		(exclude_from_sim no)
 		(at 199.136 189.738 0)
@@ -307,24 +35,6 @@
 		)
 		(uuid "b00d9340-8922-45eb-8cd3-8bc52d5cb11b")
 	)
-	(junction
-		(at 73.66 166.37)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "225fea23-df7c-4f15-ae82-e64a46bd5313")
-	)
-	(junction
-		(at 83.82 166.37)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "b0aaaee3-2870-4804-b0bf-43eb25c60e1a")
-	)
-	(junction
-		(at 60.96 166.37)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "fe67b675-f8be-445f-a552-8b2a5ed83bac")
-	)
 	(wire
 		(pts
 			(xy 74.93 110.49) (xy 110.49 110.49)
@@ -334,76 +44,6 @@
 			(type default)
 		)
 		(uuid "1d57990b-f882-4cd7-aa58-7f0d45b82c34")
-	)
-	(wire
-		(pts
-			(xy 73.66 166.37) (xy 83.82 166.37)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "229d8fb2-0554-481d-8bdf-51ded31572c8")
-	)
-	(wire
-		(pts
-			(xy 41.91 160.02) (xy 41.91 166.37)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "34a1cc5d-a918-4bd7-b0fe-2a1f5de5e060")
-	)
-	(wire
-		(pts
-			(xy 83.82 160.02) (xy 83.82 166.37)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "4cdcdd9f-49d8-4b3f-9223-d62abf3266ef")
-	)
-	(wire
-		(pts
-			(xy 102.87 160.02) (xy 102.87 166.37)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "5c4d1d06-0fe1-4fca-b30a-a5b8b7aaaf46")
-	)
-	(wire
-		(pts
-			(xy 60.96 160.02) (xy 60.96 166.37)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "7a352e77-0846-4810-ba99-4d3bece65438")
-	)
-	(wire
-		(pts
-			(xy 41.91 166.37) (xy 60.96 166.37)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "7ae4e5f3-11ff-42bb-9502-1d829633373e")
-	)
-	(wire
-		(pts
-			(xy 60.96 166.37) (xy 73.66 166.37)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "8d986d4f-fafe-475d-a5f7-c515da48f76f")
 	)
 	(bus
 		(pts
@@ -424,16 +64,6 @@
 			(type default)
 		)
 		(uuid "ec68f049-d934-465a-a509-d7d09ed6943f")
-	)
-	(wire
-		(pts
-			(xy 83.82 166.37) (xy 102.87 166.37)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "f4d59aba-22a5-4aeb-b0d1-2bb8fd97037d")
 	)
 	(image
 		(at 223.52 176.53)
@@ -801,7 +431,25 @@
 			"ABsdAAAAAAAAwGsiGAEAAABJBAAAAAAAAGBsIhgBAAAAGx0AAAAAAADgayIYAQAAAEoEAAAAAAAA"
 			"YGwiGAEAAAAbHQAAAAAAAABsIhgBAAAATgQAAAAAAABgbCIYAQAAABsdAAAAAAAAIGwiGAEAAAAY"
 			"AAAAAAAAAPDCaG8BAAAAAQAAAAAAAAAAAAAAAAAAAGgFAAAkAAAAaAUAACkAAAAYAAAAAAAAAPDC"
-			"aG8BAAAAAQAAAAAAAAAAAAAAAAAAAGgFAAAkAAAAaAUAACkAAABNBAAAAAAAAGBsIg=="
+			"aG8BAAAAAQAAAAAAAAAAAAAAAAAAAGgFAAAkAAAAaAUAACkAAABNBAAAAAAAAGBsIgMAYAAAAAAA"
+			"AAAAAADgI2MAAGAAAMCk1wMAYAAAAHWgAgBgAAAARrUCAGAAAKCZUwAAYAAAwONpAABgAAAADt0D"
+			"AGAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIB3oAIAYAAAIJxTAABgAADAGmUAAGAAAIBItQIA"
+			"YAAAIBVjAABgAAAAAAAAAAAAADDraQAAYAAAAAAAAAAAAAAAAAAAAAAAAAB6oAIAYAAAEPVpAABg"
+			"AAAAS7UCAGAAAACqGQEAYAAAwAHdAwBgAACgs9cDAGAAAEAdZQAAYAAAoJ5TAABgAADgHN0DAGAA"
+			"AIB8oAIAYAAAkPdpAABgAACATbUCAGAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+			"AAAAAAAAAAAAAAAAAAAAAAB/oAIAYAAAAAAAAAAAAABAjNcDAGAAAABQtQIAYAAAAAAAAAAAAABg"
+			"p9cDAGAAAMAYZgAAYAAAoBDdAwBgAABAFWMAAGAAAGDmaQAAYAAAAAAAAAAAAACAUrUCAGAAAAAA"
+			"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAwIGYAAGAAAAAAAAAAAAAAAAAA"
+			"AAAAAABgl1MAAGAAAACA1wMAYAAAAFW1AgBgAABQFWMAAGAAAAAAAAAAAAAAAAAAAAAAAABgBN0D"
+			"AGAAAEC21wMAYAAAAAAAAAAAAADgmVMAAGAAAIBXtQIAYAAAQPVpAABgAACAH90DAGAAAEAgZgAA"
+			"YAAAAJ61AABgAAAAAAAAAAAAAAAAAAAAAAAAYBVjAABgAADgGGYAAGAAAMCnGQEAYAAAYJxTAABg"
+			"AACA5mkAAGAAAABatQIAYAAAsOhhAABgAADgjtcDAGAAAAAAAAAAAAAAAKrXAwBgAADgnlMAAGAA"
+			"AECqGQEAYAAAUCBmAABgAABAE90DAGAAAMDXaQAAYAAAgFy1AgBgAAAAAAAAAAAAAPAYZgAAYAAA"
+			"AAAAAAAAAAAAX7UCAGAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAJpTAABgAAAA"
+			"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAbqACAGAAAAAAAAAAAAAA0NdpAABgAADguNcDAGAAAAAH"
+			"3QMAYAAAgJxTAABgAAAAGWYAAGAAACAi3QMAYAAAsAxmAABgAAAAAAAAAAAAAAAAAAAAAAAAgEG1"
+			"AgBgAAAAAAAAAAAAAAAAAAAAAAAAcPVpAABgAAAAn1MAAGAAAAAAAAAAAAAAAAAAAAAAAAAAc6AC"
+			"AGAAAICR1wMAYAAAAES1AgBgAACQFWMAAGAAAKCs1wMAYAAAAAAAAAAAAADADGYAAA=="
 		)
 	)
 	(image
@@ -1568,351 +1216,65 @@
 			"AAAAcIseGQEAAABwY7UZAQAAAECOHhkBAAAAUKl3DwEAAABQDWJvAQAAAFCpdw8BAAAAMBYZGQEA"
 			"AAAwqXcPAQAAABAbHhkBAAAAMKl3DwEAAABQjX0PAQAAAFCNfQ8BAAAAYDZ2GgEAAABwY7UZAQAA"
 			"AIANYm8BAAAAcGO1GQEAAABwY7UZAQAAAHBjtRkBAAAAMBYZGQEAAAAwqXcPAQAAAFCNfQ8BAAAA"
-			"MKl3DwEAAA=="
+			"MKl3DwEAAACwnRwBAwAAAOCdHAEDAAAAEJ4cAQMAAABAnhwBAwAAAHCeHAEDAAAAoJ4cAQMAAADQ"
+			"nhwBAwAAAACfHAEDAAAAMJ8cAQMAAABgnxwBAwAAAJCfHAEDAAAAwJ8cAQMAAAAwoBwBAwAAAGCg"
+			"HAEDAAAAkKAcAQMAAADAoBwBAwAAAPCgHAEDAAAAIKEcAQMAAABQoRwBAwAAAIChHAEDAAAAsKEc"
+			"AQMAAADgoRwBAwAAABCiHAEDAAAAQKIcAQMAAABwohwBAwAAAKCiHAEDAAAA0KIcAQMAAAAAoxwB"
+			"AwAAADCjHAEDAAAAYKMcAQMAAACQoxwBAwAAAMCjHAEDAAAA8KMcAQMAAAAgpBwBAwAAAFCkHAED"
+			"AAAAgKQcAQMAAACwpBwBAwAAAOCkHAEDAAAAEKUcAQMAAABApRwBAwAAAHClHAEDAAAAoKUcAQMA"
+			"AADQpRwBAwAAAACmHAEDAAAAMKYcAQMAAABgphwBAwAAAJCmHAEDAAAAwKYcAQMAAADwphwBAwAA"
+			"ACCnHAEDAAAAUKccAQMAAACApxwBAwAAALCnHAEDAAAA4KccAQMAAAAQqBwBAwAAAECoHAEDAAAA"
+			"cKgcAQMAAACgqBwBAwAAANCoHAEDAAAAAKkcAQMAAAAwqRwBAwAAAGCpHAEDAAAAkKkcAQMAAADA"
+			"qRwBAwAAAPCpHAEDAAAAIKocAQMAAABQqhwBAwAAAICqHAEDAAAAsKocAQMAAADgqhwBAwAAABCr"
+			"HAEDAAAAQKscAQMAAABwqxwBAwAAAKCrHAEDAAAA0KscAQMAAAAArBwBAwAAADCsHAEDAAAAYKwc"
+			"AQMAAACQrBwBAwAAAMCsHAEDAAAA8KwcAQMAAAAgrRwBAwAAAFCtHAEDAAAAgK0cAQMAAACwrRwB"
+			"AwAAAOCtHAEDAAAAEK4cAQMAAABArhwBAwAAAHCuHAEDAAAAoK4cAQMAAADQrhwBAwAAAACvHAED"
+			"AAAAMK8cAQMAAABgrxwBAwAAAJCvHAEDAAAAwK8cAQMAAAAwsBwBAwAAAGCwHAEDAAAAkLAcAQMA"
+			"AADAsBwBAwAAAPCwHAEDAAAAILEcAQMAAABQsRwBAwAAAICxHAEDAAAAsLEcAQMAAADgsRwBAwAA"
+			"ABCyHAEDAAAAQLIcAQMAAABwshwBAwAAAKCyHAEDAAAA0LIcAQMAAAAAsxwBAwAAADCzHAEDAAAA"
+			"YLMcAQMAAACQsxwBAwAAAMCzHAEDAAAA8LMcAQMAAAAgtBwBAwAAAFC0HAEDAAAAgLQcAQMAAACw"
+			"tBwBAwAAAOC0HAEDAAAAELUcAQMAAABAtRwBAwAAAHC1HAEDAAAAoLUcAQMAAADQtRwBAwAAAAC2"
+			"HAEDAAAAMA=="
 		)
 	)
-	(symbol
-		(lib_id "Connector:Conn_Coaxial")
-		(at 41.91 154.94 0)
-		(unit 1)
+	(sheet
+		(at 110.49 121.92)
+		(size 33.02 12.7)
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
 		(fields_autoplaced yes)
-		(uuid "54f2d52e-4610-4b5a-b2c4-63cf36856c97")
-		(property "Reference" "J3"
-			(at 44.45 153.9631 0)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 200 252 188 1.0000)
+		)
+		(uuid "048a3674-481e-4b9e-b0e7-4786a4679f0c")
+		(property "Sheetname" "Coxial Connectors"
+			(at 110.49 121.2084 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(justify left)
+				(justify left bottom)
 			)
 		)
-		(property "Value" "Input 1"
-			(at 44.45 156.5031 0)
+		(property "Sheetfile" "coxial_conn.kicad_sch"
+			(at 110.49 135.2046 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(justify left)
+				(justify left top)
 			)
-		)
-		(property "Footprint" "Connector_Coaxial:BNC_TEConnectivity_1478035_Horizontal"
-			(at 41.91 154.94 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 41.91 154.94 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "coaxial connector (BNC, SMA, SMB, SMC, Cinch/RCA, LEMO, ...)"
-			(at 41.91 154.94 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "4d4f7b77-fac9-453a-8f02-0312d201b4a6")
-		)
-		(pin "2"
-			(uuid "36decaf5-0e78-4a5a-be27-2ab9033e00f4")
 		)
 		(instances
 			(project "synthesizer"
 				(path "/f8740766-88d0-4c4d-b661-742f36f22c7b"
-					(reference "J3")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "power:GND")
-		(at 73.66 166.37 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "a6678ee3-becb-4c35-b7c6-d8e5029c146d")
-		(property "Reference" "#PWR040"
-			(at 73.66 172.72 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Value" "GND"
-			(at 73.66 171.45 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 73.66 166.37 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 73.66 166.37 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 73.66 166.37 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "ad6ad504-ef7a-4d62-a41b-028b64e1ca86")
-		)
-		(instances
-			(project ""
-				(path "/f8740766-88d0-4c4d-b661-742f36f22c7b"
-					(reference "#PWR040")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Connector:Conn_Coaxial")
-		(at 60.96 154.94 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "a72a0ab1-1233-4ad6-8457-c770388e6d94")
-		(property "Reference" "J2"
-			(at 63.5 153.9631 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "Input 2"
-			(at 63.5 156.5031 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Footprint" "Connector_Coaxial:BNC_TEConnectivity_1478035_Horizontal"
-			(at 60.96 154.94 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 60.96 154.94 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "coaxial connector (BNC, SMA, SMB, SMC, Cinch/RCA, LEMO, ...)"
-			(at 60.96 154.94 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "19d988e3-53f3-49b0-bf46-f3cf69a6f5d7")
-		)
-		(pin "2"
-			(uuid "c21b1117-5b29-4663-b616-84b010778eb0")
-		)
-		(instances
-			(project "synthesizer"
-				(path "/f8740766-88d0-4c4d-b661-742f36f22c7b"
-					(reference "J2")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Connector:Conn_Coaxial")
-		(at 83.82 154.94 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "bde2d897-d81a-482c-890b-adab86370fbe")
-		(property "Reference" "J4"
-			(at 86.36 153.9631 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "Output 1"
-			(at 86.36 156.5031 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Footprint" "Connector_Coaxial:BNC_TEConnectivity_1478035_Horizontal"
-			(at 83.82 154.94 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 83.82 154.94 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "coaxial connector (BNC, SMA, SMB, SMC, Cinch/RCA, LEMO, ...)"
-			(at 83.82 154.94 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "eef32a0c-5170-4ea7-b5bc-5e1c4e0ecf22")
-		)
-		(pin "2"
-			(uuid "879ee7ce-585b-4473-b7a7-ca8a92a7c391")
-		)
-		(instances
-			(project "synthesizer"
-				(path "/f8740766-88d0-4c4d-b661-742f36f22c7b"
-					(reference "J4")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Connector:Conn_Coaxial")
-		(at 102.87 154.94 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "f4cbcc2f-1e77-4899-a452-947623741428")
-		(property "Reference" "J5"
-			(at 105.41 153.9631 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "Output 2"
-			(at 105.41 156.5031 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Footprint" "Connector_Coaxial:BNC_TEConnectivity_1478035_Horizontal"
-			(at 102.87 154.94 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 102.87 154.94 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "coaxial connector (BNC, SMA, SMB, SMC, Cinch/RCA, LEMO, ...)"
-			(at 102.87 154.94 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "8d052a9f-eb7d-41e6-8992-4908525eae65")
-		)
-		(pin "2"
-			(uuid "cff16a00-bae9-4aa6-bde0-a171d9ae7892")
-		)
-		(instances
-			(project "synthesizer"
-				(path "/f8740766-88d0-4c4d-b661-742f36f22c7b"
-					(reference "J5")
-					(unit 1)
+					(page "8")
 				)
 			)
 		)

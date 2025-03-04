@@ -4,7 +4,7 @@
 use defmt::info;
 use embassy_executor::Spawner;
 use embassy_stm32::{
-    adc::{Adc, AdcChannel, SampleTime},
+    adc::{Adc, AdcChannel, Resolution, SampleTime},
     Config,
 };
 use embassy_time::Delay;
@@ -17,6 +17,7 @@ async fn main(_spawner: Spawner) {
     let config = Config::default();
     let mut peripherals = embassy_stm32::init(config);
     let mut adc1 = Adc::new(peripherals.ADC1);
+    adc1.set_resolution(Resolution::BITS16);
     let mut adc_pin0 = peripherals.PA0.degrade_adc();
     let mut adc_pin2 = peripherals.PA2.degrade_adc();
     let mut measurements = [0u16; 2];
