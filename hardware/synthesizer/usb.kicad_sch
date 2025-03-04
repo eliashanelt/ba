@@ -1873,16 +1873,6 @@
 	)
 	(wire
 		(pts
-			(xy 140.97 111.76) (xy 142.24 111.76)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "6f19efbe-81f5-4595-928c-6e7f08a018b6")
-	)
-	(wire
-		(pts
 			(xy 114.3 87.63) (xy 113.03 87.63)
 		)
 		(stroke
@@ -1903,16 +1893,6 @@
 	)
 	(wire
 		(pts
-			(xy 140.97 95.25) (xy 142.24 95.25)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "8aead45c-8f89-47e4-9e95-2894b5f2445b")
-	)
-	(wire
-		(pts
 			(xy 114.3 85.09) (xy 114.3 87.63)
 		)
 		(stroke
@@ -1920,26 +1900,6 @@
 			(type default)
 		)
 		(uuid "8af47ba3-27e1-4b7f-831f-fa812714ac4c")
-	)
-	(wire
-		(pts
-			(xy 140.97 110.49) (xy 140.97 111.76)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "8b33a7d0-05db-4f63-807e-645dcf4edb3f")
-	)
-	(wire
-		(pts
-			(xy 142.24 111.76) (xy 142.24 110.49)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "8d0b4f55-cb12-4837-b37a-a7c3735db676")
 	)
 	(wire
 		(pts
@@ -2050,6 +2010,16 @@
 			(type default)
 		)
 		(uuid "c59296ef-f67b-43c7-9660-bdbf2ddb2ab4")
+	)
+	(wire
+		(pts
+			(xy 140.97 110.49) (xy 140.97 113.03)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "c605157c-2fef-4315-819b-cfa9102a5124")
 	)
 	(wire
 		(pts
@@ -2905,7 +2875,25 @@
 			"AEQAZABuAE0AZgBZAHcAaQA1AGwANQB6AGoAeABJAEoAWgArAFkAKwBpAEgAOABZACIACgAJAAkA"
 			"IgBmAGoAZQBVAHUAWQBNAHAAVQAvAFAAVwBGAHEALwB3AFIANgBuAE0AUABlAE0AVwBXADEAMQBS"
 			"AFIASABrAGcAWgAzAFIAOQBaAFcATQBKAE0AUABjAG0AZwBZAFUAQQB0ADcAWABJAEkANgBGAGsA"
-			"NwBzAHMAcA=="
+			"NwBzAHMAcFRVd0JhaDVMQUNkQWJLejYydm9vckNpelptVmpIMjgrbHpvcUR1aUIrRFcrY0IwVkFD"
+			"Y2syR0lrSGtFREZZWEI1RmU5NTgvQzhiOEs2bFozMDNzdjZ3UlRvZHJPb0pDckFOeWlROXFERHFM"
+			"OFM0L2FyQnhiRjJNN3Jza0VhTHdCVEc4ZDhLaEg4eVVMZFNHWGtmSktsM0o0QWdzZEZ5NEEvM2x5"
+			"bGk1WkZTOHBORGxVY0tTdElORU50dE5mcE9JQ2tvV1JuOUExZUJPclk5R1ZKc0dtWjR0TWJPMm1v"
+			"czFqc2FaYVgvZFpiMXdHZUE0a05BWlFVTXI1T29RSGFxSVg1UjI4LzU1VGY1dyt1WFlmdVNzbW9k"
+			"MFVEK1ZnQjBic0U3dVVHTWVtTCtzdTQ5ZktoUmRuMFAzOVdxUHN6Mm1uM3FkcmhxeCt1L1RlZ3NJ"
+			"U0FUa2U0YlYwWnYzWnV4NUtOZlRmMkVCekZFR25YM0UvYmJwVGhHVUJrL3BMWUdGaEpQU3JPNC9v"
+			"MVZYeHdaSEVnc2RudS84aVZnOXZXcm9paFRoc0lrQW9ZZ2trRkF0aDRGcTRhWFlYM1hUWjR5amRq"
+			"dEs5S3QxODFaR0lmbFBJaEo4V2taU2hsL0RJQ3hWMDNYcmg0a1ZtSG81RnVoUHBmMjduUHVUa2Jm"
+			"azUyOUZuekZBQ1RZc3RLeHVjM1Zlbmk1VzVKRnpVdVh1NmdxQmxWUm51ZHR2OWlKVkJpMG9RS0Qw"
+			"L0FTSWZENzUxWDN2YTJzeGJQVnJLbjI5c1pQN0RqdG91TS96dUlUcUNJOGVSQUVnWWxyQ2d4N3Rv"
+			"KzlwcmY2bE8vT0VKYlJyb3pFakl0QUE5SkVFQVV6QXhvSForODlseThZYkJuVVRmLzIvdmp3Q0hl"
+			"M250ekg4NzVUMk9KQnVxTkdvTmlqSGFYOE50akVkNDlXRGtqS3RWWHJJaXA2aHdTMU5vR2NOb09R"
+			"Q0JrTS8xMUNDcE9jTXR3aE52WFY2bTM3QjVZekV1YjVmMHVHZWloTzI3YUFPT2VrRUtjbzFHeEVF"
+			"aUJPMi9lakhXOXA0YzYrT3ZiTGg0WjdLc2FDVnBSWWdOc25KVHYzSGdXUG5QdHlLSTdnUE82SEkx"
+			"MWxkQWVVSjJuRFdhTjFCenU2SWhSTFpmeG0yc2RiaCtMYWJnelBxUHU1bHRYeG9pazNINzRwKzIv"
+			"VWhXbEdGdFhBWi9mM0VXdE1zRDJLdTk5MitYOTlPR3JoZ05wUDJCMVJ3RWFJV05CTm96VXhtb042"
+			"Y25JeHYzSlpUSnYrUWRSUXhrbWlGZ0hUaHRTNE82YkxzVDFtMWFkOWsxWlVTM3Qvb2NQYkVKUHRa"
+			"d2hjU3pORA=="
 		)
 	)
 	(image
@@ -3274,7 +3262,25 @@
 			"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD0WBQAA/wIAAgIA"
 			"AAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
 			"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-			"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=="
+			"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGZkOGZmZTAw"
+			"MDEwNGE0NjQ5NDYwMDAxMDEwMDAwMDEwMDAxMDAwMGZmZGIwMDQzMDAwOAowNjA2MDcwNjA1MDgw"
+			"NzA3MDcwOTA5MDgwYTBjMTQwZDBjMGIwYjBjMTkxMjEzMGYxNDFkMWExZjFlMWQxYTFjMWMyMDI0"
+			"MmUKMjcyMDIyMmMyMzFjMWMyODM3MjkyYzMwMzEzNDM0MzQxZjI3MzkzZDM4MzIzYzJlMzMzNDMy"
+			"ZmZkYjAwNDMwMTA5MDkwOTBjCjBiMGMxODBkMGQxODMyMjExYzIxMzIzMjMyMzIzMjMyMzIzMjMy"
+			"MzIzMjMyMzIzMjMyMzIzMjMyMzIzMjMyMzIzMjMyMzIzMgozMjMyMzIzMjMyMzIzMjMyMzIzMjMy"
+			"MzIzMjMyMzIzMjMyMzIzMjMyMzIzMjMyMzJmZmMwMDAxMTA4MDA4OTAxMDAwMzAxMjIKMDAwMjEx"
+			"MDEwMzExMDFmZmM0MDAxZjAwMDAwMTA1MDEwMTAxMDEwMTAxMDAwMDAwMDAwMDAwMDAwMDAxMDIw"
+			"MzA0MDUwNjA3CjA4MDkwYTBiZmZjNDAwYjUxMDAwMDIwMTAzMDMwMjA0MDMwNTA1MDQwNDAwMDAw"
+			"MTdkMDEwMjAzMDAwNDExMDUxMjIxMzE0MQowNjEzNTE2MTA3MjI3MTE0MzI4MTkxYTEwODIzNDJi"
+			"MWMxMTU1MmQxZjAyNDMzNjI3MjgyMDkwYTE2MTcxODE5MWEyNTI2MjcKMjgyOTJhMzQzNTM2Mzcz"
+			"ODM5M2E0MzQ0NDU0NjQ3NDg0OTRhNTM1NDU1NTY1NzU4NTk1YTYzNjQ2NTY2Njc2ODY5NmE3Mzc0"
+			"Cjc1NzY3Nzc4Nzk3YTgzODQ4NTg2ODc4ODg5OGE5MjkzOTQ5NTk2OTc5ODk5OWFhMmEzYTRhNWE2"
+			"YTdhOGE5YWFiMmIzYjRiNQpiNmI3YjhiOWJhYzJjM2M0YzVjNmM3YzhjOWNhZDJkM2Q0ZDVkNmQ3"
+			"ZDhkOWRhZTFlMmUzZTRlNWU2ZTdlOGU5ZWFmMWYyZjMKZjRmNWY2ZjdmOGY5ZmFmZmM0MDAxZjAx"
+			"MDAwMzAxMDEwMTAxMDEwMTAxMDEwMTAwMDAwMDAwMDAwMDAxMDIwMzA0MDUwNjA3CjA4MDkwYTBi"
+			"ZmZjNDAwYjUxMTAwMDIwMTAyMDQwNDAzMDQwNzA1MDQwNDAwMDEwMjc3MDAwMTAyMDMxMTA0MDUy"
+			"MTMxMDYxMgo0MTUxMDc2MTcxMTMyMjMyODEwODE0NDI5MWExYjFjMTA5MjMzMzUyZjAxNTYyNzJk"
+			"MTBhMTYyNDM0ZTEyNWYxMTcxODE5MWEKMjYyNzI4MjkyYTM1MzYzNzM4MzkzYTQzNA=="
 		)
 	)
 	(label "USB-"
@@ -3738,7 +3744,7 @@
 	)
 	(symbol
 		(lib_id "power:VBUS")
-		(at 142.24 95.25 0)
+		(at 140.97 95.25 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -3747,7 +3753,7 @@
 		(fields_autoplaced yes)
 		(uuid "6d9d4ec5-b48a-4f9a-9440-b330eb79c1d9")
 		(property "Reference" "#PWR028"
-			(at 142.24 99.06 0)
+			(at 140.97 99.06 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3756,7 +3762,7 @@
 			)
 		)
 		(property "Value" "VBUS"
-			(at 142.24 90.17 0)
+			(at 140.97 90.17 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3764,7 +3770,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 142.24 95.25 0)
+			(at 140.97 95.25 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3773,7 +3779,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 142.24 95.25 0)
+			(at 140.97 95.25 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3782,7 +3788,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"VBUS\""
-			(at 142.24 95.25 0)
+			(at 140.97 95.25 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3870,7 +3876,7 @@
 	)
 	(symbol
 		(lib_id "power:GND")
-		(at 142.24 110.49 0)
+		(at 140.97 113.03 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -3879,7 +3885,7 @@
 		(fields_autoplaced yes)
 		(uuid "b0104e04-b863-4676-b49e-6d64444bb044")
 		(property "Reference" "#PWR029"
-			(at 142.24 116.84 0)
+			(at 140.97 119.38 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3888,7 +3894,7 @@
 			)
 		)
 		(property "Value" "GND"
-			(at 142.24 115.57 0)
+			(at 140.97 118.11 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3896,7 +3902,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 142.24 110.49 0)
+			(at 140.97 113.03 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3905,7 +3911,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 142.24 110.49 0)
+			(at 140.97 113.03 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3914,7 +3920,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 142.24 110.49 0)
+			(at 140.97 113.03 0)
 			(effects
 				(font
 					(size 1.27 1.27)
