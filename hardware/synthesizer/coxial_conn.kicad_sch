@@ -1160,6 +1160,16 @@
 		)
 		(uuid "19fc98d0-f864-4af7-bd1a-2b65d76cc97d")
 	)
+	(text "NANOSURF = HIGH IMPEDANCE\nSTM = LOW IMPEDANCE\nMAYBE ADD AN VOLTAGE FOLLOWER\n"
+		(exclude_from_sim no)
+		(at 94.7077 82.8123 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+		(uuid "5785c4ee-69dc-48d3-b221-e5b6ae4d6f61")
+	)
 	(text "(-10V)-10V -> 0V-1V (Noninverting Amplifier with offset)"
 		(exclude_from_sim no)
 		(at 136.398 23.876 0)
@@ -1694,7 +1704,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
 			(at 164.338 74.93 90)
 			(effects
 				(font
@@ -1828,7 +1838,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
 			(at 158.75 66.802 90)
 			(effects
 				(font
@@ -1896,7 +1906,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
 			(at 255.27 74.168 90)
 			(effects
 				(font
@@ -2014,7 +2024,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "30e3e152-0bd2-40d7-bc54-892b1d7ea54b")
-		(property "Reference" "R?"
+		(property "Reference" "R27"
 			(at 229.87 125.7299 0)
 			(effects
 				(font
@@ -2032,7 +2042,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
 			(at 225.552 127 90)
 			(effects
 				(font
@@ -2068,7 +2078,7 @@
 		(instances
 			(project ""
 				(path "/f8740766-88d0-4c4d-b661-742f36f22c7b/048a3674-481e-4b9e-b0e7-4786a4679f0c"
-					(reference "R?")
+					(reference "R27")
 					(unit 1)
 				)
 			)
@@ -2290,7 +2300,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "6c0e8975-0492-4dc7-ab1b-f6bc9bdb57d3")
-		(property "Reference" "R?"
+		(property "Reference" "R28"
 			(at 237.49 74.9299 0)
 			(effects
 				(font
@@ -2308,7 +2318,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
 			(at 236.728 76.2 90)
 			(effects
 				(font
@@ -2344,7 +2354,7 @@
 		(instances
 			(project ""
 				(path "/f8740766-88d0-4c4d-b661-742f36f22c7b/048a3674-481e-4b9e-b0e7-4786a4679f0c"
-					(reference "R?")
+					(reference "R28")
 					(unit 1)
 				)
 			)
@@ -2530,7 +2540,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
 			(at 226.568 67.31 90)
 			(effects
 				(font
@@ -2582,7 +2592,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "7ea86067-38a6-438a-8f1a-1d06e4856d63")
-		(property "Reference" "U?"
+		(property "Reference" "U8"
 			(at 138.43 46.9198 0)
 			(effects
 				(font
@@ -2652,7 +2662,7 @@
 		(instances
 			(project ""
 				(path "/f8740766-88d0-4c4d-b661-742f36f22c7b/048a3674-481e-4b9e-b0e7-4786a4679f0c"
-					(reference "U?")
+					(reference "U8")
 					(unit 1)
 				)
 			)
@@ -2686,7 +2696,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
 			(at 225.552 137.16 90)
 			(effects
 				(font
@@ -2738,7 +2748,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "9c314dd1-b4f6-4a98-8c1f-7963322f086d")
-		(property "Reference" "C?"
+		(property "Reference" "C33"
 			(at 58.42 60.9599 0)
 			(effects
 				(font
@@ -2792,7 +2802,7 @@
 		(instances
 			(project ""
 				(path "/f8740766-88d0-4c4d-b661-742f36f22c7b/048a3674-481e-4b9e-b0e7-4786a4679f0c"
-					(reference "C?")
+					(reference "C33")
 					(unit 1)
 				)
 			)
@@ -2824,7 +2834,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
 			(at 220.98 59.182 90)
 			(effects
 				(font

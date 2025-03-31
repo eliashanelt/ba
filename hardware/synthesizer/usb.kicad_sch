@@ -3738,7 +3738,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
 			(at 152.908 80.01 90)
 			(effects
 				(font
@@ -3808,7 +3808,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
 			(at 161.798 80.01 90)
 			(effects
 				(font
@@ -4205,7 +4205,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Connector_USB:USB_C_Receptacle_HCTL_HC-TYPE-C-16P-01A"
 			(at 101.6 82.55 0)
 			(effects
 				(font
