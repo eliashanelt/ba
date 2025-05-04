@@ -3,7 +3,7 @@
 
 use defmt::info;
 use embassy_executor::Spawner;
-use embassy_time::{Duration, Timer};
+use embassy_time::{Delay, Duration, Timer};
 use esp_hal::dma::{DmaRxBuf, DmaTxBuf};
 use esp_hal::i2c::master::I2c;
 use esp_hal::spi;
@@ -12,11 +12,10 @@ use esp_hal::time::Rate;
 use esp_hal::timer::timg::TimerGroup;
 use esp_hal::{clock::CpuClock, spi::master::Spi};
 use esp_hal::{dma_buffers, i2c};
+use smartknob::lcd::{self, Backlight, Display};
 use {esp_backtrace as _, esp_println as _};
 
 extern crate alloc;
-
-use lcd;
 
 const LCD_SCREEN_ADDRESS: u8 = 0x27;
 
@@ -61,11 +60,19 @@ async fn main(spawner: Spawner) {
     let sda = peripherals.GPIO18;
     let scl = peripherals.GPIO19;
 
-    let mut i2c = I2c::new(peripherals.I2C0, i2c::master::Config::default())
+    let i2c = I2c::new(peripherals.I2C0, i2c::master::Config::default())
         .unwrap()
         .with_sda(sda)
         .with_scl(scl)
         .into_async();
+
+    let mut lcd = lcd::Lcd::new(i2c, lcd::ADDRESS, Delay).await.unwrap();
+
+    lcd.set_display(Display::On).await.unwrap();
+    lcd.set_backlight(Backlight::On).await.unwrap();
+
+    lcd.clear().await.unwrap();
+    lcd.print("Hello World!").await.unwrap();
 
     let _ = spawner;
 

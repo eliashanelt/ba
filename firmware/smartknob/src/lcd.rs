@@ -158,25 +158,25 @@ where
         // SEE PAGE 45/46 FOR INITIALIZATION SPECIFICATION!
         // according to datasheet, we need at least 40ms after power rises above 2.7V
         // before sending commands. Arduino can turn on way before 4.5V so we'll wait 50
-        self.delay.delay_ms(50);
-        self.expander_write(self.control.backlight as u8)?;
-        self.delay.delay_ms(1);
+        self.delay.delay_ms(50).await;
+        self.expander_write(self.control.backlight as u8).await?;
+        self.delay.delay_ms(1).await;
 
         // Send the initial command sequence according to the HD44780 datasheet
         let mode_8bit = Mode::FUNCTIONSET as u8 | BitMode::Bit8 as u8;
         self.write4bits(mode_8bit).await?;
 
-        self.delay.delay_ms(5);
+        self.delay.delay_ms(5).await;
 
         self.write4bits(mode_8bit).await?;
-        self.delay.delay_ms(5);
+        self.delay.delay_ms(5).await;
 
         self.write4bits(mode_8bit).await?;
-        self.delay.delay_ms(5);
+        self.delay.delay_ms(5).await;
 
         let mode_4bit = Mode::FUNCTIONSET as u8 | BitMode::Bit4 as u8;
         self.write4bits(mode_4bit).await?;
-        self.delay.delay_ms(5);
+        self.delay.delay_ms(5).await;
 
         let lines_font = Mode::FUNCTIONSET as u8
             | BitMode::Bit4 as u8
@@ -203,7 +203,7 @@ where
     */
     pub async fn clear(&mut self) -> Result<(), E> {
         self.command(Mode::CLEARDISPLAY as u8).await?;
-        self.delay.delay_ms(2);
+        self.delay.delay_ms(2).await;
         Ok(())
     }
 
@@ -216,7 +216,7 @@ where
     */
     pub async fn home(&mut self) -> Result<(), E> {
         self.command(Mode::RETURNHOME as u8).await?;
-        self.delay.delay_ms(2);
+        self.delay.delay_ms(2).await;
         Ok(())
     }
 
@@ -269,9 +269,9 @@ where
         self.write_display_control().await
     }
 
-    pub fn set_backlight(&mut self, backlight: Backlight) -> Result<usize, E> {
+    pub async fn set_backlight(&mut self, backlight: Backlight) -> Result<(), E> {
         self.control.backlight = backlight;
-        Ok(self.expander_write(0)?)
+        Ok(self.expander_write(0).await?)
     }
 
     /*********** mid level commands, for sending data/cmds */
@@ -316,22 +316,22 @@ where
     }
 
     async fn write4bits(&mut self, value: u8) -> Result<(), E> {
-        self.expander_write(value)?;
+        self.expander_write(value).await?;
         self.pulse_enable(value).await?;
         Ok(())
     }
 
-    fn expander_write(&mut self, data: u8) -> Result<usize, E> {
-        Ok(self
-            .i2c
-            .write(&[data | self.control.backlight as u8])
-            .unwrap())
+    async fn expander_write(&mut self, data: u8) -> Result<(), E> {
+        self.i2c
+            .write(self.address, &[data | self.control.backlight as u8])
+            .await
     }
 
     async fn pulse_enable(&mut self, data: u8) -> Result<(), E> {
-        self.expander_write(data | BitAction::Enable as u8)?; // En high
+        self.expander_write(data | BitAction::Enable as u8).await?; // En high
         self.delay.delay_us(1).await;
-        self.expander_write(data & !(BitAction::Enable as u8))?; // En low
+        self.expander_write(data & !(BitAction::Enable as u8))
+            .await?; // En low
         self.delay.delay_us(1).await;
         Ok(())
     }
