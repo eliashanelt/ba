@@ -948,6 +948,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "rotary-encoder-embedded"
+version = "0.4.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "cc2e0709e0afc0f872201e398e7e2c602903317d0b2176347fcde304ef694037"
+dependencies = [
+ "embedded-hal 1.0.0",
+]
+
+[[package]]
 name = "rustversion"
 version = "1.0.20"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -995,6 +1004,7 @@ dependencies = [
  "critical-section",
  "defmt 0.3.100",
  "embassy-executor",
+ "embassy-sync",
  "embassy-time",
  "embedded-hal-async",
  "esp-alloc",
@@ -1002,6 +1012,7 @@ dependencies = [
  "esp-hal",
  "esp-hal-embassy",
  "esp-println",
+ "rotary-encoder-embedded",
  "static_cell",
 ]
 
