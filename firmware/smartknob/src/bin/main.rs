@@ -10,7 +10,7 @@ use defmt::info;
 use embassy_executor::Spawner;
 use embassy_time::{Delay, Duration, Ticker, Timer};
 use esp_hal::dma::{DmaRxBuf, DmaTxBuf};
-use esp_hal::gpio::{Event, Input, InputConfig, Io, Pull};
+use esp_hal::gpio::{Event, Input, InputConfig, Io, Level, Output, OutputConfig, Pull};
 use esp_hal::i2c::master::I2c;
 use esp_hal::interrupt::{InterruptHandler, Priority};
 use esp_hal::spi::Mode;
@@ -33,7 +33,7 @@ pub const PUMP_RANGE: core::ops::RangeInclusive<i32> = -1000..=1000; // [mBar]
 
 static BUTTON: Mutex<RefCell<Option<Input>>> = Mutex::new(RefCell::new(None));
 
-static SETTINGS: Mutex<RefCell<Settings>> = Mutex::new(RefCell::new(Settings::DEFAULT);
+static SETTINGS: Mutex<RefCell<Settings>> = Mutex::new(RefCell::new(Settings::DEFAULT));
 static CURRENT_SETTING_SELECTION: Mutex<RefCell<SettingSelection>> =
     Mutex::new(RefCell::new(SettingSelection::Gain));
 static BUTTON_PRESSED: AtomicBool = AtomicBool::new(false);
@@ -68,10 +68,22 @@ impl SettingSelection {
 
 #[derive(Debug, Default, Clone, Copy)]
 struct Settings {
-    gain: i32,                //[dB]
-    amplitude_threshold: i32, //[mV]
-    delay: i32,               //[ms]
-    pressure: i32,            //[mBar]
+    //TODO MAKE VOLTAGE MAPPING MODIFABLE
+    amplitude: i32, //[dB]
+    threshold: i32, //[mV]
+    delay: i32,     //[ms]
+    pressure: i32,  //[mBar]
+}
+
+impl Settings {
+    pub const DEFAULT: Self = Self {
+        amplitude: 0,
+        threshold: 0,
+        delay: 0,
+        pressure: 0,
+    };
+
+    pub fn modify(&mut self, value: i32) {}
 }
 
 #[esp_hal_embassy::main]
@@ -88,19 +100,19 @@ async fn main(spawner: Spawner) {
 
     info!("Embassy initialized!");
 
-    /*let dma_channel = peripherals.DMA_SPI2;
+    let dma_channel = p.DMA_SPI2;
 
     let (rx_buffer, rx_descriptors, tx_buffer, tx_descriptors) = dma_buffers!(32000);
     let dma_rx_buf = DmaRxBuf::new(rx_descriptors, rx_buffer).unwrap();
     let dma_tx_buf = DmaTxBuf::new(tx_descriptors, tx_buffer).unwrap();
 
-    let sclk = peripherals.GPIO0;
-    let miso = peripherals.GPIO2;
-    let mosi = peripherals.GPIO4;
-    let cs = peripherals.GPIO5;
+    let sclk = p.GPIO0;
+    let miso = p.GPIO3;
+    let mosi = p.GPIO4;
+    let cs = p.GPIO5;
 
-    let mut spi = Spi::new(
-        peripherals.SPI2,
+    let spi = Spi::new(
+        p.SPI2,
         spi::master::Config::default()
             .with_frequency(Rate::from_khz(100))
             .with_mode(Mode::_0),
@@ -112,7 +124,7 @@ async fn main(spawner: Spawner) {
     .with_cs(cs)
     .with_dma(dma_channel)
     .with_buffers(dma_rx_buf, dma_tx_buf)
-    .into_async();*/
+    .into_async();
 
     let sda = p.GPIO18;
     let scl = p.GPIO19;
@@ -128,6 +140,7 @@ async fn main(spawner: Spawner) {
     lcd.set_display(Display::On).await.unwrap();
     lcd.set_backlight(Backlight::On).await.unwrap();
 
+    let led: Output<'static> = Output::new(p.GPIO2, Level::Low, OutputConfig::default());
     let rotary_clk: Input<'static> =
         Input::new(p.GPIO32, InputConfig::default().with_pull(Pull::Up));
     let rotary_dt: Input<'static> =
@@ -140,6 +153,7 @@ async fn main(spawner: Spawner) {
 
     // 4) Spawn two independent tasks
     spawner.spawn(encoder_task(rotary_dt, rotary_clk)).unwrap();
+    spawner.spawn(blink(led, Duration::from_secs(2))).unwrap();
 
     let mut ticker = Ticker::every(Duration::from_millis(100));
     let mut setting_selection = SettingSelection::Gain;
@@ -177,16 +191,20 @@ async fn encoder_task(dt: Input<'static>, clk: Input<'static>) {
     use rotary_encoder_embedded::Direction;
     loop {
         ticker.next().await;
-        match encoder.update() {
-            Direction::Clockwise => {
-                defmt::info!("Encoder → CW");
-                // e.g. ++counter;
-            }
-            Direction::Anticlockwise => {
-                defmt::info!("Encoder ← CCW");
-                // e.g. --counter;
-            }
-            Direction::None => {}
+        let change = match encoder.update() {
+            Direction::Clockwise => 1,
+            Direction::Anticlockwise => -1,
+            Direction::None => 0,
         }
+    }
+}
+
+#[embassy_executor::task]
+async fn blink(mut led: Output<'static>, interval: Duration) {
+    loop {
+        led.set_high();
+        Timer::after(interval).await;
+        led.set_low();
+        Timer::after(interval).await;
     }
 }
