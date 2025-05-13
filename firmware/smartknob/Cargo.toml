@@ -14,7 +14,10 @@ embassy-executor = { version = "0.7.0", features = [
   "defmt",
   "task-arena-size-20480",
 ] }
+embassy-sync = { version = "0.6.2", features = ["defmt"] }
 embassy-time = { version = "0.4.0", features = ["generic-queue-8"] }
+embedded-hal = "1.0.0"
+embedded-hal-async = "1.0.0"
 esp-alloc = "0.7.0"
 esp-hal = { version = "1.0.0-beta.0", features = [
   "defmt",
@@ -29,7 +32,7 @@ static_cell = { version = "2.1.0", features = ["nightly"] }
 [profile.dev]
 # Rust debug is too slow.
 # For debug builds always builds with some optimization
-opt-level = 3
+opt-level = "s"
 
 [profile.release]
 codegen-units    = 1     # LLVM can perform better optimizations using a single thread
