@@ -6,7 +6,7 @@ use core::slice::IterMut;
 use defmt::info;
 use embassy_executor::Spawner;
 use embassy_sync::{blocking_mutex::raw::NoopRawMutex, channel::Channel};
-use embassy_time::{Delay, Instant};
+use embassy_time::{Delay, Instant, Ticker};
 use embassy_time::{Duration, Timer};
 use embedded_hal::delay::DelayNs;
 use esp_hal::clock::CpuClock;
@@ -19,12 +19,8 @@ use esp_hal::timer::systimer::SystemTimer;
 use esp_hal::{dma_buffers, i2c, spi};
 use panic_rtt_target as _;
 
-extern crate alloc;
+use smartknob::motor::mt6701::Mt6701;
 
-//pub mod led_ring;
-//pub mod motor;
-//mod tasks;
-//
 const LED_COUNT: usize = 72;
 const CLK_HZ: u64 = 240_000_000;
 
@@ -42,14 +38,7 @@ async fn main(spawner: Spawner) {
     let timer0 = SystemTimer::new(p.SYSTIMER);
     esp_hal_embassy::init(timer0.alarm0);
 
-    let mut led_data = Output::new(p.GPIO12, Level::High, OutputConfig::default());
-
-    //let sda =
-    let dma_channel = p.DMA_CH0;
-
-    let (rx_buffer, rx_descriptors, tx_buffer, tx_descriptors) = dma_buffers!(32000);
-    let dma_rx_buf = DmaRxBuf::new(rx_descriptors, rx_buffer).unwrap();
-    let dma_tx_buf = DmaTxBuf::new(tx_descriptors, tx_buffer).unwrap();
+    let led_data = Output::new(p.GPIO12, Level::High, OutputConfig::default());
 
     let sclk = p.GPIO0;
     let miso = p.GPIO3;
@@ -67,9 +56,14 @@ async fn main(spawner: Spawner) {
     .with_mosi(mosi)
     .with_miso(miso)
     .with_cs(cs)
-    .with_dma(dma_channel)
-    .with_buffers(dma_rx_buf, dma_tx_buf)
     .into_async();
+
+    let mut mt6701 = Mt6701 {
+        spi,
+        x: 0.0,
+        y: 0.0,
+        error: None,
+    };
 
     let sda = p.GPIO39;
     let scl = p.GPIO38;
@@ -85,9 +79,21 @@ async fn main(spawner: Spawner) {
 
     info!("Embassy initialized!");
 
+    spawner.spawn(led_ring(led_data)).unwrap();
+    let mut ticker = Ticker::every(Duration::from_millis(100));
+
+    loop {
+        mt6701.read_angle().await;
+        info!("Angle: x: {}, y: {}", mt6701.x, mt6701.y);
+        ticker.next().await;
+    }
+
     //let mut led_ring_channel = Channel::<NoopRawMutex, u32, 1>::new();
     //spawner.must_spawn(tasks::led_ring());
+}
 
+#[embassy_executor::task]
+pub async fn led_ring(mut led_data: Output<'static>) {
     let mut leds = [RGB8::default(); LED_COUNT];
     let mut increasing = true;
     let mut count = 0;
@@ -98,7 +104,7 @@ async fn main(spawner: Spawner) {
             on.fill(rgb);
             off.fill(RGB8::default());
             write_sk6805(&mut led_data, &leds);
-            Timer::after(Duration::from_millis(400)).await;
+            Timer::after(Duration::from_millis(4)).await;
             if increasing {
                 count += 1;
                 if count == LED_COUNT {
@@ -110,11 +116,8 @@ async fn main(spawner: Spawner) {
                     increasing = true;
                 }
             }
-        } //info!("Hello world!");
-          //Timer::after(Duration::from_secs(1)).await;
+        }
     }
-
-    // for inspiration have a look at the examples at https://github.com/esp-rs/esp-hal/tree/esp-hal-v1.0.0-beta.0/examples/src/bin
 }
 
 #[inline(always)]

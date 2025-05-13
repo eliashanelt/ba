@@ -25,6 +25,7 @@ esp-hal = { version = "1.0.0-beta.0", features = [
   "unstable",
 ] }
 esp-hal-embassy = { version = "0.7.0", features = ["esp32s3"] }
+libm = "0.2.15"
 panic-rtt-target = { version = "0.2.0", features = ["defmt"] }
 rtt-target = { version = "0.6.1", features = ["defmt"] }
 static_cell = { version = "2.1.0", features = ["nightly"] }
