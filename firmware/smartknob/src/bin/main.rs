@@ -40,23 +40,22 @@ async fn main(spawner: Spawner) {
 
     let led_data = Output::new(p.GPIO12, Level::High, OutputConfig::default());
 
-    let sclk = p.GPIO0;
-    let miso = p.GPIO3;
-    let mosi = p.GPIO4;
-    let cs = p.GPIO5;
+    let sclk = p.GPIO13;
+    let miso = p.GPIO14;
+    let mosi = p.GPIO3;
+    let cs = p.GPIO11;
 
     let spi = Spi::new(
         p.SPI2,
         spi::master::Config::default()
-            .with_frequency(Rate::from_khz(100))
-            .with_mode(spi::Mode::_0),
+            .with_frequency(Rate::from_mhz(4))
+            .with_mode(spi::Mode::_1),
     )
     .unwrap()
     .with_sck(sclk)
     .with_mosi(mosi)
     .with_miso(miso)
-    .with_cs(cs)
-    .into_async();
+    .with_cs(cs);
 
     let mut mt6701 = Mt6701 {
         spi,
@@ -80,11 +79,11 @@ async fn main(spawner: Spawner) {
     info!("Embassy initialized!");
 
     spawner.spawn(led_ring(led_data)).unwrap();
-    let mut ticker = Ticker::every(Duration::from_millis(100));
+    let mut ticker = Ticker::every(Duration::from_micros(100));
 
     loop {
-        mt6701.read_angle().await;
-        info!("Angle: x: {}, y: {}", mt6701.x, mt6701.y);
+        let angle = mt6701.read_angle().await;
+        info!("angle: {}", angle);
         ticker.next().await;
     }
 

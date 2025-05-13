@@ -1,6 +1,6 @@
 use core::f32::consts::PI;
 use embedded_hal_async::spi::SpiBus;
-use esp_hal::{spi::master::Spi, Async};
+use esp_hal::{spi::master::Spi, Async, Blocking};
 
 const ALPHA: f32 = 0.4;
 
@@ -33,7 +33,7 @@ pub struct Mt6701Error {
 pub struct Mt6701 {
     pub x: f32,
     pub y: f32,
-    pub spi: Spi<'static, Async>,
+    pub spi: Spi<'static, Blocking>,
     pub error: Option<Mt6701Error>,
 }
 
@@ -46,8 +46,8 @@ impl Mt6701 {
 
         let raw = u32::from(buf[0]) << 16 | u32::from(buf[1]) << 8 | u32::from(buf[2]);
         let angle_spi = raw >> 10;
-        defmt::info!("angle_spi: {}", angle_spi);
         let received_crc = (raw & 0x3F) as u8;
+        defmt::info!("angle_spi: {}, crc: {}", angle_spi, received_crc);
         let calculated_crc = crc6_43_18bit(raw >> 6);
 
         if received_crc == calculated_crc {
