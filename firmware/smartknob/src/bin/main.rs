@@ -76,6 +76,13 @@ async fn main(spawner: Spawner) {
     .with_scl(scl)
     .into_async();
 
+    let tmc_wl = p.GPIO7;
+    let tmc_uh = p.GPIO8;
+    let tmc_wl = p.GPIO15;
+    let tmc_ul = p.GPIO16;
+    let tmc_wh = p.GPIO17;
+    let tmc_vh = p.GPIO18;
+
     info!("Embassy initialized!");
 
     spawner.spawn(led_ring(led_data)).unwrap();
