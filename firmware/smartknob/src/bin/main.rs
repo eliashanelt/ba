@@ -9,10 +9,14 @@ use embassy_sync::{blocking_mutex::raw::NoopRawMutex, channel::Channel};
 use embassy_time::{Delay, Instant};
 use embassy_time::{Duration, Timer};
 use embedded_hal::delay::DelayNs;
-// use embedded_hal_async::delay::DelayNs;
 use esp_hal::clock::CpuClock;
+use esp_hal::dma::{DmaRxBuf, DmaTxBuf};
 use esp_hal::gpio::{Level, Output, OutputConfig, Pull};
+use esp_hal::i2c::master::I2c;
+use esp_hal::spi::master::Spi;
+use esp_hal::time::Rate;
 use esp_hal::timer::systimer::SystemTimer;
+use esp_hal::{dma_buffers, i2c, spi};
 use panic_rtt_target as _;
 
 extern crate alloc;
@@ -39,6 +43,45 @@ async fn main(spawner: Spawner) {
     esp_hal_embassy::init(timer0.alarm0);
 
     let mut led_data = Output::new(p.GPIO12, Level::High, OutputConfig::default());
+
+    //let sda =
+    let dma_channel = p.DMA_CH0;
+
+    let (rx_buffer, rx_descriptors, tx_buffer, tx_descriptors) = dma_buffers!(32000);
+    let dma_rx_buf = DmaRxBuf::new(rx_descriptors, rx_buffer).unwrap();
+    let dma_tx_buf = DmaTxBuf::new(tx_descriptors, tx_buffer).unwrap();
+
+    let sclk = p.GPIO0;
+    let miso = p.GPIO3;
+    let mosi = p.GPIO4;
+    let cs = p.GPIO5;
+
+    let spi = Spi::new(
+        p.SPI2,
+        spi::master::Config::default()
+            .with_frequency(Rate::from_khz(100))
+            .with_mode(spi::Mode::_0),
+    )
+    .unwrap()
+    .with_sck(sclk)
+    .with_mosi(mosi)
+    .with_miso(miso)
+    .with_cs(cs)
+    .with_dma(dma_channel)
+    .with_buffers(dma_rx_buf, dma_tx_buf)
+    .into_async();
+
+    let sda = p.GPIO39;
+    let scl = p.GPIO38;
+
+    let i2c = I2c::new(
+        p.I2C0,
+        i2c::master::Config::default().with_frequency(Rate::from_khz(400)),
+    )
+    .unwrap()
+    .with_sda(sda)
+    .with_scl(scl)
+    .into_async();
 
     info!("Embassy initialized!");
 
