@@ -1,11 +1,12 @@
 #![no_std]
 #![no_main]
 
+use core::fmt::DebugList;
 use core::slice::IterMut;
 use defmt::info;
 use embassy_executor::Spawner;
 use embassy_sync::{blocking_mutex::raw::NoopRawMutex, channel::Channel};
-use embassy_time::Delay;
+use embassy_time::{Delay, Instant};
 use embassy_time::{Duration, Timer};
 use embedded_hal::delay::DelayNs;
 // use embedded_hal_async::delay::DelayNs;
@@ -20,7 +21,8 @@ extern crate alloc;
 //pub mod motor;
 //mod tasks;
 //
-const LED_COUNT: usize = 1;
+const LED_COUNT: usize = 72;
+const CLK_HZ: u64 = 240_000_000;
 
 #[esp_hal_embassy::main]
 async fn main(spawner: Spawner) {
@@ -44,17 +46,27 @@ async fn main(spawner: Spawner) {
     //spawner.must_spawn(tasks::led_ring());
 
     let mut leds = [RGB8::default(); LED_COUNT];
-
+    let mut increasing = true;
+    let mut count = 0;
     loop {
-        Timer::after(Duration::from_micros(4000)).await;
-        continue;
         for hue in 0u8..=255 {
             let rgb = hsv_to_rgb(hue);
-
-            leds.fill(rgb);
+            let (on, off) = leds.split_at_mut(count.min(LED_COUNT));
+            on.fill(rgb);
+            off.fill(RGB8::default());
             write_sk6805(&mut led_data, &leds);
-
-            Timer::after(Duration::from_micros(4000)).await;
+            Timer::after(Duration::from_millis(400)).await;
+            if increasing {
+                count += 1;
+                if count == LED_COUNT {
+                    increasing = false;
+                }
+            } else {
+                count -= 1;
+                if count == 0 {
+                    increasing = true;
+                }
+            }
         } //info!("Hello world!");
           //Timer::after(Duration::from_secs(1)).await;
     }
@@ -63,25 +75,35 @@ async fn main(spawner: Spawner) {
 }
 
 #[inline(always)]
+fn delay_cycles(cycles: u32) {
+    esp_hal::xtensa_lx::timer::delay(cycles);
+}
+
+#[inline(always)]
 fn send_bit(pin: &mut Output<'static>, bit_is_one: bool) {
     // ********  timing constants from the datasheet  ********
-    const T0H_NS: u32 = 300; // 0-code high   (0.3 µs)
-    const T0L_NS: u32 = 800; // 0-code low    (0.8 µs)
-    const T1H_NS: u32 = 600; // 1-code high   (0.6 µs)
-    const T1L_NS: u32 = 200; // 1-code low    (0.2 µs)
+    const T0H_NS: u32 = ns_to_cycles(300); // 0-code high   (0.3 µs)
+    const T0L_NS: u32 = ns_to_cycles(900); // 0-code low    (0.6 µs)
+    const T1H_NS: u32 = ns_to_cycles(600); // 1-code high   (0.6 µs)
+    const T1L_NS: u32 = ns_to_cycles(600); // 1-code low    (0.6 µs)
 
     // ********  generate the waveform  ********
-    pin.set_high();
+    critical_section::with(|_| {
+        pin.set_high();
+        if bit_is_one {
+            delay_cycles(T1H_NS); // “1” – stay high a bit longer
+            pin.set_low();
+            delay_cycles(T1L_NS);
+        } else {
+            delay_cycles(T0H_NS); // “0” – short high pulse
+            pin.set_low();
+            delay_cycles(T0L_NS);
+        }
+    });
+}
 
-    if bit_is_one {
-        Delay.delay_ns(T1H_NS); // “1” – stay high a bit longer
-        pin.set_low();
-        Delay.delay_ns(T1L_NS);
-    } else {
-        Delay.delay_ns(T0H_NS); // “0” – short high pulse
-        pin.set_low();
-        Delay.delay_ns(T0L_NS);
-    }
+const fn ns_to_cycles(ns: u32) -> u32 {
+    (((CLK_HZ) * ns as u64 + 999_999_999) / 1_000_000_000) as u32
 }
 
 fn send_byte(pin: &mut Output<'static>, mut byte: u8) {
@@ -109,7 +131,7 @@ fn hsv_to_rgb(h: u8) -> RGB8 {
     }
 }
 
-#[derive(Default, Clone, Copy)]
+#[derive(Default, Clone, Copy, defmt::Format, Debug)]
 struct RGB8 {
     pub r: u8,
     pub g: u8,
