@@ -47,7 +47,7 @@ impl Mt6701 {
         let raw = u32::from(buf[0]) << 16 | u32::from(buf[1]) << 8 | u32::from(buf[2]);
         let angle_spi = raw >> 10;
         let received_crc = (raw & 0x3F) as u8;
-        defmt::info!("angle_spi: {}, crc: {}", angle_spi, received_crc);
+        //defmt::info!("angle_spi: {}, crc: {}", angle_spi, received_crc);
         let calculated_crc = crc6_43_18bit(raw >> 6);
 
         if received_crc == calculated_crc {

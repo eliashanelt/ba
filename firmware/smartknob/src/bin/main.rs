@@ -3,23 +3,31 @@
 
 use core::fmt::DebugList;
 use core::slice::IterMut;
+
+use core::ops::Mul;
 use defmt::info;
 use embassy_executor::Spawner;
 use embassy_sync::{blocking_mutex::raw::NoopRawMutex, channel::Channel};
 use embassy_time::{Delay, Instant, Ticker};
 use embassy_time::{Duration, Timer};
 use embedded_hal::delay::DelayNs;
+use embedded_hal::pwm::SetDutyCycle;
 use esp_hal::clock::CpuClock;
 use esp_hal::dma::{DmaRxBuf, DmaTxBuf};
-use esp_hal::gpio::{Level, Output, OutputConfig, Pull};
+use esp_hal::gpio::{Input, InputConfig, Level, Output, OutputConfig, Pull};
 use esp_hal::i2c::master::I2c;
+use esp_hal::mcpwm::operator::PwmPinConfig;
+use esp_hal::mcpwm::timer::PwmWorkingMode;
+use esp_hal::mcpwm::{McPwm, PeripheralClockConfig};
 use esp_hal::spi::master::Spi;
 use esp_hal::time::Rate;
 use esp_hal::timer::systimer::SystemTimer;
+use esp_hal::timer::timg::TimerGroup;
 use esp_hal::{dma_buffers, i2c, spi};
 use panic_rtt_target as _;
 
 use smartknob::motor::mt6701::Mt6701;
+use smartknob::sensor::strain::Hx711;
 
 const LED_COUNT: usize = 72;
 const CLK_HZ: u64 = 240_000_000;
@@ -35,8 +43,8 @@ async fn main(spawner: Spawner) {
 
     esp_alloc::heap_allocator!(size: 72 * 1024);
 
-    let timer0 = SystemTimer::new(p.SYSTIMER);
-    esp_hal_embassy::init(timer0.alarm0);
+    let tg = TimerGroup::new(p.TIMG1);
+    esp_hal_embassy::init(tg.timer0);
 
     let led_data = Output::new(p.GPIO12, Level::High, OutputConfig::default());
 
@@ -44,6 +52,66 @@ async fn main(spawner: Spawner) {
     let miso = p.GPIO14;
     let mosi = p.GPIO3;
     let cs = p.GPIO11;
+
+    let clock_cfg = PeripheralClockConfig::with_frequency(Rate::from_mhz(40)).unwrap();
+    let mut mcpwm = McPwm::new(p.MCPWM0, clock_cfg);
+
+    mcpwm.operator0.set_timer(&mcpwm.timer0);
+    mcpwm.operator1.set_timer(&mcpwm.timer1);
+    mcpwm.operator2.set_timer(&mcpwm.timer2);
+
+    // Map pins: UH/A, UL/B; WH/A, WL/B; VH/A, VL/B
+
+    let (mut uh, mut ul) = mcpwm.operator0.with_pins(
+        p.GPIO8,
+        PwmPinConfig::UP_ACTIVE_HIGH,
+        p.GPIO16,
+        PwmPinConfig::UP_ACTIVE_HIGH,
+    );
+
+    let (mut wh, mut wl) = mcpwm.operator1.with_pins(
+        p.GPIO17,
+        PwmPinConfig::UP_ACTIVE_HIGH,
+        p.GPIO7,
+        PwmPinConfig::UP_ACTIVE_HIGH,
+    );
+
+    let (mut vh, mut vl) = mcpwm.operator2.with_pins(
+        p.GPIO18,
+        PwmPinConfig::UP_ACTIVE_HIGH,
+        p.GPIO15,
+        PwmPinConfig::UP_ACTIVE_HIGH,
+    ); // Configure all timers for 20 kHz, 12-bit resolution (0..=4095)
+    let timer_cfg = clock_cfg
+        .timer_clock_with_frequency(1599, PwmWorkingMode::Increase, Rate::from_khz(20))
+        .unwrap();
+    mcpwm.timer0.start(timer_cfg);
+    mcpwm.timer1.start(timer_cfg);
+    mcpwm.timer2.start(timer_cfg);
+
+    let seq = [
+        (4095, 0, 0, 4095, 0, 0), // U+, V-, W off
+        (4095, 0, 0, 0, 0, 4095), // ...
+        (0, 4095, 0, 0, 4095, 0),
+        (0, 4095, 0, 0, 0, 4095),
+        (0, 0, 4095, 4095, 0, 0),
+        (4095, 0, 4095, 0, 0, 0),
+    ];
+    let step_time = Duration::from_millis(2);
+
+    loop {
+        for &(u_h, u_l, w_h, w_l, v_h, v_l) in &seq {
+            uh.set_duty_cycle(u_h);
+            ul.set_duty_cycle(u_l);
+            wh.set_duty_cycle(w_h);
+            wl.set_duty_cycle(w_l);
+            vh.set_duty_cycle(v_h);
+            vl.set_duty_cycle(v_l);
+            Timer::after(step_time).await;
+        }
+    }
+
+    return;
 
     let spi = Spi::new(
         p.SPI2,
@@ -76,21 +144,26 @@ async fn main(spawner: Spawner) {
     .with_scl(scl)
     .into_async();
 
-    let tmc_wl = p.GPIO7;
-    let tmc_uh = p.GPIO8;
-    let tmc_wl = p.GPIO15;
-    let tmc_ul = p.GPIO16;
-    let tmc_wh = p.GPIO17;
-    let tmc_vh = p.GPIO18;
+    //let tmc_wl = p.GPIO7;
+    //let tmc_uh = p.GPIO8;
+    //let tmc_wl = p.GPIO15;
+    //let tmc_ul = p.GPIO16;
+    //let tmc_wh = p.GPIO17;
+    //let tmc_vh = p.GPIO18;
 
     info!("Embassy initialized!");
 
+    let clk = Output::new(p.GPIO1, Level::Low, OutputConfig::default());
+    let dout = Input::new(p.GPIO21, InputConfig::default());
+    let mut hx = Hx711::new(clk, dout);
+
     spawner.spawn(led_ring(led_data)).unwrap();
-    let mut ticker = Ticker::every(Duration::from_micros(100));
+    let mut ticker = Ticker::every(Duration::from_secs(1));
 
     loop {
         let angle = mt6701.read_angle().await;
-        info!("angle: {}", angle);
+        let strain = hx.read_raw().await;
+        info!("angle: {}, strain: {}", angle, strain);
         ticker.next().await;
     }
 
@@ -105,7 +178,7 @@ pub async fn led_ring(mut led_data: Output<'static>) {
     let mut count = 0;
     loop {
         for hue in 0u8..=255 {
-            let rgb = hsv_to_rgb(hue);
+            let rgb = hsv_to_rgb(hue) * 0.05;
             let (on, off) = leds.split_at_mut(count.min(LED_COUNT));
             on.fill(rgb);
             off.fill(RGB8::default());
@@ -188,6 +261,23 @@ struct RGB8 {
     pub r: u8,
     pub g: u8,
     pub b: u8,
+}
+
+impl Mul<f32> for RGB8 {
+    type Output = RGB8;
+
+    fn mul(self, scalar: f32) -> RGB8 {
+        fn scale_channel(channel: u8, scalar: f32) -> u8 {
+            let scaled = channel as f32 * scalar;
+            scaled.clamp(0.0, 255.0) as u8
+        }
+
+        RGB8 {
+            r: scale_channel(self.r, scalar),
+            g: scale_channel(self.g, scalar),
+            b: scale_channel(self.b, scalar),
+        }
+    }
 }
 
 fn write_sk6805(pin: &mut Output<'static>, frame: &[RGB8]) {
