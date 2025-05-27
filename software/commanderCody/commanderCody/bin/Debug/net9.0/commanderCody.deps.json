@@ -1,0 +1,104 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v9.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v9.0": {
+      "commanderCody/1.0.0": {
+        "dependencies": {
+          "Cytosurge.PressureAPI": "1.1.0.0"
+        },
+        "runtime": {
+          "commanderCody.dll": {}
+        }
+      },
+      "Cytosurge.PressureAPI/1.1.0.0": {
+        "runtime": {
+          "Cytosurge.PressureAPI.dll": {
+            "assemblyVersion": "1.1.0.0",
+            "fileVersion": "1.1.0.0"
+          }
+        }
+      },
+      "Cytosurge.Shared/2.0.6.0": {
+        "runtime": {
+          "Cytosurge.Shared.dll": {
+            "assemblyVersion": "2.0.6.0",
+            "fileVersion": "2.0.6.0"
+          }
+        }
+      },
+      "Cytosurge.Drivers.CytosurgePressureController/2.0.6.0": {
+        "runtime": {
+          "Cytosurge.Drivers.CytosurgePressureController.dll": {
+            "assemblyVersion": "2.0.6.0",
+            "fileVersion": "2.0.6.0"
+          }
+        }
+      },
+      "log4net/1.2.11.0": {
+        "runtime": {
+          "log4net.dll": {
+            "assemblyVersion": "1.2.11.0",
+            "fileVersion": "1.2.11.0"
+          }
+        }
+      },
+      "protobuf-net/2.0.0.668": {
+        "runtime": {
+          "protobuf-net.dll": {
+            "assemblyVersion": "2.0.0.668",
+            "fileVersion": "2.0.0.668"
+          }
+        }
+      },
+      "WinUsbDriver/1.0.6061.31150": {
+        "runtime": {
+          "WinUsbDriver.dll": {
+            "assemblyVersion": "1.0.6061.31150",
+            "fileVersion": "0.0.0.0"
+          }
+        }
+      }
+    }
+  },
+  "libraries": {
+    "commanderCody/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Cytosurge.PressureAPI/1.1.0.0": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Cytosurge.Shared/2.0.6.0": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Cytosurge.Drivers.CytosurgePressureController/2.0.6.0": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "log4net/1.2.11.0": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "protobuf-net/2.0.0.668": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "WinUsbDriver/1.0.6061.31150": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}
