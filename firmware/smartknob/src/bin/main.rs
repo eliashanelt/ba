@@ -136,12 +136,16 @@ async fn main(spawner: Spawner) {
         let idx = ((((angle_deg / (2.0 * PI)) * LED_COUNT as f32 * 2.0) + 1.0) / 2.0) as usize
             % LED_COUNT;
 
-        leds.fill(RGB8::default());
-        leds[idx] = RGB8 {
-            r: 255,
-            g: 40,
-            b: 0,
-        };
+        if strain > 400000 {
+            leds.fill(RGB8::WHITE);
+        } else {
+            leds.fill(RGB8::default());
+            leds[idx] = RGB8 {
+                r: 255,
+                g: 40,
+                b: 0,
+            };
+        }
         write_sk6805(&mut led_data, &leds);
 
         // ----- Logging ------------------------------------------------------
@@ -222,6 +226,14 @@ struct RGB8 {
     pub r: u8,
     pub g: u8,
     pub b: u8,
+}
+
+impl RGB8 {
+    pub const WHITE: Self = RGB8 {
+        r: 255,
+        b: 255,
+        g: 255,
+    };
 }
 
 /*impl Mul<f32> for RGB8 {
