@@ -13,7 +13,9 @@ use core::f32::consts::PI;
 use core::ops::Mul;
 use defmt::info;
 use embassy_executor::Spawner;
-use embassy_time::{Duration, Ticker, Timer};
+use embassy_sync::blocking_mutex::raw::CriticalSectionRawMutex;
+use embassy_sync::channel::Channel;
+use embassy_time::{Duration, Ticker};
 use esp_hal::gpio::{Input, InputConfig, Level, Output, OutputConfig, Pull};
 use esp_hal::mcpwm::operator::{PwmPin, PwmPinConfig};
 use esp_hal::mcpwm::timer::PwmWorkingMode;
@@ -21,7 +23,8 @@ use esp_hal::mcpwm::{McPwm, PeripheralClockConfig};
 use esp_hal::peripherals::MCPWM0;
 use esp_hal::time::Rate;
 use esp_hal::timer::timg::TimerGroup;
-use esp_hal::{i2c, spi};
+use esp_hal::{spi, Blocking};
+use libm::sinf;
 use panic_rtt_target as _;
 
 use smartknob::motor::mt6701::Mt6701;
@@ -32,11 +35,13 @@ use smartknob::sensor::strain::Hx711;
 const LED_COUNT: usize = 72;
 const CLK_HZ: u64 = 240_000_000;
 
-const POLE_PAIRS: u32 = 8;
+const POLE_PAIRS: u32 = 4;
 /// Mechanical period for 0.25 Hz = 4 000 000 µs
 const REV_PERIOD_US: u32 = 4_000_000;
 /// Commutation step every electrical 60 °
 const STEP_US: u32 = REV_PERIOD_US / (6 * POLE_PAIRS); // = 83_333 µs
+
+static ANGLE_CH: Channel<CriticalSectionRawMutex, f32, 1> = Channel::new();
 
 // ======== Entry-point =======================================================
 
@@ -119,25 +124,25 @@ async fn main(spawner: Spawner) {
     let mut hx = Hx711::new(clk, dout);
 
     // ------------- Spawn the motor-drive task  ------------------------------
-    /*spawner
-    .spawn(open_loop_spin(uh, ul, wh, wl, vh, vl))
-    .unwrap();*/
+    spawner
+        .spawn(closed_loop_sine(uh, ul, wh, wl, vh, vl, mt6701))
+        .unwrap();
 
     // ­------------ Unified sampling + LED loop ------------
     let mut leds = [RGB8::default(); LED_COUNT];
     let mut ticker = Ticker::every(Duration::from_millis(4)); // 100 Hz
     loop {
         // ----- Acquire sensor data -----------------------------------------
-        let angle_deg = mt6701.read_angle().await; // 0–360°
+        let angle = ANGLE_CH.receive().await;
         let strain = hx.read_raw().await;
 
         // ----- Update LED ring ---------------------------------------------
         // Map 0-360° → 0-71 index.
-        let idx = ((((angle_deg / (2.0 * PI)) * LED_COUNT as f32 * 2.0) + 1.0) / 2.0) as usize
-            % LED_COUNT;
+        let idx =
+            ((((angle / (2.0 * PI)) * LED_COUNT as f32 * 2.0) + 1.0) / 2.0) as usize % LED_COUNT;
 
         if strain > 400000 {
-            leds.fill(RGB8::WHITE);
+            leds.fill(RGB8::WHITE * 0.5);
         } else {
             leds.fill(RGB8::default());
             leds[idx] = RGB8 {
@@ -149,10 +154,6 @@ async fn main(spawner: Spawner) {
         write_sk6805(&mut led_data, &leds);
 
         // ----- Logging ------------------------------------------------------
-        /*info!(
-            "angle: {}, strain: {}, led_index: {}",
-            angle_deg, strain, idx
-        );*/
 
         ticker.next().await; // keep loop at 100 Hz
     }
@@ -177,9 +178,150 @@ fn hsv_to_rgb(h: u8) -> RGB8 {
 }
 
 // ======== Task: open-loop BLDC commutation (unchanged) ======================
+//
+#[embassy_executor::task]
+async fn open_loop_sine(
+    mut uh: PwmPin<'static, MCPWM0, 0, true>,
+    mut ul: PwmPin<'static, MCPWM0, 0, false>,
+    mut vh: PwmPin<'static, MCPWM0, 1, true>,
+    mut vl: PwmPin<'static, MCPWM0, 1, false>,
+    mut wh: PwmPin<'static, MCPWM0, 2, true>,
+    mut wl: PwmPin<'static, MCPWM0, 2, false>,
+) {
+    use core::f32::consts::PI;
+    use embassy_time::{Duration, Ticker};
+
+    const PWM_MAX: u16 = 4095; // 12-bit resolution
+    const P_PAIRS: usize = 4; // EM3215 → 4 pole pairs
+    const F_MECH_HZ: f32 = 1.0; // 1 rev/s = 60 rpm
+    const UPDATE_HZ: u32 = 2_000; // refresh 2 000 ×/s
+
+    // --- pre-compute increments -----------------------------------------
+    let electrical_hz = F_MECH_HZ * P_PAIRS as f32; // 4 Hz
+    let d_theta = 2.0 * PI * electrical_hz / UPDATE_HZ as f32;
+
+    // Offset phases for the three windings
+    const A_PHASE: f32 = 0.0;
+    const B_PHASE: f32 = -2.0 * PI / 3.0; // −120°
+    const C_PHASE: f32 = 2.0 * PI / 3.0; // +120°
+
+    // Amplitude (0.0–1.0). 0.25 is usually plenty for a gimbal motor.
+    const MODULATION: f32 = 0.25;
+
+    let mut theta = 0.0_f32;
+    let mut ticker = Ticker::every(Duration::from_micros(1_000_000 / UPDATE_HZ as u64));
+
+    loop {
+        // --- compute three phase voltages (sinusoidal, centred 0.0–1.0) ---
+        let va = sinf(theta + A_PHASE) * MODULATION + 0.5;
+        let vb = sinf(theta + B_PHASE) * MODULATION + 0.5;
+        let vc = sinf(theta + C_PHASE) * MODULATION + 0.5;
+
+        // --- convert to timer counts --------------------------------------
+        let da = (va * PWM_MAX as f32) as u16;
+        let db = (vb * PWM_MAX as f32) as u16;
+        let dc = (vc * PWM_MAX as f32) as u16;
+
+        // --- write to half-bridges ----------------------------------------
+        //   high-side = “positive”, low-side = complementary
+        uh.set_duty_cycle(da);
+        ul.set_duty_cycle(PWM_MAX - da);
+
+        vh.set_duty_cycle(db);
+        vl.set_duty_cycle(PWM_MAX - db);
+
+        wh.set_duty_cycle(dc);
+        wl.set_duty_cycle(PWM_MAX - dc);
+
+        // --- advance electrical angle -------------------------------------
+        theta += d_theta;
+        if theta >= 2.0 * PI {
+            theta -= 2.0 * PI;
+        }
+
+        ticker.next().await; // wait until next update slot
+    }
+}
 
 #[embassy_executor::task]
-async fn open_loop_spin(
+async fn closed_loop_sine(
+    mut uh: PwmPin<'static, MCPWM0, 0, true>,
+    mut ul: PwmPin<'static, MCPWM0, 0, false>,
+    mut vh: PwmPin<'static, MCPWM0, 1, true>,
+    mut vl: PwmPin<'static, MCPWM0, 1, false>,
+    mut wh: PwmPin<'static, MCPWM0, 2, true>,
+    mut wl: PwmPin<'static, MCPWM0, 2, false>,
+    mut mt6701: Mt6701,
+) {
+    use core::f32::consts::PI;
+    use embassy_time::{Duration, Ticker};
+
+    const PWM_MAX: u16 = 4095;
+    const P_PAIRS: f32 = 4.0;
+    const UPDATE_HZ: u32 = 2_000;
+    const MODULATION: f32 = 0.25;
+    const A_PHASE: f32 = 0.0;
+    const B_PHASE: f32 = -2.0 * PI / 3.0;
+    const C_PHASE: f32 = 2.0 * PI / 3.0;
+    const Kp: f32 = 0.5; // tune me!
+
+    let mut ticker = Ticker::every(Duration::from_micros(1_000_000 / UPDATE_HZ as u64));
+    let mut target = 0.0;
+
+    fn wrap_2pi(x: f32) -> f32 {
+        let mut y = x % (2.0 * PI);
+        if y < 0.0 {
+            y += 2.0 * PI
+        }
+        y
+    }
+
+    let mut ref_elec = 0.0_f32;
+
+    loop {
+        // advance the reference by your desired speed:
+        // mechanical speed [rad/s] = ω_mech; electrical = ω_mech * P_PAIRS
+        let omega_mech = 6.0; // rad/s target
+        let omega_elec = omega_mech * P_PAIRS;
+        ref_elec = wrap_2pi(ref_elec + omega_elec * (1.0 / UPDATE_HZ as f32));
+
+        // read actual
+        let mech = mt6701.read_angle().await;
+        ANGLE_CH.send(mech).await;
+        let elec = mech * P_PAIRS % (2.0 * PI);
+
+        // error in [-π, π)
+        let mut err = ref_elec - elec;
+        if err > PI {
+            err -= 2.0 * PI
+        }
+        if err < -PI {
+            err += 2.0 * PI
+        }
+
+        let phi_0 = Kp * err;
+        let phase = ref_elec + phi_0; // 3) generate sinusoidal PWM
+        let va = sinf(phase + A_PHASE) * MODULATION + 0.5;
+        let vb = sinf(phase + B_PHASE) * MODULATION + 0.5;
+        let vc = sinf(phase + C_PHASE) * MODULATION + 0.5;
+
+        let da = (va * PWM_MAX as f32) as u16;
+        let db = (vb * PWM_MAX as f32) as u16;
+        let dc = (vc * PWM_MAX as f32) as u16;
+
+        uh.set_duty_cycle(da);
+        ul.set_duty_cycle(PWM_MAX - da);
+        vh.set_duty_cycle(db);
+        vl.set_duty_cycle(PWM_MAX - db);
+        wh.set_duty_cycle(dc);
+        wl.set_duty_cycle(PWM_MAX - dc);
+
+        ticker.next().await;
+    }
+}
+
+#[embassy_executor::task]
+async fn open_laoop_spin(
     mut uh: PwmPin<'static, MCPWM0, 0, true>,
     mut ul: PwmPin<'static, MCPWM0, 0, false>,
     mut vh: PwmPin<'static, MCPWM0, 1, true>,
@@ -236,7 +378,7 @@ impl RGB8 {
     };
 }
 
-/*impl Mul<f32> for RGB8 {
+impl Mul<f32> for RGB8 {
     type Output = RGB8;
     fn mul(self, scalar: f32) -> RGB8 {
         fn sc(ch: u8, k: f32) -> u8 {
@@ -248,7 +390,7 @@ impl RGB8 {
             b: sc(self.b, scalar),
         }
     }
-}*/
+}
 
 #[inline(always)]
 fn send_bit(pin: &mut Output<'static>, bit_is_one: bool) {
