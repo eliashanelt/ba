@@ -10,6 +10,7 @@
 //! except that everything now happens in one task – no `Channel` is needed.
 
 use core::f32::consts::PI;
+use core::intrinsics::roundf32;
 use core::ops::Mul;
 use defmt::info;
 use embassy_executor::Spawner;
@@ -24,10 +25,11 @@ use esp_hal::peripherals::MCPWM0;
 use esp_hal::time::Rate;
 use esp_hal::timer::timg::TimerGroup;
 use esp_hal::{spi, Blocking};
-use libm::sinf;
+use libm::{cosf, sinf};
 use panic_rtt_target as _;
 
 use smartknob::motor::mt6701::Mt6701;
+use smartknob::pid;
 use smartknob::sensor::strain::Hx711;
 
 // ======== Application-wide constants ========================================
@@ -142,7 +144,7 @@ async fn main(spawner: Spawner) {
             ((((angle / (2.0 * PI)) * LED_COUNT as f32 * 2.0) + 1.0) / 2.0) as usize % LED_COUNT;
 
         if strain > 400000 {
-            leds.fill(RGB8::WHITE * 0.5);
+            leds.fill(RGB8 { r: 0, b: 5, g: 0 });
         } else {
             leds.fill(RGB8::default());
             leds[idx] = RGB8 {
@@ -243,6 +245,14 @@ async fn open_loop_sine(
     }
 }
 
+fn wrap_2pi(x: f32) -> f32 {
+    let mut y = x % (2.0 * PI);
+    if y < 0.0 {
+        y += 2.0 * PI
+    }
+    y
+}
+
 #[embassy_executor::task]
 async fn closed_loop_sine(
     mut uh: PwmPin<'static, MCPWM0, 0, true>,
@@ -259,55 +269,37 @@ async fn closed_loop_sine(
     const PWM_MAX: u16 = 4095;
     const P_PAIRS: f32 = 4.0;
     const UPDATE_HZ: u32 = 2_000;
-    const MODULATION: f32 = 0.25;
-    const A_PHASE: f32 = 0.0;
-    const B_PHASE: f32 = -2.0 * PI / 3.0;
-    const C_PHASE: f32 = 2.0 * PI / 3.0;
-    const Kp: f32 = 0.5; // tune me!
+    const MODULATION: f32 = 0.7;
+    const TORQUE_ADVANCE: f32 = core::f32::consts::FRAC_PI_2;
+    const KP: f32 = 1.2;
+    const KI: f32 = 25.0;
 
+    let mut i_err = 0.0;
     let mut ticker = Ticker::every(Duration::from_micros(1_000_000 / UPDATE_HZ as u64));
-    let mut target = 0.0;
-
-    fn wrap_2pi(x: f32) -> f32 {
-        let mut y = x % (2.0 * PI);
-        if y < 0.0 {
-            y += 2.0 * PI
-        }
-        y
-    }
-
-    let mut ref_elec = 0.0_f32;
 
     loop {
-        // advance the reference by your desired speed:
-        // mechanical speed [rad/s] = ω_mech; electrical = ω_mech * P_PAIRS
-        let omega_mech = 6.0; // rad/s target
-        let omega_elec = omega_mech * P_PAIRS;
-        ref_elec = wrap_2pi(ref_elec + omega_elec * (1.0 / UPDATE_HZ as f32));
-
-        // read actual
-        let mech = mt6701.read_angle().await;
+        const TARGET_MECH: f32 = 6.0; // rad
+        let mech = mt6701.read_angle().await; // 0–2π rad
         ANGLE_CH.send(mech).await;
-        let elec = mech * P_PAIRS % (2.0 * PI);
+        let elec = mech * P_PAIRS;
+        let targ_e = TARGET_MECH * P_PAIRS;
 
-        // error in [-π, π)
-        let mut err = ref_elec - elec;
-        if err > PI {
-            err -= 2.0 * PI
-        }
-        if err < -PI {
-            err += 2.0 * PI
-        }
+        let err = wrap_2pi(targ_e - elec);
+        i_err = (i_err + err / UPDATE_HZ as f32).clamp(-0.3, 0.3);
 
-        let phi_0 = Kp * err;
-        let phase = ref_elec + phi_0; // 3) generate sinusoidal PWM
-        let va = sinf(phase + A_PHASE) * MODULATION + 0.5;
-        let vb = sinf(phase + B_PHASE) * MODULATION + 0.5;
-        let vc = sinf(phase + C_PHASE) * MODULATION + 0.5;
+        let phase = elec + TORQUE_ADVANCE + KP * err + KI * i_err;
 
-        let da = (va * PWM_MAX as f32) as u16;
-        let db = (vb * PWM_MAX as f32) as u16;
-        let dc = (vc * PWM_MAX as f32) as u16;
+        let (va, vb, vc) = (
+            sinf(phase) * MODULATION + 0.5,
+            sinf(phase - 2.0 * PI / 3.0) * MODULATION + 0.5,
+            sinf(phase + 2.0 * PI / 3.0) * MODULATION + 0.5,
+        );
+
+        let (da, db, dc) = (
+            (va * PWM_MAX as f32) as u16,
+            (vb * PWM_MAX as f32) as u16,
+            (vc * PWM_MAX as f32) as u16,
+        );
 
         uh.set_duty_cycle(da);
         ul.set_duty_cycle(PWM_MAX - da);
@@ -439,4 +431,203 @@ fn write_sk6805(pin: &mut Output<'static>, frame: &[RGB8]) {
         }
     }
     Delay.delay_us(80);
+}
+
+pub enum Command {
+    Calibrate,
+    Config(SmartKnobConfig),
+    Haptic(Press),
+}
+
+pub enum Press {
+    Short,
+    Long,
+}
+
+pub struct SmartKnobConfig {}
+
+pub struct MotorController {
+    motor: BldcMotor,
+}
+
+pub struct BldcMotor {}
+
+pub struct Foc<const PWM_RESOLUTION: u16> {
+    flux_current_controller: pid::PIController,
+    torque_current_controller: pid::PIController,
+}
+
+const FRAC_1_SQRT_3: f32 = 0.57735027;
+const SQRT_3: f32 = 1.7320508;
+
+impl<const PWM_RESOLUTION: u16> Foc<PWM_RESOLUTION> {
+    pub fn new(
+        flux_current_controller: pid::PIController,
+        torque_current_controller: pid::PIController,
+    ) -> Self {
+        Self {
+            flux_current_controller,
+            torque_current_controller,
+        }
+    }
+
+    pub fn update(
+        &mut self,
+        currents: [f32; 2],
+        angle: f32,
+        desired_torque: f32,
+        dt: f32,
+    ) -> [u16; 3] {
+        let sin_angle = sinf(angle);
+        let cos_angle = cosf(angle);
+
+        let orthogonal_current = clarke(ThreePhaseBalancedReferenceFrame {
+            a: currents[0],
+            b: currents[1],
+        });
+
+        let rotating_current = park(cos_angle, sin_angle, orthogonal_current);
+
+        let v_d = self
+            .flux_current_controller
+            .update(rotating_current.d, 0.0, dt);
+        let v_q = self
+            .torque_current_controller
+            .update(rotating_current.q, desired_torque, dt);
+
+        // Inverse Park transform
+        let orthogonal_voltage = inverse_park(
+            cos_angle,
+            sin_angle,
+            RotatingReferenceFrame { d: v_d, q: v_q },
+        );
+        as_compare_value::<PWM_RESOLUTION>(orthogonal_voltage)
+    }
+}
+
+pub fn clarke(inputs: ThreePhaseBalancedReferenceFrame) -> TwoPhaseReferenceFrame {
+    TwoPhaseReferenceFrame {
+        // Eq3
+        alpha: inputs.a,
+        // Eq4
+        beta: FRAC_1_SQRT_3 * (inputs.a + 2.0 * inputs.b),
+    }
+}
+
+pub fn park(
+    cos_angle: f32,
+    sin_angle: f32,
+    inputs: TwoPhaseReferenceFrame,
+) -> RotatingReferenceFrame {
+    RotatingReferenceFrame {
+        // Eq8
+        d: cos_angle * inputs.alpha + sin_angle * inputs.beta,
+        // Eq9
+        q: cos_angle * inputs.beta - sin_angle * inputs.alpha,
+    }
+}
+
+#[derive(Debug, Clone)]
+pub struct ThreePhaseBalancedReferenceFrame {
+    pub a: f32,
+    pub b: f32,
+}
+
+#[derive(Debug, Clone)]
+pub struct TwoPhaseReferenceFrame {
+    pub alpha: f32,
+    pub beta: f32,
+}
+
+#[derive(Debug, Clone)]
+pub struct RotatingReferenceFrame {
+    pub d: f32,
+    pub q: f32,
+}
+
+pub fn inverse_park(
+    cos_angle: f32,
+    sin_angle: f32,
+    inputs: RotatingReferenceFrame,
+) -> TwoPhaseReferenceFrame {
+    TwoPhaseReferenceFrame {
+        // Eq10
+        alpha: cos_angle * inputs.d - sin_angle * inputs.q,
+        // Eq11
+        beta: sin_angle * inputs.d + cos_angle * inputs.q,
+    }
+}
+
+pub fn inverse_clarke(inputs: TwoPhaseReferenceFrame) -> ThreePhaseReferenceFrame {
+    ThreePhaseReferenceFrame {
+        // Eq5
+        a: inputs.alpha,
+        // Eq6
+        b: (-inputs.alpha + SQRT_3 * inputs.beta) / 2.0,
+        // Eq7
+        c: (-inputs.alpha - SQRT_3 * inputs.beta) / 2.0,
+    }
+}
+#[derive(Debug, Clone)]
+pub struct ThreePhaseReferenceFrame {
+    pub a: f32,
+    pub b: f32,
+    pub c: f32,
+}
+
+fn modulate(value: TwoPhaseReferenceFrame) -> [f32; 3] {
+    // Convert alpha/beta to x/y/z
+    let sqrt_3_alpha = SQRT_3 * value.alpha;
+    let beta = value.beta;
+    let x = beta;
+    let y = (beta + sqrt_3_alpha) / 2.0;
+    let z = (beta - sqrt_3_alpha) / 2.0;
+
+    // Calculate which sector the value falls in
+    let sector: u8 = match (
+        x.is_sign_positive(),
+        y.is_sign_positive(),
+        z.is_sign_positive(),
+    ) {
+        (true, true, false) => 1,
+        (_, true, true) => 2,
+        (true, false, true) => 3,
+        (false, false, true) => 4,
+        (_, false, false) => 5,
+        (false, true, false) => 6,
+    };
+
+    // Map a,b,c values to three phase
+    let (ta, tb, tc);
+    match sector {
+        1 | 4 => {
+            ta = x - z;
+            tb = x + z;
+            tc = -x + z;
+        }
+        2 | 5 => {
+            ta = y - z;
+            tb = y + z;
+            tc = -y - z;
+        }
+        3 | 6 => {
+            ta = y - x;
+            tb = -y + x;
+            tc = -y - x;
+        }
+        _ => unreachable!("invalid sector"),
+    }
+
+    [ta, tb, tc]
+}
+
+fn as_compare_value<const MAX: u16>(value: TwoPhaseReferenceFrame) -> [u16; 3] {
+    modulate(value).map(|v| {
+        // scale into [0 .. MAX+1] range
+        let scaled = (v + 1.0) * ((MAX as f32) + 1.0) / 2.0;
+        // add 0.5 for rounding-to-nearest, then clamp into [0 .. MAX]
+        let rounded = (scaled + 0.5).clamp(0.0, MAX as f32);
+        // truncate to u16
+        rounded as u16
+    })
 }
