@@ -30,11 +30,14 @@ pub struct PIDController {
     k_p: f32,
     integral: IntegralComponent,
     derivative: DerivativeComponent,
+    output_ramp: Option<f32>,
+    limit: Option<f32>,
+    prev_output: Option<f32>,
 }
 
 impl PIDController {
     /// Create a new PID controller with the given gains.
-    pub fn new(k_p: f32, k_i: f32, k_d: f32) -> Self {
+    pub fn new(k_p: f32, k_i: f32, k_d: f32, output_ramp: Option<f32>, limit: Option<f32>) -> Self {
         Self {
             k_p,
             integral: IntegralComponent { k_i, integral: 0.0 },
@@ -42,13 +45,32 @@ impl PIDController {
                 k_d,
                 last_measurement: None,
             },
+            output_ramp,
+            limit,
+            prev_output: None,
         }
     }
 
     /// Update the PID controller, returning the new output value.
     pub fn update(&mut self, measurement: f32, setpoint: f32, dt: f32) -> f32 {
         let error = measurement - setpoint;
-        self.k_p * error + self.integral.update(error, dt) + self.derivative.update(measurement, dt)
+        let mut output = self.k_p * error
+            + self.integral.update(error, dt)
+            + self.derivative.update(measurement, dt);
+        if let Some(limit) = self.limit {
+            output = output.clamp(limit, limit);
+        }
+        let prev_output = self.prev_output.unwrap_or(0.0);
+        if let Some(output_ramp) = self.output_ramp {
+            let output_rate = (prev_output - output) / dt;
+            if output_rate > output_ramp {
+                output = prev_output + output_ramp * dt;
+            } else if output_rate < -output_ramp {
+                output = prev_output - output_ramp * dt;
+            }
+        }
+        self.prev_output = Some(output);
+        output
     }
 }
 
@@ -79,5 +101,15 @@ impl DerivativeComponent {
         self.last_measurement = Some(measurement);
 
         self.k_d * derivative
+    }
+}
+
+fn constrain(value: f32, min: f32, max: f32) -> f32 {
+    if value < min {
+        min
+    } else if value > max {
+        max
+    } else {
+        value
     }
 }

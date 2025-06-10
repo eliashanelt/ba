@@ -673,6 +673,7 @@ impl BldcMotor {
 pub struct Foc<const PWM_RESOLUTION: u16> {
     flux_current_controller: pid::PIController,
     torque_current_controller: pid::PIController,
+    velocity_controller: pid::PIDController,
     motion_control_type: MotionControlType,
     torque_control_type: TorqueControlType,
 }
@@ -1052,13 +1053,33 @@ pub fn normalize_angle(mut angle: f32) -> f32 {
 static MOTOR_CH: Channel<CriticalSectionRawMutex, Command, 1> = Channel::new();
 
 #[embassy_executor::task]
-pub async fn motor_task2() {
+pub async fn motor_task2(mut motor: BldcMotor) {
+    let config = SmartKnobConfig::default();
+
     loop {
-        let command = MOTOR_CH.receive().await;
-        match command {
-            Command::Calibrate => todo!(),
-            Command::Config(smart_knob_config) => todo!(),
-            Command::Haptic(press) => todo!(),
+        //motor.foc.loop();
+        if let Ok(command) = MOTOR_CH.try_receive() {
+            match command {
+                Command::Calibrate => {
+                    motor.foc.velocity_controller =
+                        pid::PIDController::new(
+                            FOC_PID_P,
+                            FOC_PID_I,
+                            FOC_PID_D,
+                            Some(FOC_PID_OUTPUT_RAMP),
+                            Some(FOC_PID_LIMIT)
+                        );
+
+                    //motor.calibrate();
+                }
+                Command::Config(smart_knob_config) => todo!(),
+                Command::Haptic(press) => todo!(),
+            }
         }
     }
 }
+const FOC_PID_P: f32 = 4.0;
+const FOC_PID_I: f32 = 0.0;
+const FOC_PID_D: f32 = 0.04;
+const: FOC_PID_OUTPUT_RAMP: f32 = 10000.0;
+const: FOC_PID_LIMIT: f32 = 10.0;
