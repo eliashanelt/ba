@@ -10,21 +10,21 @@
 //! except that everything now happens in one task – no `Channel` is needed.
 
 use core::f32::consts::{PI, TAU};
-use core::ops::Mul;
 use defmt::{error, info};
 use embassy_executor::Spawner;
 use embassy_sync::blocking_mutex::raw::CriticalSectionRawMutex;
 use embassy_sync::channel::Channel;
-use embassy_time::{Duration, Ticker};
+use embassy_time::{Delay, Duration, Instant, Ticker};
 use embedded_hal::delay::DelayNs;
-use esp_hal::gpio::{Input, InputConfig, Level, Output, OutputConfig, Pull};
+use embedded_hal::pwm::SetDutyCycle;
+use esp_hal::gpio::{Input, InputConfig, Level, Output, OutputConfig};
 use esp_hal::mcpwm::operator::{PwmPin, PwmPinConfig};
 use esp_hal::mcpwm::timer::PwmWorkingMode;
 use esp_hal::mcpwm::{McPwm, PeripheralClockConfig};
 use esp_hal::peripherals::MCPWM0;
+use esp_hal::spi;
 use esp_hal::time::Rate;
 use esp_hal::timer::timg::TimerGroup;
-use esp_hal::{spi, Blocking};
 use libm::{atan2f, cosf, fabsf, floorf, sinf};
 use panic_rtt_target as _;
 
@@ -33,10 +33,7 @@ use smartknob::pid;
 use smartknob::sensor::strain::Hx711;
 use smartknob::tasks::led_ring;
 use smartknob::tasks::strain_gauge::strain_gauge;
-use tasks::led_ring;
 // ======== Application-wide constants ========================================
-
-const CLK_HZ: u64 = 240_000_000;
 
 const POLE_PAIRS: u32 = 4;
 /// Mechanical period for 0.25 Hz = 4 000 000 µs
@@ -130,20 +127,19 @@ async fn main(spawner: Spawner) {
 
     // ------------- Spawn the motor-drive task  ------------------------------
     /*spawner
-        .spawn(motor_task(uh, ul, wh, wl, vh, vl, mt6701))
-        .unwrap();*/
+    .spawn(motor_task(uh, ul, wh, wl, vh, vl, mt6701))
+    .unwrap();*/
 
     // ­------------ Unified sampling + LED loop ------------
     spawner.spawn(led_ring(led_pin)).unwrap();
     spawner.spawn(strain_gauge(hx711)).unwrap();
+
+    let mut ticker = Ticker::every(Duration::from_secs(5));
     loop {
         info!("Hello World");
         ticker.next().await; // keep loop at 100 Hz
     }
 }
-
-
-
 
 pub enum Command {
     Calibrate,
@@ -179,14 +175,54 @@ pub enum MotionControlType {
     AngleOpenLoop,
 }
 
+#[derive(Debug, Clone, Copy)]
 pub struct SmartKnobConfig {
-    pub position_width_radians: f32,
-    pub endstop_strength_unit: f32,
-    pub snap_point: f32,
-    pub detent_posiitons_count: u32,
-    pub detent_positions: [u32; 5],
-}
+    /// Set the integer position.
+    pub position: i32,
 
+    /// Set the fractional position. Typical range: (-snap_point, snap_point).
+    pub sub_position_unit: f32,
+
+    /// Position is normally only applied when it changes—but you can force
+    /// re‐application via a nonce bump. Must be < 256.
+    pub position_nonce: u8,
+
+    /// Minimum position allowed.
+    pub min_position: i32,
+
+    /// Maximum position allowed.
+    /// If equal to `min_position` → only one allowed position.
+    /// If < `min_position` → bounds are disabled.
+    pub max_position: i32,
+
+    /// Angular “width” of each position/detent, in radians.
+    pub position_width_radians: f32,
+
+    /// Strength of detents (0 = off, >1 = unstable).
+    pub detent_strength_unit: f32,
+
+    /// Strength of endstop torque at the bounds (0 = off).
+    pub endstop_strength_unit: f32,
+
+    /// Fractional threshold where the position will step.
+    /// Typical range: (0.5, 1.5).
+    pub snap_point: f32,
+
+    /// Arbitrary NUL-terminated C string (up to 64 chars + NUL).
+    pub id: [u8; 65],
+
+    /// How many entries in `detent_positions` are valid.
+    pub detent_positions_count: usize,
+
+    /// Up to 5 “magnetic” detent positions.
+    pub detent_positions: [i32; 5],
+
+    /// Bias for asymmetric detents; typical = 0.
+    pub snap_point_bias: f32,
+
+    /// Hue (0–255) for 8 ring LEDs, if supported.
+    pub led_hue: i16,
+}
 impl SmartKnobConfig {
     pub fn check(&self) -> Result<(), ConfigError> {
         // Check detent_strength_unit is not negative
@@ -205,7 +241,7 @@ impl SmartKnobConfig {
         }
 
         // Check detent_positions_count doesn't exceed array size
-        if self.detent_positions_count > self.detent_positions.len() as u32 {
+        if self.detent_positions_count > self.detent_positions.len() {
             return Err(ConfigError::DetentPositionsCountTooLarge);
         }
 
@@ -226,9 +262,8 @@ pub enum ConfigError {
     DetentPositionsCountTooLarge,
     SnapPointBiasNegative,
 }
-
-impl std::fmt::Display for ConfigError {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+impl core::fmt::Display for ConfigError {
+    fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
         match self {
             ConfigError::DetentStrengthNegative => {
                 write!(f, "detent_strength_unit cannot be negative")
@@ -258,8 +293,17 @@ impl Default for SmartKnobConfig {
             position_width_radians: 60.0 * PI / 180.0,
             endstop_strength_unit: 0.0,
             snap_point: 0.5,
-            detent_posiitons_count: 0,
+            detent_positions_count: 0,
             detent_positions: [0; 5],
+            snap_point_bias: 0.0,
+            detent_strength_unit: 0.0,
+            position: 0,
+            sub_position_unit: 0.0,
+            position_nonce: 0,
+            min_position: 0,
+            max_position: 0,
+            id: [0; 65],
+            led_hue: 0,
         }
     }
 }
@@ -435,7 +479,7 @@ impl BldcMotor {
     /* ------------------------------------------------------------------ */
     pub fn move_to(&mut self, target: f32) {
         //self.drive_elec(angle_elec);
-        match self.control_type {}
+        //match self.control_type {}
     }
 
     /* ------------------------------------------------------------------ */
@@ -454,6 +498,8 @@ pub struct Foc<const PWM_RESOLUTION: u16> {
     velocity_pid: pid::PIDController,
     motion_control_type: MotionControlType,
     torque_control_type: TorqueControlType,
+
+    shaft_velocity: f32,
 }
 
 const FRAC_1_SQRT_3: f32 = 0.57735027;
@@ -467,6 +513,10 @@ impl<const PWM_RESOLUTION: u16> Foc<PWM_RESOLUTION> {
         Self {
             flux_current_controller,
             torque_current_controller,
+            velocity_pid: pid::PIDController::new(1.0, 2.0, 3.0, None, None),
+            motion_control_type: MotionControlType::Torque,
+            torque_control_type: TorqueControlType::Voltage,
+            shaft_velocity: 0.0,
         }
     }
 
@@ -634,7 +684,7 @@ fn as_compare_value<const MAX: u16>(value: TwoPhaseReferenceFrame) -> [u16; 3] {
 const FOC_VOLTAGE_LIMIT: f32 = 5.0;
 
 async fn calibrate(motor: &mut BldcMotor, mt6701: &mut Mt6701) -> Result<(), CalibrationError> {
-    motor.control_type = MotionControlType::OpenAngleLoop;
+    motor.control_type = MotionControlType::AngleOpenLoop;
     motor.pole_pairs = 1;
     motor.zero_electric_angle = 0.0;
     motor.sensor_direction = Direction::CW;
@@ -828,14 +878,35 @@ pub fn normalize_angle(mut angle: f32) -> f32 {
     angle
 }
 
+pub struct PersistentConfiguration {
+    zero_electrical_offset: f32,
+    direction_cw: Direction,
+    pole_pairs: u32,
+}
+
 static MOTOR_CH: Channel<CriticalSectionRawMutex, Command, 1> = Channel::new();
 
 #[embassy_executor::task]
 pub async fn motor_task2(mut motor: BldcMotor) {
-    //motor.zero_electric_angle =
+    let persistant_config = PersistentConfiguration {
+        zero_electrical_offset: 0.0,
+        direction_cw: Direction::CW,
+        pole_pairs: 8,
+    };
+
+    //motor.init();
+    motor.zero_electric_angle = persistant_config.zero_electrical_offset;
+    motor.init_foc();
+    //motor.monitor_downsample = 0;
+    let mut current_detent_center = motor.shaft_angle;
     let mut config = SmartKnobConfig::default();
     let mut current_position = 0;
 
+    let mut latest_sub_position_unit = 0.0;
+
+    let mut idle_check_velocity_ewma = 0.0;
+    let mut last_idle_start: u32 = 0;
+    let mut last_publish: u32 = 0;
     loop {
         //motor.foc.loop();
         if let Ok(command) = MOTOR_CH.try_receive() {
@@ -856,7 +927,7 @@ pub async fn motor_task2(mut motor: BldcMotor) {
                     if let Err(e) = new_config.check() {
                         panic!("Invalid smartknob config: {e}");
                     }
-                    let position_updated = false;
+                    let mut position_updated = false;
 
                     if new_config.position != config.position
                         || new_config.sub_position_unit != config.sub_position_unit
@@ -866,9 +937,7 @@ pub async fn motor_task2(mut motor: BldcMotor) {
                         current_position = new_config.position;
                         position_updated = true;
                     }
-
-                    todo!()
-
+                    //TODO!
                     if new_config.min_position <= new_config.max_position {
                         // Only check bounds if min/max indicate bounds are active (min >= max)
                         if current_position < new_config.min_position {
@@ -879,13 +948,47 @@ pub async fn motor_task2(mut motor: BldcMotor) {
                             info!("Adjusting position to max");
                         }
                     }
-                    motor.foc.PID_velocity_pid.derivative.k_d = config.detent_positions_count > 0 ? 0 : CLAMP(raw, min(derivative_lower_strength, derivative_upper_strength), max(derivative_lower_strength, derivative_upper_strength));
+
+                    if position_updated
+                        || new_config.position_width_radians != config.position_width_radians
+                    {
+                        info!("Adjusting detent center");
+                        let new_sub_position = if position_updated {
+                            new_config.sub_position_unit
+                        } else {
+                            latest_sub_position_unit
+                        };
+                        let shaft_angle = -motor.shaft_angle;
+                        current_detent_center =
+                            shaft_angle + new_sub_position * new_config.position_width_radians;
+                    }
+                    config = new_config;
+                    info!("Got new config");
+
+                    let derivative_lower_strength = config.detent_strength_unit * 0.08;
+                    let derivative_upper_strength = config.detent_strength_unit * 0.02;
+                    let derivative_position_width_lower = deg_to_rad(3.0);
+                    let derivative_position_width_upper = deg_to_rad(8.0);
+
+                    let raw = derivative_lower_strength
+                        + (derivative_upper_strength - derivative_lower_strength)
+                            / (derivative_position_width_upper - derivative_position_width_lower)
+                            * (config.position_width_radians - derivative_position_width_lower);
+
+                    motor.foc.velocity_pid.derivative.k_d = if config.detent_positions_count > 0 {
+                        0.0
+                    } else {
+                        let min = derivative_lower_strength.min(derivative_upper_strength);
+                        let max = derivative_lower_strength.max(derivative_upper_strength);
+                        raw.clamp(min, max)
+                    };
                 }
+                //DONE
                 Command::Haptic(press) => {
                     let (strength, foc_ticks) = match press {
                         Press::Short => (5.0, 3),
                         Press::Long => (20.0, 6),
-                    }
+                    };
                     //motor.move(strength);
                     for _ in 0..foc_ticks {
                         //motor.foc.loop()
@@ -898,8 +1001,89 @@ pub async fn motor_task2(mut motor: BldcMotor) {
                     }
                     //motor.move(0);
                     //motor.foc.loop();
-                },
+                }
             }
+
+            idle_check_velocity_ewma = motor.foc.shaft_velocity * IDLE_VELOCITY_EWMA_ALPHA
+                + idle_check_velocity_ewma * (1.0 - IDLE_VELOCITY_EWMA_ALPHA);
+
+            if fabsf(idle_check_velocity_ewma) > IDLE_VELOCITY_RAD_PER_SEC {
+                last_idle_start = 0;
+            } else if last_idle_start == 0 {
+                last_idle_start = millis();
+            }
+            if last_idle_start > 0
+                && millis() - last_idle_start > IDLE_CORRECTION_DELAY_MILLIS
+                && fabsf(motor.shaft_angle - current_detent_center) < IDLE_CORRECTION_MAX_ANGLE_RAD
+            {
+                current_detent_center = motor.shaft_angle * IDLE_CORRECTION_RATE_ALPHA
+                    + current_detent_center * (1.0 - IDLE_CORRECTION_RATE_ALPHA);
+            }
+
+            let mut angle_to_detent_center = -motor.shaft_angle - current_detent_center;
+
+            let snap_point_radians = config.position_width_radians * config.snap_point;
+            let bias_radians = config.position_width_radians * config.snap_point_bias;
+            let snap_point_radians_decrease = snap_point_radians
+                + (if current_position <= 0 {
+                    bias_radians
+                } else {
+                    -bias_radians
+                });
+            let snap_point_radians_increase = -snap_point_radians
+                + (if current_position >= 0 {
+                    -bias_radians
+                } else {
+                    bias_radians
+                });
+
+            // number of discrete positions
+            let num_positions: i32 = config.max_position - config.min_position + 1;
+
+            // move detent center and position if we’ve crossed snap thresholds
+            if angle_to_detent_center > snap_point_radians_decrease
+                && (num_positions <= 0 || current_position > config.min_position)
+            {
+                current_detent_center += config.position_width_radians;
+                angle_to_detent_center -= config.position_width_radians;
+                current_position -= 1;
+            } else if angle_to_detent_center < snap_point_radians_increase
+                && (num_positions <= 0 || current_position < config.max_position)
+            {
+                current_detent_center -= config.position_width_radians;
+                angle_to_detent_center += config.position_width_radians;
+                current_position += 1;
+            }
+
+            // compute the fractional (sub-position) unit
+            latest_sub_position_unit = -angle_to_detent_center / config.position_width_radians;
+
+            // clamp into a small “dead zone” around center
+            let dead_zone_min =
+                (-config.position_width_radians * DEAD_ZONE_DETENT_PERCENT).max(-DEAD_ZONE_RAD);
+            let dead_zone_max =
+                (config.position_width_radians * DEAD_ZONE_DETENT_PERCENT).min(DEAD_ZONE_RAD);
+            let dead_zone_adjustment = angle_to_detent_center.clamp(dead_zone_min, dead_zone_max);
+
+            // check if we’re pushing past the hard bounds
+            let out_of_bounds = num_positions > 0
+                && ((angle_to_detent_center > 0.0 && current_position == config.min_position)
+                    || (angle_to_detent_center < 0.0 && current_position == config.max_position));
+
+            // apply to your motor controller
+            motor.foc.velocity_pid.limit = Some(10.0); // or: if out_of_bounds { 10 } else { 3 };
+            motor.foc.velocity_pid.k_p = if out_of_bounds {
+                config.endstop_strength_unit * 4.0
+            } else {
+                config.detent_strength_unit * 4.0
+            };
+            if fabsf(motor.foc.shaft_velocity) > 60.0 {
+                motor.move_to(0.0);
+            } else {
+                //let input = -angle
+            }
+            let torque = 0.0; //motor.foc.velocity_pid()
+            motor.move_to(torque);
         }
     }
 }
@@ -908,3 +1092,17 @@ const FOC_PID_I: f32 = 0.0;
 const FOC_PID_D: f32 = 0.04;
 const FOC_PID_OUTPUT_RAMP: f32 = 10000.0;
 const FOC_PID_LIMIT: f32 = 10.0;
+
+const DEAD_ZONE_DETENT_PERCENT: f32 = 0.2;
+const DEAD_ZONE_RAD: f32 = 1.0 * PI / 180.0;
+
+const IDLE_VELOCITY_EWMA_ALPHA: f32 = 0.001;
+const IDLE_VELOCITY_RAD_PER_SEC: f32 = 0.05;
+const IDLE_CORRECTION_DELAY_MILLIS: u32 = 500;
+const IDLE_CORRECTION_MAX_ANGLE_RAD: f32 = 5.0 * PI / 180.0;
+const IDLE_CORRECTION_RATE_ALPHA: f32 = 0.0005;
+
+//SK_INVERT_ROTATION
+fn millis() -> u32 {
+    Instant::now().as_millis() as u32
+}

@@ -1,6 +1,11 @@
 use core::ops::Mul;
 
+use embassy_time::Delay;
+use embedded_hal::delay::DelayNs;
+use esp_hal::gpio::Output;
+
 const LED_COUNT: usize = 72;
+const CLK_HZ: u64 = 240_000_000;
 
 pub enum Effect {
     Snake,
@@ -68,9 +73,9 @@ impl LedRing {
         let leds = [RGB8::default(); LED_COUNT];
         Self { leds, led_pin }
     }
+
+    pub fn update(&mut self) {}
 }
-use embassy_time::Delay;
-use esp_hal::gpio::Output;
 
 #[inline(always)]
 fn send_bit(pin: &mut Output<'static>, bit_is_one: bool) {

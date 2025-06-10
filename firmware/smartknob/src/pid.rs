@@ -27,11 +27,11 @@ impl PIController {
 /// Uses the derivative-on-measurement technique to avoid derivative kicks on
 /// setpoint changes.
 pub struct PIDController {
-    k_p: f32,
+    pub k_p: f32,
     integral: IntegralComponent,
     pub derivative: DerivativeComponent,
     output_ramp: Option<f32>,
-    limit: Option<f32>,
+    pub limit: Option<f32>,
     prev_output: Option<f32>,
 }
 
