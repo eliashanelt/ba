@@ -17,7 +17,6 @@ use embassy_sync::blocking_mutex::raw::CriticalSectionRawMutex;
 use embassy_sync::channel::Channel;
 use embassy_time::{Duration, Ticker};
 use embedded_hal::delay::DelayNs;
-use embedded_hal_async::delay::DelayNs;
 use esp_hal::gpio::{Input, InputConfig, Level, Output, OutputConfig, Pull};
 use esp_hal::mcpwm::operator::{PwmPin, PwmPinConfig};
 use esp_hal::mcpwm::timer::PwmWorkingMode;
@@ -129,7 +128,7 @@ async fn main(spawner: Spawner) {
 
     // ------------- Spawn the motor-drive task  ------------------------------
     spawner
-        .spawn(closed_loop_sine(uh, ul, wh, wl, vh, vl, mt6701))
+        .spawn(motor_task(uh, ul, wh, wl, vh, vl, mt6701))
         .unwrap();
 
     // ­------------ Unified sampling + LED loop ------------
@@ -157,7 +156,7 @@ async fn main(spawner: Spawner) {
                 b: 0,
             };
         }
-        write_sk6805(&mut led_data, &leds);
+        //write_sk6805(&mut led_data, &leds);
 
         // ----- Logging ------------------------------------------------------
 
@@ -183,6 +182,14 @@ fn hsv_to_rgb(h: u8) -> RGB8 {
     }
 }
 
+fn wrap_2pi(x: f32) -> f32 {
+    let mut y = x % (2.0 * PI);
+    if y < 0.0 {
+        y += 2.0 * PI
+    }
+    y
+}
+
 #[embassy_executor::task]
 async fn motor_task(
     mut uh: PwmPin<'static, MCPWM0, 0, true>,
@@ -193,100 +200,95 @@ async fn motor_task(
     mut wl: PwmPin<'static, MCPWM0, 2, false>,
     mut mt6701: Mt6701,
 ) {
-    const P_PAIRS: usize = 4; // EM3215 → 4 pole pairs
+    // ---------- ① create a tiny “shadow” motor object --------------------
+    let mut motor = BldcMotor {
+        pwm: PhasePwm {
+            uh,
+            ul,
+            vh,
+            vl,
+            wh,
+            wl,
+        },
+        control_type: MotionControlType::OpenAngleLoop,
+        pole_pairs: 1, // dummy, real value comes from calibration
+        zero_electric_angle: 0.0,
+        sensor_direction: Direction::CW,
+        voltage_limit: 0.0,
+        shaft_angle: 0.0,
+        target: 0.0,
+    };
 
-    const FOC_PID_P: f32 = 1.0;
-    const FOC_PID_I: f32 = 0.0;
-    const FOC_PID_D: f32 = 0.148;
-    const FOC_PID_OUTPUT_RAMP: f32 = 5000.0;
-    const FOC_PID_LIMIT: f32 = 3.0;
-
-    const FOC_VOLTAGE_LIMIT: f32 = 3.0;
-    const FOC_LPF: f32 = 0.0075;
-    //let mut foc = Foc::new();
-
-    loop {
-        let mech_angle = mt6701.read_angle().await;
-        let elec_angle = (mech_angle * P_PAIRS as f32) % (2.0 * PI);
+    // ---------- ② run the calibration routine ----------------------------
+    if let Err(e) = calibrate(&mut motor, &mut mt6701).await {
+        error!("Calibration failed");
+        panic!();
     }
-}
+    // ---------- ③ pull *measured* parameters back out --------------------
+    let pole_pairs = motor.pole_pairs as f32;
+    let zero_offset = motor.zero_electric_angle; // rad
+    let dir_sign = f32::from(motor.sensor_direction); // +1 or -1
 
-// ======== Task: open-loop BLDC commutation (unchanged) ======================
-//
-#[embassy_executor::task]
-async fn open_loop_sine(
-    mut uh: PwmPin<'static, MCPWM0, 0, true>,
-    mut ul: PwmPin<'static, MCPWM0, 0, false>,
-    mut vh: PwmPin<'static, MCPWM0, 1, true>,
-    mut vl: PwmPin<'static, MCPWM0, 1, false>,
-    mut wh: PwmPin<'static, MCPWM0, 2, true>,
-    mut wl: PwmPin<'static, MCPWM0, 2, false>,
-) {
-    use core::f32::consts::PI;
-    use embassy_time::{Duration, Ticker};
+    info!(
+        "PPairs={}, 0-elec offset={} rad, dir={}",
+        pole_pairs, zero_offset, dir_sign
+    );
 
-    const PWM_MAX: u16 = 4095; // 12-bit resolution
-    const P_PAIRS: usize = 4; // EM3215 → 4 pole pairs
-    const F_MECH_HZ: f32 = 1.0; // 1 rev/s = 60 rpm
-    const UPDATE_HZ: u32 = 2_000; // refresh 2 000 ×/s
+    // ---------------------------------------------------------------------
+    // From here on we revert to your original “closed_loop_sine” logic,
+    // but replace the *hard-wired* constants with the values we just found.
+    // ---------------------------------------------------------------------
 
-    // --- pre-compute increments -----------------------------------------
-    let electrical_hz = F_MECH_HZ * P_PAIRS as f32; // 4 Hz
-    let d_theta = 2.0 * PI * electrical_hz / UPDATE_HZ as f32;
+    const PWM_MAX: u16 = 4095;
+    const UPDATE_HZ: u32 = 2_000;
+    const MODULATION: f32 = 0.7;
+    const TORQUE_ADVANCE: f32 = core::f32::consts::FRAC_PI_2;
+    const KP: f32 = 1.2;
+    const KI: f32 = 25.0;
 
-    // Offset phases for the three windings
-    const A_PHASE: f32 = 0.0;
-    const B_PHASE: f32 = -2.0 * PI / 3.0; // −120°
-    const C_PHASE: f32 = 2.0 * PI / 3.0; // +120°
-
-    // Amplitude (0.0–1.0). 0.25 is usually plenty for a gimbal motor.
-    const MODULATION: f32 = 0.25;
-
-    let mut theta = 0.0_f32;
+    let mut i_err = 0.0;
     let mut ticker = Ticker::every(Duration::from_micros(1_000_000 / UPDATE_HZ as u64));
+    let mut target = 0.0;
 
     loop {
-        // --- compute three phase voltages (sinusoidal, centred 0.0–1.0) ---
-        let va = sinf(theta + A_PHASE) * MODULATION + 0.5;
-        let vb = sinf(theta + B_PHASE) * MODULATION + 0.5;
-        let vc = sinf(theta + C_PHASE) * MODULATION + 0.5;
-
-        // --- convert to timer counts --------------------------------------
-        let da = (va * PWM_MAX as f32) as u16;
-        let db = (vb * PWM_MAX as f32) as u16;
-        let dc = (vc * PWM_MAX as f32) as u16;
-
-        // --- write to half-bridges ----------------------------------------
-        //   high-side = “positive”, low-side = complementary
-        uh.set_duty_cycle(da);
-        ul.set_duty_cycle(PWM_MAX - da);
-
-        vh.set_duty_cycle(db);
-        vl.set_duty_cycle(PWM_MAX - db);
-
-        wh.set_duty_cycle(dc);
-        wl.set_duty_cycle(PWM_MAX - dc);
-
-        // --- advance electrical angle -------------------------------------
-        theta += d_theta;
-        if theta >= 2.0 * PI {
-            theta -= 2.0 * PI;
+        if let Ok(t) = TARGET_CH.try_receive() {
+            target = t;
         }
 
-        ticker.next().await; // wait until next update slot
+        // --- mechanical rotor angle from the encoder
+        let mech = mt6701.read_angle().await * dir_sign;
+
+        // --- electrical angle, incl. measured zero-offset
+        let elec = mech * pole_pairs + zero_offset;
+        let targ_e = target * pole_pairs;
+
+        // --- PID on electrical angle error
+        let err = wrap_2pi(targ_e - elec);
+        i_err = (i_err + err / UPDATE_HZ as f32).clamp(-0.3, 0.3);
+        let phase = elec + TORQUE_ADVANCE + KP * err + KI * i_err;
+
+        // --- space-vector sine modulation exactly as before
+        let (va, vb, vc) = (
+            sinf(phase) * MODULATION + 0.5,
+            sinf(phase - 2.0 * PI / 3.0) * MODULATION + 0.5,
+            sinf(phase + 2.0 * PI / 3.0) * MODULATION + 0.5,
+        );
+
+        let (da, db, dc) = (
+            (va * PWM_MAX as f32) as u16,
+            (vb * PWM_MAX as f32) as u16,
+            (vc * PWM_MAX as f32) as u16,
+        );
+
+        motor.pwm.set_phase_duties(da as f32, db as f32, dc as f32);
+        // publish the (now calibrated) mechanical angle to the LED task
+        ANGLE_CH.send(mech).await;
+
+        ticker.next().await;
     }
 }
-
-fn wrap_2pi(x: f32) -> f32 {
-    let mut y = x % (2.0 * PI);
-    if y < 0.0 {
-        y += 2.0 * PI
-    }
-    y
-}
-
 #[embassy_executor::task]
-async fn closed_loop_sine(
+async fn closed_loop_sinea(
     mut uh: PwmPin<'static, MCPWM0, 0, true>,
     mut ul: PwmPin<'static, MCPWM0, 0, false>,
     mut vh: PwmPin<'static, MCPWM0, 1, true>,
@@ -345,45 +347,6 @@ async fn closed_loop_sine(
         ticker.next().await;
     }
 }
-
-#[embassy_executor::task]
-async fn open_laoop_spin(
-    mut uh: PwmPin<'static, MCPWM0, 0, true>,
-    mut ul: PwmPin<'static, MCPWM0, 0, false>,
-    mut vh: PwmPin<'static, MCPWM0, 1, true>,
-    mut vl: PwmPin<'static, MCPWM0, 1, false>,
-    mut wh: PwmPin<'static, MCPWM0, 2, true>,
-    mut wl: PwmPin<'static, MCPWM0, 2, false>,
-) {
-    use embassy_time::Ticker;
-
-    // Six-step (trapezoidal) table ─ unchanged
-    const TABLE: [[u16; 6]; 6] = [
-        [4095, 0, 0, 0, 0, 4095], // A+ C-
-        [4095, 0, 0, 0, 4095, 0], // A+ B-
-        [0, 0, 0, 4095, 4095, 0], // B+ C-
-        [0, 4095, 0, 4095, 0, 0], // B+ A-
-        [0, 4095, 4095, 0, 0, 0], // C+ A-
-        [0, 0, 4095, 0, 0, 4095], // C+ B-
-    ];
-
-    let mut step = 0usize;
-    let mut ticker = Ticker::every(Duration::from_micros(STEP_US as _));
-
-    loop {
-        let phase = TABLE[step];
-        uh.set_duty_cycle(phase[0]);
-        ul.set_duty_cycle(phase[1]);
-        vh.set_duty_cycle(phase[2]);
-        vl.set_duty_cycle(phase[3]);
-        wh.set_duty_cycle(phase[4]);
-        wl.set_duty_cycle(phase[5]);
-
-        step = (step + 1) % 6;
-        ticker.next().await;
-    }
-}
-// ======== Utility functions / structs (unchanged) ===========================
 
 use embassy_time::Delay;
 use embedded_hal::pwm::SetDutyCycle;
@@ -503,7 +466,33 @@ pub struct MotorController {
     motor: BldcMotor,
 }
 
+pub struct PhasePwm {
+    pub uh: PwmPin<'static, MCPWM0, 0, true>,
+    pub ul: PwmPin<'static, MCPWM0, 0, false>,
+    pub vh: PwmPin<'static, MCPWM0, 1, true>,
+    pub vl: PwmPin<'static, MCPWM0, 1, false>,
+    pub wh: PwmPin<'static, MCPWM0, 2, true>,
+    pub wl: PwmPin<'static, MCPWM0, 2, false>,
+}
+
+impl PhasePwm {
+    /// Write *three* centred-PWM duty cycles (`0.0 … 1.0`)
+    /// and derive the complementary low-side outputs.
+    fn set_phase_duties(&mut self, a: f32, b: f32, c: f32) {
+        const PWM_MAX: u16 = 4095;
+        let to_counts = |u: f32| -> u16 { (u.clamp(0.0, 1.0) * PWM_MAX as f32) as u16 };
+        let (da, db, dc) = (to_counts(a), to_counts(b), to_counts(c));
+
+        self.uh.set_duty_cycle(da);
+        self.ul.set_duty_cycle(PWM_MAX - da);
+        self.vh.set_duty_cycle(db);
+        self.vl.set_duty_cycle(PWM_MAX - db);
+        self.wh.set_duty_cycle(dc);
+        self.wl.set_duty_cycle(PWM_MAX - dc);
+    }
+}
 pub struct BldcMotor {
+    pwm: PhasePwm,
     control_type: MotionControlType,
     pole_pairs: u32,
     zero_electric_angle: f32,
@@ -514,8 +503,53 @@ pub struct BldcMotor {
 }
 
 impl BldcMotor {
-    pub fn init_foc(&mut self) {}
-    pub fn move_to(&mut self, value: f32) {}
+    pub fn init_foc(&mut self) {
+        self.pwm.set_phase_duties(0.5, 0.5, 0.5);
+    }
+    /*pub fn move_to(&mut self, elec_angle: f32) {
+        const MODULATION: f32 = 0.25; // keep it gentle (≈25 % bus)
+        let m = MODULATION.min(self.voltage_limit / FOC_VOLTAGE_LIMIT);
+
+        let (va, vb, vc) = (
+            sinf(elec_angle) * m + 0.5,
+            sinf(elec_angle - 2.0 * PI / 3.0) * m + 0.5,
+            sinf(elec_angle + 2.0 * PI / 3.0) * m + 0.5,
+        );
+
+        self.pwm.set_phase_duties(va, vb, vc);
+    }*/
+
+    /* ------------------------------------------------------------------ */
+    /* 1.  The low-level driver – absolute electrical angle, drives HW   */
+    /* ------------------------------------------------------------------ */
+    pub fn drive_elec(&mut self, angle_elec: f32) {
+        use libm::sinf;
+        const MOD: f32 = 0.25;
+        let m = MOD.min(self.voltage_limit / FOC_VOLTAGE_LIMIT);
+
+        let (va, vb, vc) = (
+            sinf(angle_elec) * m + 0.5,
+            sinf(angle_elec - 2.0 * PI / 3.0) * m + 0.5,
+            sinf(angle_elec + 2.0 * PI / 3.0) * m + 0.5,
+        );
+        self.pwm.set_phase_duties(va, vb, vc);
+    }
+
+    /* ------------------------------------------------------------------ */
+    /* 2.  `move_to` (ABSOLUTE) – wrapper expected by calibration         */
+    /* ------------------------------------------------------------------ */
+    pub fn move_by(&mut self, angle_elec: f32) {
+        self.drive_elec(angle_elec);
+    }
+
+    /* ------------------------------------------------------------------ */
+    /* 3.  `move_by` (RELATIVE) – optional helper for UI / haptics        */
+    /* ------------------------------------------------------------------ */
+    pub fn move_to(&mut self, delta_elec: f32) {
+        // keep track of the current commanded angle in a field
+        self.target += delta_elec;
+        self.drive_elec(self.target);
+    }
 }
 
 pub struct Foc<const PWM_RESOLUTION: u16> {
@@ -770,8 +804,8 @@ async fn calibrate(motor: &mut BldcMotor, mt6701: &mut Mt6701) -> Result<(), Cal
     info!("Pause");
     Delay.delay_ms(1000);
     info!("Measuring");
-    let start_angle = motor.sensor_direction.into() * mt6701.read_angle().await;
-    let dest = alpha + elec_revs as f32 * 2.0 * PI;
+    let start_angle = f32::from(motor.sensor_direction) * mt6701.read_angle().await;
+    let dest = alpha + elec_revs as f32 * TAU;
     while alpha < dest {
         motor.move_to(alpha);
         alpha += 0.03;
@@ -781,7 +815,7 @@ async fn calibrate(motor: &mut BldcMotor, mt6701: &mut Mt6701) -> Result<(), Cal
         motor.move_to(alpha);
         Delay.delay_ms(1);
     }
-    let end_angle = motor.sensor_direction.into() * mt6701.read_angle().await;
+    let end_angle = f32::from(motor.sensor_direction) * mt6701.read_angle().await;
     motor.voltage_limit = 0.0;
     motor.move_to(alpha);
 
@@ -789,27 +823,27 @@ async fn calibrate(motor: &mut BldcMotor, mt6701: &mut Mt6701) -> Result<(), Cal
         error!("motor did not reach target");
         return Err(CalibrationError::X);
     }
-
-    let elec_per_mech = elec_revs * 2.0 * PI / (end_angle - start_angle);
+    info!("moved: {}", end_angle - start_angle);
+    let elec_per_mech: f32 = elec_revs as f32 * TAU / (end_angle - start_angle);
     info!(
         "electrical angle / mechanical angle (i.e. pole pairs) = {}",
         elec_per_mech
     );
-    if elec_per_mech < 3.0 || elec_per_mech > 12 {
+    if elec_per_mech < 3.0 || elec_per_mech > 12.0 {
         error!("Unexpected calculated pole pairs: {}", elec_per_mech);
         return Err(CalibrationError::X);
     }
 
-    let measured_pole_pairs: u32 = (elec_per_mech + 0.5).into();
+    let measured_pole_pairs: u32 = (elec_per_mech as f32 + 0.5) as u32;
     info!("Pole pairs set to {}", measured_pole_pairs);
 
     Delay.delay_ms(1000);
 
     motor.voltage_limit = FOC_VOLTAGE_LIMIT;
     motor.move_to(alpha);
-    let offset_x = 0.0;
-    let offset_y = 0.0;
-    let dest1 = (floorf(alpha / 2.0 * PI) + measured_pole_pairs / 2.0) * 2.0 * PI;
+    let mut offset_x = 0.0;
+    let mut offset_y = 0.0;
+    let dest1 = (floorf(alpha / 2.0 * PI) + measured_pole_pairs as f32 / 2.0) * 2.0 * PI;
     let dest2 = floorf(alpha / 2.0 * PI) * 2.0 * PI;
 
     while alpha < dest1 {
@@ -817,7 +851,9 @@ async fn calibrate(motor: &mut BldcMotor, mt6701: &mut Mt6701) -> Result<(), Cal
         Delay.delay_ms(200);
         let real_elec_angle = normalize_angle(alpha);
         let measured_elec_angle = normalize_angle(
-            motor.sensor_direction.into() * measured_pole_pairs as f32 * mt6701.read_angle().await,
+            f32::from(motor.sensor_direction)
+                * measured_pole_pairs as f32
+                * mt6701.read_angle().await,
         );
 
         let offset_angle = measured_elec_angle - real_elec_angle;
@@ -830,6 +866,27 @@ async fn calibrate(motor: &mut BldcMotor, mt6701: &mut Mt6701) -> Result<(), Cal
             rad_to_deg(normalize_angle(offset_angle))
         );
         alpha += 0.4;
+    }
+    while alpha > dest2 {
+        motor.move_to(alpha);
+        Delay.delay_ms(200);
+        let real_elec_angle = normalize_angle(alpha);
+        let measured_elec_angle = normalize_angle(
+            f32::from(motor.sensor_direction)
+                * measured_pole_pairs as f32
+                * mt6701.read_angle().await,
+        );
+
+        let offset_angle = measured_elec_angle - real_elec_angle;
+        offset_x += cosf(offset_angle);
+        offset_y += sinf(offset_angle);
+        info!(
+            "{},{},{}",
+            rad_to_deg(real_elec_angle),
+            rad_to_deg(measured_elec_angle),
+            rad_to_deg(normalize_angle(offset_angle))
+        );
+        alpha -= 0.4;
     }
     motor.voltage_limit = 0.0;
     motor.move_to(alpha);
