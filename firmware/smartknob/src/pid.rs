@@ -29,7 +29,7 @@ impl PIController {
 pub struct PIDController {
     k_p: f32,
     integral: IntegralComponent,
-    derivative: DerivativeComponent,
+    pub derivative: DerivativeComponent,
     output_ramp: Option<f32>,
     limit: Option<f32>,
     prev_output: Option<f32>,
@@ -86,8 +86,8 @@ impl IntegralComponent {
     }
 }
 
-struct DerivativeComponent {
-    k_d: f32,
+pub struct DerivativeComponent {
+    pub k_d: f32,
     last_measurement: Option<f32>,
 }
 

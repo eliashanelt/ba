@@ -31,6 +31,7 @@ use panic_rtt_target as _;
 use smartknob::motor::mt6701::Mt6701;
 use smartknob::pid;
 use smartknob::sensor::strain::Hx711;
+use smartknob::led_ring;
 
 // ======== Application-wide constants ========================================
 
@@ -128,9 +129,9 @@ async fn main(spawner: Spawner) {
     let mut hx = Hx711::new(clk, dout);
 
     // ------------- Spawn the motor-drive task  ------------------------------
-    spawner
+    /*spawner
         .spawn(motor_task(uh, ul, wh, wl, vh, vl, mt6701))
-        .unwrap();
+        .unwrap();*/
 
     // ­------------ Unified sampling + LED loop ------------
     let mut leds = [RGB8::default(); LED_COUNT];
@@ -165,272 +166,8 @@ async fn main(spawner: Spawner) {
     }
 }
 
-fn hsv_to_rgb(h: u8) -> RGB8 {
-    let region = h / 43; // 6 regions over 0–255
-    let remainder = (h as u16 - region as u16 * 43) * 6;
 
-    let p = 0;
-    let q = (255 * 255 - 255 * remainder / 256) as u8;
-    let t = (255 * remainder / 256) as u8;
 
-    match region {
-        0 => RGB8 { r: 255, g: t, b: p },
-        1 => RGB8 { r: q, g: 255, b: p },
-        2 => RGB8 { r: p, g: 255, b: t },
-        3 => RGB8 { r: p, g: q, b: 255 },
-        4 => RGB8 { r: t, g: p, b: 255 },
-        _ => RGB8 { r: 255, g: p, b: q },
-    }
-}
-
-fn wrap_2pi(x: f32) -> f32 {
-    let mut y = x % (2.0 * PI);
-    if y < 0.0 {
-        y += 2.0 * PI
-    }
-    y
-}
-
-#[embassy_executor::task]
-async fn motor_task(
-    mut uh: PwmPin<'static, MCPWM0, 0, true>,
-    mut ul: PwmPin<'static, MCPWM0, 0, false>,
-    mut vh: PwmPin<'static, MCPWM0, 1, true>,
-    mut vl: PwmPin<'static, MCPWM0, 1, false>,
-    mut wh: PwmPin<'static, MCPWM0, 2, true>,
-    mut wl: PwmPin<'static, MCPWM0, 2, false>,
-    mut mt6701: Mt6701,
-) {
-    // ---------- ① create a tiny “shadow” motor object --------------------
-    let mut motor = BldcMotor {
-        driver: BldcDriver {
-            uh,
-            ul,
-            vh,
-            vl,
-            wh,
-            wl,
-        },
-        control_type: MotionControlType::OpenAngleLoop,
-        pole_pairs: 1, // dummy, real value comes from calibration
-        zero_electric_angle: 0.0,
-        sensor_direction: Direction::CW,
-        voltage_limit: 0.0,
-        shaft_angle: 0.0,
-        target: 0.0,
-    };
-
-    // ---------- ② run the calibration routine ----------------------------
-    if let Err(e) = calibrate(&mut motor, &mut mt6701).await {
-        error!("Calibration failed");
-        panic!();
-    }
-    // ---------- ③ pull *measured* parameters back out --------------------
-    let pole_pairs = motor.pole_pairs as f32;
-    let zero_offset = motor.zero_electric_angle; // rad
-    let dir_sign = f32::from(motor.sensor_direction); // +1 or -1
-
-    info!(
-        "PPairs={}, 0-elec offset={} rad, dir={}",
-        pole_pairs, zero_offset, dir_sign
-    );
-
-    // ---------------------------------------------------------------------
-    // From here on we revert to your original “closed_loop_sine” logic,
-    // but replace the *hard-wired* constants with the values we just found.
-    // ---------------------------------------------------------------------
-
-    const PWM_MAX: u16 = 4095;
-    const UPDATE_HZ: u32 = 2_000;
-    const MODULATION: f32 = 0.7;
-    const TORQUE_ADVANCE: f32 = core::f32::consts::FRAC_PI_2;
-    const KP: f32 = 1.2;
-    const KI: f32 = 25.0;
-
-    let mut i_err = 0.0;
-    let mut ticker = Ticker::every(Duration::from_micros(1_000_000 / UPDATE_HZ as u64));
-    let mut target = 0.0;
-
-    loop {
-        if let Ok(t) = TARGET_CH.try_receive() {
-            target = t;
-        }
-
-        // --- mechanical rotor angle from the encoder
-        let mech = mt6701.read_angle().await * dir_sign;
-
-        // --- electrical angle, incl. measured zero-offset
-        let elec = mech * pole_pairs + zero_offset;
-        let targ_e = target * pole_pairs;
-
-        // --- PID on electrical angle error
-        let err = wrap_2pi(targ_e - elec);
-        i_err = (i_err + err / UPDATE_HZ as f32).clamp(-0.3, 0.3);
-        let phase = elec + TORQUE_ADVANCE + KP * err + KI * i_err;
-
-        // --- space-vector sine modulation exactly as before
-        let (va, vb, vc) = (
-            sinf(phase) * MODULATION + 0.5,
-            sinf(phase - 2.0 * PI / 3.0) * MODULATION + 0.5,
-            sinf(phase + 2.0 * PI / 3.0) * MODULATION + 0.5,
-        );
-
-        let (da, db, dc) = (
-            (va * PWM_MAX as f32) as u16,
-            (vb * PWM_MAX as f32) as u16,
-            (vc * PWM_MAX as f32) as u16,
-        );
-
-        motor
-            .driver
-            .set_phase_duties(da as f32, db as f32, dc as f32);
-        // publish the (now calibrated) mechanical angle to the LED task
-        ANGLE_CH.send(mech).await;
-
-        ticker.next().await;
-    }
-}
-#[embassy_executor::task]
-async fn closed_loop_sinea(
-    mut uh: PwmPin<'static, MCPWM0, 0, true>,
-    mut ul: PwmPin<'static, MCPWM0, 0, false>,
-    mut vh: PwmPin<'static, MCPWM0, 1, true>,
-    mut vl: PwmPin<'static, MCPWM0, 1, false>,
-    mut wh: PwmPin<'static, MCPWM0, 2, true>,
-    mut wl: PwmPin<'static, MCPWM0, 2, false>,
-    mut mt6701: Mt6701,
-) {
-    use core::f32::consts::PI;
-    use embassy_time::{Duration, Ticker};
-
-    const PWM_MAX: u16 = 4095;
-    const P_PAIRS: f32 = 4.0;
-    const UPDATE_HZ: u32 = 2_000;
-    const MODULATION: f32 = 0.7;
-    const TORQUE_ADVANCE: f32 = core::f32::consts::FRAC_PI_2;
-    const KP: f32 = 1.2;
-    const KI: f32 = 25.0;
-
-    let mut i_err = 0.0;
-    let mut ticker = Ticker::every(Duration::from_micros(1_000_000 / UPDATE_HZ as u64));
-    let mut target = 0.0;
-    loop {
-        if let Ok(target_mech) = TARGET_CH.try_receive() {
-            target = target_mech;
-        }
-        let mech = mt6701.read_angle().await; // 0–2π rad
-        ANGLE_CH.send(mech).await;
-        let elec = mech * P_PAIRS;
-        let targ_e = target * P_PAIRS;
-
-        let err = wrap_2pi(targ_e - elec);
-        i_err = (i_err + err / UPDATE_HZ as f32).clamp(-0.3, 0.3);
-
-        let phase = elec + TORQUE_ADVANCE + KP * err + KI * i_err;
-
-        let (va, vb, vc) = (
-            sinf(phase) * MODULATION + 0.5,
-            sinf(phase - 2.0 * PI / 3.0) * MODULATION + 0.5,
-            sinf(phase + 2.0 * PI / 3.0) * MODULATION + 0.5,
-        );
-
-        let (da, db, dc) = (
-            (va * PWM_MAX as f32) as u16,
-            (vb * PWM_MAX as f32) as u16,
-            (vc * PWM_MAX as f32) as u16,
-        );
-
-        uh.set_duty_cycle(da);
-        ul.set_duty_cycle(PWM_MAX - da);
-        vh.set_duty_cycle(db);
-        vl.set_duty_cycle(PWM_MAX - db);
-        wh.set_duty_cycle(dc);
-        wl.set_duty_cycle(PWM_MAX - dc);
-
-        ticker.next().await;
-    }
-}
-
-use embassy_time::Delay;
-use embedded_hal::pwm::SetDutyCycle;
-
-#[derive(Clone, Default, Copy, defmt::Format, Debug)]
-struct RGB8 {
-    pub r: u8,
-    pub g: u8,
-    pub b: u8,
-}
-
-impl RGB8 {
-    pub const WHITE: Self = RGB8 {
-        r: 255,
-        b: 255,
-        g: 255,
-    };
-}
-
-impl Mul<f32> for RGB8 {
-    type Output = RGB8;
-    fn mul(self, scalar: f32) -> RGB8 {
-        fn sc(ch: u8, k: f32) -> u8 {
-            (ch as f32 * k).clamp(0.0, 255.0) as u8
-        }
-        RGB8 {
-            r: sc(self.r, scalar),
-            g: sc(self.g, scalar),
-            b: sc(self.b, scalar),
-        }
-    }
-}
-
-#[inline(always)]
-fn send_bit(pin: &mut Output<'static>, bit_is_one: bool) {
-    // ********  timing constants from the datasheet  ********
-    const T0H_NS: u32 = ns_to_cycles(300); // 0-code high   (0.3 µs)
-    const T0L_NS: u32 = ns_to_cycles(900); // 0-code low    (0.6 µs)
-    const T1H_NS: u32 = ns_to_cycles(600); // 1-code high   (0.6 µs)
-    const T1L_NS: u32 = ns_to_cycles(600); // 1-code low    (0.6 µs)
-
-    // ********  generate the waveform  ********
-    critical_section::with(|_| {
-        pin.set_high();
-        if bit_is_one {
-            delay_cycles(T1H_NS); // “1” – stay high a bit longer
-            pin.set_low();
-            delay_cycles(T1L_NS);
-        } else {
-            delay_cycles(T0H_NS); // “0” – short high pulse
-            pin.set_low();
-            delay_cycles(T0L_NS);
-        }
-    });
-}
-
-#[inline(always)]
-fn delay_cycles(cycles: u32) {
-    esp_hal::xtensa_lx::timer::delay(cycles);
-}
-
-#[inline(always)]
-const fn ns_to_cycles(ns: u32) -> u32 {
-    (((CLK_HZ) * ns as u64 + 999_999_999) / 1_000_000_000) as u32
-}
-
-fn send_byte(pin: &mut Output<'static>, mut byte: u8) {
-    for _ in 0..8 {
-        send_bit(pin, (byte & 0x80) != 0);
-        byte <<= 1;
-    }
-}
-
-fn write_sk6805(pin: &mut Output<'static>, frame: &[RGB8]) {
-    for rgb in frame {
-        for &b in &[rgb.g, rgb.r, rgb.b] {
-            send_byte(pin, b);
-        }
-    }
-    Delay.delay_us(80);
-}
 
 pub enum Command {
     Calibrate,
@@ -472,6 +209,71 @@ pub struct SmartKnobConfig {
     pub snap_point: f32,
     pub detent_posiitons_count: u32,
     pub detent_positions: [u32; 5],
+}
+
+impl SmartKnobConfig {
+    pub fn check(&self) -> Result<(), ConfigError> {
+        // Check detent_strength_unit is not negative
+        if self.detent_strength_unit < 0.0 {
+            return Err(ConfigError::DetentStrengthNegative);
+        }
+
+        // Check endstop_strength_unit is not negative
+        if self.endstop_strength_unit < 0.0 {
+            return Err(ConfigError::EndstopStrengthNegative);
+        }
+
+        // Check snap_point is >= 0.5 for stability
+        if self.snap_point < 0.5 {
+            return Err(ConfigError::SnapPointTooSmall);
+        }
+
+        // Check detent_positions_count doesn't exceed array size
+        if self.detent_positions_count > self.detent_positions.len() as u32 {
+            return Err(ConfigError::DetentPositionsCountTooLarge);
+        }
+
+        // Check snap_point_bias is not negative
+        if self.snap_point_bias < 0.0 {
+            return Err(ConfigError::SnapPointBiasNegative);
+        }
+
+        Ok(())
+    }
+}
+
+#[derive(Debug, PartialEq)]
+pub enum ConfigError {
+    DetentStrengthNegative,
+    EndstopStrengthNegative,
+    SnapPointTooSmall,
+    DetentPositionsCountTooLarge,
+    SnapPointBiasNegative,
+}
+
+impl std::fmt::Display for ConfigError {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            ConfigError::DetentStrengthNegative => {
+                write!(f, "detent_strength_unit cannot be negative")
+            }
+            ConfigError::EndstopStrengthNegative => {
+                write!(f, "endstop_strength_unit cannot be negative")
+            }
+            ConfigError::SnapPointTooSmall => {
+                write!(f, "snap_point must be >= 0.5 for stability")
+            }
+            ConfigError::DetentPositionsCountTooLarge => {
+                write!(f, "detent_positions_count is too large")
+            }
+            ConfigError::SnapPointBiasNegative => {
+                write!(
+                    f,
+                    "snap_point_bias cannot be negative or there is risk of instability"
+                )
+            }
+        }
+    }
 }
 
 impl Default for SmartKnobConfig {
@@ -673,7 +475,7 @@ impl BldcMotor {
 pub struct Foc<const PWM_RESOLUTION: u16> {
     flux_current_controller: pid::PIController,
     torque_current_controller: pid::PIController,
-    velocity_controller: pid::PIDController,
+    velocity_pid: pid::PIDController,
     motion_control_type: MotionControlType,
     torque_control_type: TorqueControlType,
 }
@@ -1054,26 +856,73 @@ static MOTOR_CH: Channel<CriticalSectionRawMutex, Command, 1> = Channel::new();
 
 #[embassy_executor::task]
 pub async fn motor_task2(mut motor: BldcMotor) {
-    let config = SmartKnobConfig::default();
+    //motor.zero_electric_angle =
+    let mut config = SmartKnobConfig::default();
+    let mut current_position = 0;
 
     loop {
         //motor.foc.loop();
         if let Ok(command) = MOTOR_CH.try_receive() {
             match command {
                 Command::Calibrate => {
-                    motor.foc.velocity_controller =
-                        pid::PIDController::new(
-                            FOC_PID_P,
-                            FOC_PID_I,
-                            FOC_PID_D,
-                            Some(FOC_PID_OUTPUT_RAMP),
-                            Some(FOC_PID_LIMIT)
-                        );
+                    motor.foc.velocity_pid = pid::PIDController::new(
+                        FOC_PID_P,
+                        FOC_PID_I,
+                        FOC_PID_D,
+                        Some(FOC_PID_OUTPUT_RAMP),
+                        Some(FOC_PID_LIMIT),
+                    );
 
                     //motor.calibrate();
+                    //motor.init_foc();
                 }
-                Command::Config(smart_knob_config) => todo!(),
-                Command::Haptic(press) => todo!(),
+                Command::Config(new_config) => {
+                    if let Err(e) = new_config.check() {
+                        panic!("Invalid smartknob config: {e}");
+                    }
+                    let position_updated = false;
+
+                    if new_config.position != config.position
+                        || new_config.sub_position_unit != config.sub_position_unit
+                        || new_config.position_nonce != config.position_nonce
+                    {
+                        info!("Applying position change");
+                        current_position = new_config.position;
+                        position_updated = true;
+                    }
+
+                    todo!()
+
+                    if new_config.min_position <= new_config.max_position {
+                        // Only check bounds if min/max indicate bounds are active (min >= max)
+                        if current_position < new_config.min_position {
+                            current_position = new_config.min_position;
+                            info!("Adjusting position to min");
+                        } else if current_position > new_config.max_position {
+                            current_position = new_config.max_position;
+                            info!("Adjusting position to max");
+                        }
+                    }
+                    motor.foc.PID_velocity_pid.derivative.k_d = config.detent_positions_count > 0 ? 0 : CLAMP(raw, min(derivative_lower_strength, derivative_upper_strength), max(derivative_lower_strength, derivative_upper_strength));
+                }
+                Command::Haptic(press) => {
+                    let (strength, foc_ticks) = match press {
+                        Press::Short => (5.0, 3),
+                        Press::Long => (20.0, 6),
+                    }
+                    //motor.move(strength);
+                    for _ in 0..foc_ticks {
+                        //motor.foc.loop()
+                        Delay.delay_ms(1);
+                    }
+                    //motor.move(-strength);
+                    for _ in 0..foc_ticks {
+                        //motor.foc.loop()
+                        Delay.delay_ms(1);
+                    }
+                    //motor.move(0);
+                    //motor.foc.loop();
+                },
             }
         }
     }
@@ -1081,5 +930,5 @@ pub async fn motor_task2(mut motor: BldcMotor) {
 const FOC_PID_P: f32 = 4.0;
 const FOC_PID_I: f32 = 0.0;
 const FOC_PID_D: f32 = 0.04;
-const: FOC_PID_OUTPUT_RAMP: f32 = 10000.0;
-const: FOC_PID_LIMIT: f32 = 10.0;
+const FOC_PID_OUTPUT_RAMP: f32 = 10000.0;
+const FOC_PID_LIMIT: f32 = 10.0;
