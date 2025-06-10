@@ -10,13 +10,13 @@
 //! except that everything now happens in one task – no `Channel` is needed.
 
 use core::f32::consts::PI;
-use core::intrinsics::roundf32;
 use core::ops::Mul;
-use defmt::info;
+use defmt::{error, info};
 use embassy_executor::Spawner;
 use embassy_sync::blocking_mutex::raw::CriticalSectionRawMutex;
 use embassy_sync::channel::Channel;
 use embassy_time::{Duration, Ticker};
+use embedded_hal_async::delay::DelayNs;
 use esp_hal::gpio::{Input, InputConfig, Level, Output, OutputConfig, Pull};
 use esp_hal::mcpwm::operator::{PwmPin, PwmPinConfig};
 use esp_hal::mcpwm::timer::PwmWorkingMode;
@@ -25,7 +25,7 @@ use esp_hal::peripherals::MCPWM0;
 use esp_hal::time::Rate;
 use esp_hal::timer::timg::TimerGroup;
 use esp_hal::{spi, Blocking};
-use libm::{cosf, sinf};
+use libm::{cosf, fabsf, sinf};
 use panic_rtt_target as _;
 
 use smartknob::motor::mt6701::Mt6701;
@@ -44,6 +44,7 @@ const REV_PERIOD_US: u32 = 4_000_000;
 const STEP_US: u32 = REV_PERIOD_US / (6 * POLE_PAIRS); // = 83_333 µs
 
 static ANGLE_CH: Channel<CriticalSectionRawMutex, f32, 1> = Channel::new();
+static TARGET_CH: Channel<CriticalSectionRawMutex, f32, 1> = Channel::new();
 
 // ======== Entry-point =======================================================
 
@@ -133,11 +134,13 @@ async fn main(spawner: Spawner) {
     // ­------------ Unified sampling + LED loop ------------
     let mut leds = [RGB8::default(); LED_COUNT];
     let mut ticker = Ticker::every(Duration::from_millis(4)); // 100 Hz
+    let mut v = 0;
     loop {
         // ----- Acquire sensor data -----------------------------------------
         let angle = ANGLE_CH.receive().await;
         let strain = hx.read_raw().await;
-
+        TARGET_CH.send((v as f32 / 100.0) * 2.0 * PI).await;
+        v = (v + 1) % 100;
         // ----- Update LED ring ---------------------------------------------
         // Map 0-360° → 0-71 index.
         let idx =
@@ -176,6 +179,34 @@ fn hsv_to_rgb(h: u8) -> RGB8 {
         3 => RGB8 { r: p, g: q, b: 255 },
         4 => RGB8 { r: t, g: p, b: 255 },
         _ => RGB8 { r: 255, g: p, b: q },
+    }
+}
+
+#[embassy_executor::task]
+async fn motor_task(
+    mut uh: PwmPin<'static, MCPWM0, 0, true>,
+    mut ul: PwmPin<'static, MCPWM0, 0, false>,
+    mut vh: PwmPin<'static, MCPWM0, 1, true>,
+    mut vl: PwmPin<'static, MCPWM0, 1, false>,
+    mut wh: PwmPin<'static, MCPWM0, 2, true>,
+    mut wl: PwmPin<'static, MCPWM0, 2, false>,
+    mut mt6701: Mt6701,
+) {
+    const P_PAIRS: usize = 4; // EM3215 → 4 pole pairs
+
+    const FOC_PID_P: f32 = 1.0;
+    const FOC_PID_I: f32 = 0.0;
+    const FOC_PID_D: f32 = 0.148;
+    const FOC_PID_OUTPUT_RAMP: f32 = 5000.0;
+    const FOC_PID_LIMIT: f32 = 3.0;
+
+    const FOC_VOLTAGE_LIMIT: f32 = 3.0;
+    const FOC_LPF: f32 = 0.0075;
+    //let mut foc = Foc::new();
+
+    loop {
+        let mech_angle = mt6701.read_angle().await;
+        let elec_angle = (mech_angle * P_PAIRS as f32) % (2.0 * PI);
     }
 }
 
@@ -276,13 +307,15 @@ async fn closed_loop_sine(
 
     let mut i_err = 0.0;
     let mut ticker = Ticker::every(Duration::from_micros(1_000_000 / UPDATE_HZ as u64));
-
+    let mut target = 0.0;
     loop {
-        const TARGET_MECH: f32 = 6.0; // rad
+        if let Ok(target_mech) = TARGET_CH.try_receive() {
+            target = target_mech;
+        }
         let mech = mt6701.read_angle().await; // 0–2π rad
         ANGLE_CH.send(mech).await;
         let elec = mech * P_PAIRS;
-        let targ_e = TARGET_MECH * P_PAIRS;
+        let targ_e = target * P_PAIRS;
 
         let err = wrap_2pi(targ_e - elec);
         i_err = (i_err + err / UPDATE_HZ as f32).clamp(-0.3, 0.3);
@@ -352,7 +385,6 @@ async fn open_laoop_spin(
 // ======== Utility functions / structs (unchanged) ===========================
 
 use embassy_time::Delay;
-use embedded_hal::delay::DelayNs;
 use embedded_hal::pwm::SetDutyCycle;
 
 #[derive(Clone, Default, Copy, defmt::Format, Debug)]
@@ -444,13 +476,35 @@ pub enum Press {
     Long,
 }
 
+#[derive(Clone, Copy, PartialEq, Eq)]
+pub enum Direction {
+    CW,
+    CCW,
+}
+
+pub enum MotionControlType {
+    OpenAngleLoop,
+    Torque,
+}
+
 pub struct SmartKnobConfig {}
 
 pub struct MotorController {
     motor: BldcMotor,
 }
 
-pub struct BldcMotor {}
+pub struct BldcMotor {
+    control_type: MotionControlType,
+    pole_pairs: u32,
+    zero_electric_angle: f32,
+    sensor_direction: Direction,
+    voltage_limit: f32,
+}
+
+impl BldcMotor {
+    pub fn init_foc(&mut self) {}
+    pub fn move_to(&mut self, value: f32) {}
+}
 
 pub struct Foc<const PWM_RESOLUTION: u16> {
     flux_current_controller: pid::PIController,
@@ -630,4 +684,85 @@ fn as_compare_value<const MAX: u16>(value: TwoPhaseReferenceFrame) -> [u16; 3] {
         // truncate to u16
         rounded as u16
     })
+}
+
+const FOC_VOLTAGE_LIMIT: f32 = 5.0;
+
+async fn calibrate(motor: &mut BldcMotor, mt6701: &mut Mt6701) -> Result<(), CalibrationError> {
+    motor.control_type = MotionControlType::OpenAngleLoop;
+    motor.pole_pairs = 1;
+    motor.zero_electric_angle = 0.0;
+    motor.sensor_direction = Direction::CW;
+    motor.init_foc();
+
+    let mut alpha = 0.0;
+
+    motor.voltage_limit = FOC_VOLTAGE_LIMIT;
+    motor.move_to(alpha);
+
+    for _ in 0..200 {
+        motor.move_to(alpha);
+        Delay.delay_ms(1);
+    }
+    let start_angle = mt6701.read_angle().await;
+
+    while alpha < 3.0 * 2.0 * PI {
+        motor.move_to(alpha);
+        Delay.delay_ms(1);
+        alpha += 0.01;
+    }
+
+    let end_angle = mt6701.read_angle().await;
+
+    motor.voltage_limit = 0.0;
+    motor.move_to(alpha);
+
+    let moved_angle = fabsf(end_angle - start_angle);
+
+    if moved_angle < rad_to_deg(30.0) || moved_angle > rad_to_deg(180.0) {
+        error!(
+            "Unexpected sensor change: start={}, end={}, moved={}",
+            start_angle, end_angle, moved_angle
+        );
+        return Err(CalibrationError::X);
+    }
+
+    info!(
+        "sensor change: start={}, end={}, moved={}",
+        start_angle, end_angle, moved_angle
+    );
+
+    let direction = if end_angle > start_angle {
+        Direction::CW
+    } else {
+        Direction::CCW
+    };
+    info!(
+        "sensor measures positive change for positive motor rotaion: {}",
+        direction == Direction::CW
+    );
+    motor.zero_electric_angle = 0.0;
+    motor.sensor_direction = direction;
+    motor.init_foc();
+
+    let elec_revs = 20;
+    info!("Going to measure {} electrical revolutions", elec_revs);
+    motor.voltage_limit = FOC_VOLTAGE_LIMIT;
+    motor.move_to(alpha);
+    info!("Going to electrical zero");
+    let dest = alpha + 2.0 * PI;
+
+    motor.pole_pairs = measured_pole_pairs;
+    motor.zero_electric_angle = avg_offset_angle + _3PI_2;
+    motor.voltage_limit = FOC_VOLTAGE_LIMIT;
+    motor.control_type = MotionControlType::Torque;
+    Ok(())
+}
+
+enum CalibrationError {
+    X,
+}
+
+fn rad_to_deg(rad: f32) -> f32 {
+    (rad / 2.0 * PI) * 360.0
 }
