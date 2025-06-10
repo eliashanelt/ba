@@ -46,6 +46,7 @@ const STEP_US: u32 = REV_PERIOD_US / (6 * POLE_PAIRS); // = 83_333 µs
 static ANGLE_CH: Channel<CriticalSectionRawMutex, f32, 1> = Channel::new();
 static TARGET_CH: Channel<CriticalSectionRawMutex, f32, 1> = Channel::new();
 
+const PWM_FREQUENCY: Rate = Rate::from_khz(20);
 // ======== Entry-point =======================================================
 
 #[esp_hal_embassy::main]
@@ -95,7 +96,7 @@ async fn main(spawner: Spawner) {
 
     // 20 kHz PWM, 12-bit resolution -----------------------------------------
     let timer_cfg = clock_cfg
-        .timer_clock_with_frequency(1599, PwmWorkingMode::Increase, Rate::from_khz(20))
+        .timer_clock_with_frequency(1599, PwmWorkingMode::Increase, PWM_FREQUENCY)
         .unwrap();
     mcpwm.timer0.start(timer_cfg);
     mcpwm.timer1.start(timer_cfg);
@@ -202,7 +203,7 @@ async fn motor_task(
 ) {
     // ---------- ① create a tiny “shadow” motor object --------------------
     let mut motor = BldcMotor {
-        pwm: PhasePwm {
+        driver: BldcDriver {
             uh,
             ul,
             vh,
@@ -280,7 +281,9 @@ async fn motor_task(
             (vc * PWM_MAX as f32) as u16,
         );
 
-        motor.pwm.set_phase_duties(da as f32, db as f32, dc as f32);
+        motor
+            .driver
+            .set_phase_duties(da as f32, db as f32, dc as f32);
         // publish the (now calibrated) mechanical angle to the LED task
         ANGLE_CH.send(mech).await;
 
@@ -458,41 +461,127 @@ impl From<Direction> for f32 {
 pub enum MotionControlType {
     OpenAngleLoop,
     Torque,
+    Voltage,
 }
 
 pub struct SmartKnobConfig {}
+
+#[derive(Clone, Copy)]
+pub enum PhaseState {
+    Off,
+    On,
+    High,
+    Low,
+}
 
 pub struct MotorController {
     motor: BldcMotor,
 }
 
-pub struct PhasePwm {
+pub struct BldcDriver {
     pub uh: PwmPin<'static, MCPWM0, 0, true>,
     pub ul: PwmPin<'static, MCPWM0, 0, false>,
     pub vh: PwmPin<'static, MCPWM0, 1, true>,
     pub vl: PwmPin<'static, MCPWM0, 1, false>,
     pub wh: PwmPin<'static, MCPWM0, 2, true>,
     pub wl: PwmPin<'static, MCPWM0, 2, false>,
+    pub dead_zone: f32,
+    pub pwm_frequency: u32,
+    pub phase_states: [PhaseState; 3],
 }
 
-impl PhasePwm {
+impl BldcDriver {
+    pub fn init(
+        uh: PwmPin<'static, MCPWM0, 0, true>,
+        ul: PwmPin<'static, MCPWM0, 0, false>,
+        vh: PwmPin<'static, MCPWM0, 1, true>,
+        vl: PwmPin<'static, MCPWM0, 1, false>,
+        wh: PwmPin<'static, MCPWM0, 2, true>,
+        wl: PwmPin<'static, MCPWM0, 2, false>,
+    ) -> Self {
+        Self {
+            uh,
+            ul,
+            vh,
+            vl,
+            wh,
+            wl,
+            dead_zone: 0.02,
+            pwm_frequency: todo!(),
+            phase_states: [PhaseState::Off; 3],
+        }
+    }
+    pub fn enable(&mut self) {
+        self.phase_states = [PhaseState::On; 3];
+        self.set_phase_duties(0.0, 0.0, 0.0);
+    }
+
     /// Write *three* centred-PWM duty cycles (`0.0 … 1.0`)
     /// and derive the complementary low-side outputs.
-    fn set_phase_duties(&mut self, a: f32, b: f32, c: f32) {
+    /*fn set_phase_duties(&mut self, a: f32, b: f32, c: f32) {
         const PWM_MAX: u16 = 4095;
         let to_counts = |u: f32| -> u16 { (u.clamp(0.0, 1.0) * PWM_MAX as f32) as u16 };
         let (da, db, dc) = (to_counts(a), to_counts(b), to_counts(c));
-
         self.uh.set_duty_cycle(da);
         self.ul.set_duty_cycle(PWM_MAX - da);
         self.vh.set_duty_cycle(db);
         self.vl.set_duty_cycle(PWM_MAX - db);
         self.wh.set_duty_cycle(dc);
         self.wl.set_duty_cycle(PWM_MAX - dc);
+    }*/
+
+    pub fn set_phase_duties(&mut self, a: f32, b: f32, c: f32) {
+        const PWM_MAX: u16 = 4095;
+        let to_counts = |u: f32| -> u16 { (u.clamp(0.0, 1.0) * PWM_MAX as f32) as u16 };
+
+        let duties = [a, b, c];
+
+        // Handle each phase separately due to different const generic types
+        for (i, &duty) in duties.iter().enumerate() {
+            let (high_duty, low_duty) = match self.phase_states[i] {
+                PhaseState::On => {
+                    // Normal complementary PWM with deadtime
+                    let high_duty = (duty - self.dead_zone).clamp(0.0, 1.0);
+                    let low_duty = 1.0 - (duty + self.dead_zone).clamp(0.0, 1.0);
+                    (to_counts(high_duty), to_counts(low_duty))
+                }
+                PhaseState::High => {
+                    // Only high-side active
+                    (to_counts(duty), 0)
+                }
+                PhaseState::Low => {
+                    // Only low-side active
+                    (0, to_counts(duty))
+                }
+                PhaseState::Off => {
+                    // Both switches off
+                    (0, 0)
+                }
+            };
+
+            match i {
+                0 => {
+                    // Phase A (U)
+                    self.uh.set_duty_cycle(high_duty);
+                    self.ul.set_duty_cycle(low_duty);
+                }
+                1 => {
+                    // Phase B (V)
+                    self.vh.set_duty_cycle(high_duty);
+                    self.vl.set_duty_cycle(low_duty);
+                }
+                2 => {
+                    // Phase C (W)
+                    self.wh.set_duty_cycle(high_duty);
+                    self.wl.set_duty_cycle(low_duty);
+                }
+                _ => unreachable!(),
+            }
+        }
     }
 }
 pub struct BldcMotor {
-    pwm: PhasePwm,
+    driver: BldcDriver,
     control_type: MotionControlType,
     pole_pairs: u32,
     zero_electric_angle: f32,
@@ -504,7 +593,7 @@ pub struct BldcMotor {
 
 impl BldcMotor {
     pub fn init_foc(&mut self) {
-        self.pwm.set_phase_duties(0.5, 0.5, 0.5);
+        self.driver.set_phase_duties(0.5, 0.5, 0.5);
     }
     /*pub fn move_to(&mut self, elec_angle: f32) {
         const MODULATION: f32 = 0.25; // keep it gentle (≈25 % bus)
@@ -532,20 +621,20 @@ impl BldcMotor {
             sinf(angle_elec - 2.0 * PI / 3.0) * m + 0.5,
             sinf(angle_elec + 2.0 * PI / 3.0) * m + 0.5,
         );
-        self.pwm.set_phase_duties(va, vb, vc);
+        self.driver.set_phase_duties(va, vb, vc);
     }
 
     /* ------------------------------------------------------------------ */
     /* 2.  `move_to` (ABSOLUTE) – wrapper expected by calibration         */
     /* ------------------------------------------------------------------ */
-    pub fn move_by(&mut self, angle_elec: f32) {
+    pub fn move_to(&mut self, angle_elec: f32) {
         self.drive_elec(angle_elec);
     }
 
     /* ------------------------------------------------------------------ */
     /* 3.  `move_by` (RELATIVE) – optional helper for UI / haptics        */
     /* ------------------------------------------------------------------ */
-    pub fn move_to(&mut self, delta_elec: f32) {
+    pub fn move_by(&mut self, delta_elec: f32) {
         // keep track of the current commanded angle in a field
         self.target += delta_elec;
         self.drive_elec(self.target);
@@ -812,7 +901,7 @@ async fn calibrate(motor: &mut BldcMotor, mt6701: &mut Mt6701) -> Result<(), Cal
     }
     info!("Pause");
     for _ in 0..1000 {
-        motor.move_to(alpha);
+        motor.move_by(alpha);
         Delay.delay_ms(1);
     }
     let end_angle = f32::from(motor.sensor_direction) * mt6701.read_angle().await;

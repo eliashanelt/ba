@@ -73,3 +73,8 @@ impl Mt6701 {
         rad
     }
 }
+
+pub struct Sensor {
+    full_rotations: u32,
+    angle: f32,
+}
