@@ -31,11 +31,11 @@ use panic_rtt_target as _;
 use smartknob::motor::mt6701::Mt6701;
 use smartknob::pid;
 use smartknob::sensor::strain::Hx711;
-use smartknob::led_ring;
-
+use smartknob::tasks::led_ring;
+use smartknob::tasks::strain_gauge::strain_gauge;
+use tasks::led_ring;
 // ======== Application-wide constants ========================================
 
-const LED_COUNT: usize = 72;
 const CLK_HZ: u64 = 240_000_000;
 
 const POLE_PAIRS: u32 = 4;
@@ -65,7 +65,7 @@ async fn main(spawner: Spawner) {
     esp_hal_embassy::init(tg.timer0);
 
     // --- LED data pin -------------------------------------------------------
-    let mut led_data = Output::new(p.GPIO12, Level::High, OutputConfig::default());
+    let mut led_pin = Output::new(p.GPIO12, Level::High, OutputConfig::default());
 
     // --- MCPWM setup (unchanged, just shorter) -----------------------------
     let clock_cfg = PeripheralClockConfig::with_frequency(Rate::from_mhz(40)).unwrap();
@@ -126,7 +126,7 @@ async fn main(spawner: Spawner) {
     // --- HX711 strain gauge (unchanged) ------------------------------------
     let clk = Output::new(p.GPIO1, Level::Low, OutputConfig::default());
     let dout = Input::new(p.GPIO21, InputConfig::default());
-    let mut hx = Hx711::new(clk, dout);
+    let mut hx711 = Hx711::new(clk, dout);
 
     // ------------- Spawn the motor-drive task  ------------------------------
     /*spawner
@@ -134,34 +134,10 @@ async fn main(spawner: Spawner) {
         .unwrap();*/
 
     // ­------------ Unified sampling + LED loop ------------
-    let mut leds = [RGB8::default(); LED_COUNT];
-    let mut ticker = Ticker::every(Duration::from_millis(4)); // 100 Hz
-    let mut v = 0;
+    spawner.spawn(led_ring(led_pin)).unwrap();
+    spawner.spawn(strain_gauge(hx711)).unwrap();
     loop {
-        // ----- Acquire sensor data -----------------------------------------
-        let angle = ANGLE_CH.receive().await;
-        let strain = hx.read_raw().await;
-        TARGET_CH.send((v as f32 / 100.0) * 2.0 * PI).await;
-        v = (v + 1) % 100;
-        // ----- Update LED ring ---------------------------------------------
-        // Map 0-360° → 0-71 index.
-        let idx =
-            ((((angle / (2.0 * PI)) * LED_COUNT as f32 * 2.0) + 1.0) / 2.0) as usize % LED_COUNT;
-
-        if strain > 400000 {
-            leds.fill(RGB8 { r: 0, b: 5, g: 0 });
-        } else {
-            leds.fill(RGB8::default());
-            leds[idx] = RGB8 {
-                r: 255,
-                g: 40,
-                b: 0,
-            };
-        }
-        //write_sk6805(&mut led_data, &leds);
-
-        // ----- Logging ------------------------------------------------------
-
+        info!("Hello World");
         ticker.next().await; // keep loop at 100 Hz
     }
 }

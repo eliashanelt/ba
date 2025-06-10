@@ -1,5 +1,4 @@
 use core::f32::consts::PI;
-use embedded_hal_async::spi::SpiBus;
 use esp_hal::{spi::master::Spi, Async, Blocking};
 
 const ALPHA: f32 = 0.4;

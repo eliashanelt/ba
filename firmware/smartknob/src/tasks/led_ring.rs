@@ -1,17 +1,22 @@
+use embassy_time::{Duration, Ticker};
+use esp_hal::gpio::Output;
+
+use crate::led_ring::LedRing;
+
 #[embassy_executor::task]
-pub async fn led_ring(mut led_pin: Output) {
+pub async fn led_ring(mut led_pin: Output<'static>) {
     let mut led_ring = LedRing::new(led_pin);
     let mut ticker = Ticker::every(Duration::from_millis(4)); // 100 Hz
     let mut v = 0;
     loop {
         // ----- Acquire sensor data -----------------------------------------
-        let angle = ANGLE_CH.receive().await;
-        let strain = hx.read_raw().await;
-        TARGET_CH.send((v as f32 / 100.0) * 2.0 * PI).await;
-        v = (v + 1) % 100;
+        //let angle = ANGLE_CH.receive().await;
+        //let strain = hx.read_raw().await;
+        //TARGET_CH.send((v as f32 / 100.0) * 2.0 * PI).await;
+        //v = (v + 1) % 100;
         // ----- Update LED ring ---------------------------------------------
         // Map 0-360° → 0-71 index.
-        let idx =
+        /*let idx =
             ((((angle / (2.0 * PI)) * LED_COUNT as f32 * 2.0) + 1.0) / 2.0) as usize % LED_COUNT;
 
         if strain > 400000 {
@@ -23,7 +28,8 @@ pub async fn led_ring(mut led_pin: Output) {
                 g: 40,
                 b: 0,
             };
-        }
+        }*/
+        led_ring.update();
         //write_sk6805(&mut led_data, &leds);
 
         // ----- Logging ------------------------------------------------------

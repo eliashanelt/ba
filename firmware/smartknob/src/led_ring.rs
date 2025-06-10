@@ -59,16 +59,18 @@ fn hsv_to_rgb(h: u8) -> RGB8 {
     }
 }
 pub struct LedRing {
-    leds: [RGB8::default(); LED_COUNT],
+    leds: [RGB8; LED_COUNT],
+    led_pin: Output<'static>,
 }
 
 impl LedRing {
-    pub fn new() -> Self {
-        Self
+    pub fn new(led_pin: Output<'static>) -> Self {
+        let leds = [RGB8::default(); LED_COUNT];
+        Self { leds, led_pin }
     }
 }
 use embassy_time::Delay;
-use embedded_hal::pwm::SetDutyCycle;
+use esp_hal::gpio::Output;
 
 #[inline(always)]
 fn send_bit(pin: &mut Output<'static>, bit_is_one: bool) {
