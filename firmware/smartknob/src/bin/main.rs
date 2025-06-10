@@ -459,12 +459,32 @@ impl From<Direction> for f32 {
 }
 
 pub enum MotionControlType {
-    OpenAngleLoop,
     Torque,
-    Voltage,
+    Velocity,
+    Angle,
+    VelocityOpenLoop,
+    AngleOpenLoop,
 }
 
-pub struct SmartKnobConfig {}
+pub struct SmartKnobConfig {
+    pub position_width_radians: f32,
+    pub endstop_strength_unit: f32,
+    pub snap_point: f32,
+    pub detent_posiitons_count: u32,
+    pub detent_positions: [u32; 5],
+}
+
+impl Default for SmartKnobConfig {
+    fn default() -> Self {
+        Self {
+            position_width_radians: 60.0 * PI / 180.0,
+            endstop_strength_unit: 0.0,
+            snap_point: 0.5,
+            detent_posiitons_count: 0,
+            detent_positions: [0; 5],
+        }
+    }
+}
 
 #[derive(Clone, Copy)]
 pub enum PhaseState {
@@ -486,7 +506,7 @@ pub struct BldcDriver {
     pub wh: PwmPin<'static, MCPWM0, 2, true>,
     pub wl: PwmPin<'static, MCPWM0, 2, false>,
     pub dead_zone: f32,
-    pub pwm_frequency: u32,
+    pub pwm_frequency: Rate,
     pub phase_states: [PhaseState; 3],
 }
 
@@ -507,7 +527,7 @@ impl BldcDriver {
             wh,
             wl,
             dead_zone: 0.02,
-            pwm_frequency: todo!(),
+            pwm_frequency: PWM_FREQUENCY,
             phase_states: [PhaseState::Off; 3],
         }
     }
@@ -582,6 +602,7 @@ impl BldcDriver {
 }
 pub struct BldcMotor {
     driver: BldcDriver,
+    foc: Foc<4095>,
     control_type: MotionControlType,
     pole_pairs: u32,
     zero_electric_angle: f32,
@@ -589,6 +610,13 @@ pub struct BldcMotor {
     voltage_limit: f32,
     shaft_angle: f32,
     target: f32,
+}
+
+#[derive(Clone, Copy)]
+pub enum TorqueControlType {
+    Voltage,
+    DcCurrent,
+    FocCurrent,
 }
 
 impl BldcMotor {
@@ -627,8 +655,9 @@ impl BldcMotor {
     /* ------------------------------------------------------------------ */
     /* 2.  `move_to` (ABSOLUTE) – wrapper expected by calibration         */
     /* ------------------------------------------------------------------ */
-    pub fn move_to(&mut self, angle_elec: f32) {
-        self.drive_elec(angle_elec);
+    pub fn move_to(&mut self, target: f32) {
+        //self.drive_elec(angle_elec);
+        match self.control_type {}
     }
 
     /* ------------------------------------------------------------------ */
@@ -644,6 +673,8 @@ impl BldcMotor {
 pub struct Foc<const PWM_RESOLUTION: u16> {
     flux_current_controller: pid::PIController,
     torque_current_controller: pid::PIController,
+    motion_control_type: MotionControlType,
+    torque_control_type: TorqueControlType,
 }
 
 const FRAC_1_SQRT_3: f32 = 0.57735027;
@@ -1016,4 +1047,18 @@ pub fn normalize_angle(mut angle: f32) -> f32 {
         angle += TAU;
     }
     angle
+}
+
+static MOTOR_CH: Channel<CriticalSectionRawMutex, Command, 1> = Channel::new();
+
+#[embassy_executor::task]
+pub async fn motor_task2() {
+    loop {
+        let command = MOTOR_CH.receive().await;
+        match command {
+            Command::Calibrate => todo!(),
+            Command::Config(smart_knob_config) => todo!(),
+            Command::Haptic(press) => todo!(),
+        }
+    }
 }
