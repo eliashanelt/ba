@@ -1087,6 +1087,7 @@ pub async fn motor_task2(mut motor: BldcMotor) {
         }
     }
 }
+
 const FOC_PID_P: f32 = 4.0;
 const FOC_PID_I: f32 = 0.0;
 const FOC_PID_D: f32 = 0.04;

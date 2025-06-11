@@ -4,5 +4,6 @@ pub mod motor;
 pub mod pid;
 pub mod sensor;
 pub mod tasks;
+pub mod util;
 
 extern crate alloc;
