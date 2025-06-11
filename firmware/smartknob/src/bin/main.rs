@@ -1,14 +1,6 @@
 #![no_std]
 #![no_main]
 
-//! Modified on 2025-06-09
-//! – Spins the BLDC at **0.25 Hz** (≈4 s per mechanical rev)
-//! – LED ring shows the **absolute rotor angle** reported by the MT6701 *in real-time*,
-//!   so if you stall the shaft by hand the LEDs freeze accordingly.
-//!
-//! The rest of the application remains identical to your original example,
-//! except that everything now happens in one task – no `Channel` is needed.
-
 use core::f32::consts::{PI, TAU};
 use defmt::{error, info};
 use embassy_executor::Spawner;
@@ -33,19 +25,8 @@ use smartknob::pid;
 use smartknob::sensor::strain::Hx711;
 use smartknob::tasks::led_ring;
 use smartknob::tasks::strain_gauge::strain_gauge;
-// ======== Application-wide constants ========================================
-
-const POLE_PAIRS: u32 = 4;
-/// Mechanical period for 0.25 Hz = 4 000 000 µs
-const REV_PERIOD_US: u32 = 4_000_000;
-/// Commutation step every electrical 60 °
-const STEP_US: u32 = REV_PERIOD_US / (6 * POLE_PAIRS); // = 83_333 µs
-
-static ANGLE_CH: Channel<CriticalSectionRawMutex, f32, 1> = Channel::new();
-static TARGET_CH: Channel<CriticalSectionRawMutex, f32, 1> = Channel::new();
 
 const PWM_FREQUENCY: Rate = Rate::from_khz(20);
-// ======== Entry-point =======================================================
 
 #[esp_hal_embassy::main]
 async fn main(spawner: Spawner) {
@@ -54,17 +35,12 @@ async fn main(spawner: Spawner) {
     let config = esp_hal::Config::default().with_cpu_clock(esp_hal::clock::CpuClock::max());
     let p = esp_hal::init(config);
 
-    // --- Memory heap (unchanged) -------------------------------------------
     esp_alloc::heap_allocator!(size: 72 * 1024);
-
-    // --- Timer for Embassy --------------------------------------------------
     let tg = TimerGroup::new(p.TIMG1);
     esp_hal_embassy::init(tg.timer0);
 
-    // --- LED data pin -------------------------------------------------------
-    let mut led_pin = Output::new(p.GPIO12, Level::High, OutputConfig::default());
+    let led_pin = Output::new(p.GPIO12, Level::High, OutputConfig::default());
 
-    // --- MCPWM setup (unchanged, just shorter) -----------------------------
     let clock_cfg = PeripheralClockConfig::with_frequency(Rate::from_mhz(40)).unwrap();
     let mut mcpwm = McPwm::new(p.MCPWM0, clock_cfg);
 
@@ -72,27 +48,25 @@ async fn main(spawner: Spawner) {
     mcpwm.operator1.set_timer(&mcpwm.timer1);
     mcpwm.operator2.set_timer(&mcpwm.timer2);
 
-    // Map BLDC phases: UH/UL, WH/WL, VH/VL ----------------------------------
-    let (mut uh, mut ul) = mcpwm.operator0.with_pins(
+    let (uh, ul) = mcpwm.operator0.with_pins(
         p.GPIO8,
         PwmPinConfig::UP_ACTIVE_HIGH,
         p.GPIO16,
         PwmPinConfig::UP_ACTIVE_HIGH,
     );
-    let (mut wh, mut wl) = mcpwm.operator1.with_pins(
+    let (wh, wl) = mcpwm.operator1.with_pins(
         p.GPIO17,
         PwmPinConfig::UP_ACTIVE_HIGH,
         p.GPIO7,
         PwmPinConfig::UP_ACTIVE_HIGH,
     );
-    let (mut vh, mut vl) = mcpwm.operator2.with_pins(
+    let (vh, vl) = mcpwm.operator2.with_pins(
         p.GPIO18,
         PwmPinConfig::UP_ACTIVE_HIGH,
         p.GPIO15,
         PwmPinConfig::UP_ACTIVE_HIGH,
     );
 
-    // 20 kHz PWM, 12-bit resolution -----------------------------------------
     let timer_cfg = clock_cfg
         .timer_clock_with_frequency(1599, PwmWorkingMode::Increase, PWM_FREQUENCY)
         .unwrap();
@@ -100,7 +74,6 @@ async fn main(spawner: Spawner) {
     mcpwm.timer1.start(timer_cfg);
     mcpwm.timer2.start(timer_cfg);
 
-    // --- MT6701 absolute encoder -------------------------------------------
     let spi = spi::master::Spi::new(
         p.SPI2,
         spi::master::Config::default()
@@ -113,7 +86,7 @@ async fn main(spawner: Spawner) {
     .with_miso(p.GPIO14)
     .with_cs(p.GPIO11);
 
-    let mut mt6701 = Mt6701 {
+    let mt6701 = Mt6701 {
         spi,
         x: 0.0,
         y: 0.0,
@@ -123,21 +96,19 @@ async fn main(spawner: Spawner) {
     // --- HX711 strain gauge (unchanged) ------------------------------------
     let clk = Output::new(p.GPIO1, Level::Low, OutputConfig::default());
     let dout = Input::new(p.GPIO21, InputConfig::default());
-    let mut hx711 = Hx711::new(clk, dout);
+    let hx711 = Hx711::new(clk, dout);
 
-    // ------------- Spawn the motor-drive task  ------------------------------
     /*spawner
     .spawn(motor_task(uh, ul, wh, wl, vh, vl, mt6701))
     .unwrap();*/
 
-    // ­------------ Unified sampling + LED loop ------------
     spawner.spawn(led_ring(led_pin)).unwrap();
     spawner.spawn(strain_gauge(hx711)).unwrap();
 
     let mut ticker = Ticker::every(Duration::from_secs(5));
     loop {
         info!("Hello World");
-        ticker.next().await; // keep loop at 100 Hz
+        ticker.next().await;
     }
 }
 
