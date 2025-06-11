@@ -37,6 +37,15 @@ pub struct Mt6701 {
 }
 
 impl Mt6701 {
+    pub fn new(spi: Spi<'static, Blocking>) -> Self {
+        Self {
+            x: 0.0,
+            y: 0.0,
+            spi,
+            error: None,
+        }
+    }
+
     /// Read raw angle and update filter; returns current angle in radians
     pub async fn read_angle(&mut self) -> f32 {
         let mut buf = [0u8; 3];
@@ -71,9 +80,4 @@ impl Mt6701 {
         }
         rad
     }
-}
-
-pub struct Sensor {
-    full_rotations: u32,
-    angle: f32,
 }

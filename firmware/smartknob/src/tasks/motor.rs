@@ -1,9 +1,15 @@
 use defmt::info;
 use libm::fabsf;
 
+use crate::{
+    config::{PersistentConfiguration, SmartKnobConfig},
+    motor::BldcMotor,
+    util::Direction,
+};
+
 #[embassy_executor::task]
 
-pub async fn motor_task2(mut motor: BldcMotor) {
+pub async fn motor_task(mut motor: BldcMotor) {
     let persistant_config = PersistentConfiguration {
         zero_electrical_offset: 0.0,
         direction_cw: Direction::CW,
@@ -11,10 +17,10 @@ pub async fn motor_task2(mut motor: BldcMotor) {
     };
 
     //motor.init();
-    motor.zero_electric_angle = persistant_config.zero_electrical_offset;
+    motor.foc.zero_electric_angle = persistant_config.zero_electrical_offset;
     motor.init_foc();
     //motor.monitor_downsample = 0;
-    let mut current_detent_center = motor.shaft_angle;
+    let mut current_detent_center = motor.foc.shaft_angle;
     let mut config = SmartKnobConfig::default();
     let mut current_position = 0;
 

@@ -125,7 +125,7 @@ impl Default for SmartKnobConfig {
 }
 
 pub struct PersistentConfiguration {
-    zero_electrical_offset: f32,
-    direction_cw: Direction,
-    pole_pairs: u32,
+    pub zero_electrical_offset: f32,
+    pub direction_cw: Direction,
+    pub pole_pairs: u32,
 }

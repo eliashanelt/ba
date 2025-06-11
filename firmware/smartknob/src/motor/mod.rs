@@ -37,14 +37,12 @@ pub enum Press {
 }
 
 pub struct BldcMotor {
-    driver: BldcDriver,
-    foc: Foc<4095>,
-    pole_pairs: u32,
-    zero_electric_angle: f32,
-    sensor_direction: Direction,
-    voltage_limit: f32,
-    shaft_angle: f32,
-    target: f32,
+    pub driver: BldcDriver,
+    pub foc: Foc<4095>,
+    pub pole_pairs: u32,
+    pub zero_electric_angle: f32,
+    pub sensor_direction: Direction,
+    pub voltage_limit: f32,
 }
 
 impl BldcMotor {
@@ -67,17 +65,20 @@ impl BldcMotor {
     /* ------------------------------------------------------------------ */
     /* 2.  `move_to` (ABSOLUTE) – wrapper expected by calibration         */
     /* ------------------------------------------------------------------ */
-    pub fn move_to(&mut self, target: f32) {
+    pub fn move_to(&mut self, new_target: f32) {
+        if self.foc.motion_cnt + 1 < self.foc.motion_downsample {
+            return;
+        }
+
+        motion_cnt = 0;
+
         //self.drive_elec(angle_elec);
         //match self.control_type {}
     }
 
-    /* ------------------------------------------------------------------ */
-    /* 3.  `move_by` (RELATIVE) – optional helper for UI / haptics        */
-    /* ------------------------------------------------------------------ */
-    pub fn move_by(&mut self, delta_elec: f32) {
+    /*pub fn move_by(&mut self, delta_elec: f32) {
         // keep track of the current commanded angle in a field
         self.target += delta_elec;
         self.drive_elec(self.target);
-    }
+    }*/
 }

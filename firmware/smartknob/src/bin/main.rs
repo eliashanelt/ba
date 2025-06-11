@@ -25,6 +25,7 @@ use smartknob::motor::mt6701::Mt6701;
 use smartknob::pid;
 use smartknob::sensor::strain::Hx711;
 use smartknob::tasks::led_ring;
+use smartknob::tasks::motor_angle::motor_angle;
 use smartknob::tasks::strain_gauge::strain_gauge;
 
 const PWM_FREQUENCY: Rate = Rate::from_khz(20);
@@ -87,13 +88,7 @@ async fn main(spawner: Spawner) {
     .with_miso(p.GPIO14)
     .with_cs(p.GPIO11);
 
-    let mt6701 = Mt6701 {
-        spi,
-        x: 0.0,
-        y: 0.0,
-        error: None,
-    };
-
+    let mt6701 = Mt6701::new(spi);
     // --- HX711 strain gauge (unchanged) ------------------------------------
     let clk = Output::new(p.GPIO1, Level::Low, OutputConfig::default());
     let dout = Input::new(p.GPIO21, InputConfig::default());
@@ -105,6 +100,7 @@ async fn main(spawner: Spawner) {
 
     spawner.spawn(led_ring(led_pin)).unwrap();
     spawner.spawn(strain_gauge(hx711)).unwrap();
+    spawner.spawn(motor_angle(mt6701)).unwrap();
 
     let mut ticker = Ticker::every(Duration::from_secs(5));
     loop {

@@ -1,4 +1,5 @@
-use embassy_time::Instant;
+use embassy_time::{Duration, Instant};
+use esp_hal::time::Rate;
 
 #[derive(Clone, Copy, PartialEq, Eq)]
 pub enum Direction {
@@ -68,4 +69,45 @@ pub fn normalize_angle(mut angle: f32) -> f32 {
 
 pub fn millis() -> u32 {
     Instant::now().as_millis() as u32
+}
+
+pub fn rate_to_duration(rate: Rate) -> Duration {
+    Duration::from_micros(rate.as_duration().as_micros())
+}
+
+pub struct LowPassFilter {
+    tf: f32,
+    y_prev: f32,
+    timestamp_prev: Instant,
+}
+
+impl LowPassFilter {
+    pub fn new(time_constant: f32) -> Self {
+        LowPassFilter {
+            tf: time_constant,
+            y_prev: 0.0,
+            timestamp_prev: Instant::now(),
+        }
+    }
+
+    pub fn update(&mut self, x: f32) -> f32 {
+        let now = Instant::now();
+        let mut dt = 1_000_000 as f32 / now.duration_since(self.timestamp_prev).as_micros() as f32;
+
+        if dt < 0.0 {
+            dt = 1e-3;
+        } else if dt > 0.3 {
+            self.y_prev = x;
+            self.timestamp_prev = now;
+            return x;
+        }
+
+        let alpha = self.tf / (self.tf + dt);
+        let y = alpha * self.y_prev + (1.0 - alpha) * x;
+
+        self.y_prev = y;
+        self.timestamp_prev = now;
+
+        y
+    }
 }

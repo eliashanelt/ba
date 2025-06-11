@@ -6,7 +6,7 @@ use esp_hal::{
 
 use crate::{
     sensor::strain::Hx711,
-    util::{lerp, MovingAverage},
+    util::{lerp, rate_to_duration, MovingAverage},
 };
 
 const STRAIN_PRESSED: f32 = 1.0;
@@ -25,9 +25,7 @@ pub enum VirtualButtonState {
 
 #[embassy_executor::task]
 pub async fn strain_gauge(mut hx711: Hx711<Output<'static>, Input<'static>>) {
-    let mut ticker = Ticker::every(Duration::from_millis(
-        POLLING_RATE.as_duration().as_millis(),
-    ));
+    let mut ticker = Ticker::every(rate_to_duration(POLLING_RATE));
     let mut strain_filter = MovingAverage::<10>::new();
     let mut virtual_button_state: VirtualButtonState = VirtualButtonState::Idle;
     let mut last_press_triggered_at = Instant::now();
