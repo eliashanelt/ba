@@ -281,9 +281,3 @@ async fn calibrate(motor: &mut BldcMotor, mt6701: &mut Mt6701) -> Result<(), Cal
 
     Ok(())
 }
-
-enum CalibrationError {
-    X,
-}
-
-static MOTOR_CH: Channel<CriticalSectionRawMutex, Command, 1> = Channel::new();

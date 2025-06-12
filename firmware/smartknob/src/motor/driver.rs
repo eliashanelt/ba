@@ -1,4 +1,7 @@
+use embedded_hal::pwm::SetDutyCycle;
 use esp_hal::{mcpwm::operator::PwmPin, peripherals::MCPWM0, time::Rate};
+
+const PWM_FREQUENCY: Rate = Rate::from_khz(40);
 
 #[derive(Clone, Copy)]
 pub enum PhaseState {

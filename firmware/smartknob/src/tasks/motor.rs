@@ -1,14 +1,24 @@
 use defmt::info;
+use embassy_sync::{blocking_mutex::raw::CriticalSectionRawMutex, channel::Channel};
+use embassy_time::Delay;
+use embedded_hal::delay::DelayNs;
 use libm::fabsf;
 
 use crate::{
     config::{PersistentConfiguration, SmartKnobConfig},
-    motor::BldcMotor,
-    util::Direction,
+    motor::{
+        BldcMotor, Command, Press, DEAD_ZONE_DETENT_PERCENT, DEAD_ZONE_RAD, FOC_PID_D, FOC_PID_I,
+        FOC_PID_LIMIT, FOC_PID_OUTPUT_RAMP, FOC_PID_P, IDLE_CORRECTION_DELAY_MILLIS,
+        IDLE_CORRECTION_MAX_ANGLE_RAD, IDLE_CORRECTION_RATE_ALPHA, IDLE_VELOCITY_EWMA_ALPHA,
+        IDLE_VELOCITY_RAD_PER_SEC,
+    },
+    pid,
+    util::{millis, Direction},
 };
 
-#[embassy_executor::task]
+static MOTOR_CH: Channel<CriticalSectionRawMutex, Command, 1> = Channel::new();
 
+#[embassy_executor::task]
 pub async fn motor_task(mut motor: BldcMotor) {
     let persistant_config = PersistentConfiguration {
         zero_electrical_offset: 0.0,
@@ -18,8 +28,8 @@ pub async fn motor_task(mut motor: BldcMotor) {
 
     //motor.init();
     motor.foc.zero_electric_angle = persistant_config.zero_electrical_offset;
-    motor.init_foc();
-    //motor.monitor_downsample = 0;
+    motor.foc.init();
+    motor.foc.monitor_downsample = 0;
     let mut current_detent_center = motor.foc.shaft_angle;
     let mut config = SmartKnobConfig::default();
     let mut current_position = 0;
@@ -30,7 +40,7 @@ pub async fn motor_task(mut motor: BldcMotor) {
     let mut last_idle_start: u32 = 0;
     let mut last_publish: u32 = 0;
     loop {
-        //motor.foc.loop();
+        motor.foc.update();
         if let Ok(command) = MOTOR_CH.try_receive() {
             match command {
                 Command::Calibrate => {
@@ -42,8 +52,8 @@ pub async fn motor_task(mut motor: BldcMotor) {
                         Some(FOC_PID_LIMIT),
                     );
 
-                    //motor.calibrate();
-                    //motor.init_foc();
+                    motor.calibrate();
+                    motor.foc.init();
                 }
                 Command::Config(new_config) => {
                     if let Err(e) = new_config.check() {
@@ -80,7 +90,7 @@ pub async fn motor_task(mut motor: BldcMotor) {
                         } else {
                             latest_sub_position_unit
                         };
-                        let shaft_angle = -motor.shaft_angle;
+                        let shaft_angle = -motor.foc.shaft_angle;
                         current_detent_center =
                             shaft_angle + new_sub_position * new_config.position_width_radians;
                     }
@@ -89,8 +99,8 @@ pub async fn motor_task(mut motor: BldcMotor) {
 
                     let derivative_lower_strength = config.detent_strength_unit * 0.08;
                     let derivative_upper_strength = config.detent_strength_unit * 0.02;
-                    let derivative_position_width_lower = deg_to_rad(3.0);
-                    let derivative_position_width_upper = deg_to_rad(8.0);
+                    let derivative_position_width_lower = 3.0_f32.to_radians();
+                    let derivative_position_width_upper = 8.0_f32.to_radians();
 
                     let raw = derivative_lower_strength
                         + (derivative_upper_strength - derivative_lower_strength)
@@ -111,18 +121,18 @@ pub async fn motor_task(mut motor: BldcMotor) {
                         Press::Short => (5.0, 3),
                         Press::Long => (20.0, 6),
                     };
-                    //motor.move(strength);
+                    motor.move_to(strength);
                     for _ in 0..foc_ticks {
-                        //motor.foc.loop()
+                        motor.foc.update();
                         Delay.delay_ms(1);
                     }
-                    //motor.move(-strength);
+                    motor.move_to(-strength);
                     for _ in 0..foc_ticks {
-                        //motor.foc.loop()
+                        motor.foc.update();
                         Delay.delay_ms(1);
                     }
-                    //motor.move(0);
-                    //motor.foc.loop();
+                    motor.move_to(0.0);
+                    motor.foc.update();
                 }
             }
 
@@ -136,13 +146,14 @@ pub async fn motor_task(mut motor: BldcMotor) {
             }
             if last_idle_start > 0
                 && millis() - last_idle_start > IDLE_CORRECTION_DELAY_MILLIS
-                && fabsf(motor.shaft_angle - current_detent_center) < IDLE_CORRECTION_MAX_ANGLE_RAD
+                && fabsf(motor.foc.shaft_angle - current_detent_center)
+                    < IDLE_CORRECTION_MAX_ANGLE_RAD
             {
-                current_detent_center = motor.shaft_angle * IDLE_CORRECTION_RATE_ALPHA
+                current_detent_center = motor.foc.shaft_angle * IDLE_CORRECTION_RATE_ALPHA
                     + current_detent_center * (1.0 - IDLE_CORRECTION_RATE_ALPHA);
             }
 
-            let mut angle_to_detent_center = -motor.shaft_angle - current_detent_center;
+            let mut angle_to_detent_center = -motor.foc.shaft_angle - current_detent_center;
 
             let snap_point_radians = config.position_width_radians * config.snap_point;
             let bias_radians = config.position_width_radians * config.snap_point_bias;

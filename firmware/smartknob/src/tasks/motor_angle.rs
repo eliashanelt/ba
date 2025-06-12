@@ -1,17 +1,19 @@
 use core::f32::consts::{PI, TAU};
 
-use embassy_sync::{blocking_mutex::raw::CriticalSectionRawMutex, watch::Watch};
+use embassy_futures::select::select;
+use embassy_sync::{blocking_mutex::raw::CriticalSectionRawMutex, signal::Signal, watch::Watch};
 use embassy_time::{Instant, Ticker};
 use esp_hal::time::Rate;
 
 use crate::{motor::mt6701::Mt6701, util::rate_to_duration};
 
-static WATCH: Watch<CriticalSectionRawMutex, Angle, 1> = Watch::new();
+static WATCH: Watch<CriticalSectionRawMutex, RotorState, 1> = Watch::new();
+static TRIGGER: Signal<CriticalSectionRawMutex, ()> = Signal::new();
 
 const POLLING_RATE: Rate = Rate::from_hz(100);
 
 #[derive(Clone, Copy)]
-pub struct Angle {
+pub struct RotorState {
     mechanical_angle: f32, //[rad]
     velocity: f32,         // [rad/s]
     angle: f32,            // [rad]
@@ -22,7 +24,6 @@ pub async fn motor_angle(mut mt6701: Mt6701) {
     let mut ticker = Ticker::every(rate_to_duration(POLLING_RATE));
     let mut full_rotations: i32 = 0;
     let mut last: Option<(f32, Instant)> = None;
-
     loop {
         let mechanical = mt6701.read_angle().await;
         let now = Instant::now();
@@ -42,14 +43,13 @@ pub async fn motor_angle(mut mt6701: Mt6701) {
         } else {
             0.0
         };
-        WATCH.sender().send(Angle {
+        last = Some((mechanical, now));
+        WATCH.sender().send(RotorState {
             mechanical_angle: mechanical,
             angle: continuous,
             velocity,
         });
-
-        last = Some((mechanical, now));
-
-        ticker.next().await;
+        TRIGGER.reset();
+        select(ticker.next(), TRIGGER.wait()).await;
     }
 }

@@ -24,6 +24,40 @@ struct Dq {
     q: f32,
 }
 
+#[repr(u8)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum ModulationType {
+    /// Sinusoidal PWM modulation
+    SinePwm,
+    /// Space Vector PWM modulation
+    SpaceVectorPwm,
+    /// 120° trapezoidal (six-step) modulation
+    Trapezoid120,
+    /// 150° trapezoidal modulation
+    Trapezoid150,
+}
+
+/// Operational states of the FOC motor controller
+#[repr(u8)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum MotorStatus {
+    /// Motor is not yet initialized
+    Uninitialized,
+    /// Motor initialization in progress
+    Initializing,
+    /// Initialized but not calibrated (open-loop only)
+    Uncalibrated,
+    /// Calibration in progress
+    Calibrating,
+    /// Initialized and calibrated (closed-loop possible)
+    Ready,
+    /// Recoverable error (e.g. overcurrent protection active)
+    Error,
+    /// Calibration failed (possibly recoverable)
+    CalibrationFailed,
+    /// Initialization failed (not recoverable)
+    InitializationFailed,
+}
 pub trait Sensor {
     /// Mechanical angle [rad]
     fn get_mechanical_angle(&mut self) -> f32;
@@ -69,11 +103,11 @@ pub struct FocMotor<S: Sensor> {
     // Control & modulation
     pub motion_control_type: MotionControlType,
     pub torque_control_type: TorqueControlType,
-    pub foc_modulation: FocModulationType,
+    pub foc_modulation: ModulationType,
 
     // Status & enable
     pub enabled: bool,
-    pub motor_status: FocMotorStatus,
+    pub motor_status: MotorStatus,
 
     // Sensors
     sensor: Option<S>,
@@ -89,12 +123,12 @@ pub struct FocMotor<S: Sensor> {
     pub lpf_angle: LowPassFilter,
 
     // Monitoring
-    pub monitor_port: Option<Box<dyn core::fmt::Write>>,
-    pub monitor_variables: u8,
     pub monitor_downsample: u32,
     monitor_cnt: u32,
 }
 impl Foc {
+    pub fn init(&mut self) {}
+
     pub fn update(&mut self) {
         //open loop
         if self.motion_control_type == MotionControlType::AngleOpenLoop
