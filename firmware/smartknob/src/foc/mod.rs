@@ -1,3 +1,5 @@
+use defmt::error;
+
 use crate::{
     bldc::BldcMotor,
     pid::PIDController,
@@ -113,7 +115,7 @@ pub struct Foc<S: AngleSensor> {
     pub motor_status: MotorStatus,
 
     // PWM modulation related variables
-    pub foc_modulation: ModulationType,
+    pub modulation: ModulationType,
     pub modulation_centered: bool,
 
     // Configuration structures
@@ -185,7 +187,7 @@ impl<S: AngleSensor> Default for Foc<S> {
             enabled: false,
             motor_status: MotorStatus::MotorUninitialized,
 
-            foc_modulation: ModulationType::SinePWM,
+            modulation: ModulationType::SinePWM,
             modulation_centered: true,
 
             torque_controller: TorqueControlType::Voltage,
@@ -256,22 +258,6 @@ impl<S: AngleSensor> Foc<S> {
             )
         } else {
             self.electrical_angle
-        }
-    }
-
-    pub fn update(&mut self) {
-        if self.controller == MotionControlType::AngleOpenloop
-            || self.controller == MotionControlType::VelocityOpenloop
-            || !self.enabled
-        {
-            return;
-        }
-        self.electrical_angle = self.electrical_angle();
-
-        match self.torque_controller {
-            TorqueControlType::Voltage => {}
-            TorqueControlType::DcCurrent => todo!(),
-            TorqueControlType::FocCurrent => todo!(),
         }
     }
 }

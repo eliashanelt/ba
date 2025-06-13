@@ -19,6 +19,7 @@ pub struct BldcDriver {
     pub wh: PwmPin<'static, MCPWM0, 2, true>,
     pub wl: PwmPin<'static, MCPWM0, 2, false>,
     pub dead_zone: f32,
+    pub voltage_limit: f32,
     pub pwm_frequency: Rate,
     pub phase_states: [PhaseState; 3],
 }
@@ -40,6 +41,7 @@ impl BldcDriver {
             wh,
             wl,
             dead_zone: 0.02,
+            voltage_limit: 0.0,
             pwm_frequency: PWM_FREQUENCY,
             phase_states: [PhaseState::Off; 3],
         }
@@ -47,6 +49,11 @@ impl BldcDriver {
 
     pub fn enable(&mut self) {
         self.phase_states = [PhaseState::On; 3];
+        self.set_phase_duties(0.0, 0.0, 0.0);
+    }
+
+    pub fn disable(&mut self) {
+        self.phase_states = [PhaseState::Off; 3];
         self.set_phase_duties(0.0, 0.0, 0.0);
     }
 
