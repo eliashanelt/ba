@@ -1,7 +1,7 @@
 use embassy_time::{Duration, Instant};
 use esp_hal::time::Rate;
 
-#[derive(Clone, Copy, PartialEq, Eq)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum Direction {
     CW,
     CCW,
@@ -75,6 +75,7 @@ pub fn rate_to_duration(rate: Rate) -> Duration {
     Duration::from_micros(rate.as_duration().as_micros())
 }
 
+#[derive(Clone, Copy, Debug)]
 pub struct LowPassFilter {
     tf: f32,
     y_prev: f32,

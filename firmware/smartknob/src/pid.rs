@@ -26,6 +26,7 @@ impl PIController {
 ///
 /// Uses the derivative-on-measurement technique to avoid derivative kicks on
 /// setpoint changes.
+#[derive(Clone, Copy, Debug)]
 pub struct PIDController {
     pub k_p: f32,
     integral: IntegralComponent,
@@ -72,8 +73,14 @@ impl PIDController {
         self.prev_output = Some(output);
         output
     }
+
+    pub fn reset(&mut self) {
+        self.integral.integral = 0.0;
+        self.derivative.last_measurement = None;
+    }
 }
 
+#[derive(Debug, Clone, Copy)]
 struct IntegralComponent {
     k_i: f32,
     integral: f32,
@@ -86,6 +93,7 @@ impl IntegralComponent {
     }
 }
 
+#[derive(Debug, Clone, Copy)]
 pub struct DerivativeComponent {
     pub k_d: f32,
     last_measurement: Option<f32>,
