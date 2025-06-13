@@ -4,6 +4,7 @@ pub mod led_ring;
 //pub mod motor;
 pub mod bldc;
 pub mod foc;
+pub mod mt6701;
 pub mod pid;
 pub mod sensor;
 pub mod tasks;

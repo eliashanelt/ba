@@ -5,7 +5,7 @@ use embassy_sync::{blocking_mutex::raw::CriticalSectionRawMutex, signal::Signal,
 use embassy_time::{Instant, Ticker};
 use esp_hal::time::Rate;
 
-use crate::{motor::mt6701::Mt6701, util::rate_to_duration};
+use crate::{mt6701::Mt6701, util::rate_to_duration};
 
 static WATCH: Watch<CriticalSectionRawMutex, RotorState, 1> = Watch::new();
 static TRIGGER: Signal<CriticalSectionRawMutex, ()> = Signal::new();

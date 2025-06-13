@@ -65,11 +65,11 @@ pub async fn motor_task(mut motor: BldcMotor) {
     let mut last_idle_start: u32 = 0;
     let mut last_publish: u32 = 0;
     loop {
-        motor.foc.update();
+        motor.update_foc();
         if let Ok(command) = MOTOR_CH.try_receive() {
             match command {
                 Command::Calibrate => {
-                    motor.foc.velocity_pid = pid::PIDController::new(
+                    motor.foc.pid_velocity = pid::PIDController::new(
                         FOC_PID_P,
                         FOC_PID_I,
                         FOC_PID_D,
@@ -77,7 +77,7 @@ pub async fn motor_task(mut motor: BldcMotor) {
                         Some(FOC_PID_LIMIT),
                     );
 
-                    motor.calibrate();
+                    calibrate(motor);
                     motor.foc.init();
                 }
                 Command::Config(new_config) => {
@@ -132,7 +132,7 @@ pub async fn motor_task(mut motor: BldcMotor) {
                             / (derivative_position_width_upper - derivative_position_width_lower)
                             * (config.position_width_radians - derivative_position_width_lower);
 
-                    motor.foc.velocity_pid.derivative.k_d = if config.detent_positions_count > 0 {
+                    motor.foc.pid_velocity.d = if config.detent_positions_count > 0 {
                         0.0
                     } else {
                         let min = derivative_lower_strength.min(derivative_upper_strength);
@@ -148,16 +148,16 @@ pub async fn motor_task(mut motor: BldcMotor) {
                     };
                     motor.move_to(strength);
                     for _ in 0..foc_ticks {
-                        motor.foc.update();
+                        motor.update_foc();
                         Delay.delay_ms(1);
                     }
                     motor.move_to(-strength);
                     for _ in 0..foc_ticks {
-                        motor.foc.update();
+                        motor.update_foc();
                         Delay.delay_ms(1);
                     }
                     motor.move_to(0.0);
-                    motor.foc.update();
+                    motor.update_foc();
                 }
             }
 
@@ -195,7 +195,7 @@ pub async fn motor_task(mut motor: BldcMotor) {
                     bias_radians
                 });
 
-            // number of discrete positions
+            // number of discrete positionsld
             let num_positions: i32 = config.max_position - config.min_position + 1;
 
             // move detent center and position if we’ve crossed snap thresholds
@@ -229,8 +229,8 @@ pub async fn motor_task(mut motor: BldcMotor) {
                     || (angle_to_detent_center < 0.0 && current_position == config.max_position));
 
             // apply to your motor controller
-            motor.foc.velocity_pid.limit = Some(10.0); // or: if out_of_bounds { 10 } else { 3 };
-            motor.foc.velocity_pid.k_p = if out_of_bounds {
+            motor.foc.pid_velocity.limit = Some(10.0); // or: if out_of_bounds { 10 } else { 3 };
+            motor.foc.pid_velocity.p = if out_of_bounds {
                 config.endstop_strength_unit * 4.0
             } else {
                 config.detent_strength_unit * 4.0
@@ -240,7 +240,7 @@ pub async fn motor_task(mut motor: BldcMotor) {
             } else {
                 //let input = -angle
             }
-            let torque = 0.0; //motor.foc.velocity_pid()
+            let torque = 0.0; //motor.foc.pid_velocity()
             motor.move_to(torque);
         }
     }

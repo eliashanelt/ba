@@ -1,7 +1,8 @@
 use core::f32::consts::{PI, TAU};
 
-use defmt::error;
-use embassy_time::Instant;
+use defmt::{error, info};
+use embassy_time::{Delay, Instant};
+use embedded_hal::delay::DelayNs;
 use libm::{cosf, sinf};
 
 use crate::{
@@ -9,7 +10,7 @@ use crate::{
         trap_maps::{HIGH_IMPEDANCE, TRAP_120_MAP, TRAP_150_MAP},
         AngleSensor, Foc, ModulationType, MotionControlType, TorqueControlType,
     },
-    util::{normalize_angle, RPM_TO_RADS, SQRT3, SQRT3_2},
+    util::{normalize_angle, Direction, RPM_TO_RADS, SQRT3, SQRT3_2},
 };
 
 use super::{driver::PhaseState, BldcDriver};
@@ -423,5 +424,178 @@ impl BldcMotor {
         self.open_loop_timestamp = Some(now);
 
         u_q
+    }
+
+    async fn calibrate(&mut self) -> Result<(), ()> {
+        self.foc.controller = MotionControlType::AngleOpenloop;
+        self.foc.pole_pairs = 1;
+        self.foc.zero_electric_angle = 0.0;
+        self.foc.sensor_direction = Some(Direction::CW);
+        self.init_foc();
+
+        let mut alpha = 0.0;
+
+        self.foc.voltage_limit = FOC_VOLTAGE_LIMIT;
+        self.move_to(alpha);
+
+        for _ in 0..200 {
+            self.move_to(alpha);
+            Delay.delay_ms(1);
+        }
+        let start_angle = mt6701.read_angle().await;
+
+        while alpha < 3.0 * 2.0 * PI {
+            self.move_to(alpha);
+            Delay.delay_ms(1);
+            alpha += 0.01;
+        }
+
+        let end_angle = mt6701.read_angle().await;
+
+        self.voltage_limit = 0.0;
+        self.move_to(alpha);
+
+        let moved_angle = fabsf(end_angle - start_angle);
+
+        if moved_angle < deg_to_rad(30.0) || moved_angle > deg_to_rad(180.0) {
+            error!(
+                "Unexpected sensor change: start={}, end={}, moved={}",
+                start_angle, end_angle, moved_angle
+            );
+            return Err(());
+        }
+
+        info!(
+            "sensor change: start={}, end={}, moved={}",
+            start_angle, end_angle, moved_angle
+        );
+
+        let direction = if end_angle > start_angle {
+            Direction::CW
+        } else {
+            Direction::CCW
+        };
+        info!(
+            "sensor measures positive change for positive motor rotaion: {}",
+            direction == Direction::CW
+        );
+        motor.foc.zero_electric_angle = 0.0;
+        motor.foc.sensor_direction = Some(direction);
+        motor.init_foc();
+
+        let elec_revs = 20;
+        info!("Going to measure {} electrical revolutions", elec_revs);
+        motor.foc.voltage_limit = FOC_VOLTAGE_LIMIT;
+        motor.move_to(alpha);
+        info!("Going to electrical zero");
+        let dest = alpha + 2.0 * PI;
+        while alpha < dest {
+            motor.move_to(alpha);
+            alpha += 0.03;
+        }
+        info!("Pause");
+        Delay.delay_ms(1000);
+        info!("Measuring");
+        let start_angle = f32::from(motor.sensor_direction) * mt6701.read_angle().await;
+        let dest = alpha + elec_revs as f32 * TAU;
+        while alpha < dest {
+            motor.move_to(alpha);
+            alpha += 0.03;
+        }
+        info!("Pause");
+        for _ in 0..1000 {
+            motor.move_by(alpha);
+            Delay.delay_ms(1);
+        }
+        let end_angle = f32::from(motor.sensor_direction) * mt6701.read_angle().await;
+        motor.voltage_limit = 0.0;
+        motor.move_to(alpha);
+
+        if fabsf(motor.shaft_angle - motor.target) > PI / 180.0 {
+            error!("motor did not reach target");
+            return Err(CalibrationError::X);
+        }
+        info!("moved: {}", end_angle - start_angle);
+        let elec_per_mech: f32 = elec_revs as f32 * TAU / (end_angle - start_angle);
+        info!(
+            "electrical angle / mechanical angle (i.e. pole pairs) = {}",
+            elec_per_mech
+        );
+        if elec_per_mech < 3.0 || elec_per_mech > 12.0 {
+            error!("Unexpected calculated pole pairs: {}", elec_per_mech);
+            return Err(CalibrationError::X);
+        }
+
+        let measured_pole_pairs: u32 = (elec_per_mech as f32 + 0.5) as u32;
+        info!("Pole pairs set to {}", measured_pole_pairs);
+
+        Delay.delay_ms(1000);
+
+        motor.voltage_limit = FOC_VOLTAGE_LIMIT;
+        motor.move_to(alpha);
+        let mut offset_x = 0.0;
+        let mut offset_y = 0.0;
+        let dest1 = (floorf(alpha / 2.0 * PI) + measured_pole_pairs as f32 / 2.0) * 2.0 * PI;
+        let dest2 = floorf(alpha / 2.0 * PI) * 2.0 * PI;
+
+        while alpha < dest1 {
+            motor.move_to(alpha);
+            Delay.delay_ms(200);
+            let real_elec_angle = normalize_angle(alpha);
+            let measured_elec_angle = normalize_angle(
+                f32::from(motor.sensor_direction)
+                    * measured_pole_pairs as f32
+                    * mt6701.read_angle().await,
+            );
+
+            let offset_angle = measured_elec_angle - real_elec_angle;
+            offset_x += cosf(offset_angle);
+            offset_y += sinf(offset_angle);
+            info!(
+                "{},{},{}",
+                rad_to_deg(real_elec_angle),
+                rad_to_deg(measured_elec_angle),
+                rad_to_deg(normalize_angle(offset_angle))
+            );
+            alpha += 0.4;
+        }
+        while alpha > dest2 {
+            motor.move_to(alpha);
+            Delay.delay_ms(200);
+            let real_elec_angle = normalize_angle(alpha);
+            let measured_elec_angle = normalize_angle(
+                f32::from(motor.sensor_direction)
+                    * measured_pole_pairs as f32
+                    * mt6701.read_angle().await,
+            );
+
+            let offset_angle = measured_elec_angle - real_elec_angle;
+            offset_x += cosf(offset_angle);
+            offset_y += sinf(offset_angle);
+            info!(
+                "{},{},{}",
+                rad_to_deg(real_elec_angle),
+                rad_to_deg(measured_elec_angle),
+                rad_to_deg(normalize_angle(offset_angle))
+            );
+            alpha -= 0.4;
+        }
+        motor.voltage_limit = 0.0;
+        motor.move_to(alpha);
+
+        let avg_offset_angle = atan2f(offset_y, offset_x);
+
+        motor.pole_pairs = measured_pole_pairs;
+        motor.zero_electric_angle = avg_offset_angle + 3.0 * PI / 2.0;
+        motor.voltage_limit = FOC_VOLTAGE_LIMIT;
+        motor.control_type = MotionControlType::Torque;
+
+        info!(
+            "calibration results: 0elec_angle={}, direction is cw={}",
+            motor.zero_electric_angle,
+            motor.sensor_direction == Direction::CW
+        );
+
+        Ok(())
     }
 }
