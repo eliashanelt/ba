@@ -52,8 +52,10 @@ impl PIDController {
         }
     }
 
+    pub fn update(&mut self, error: f32) -> f32 {}
+
     /// Update the PID controller, returning the new output value.
-    pub fn update(&mut self, measurement: f32, setpoint: f32, dt: f32) -> f32 {
+    pub fn _update(&mut self, measurement: f32, setpoint: f32, dt: f32) -> f32 {
         let error = measurement - setpoint;
         let mut output = self.k_p * error
             + self.integral.update(error, dt)

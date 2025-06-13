@@ -101,10 +101,10 @@ pub struct Foc<S: AngleSensor> {
     pub velocity_index_search: f32,
 
     // Motor physical parameters
-    pub phase_resistance: f32,
+    pub phase_resistance: Option<f32>,
     pub pole_pairs: i32,
     pub kv_rating: Option<f32>,
-    pub phase_inductance: f32,
+    pub phase_inductance: Option<f32>,
 
     // Limiting variables
     pub voltage_limit: f32,
@@ -175,10 +175,10 @@ impl<S: AngleSensor> Default for Foc<S> {
             voltage_sensor_align: DEF_VOLTAGE_SENSOR_ALIGN,
             velocity_index_search: DEF_INDEX_SEARCH_TARGET_VELOCITY,
 
-            phase_resistance: 0.0,
+            phase_resistance: None,
             pole_pairs: 0,
             kv_rating: None,
-            phase_inductance: 0.0,
+            phase_inductance: None,
 
             voltage_limit: DEF_POWER_SUPPLY,
             current_limit: DEF_CURRENT_LIM,

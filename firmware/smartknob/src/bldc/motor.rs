@@ -9,7 +9,7 @@ use crate::{
         trap_maps::{HIGH_IMPEDANCE, TRAP_120_MAP, TRAP_150_MAP},
         AngleSensor, Foc, ModulationType, MotionControlType, TorqueControlType,
     },
-    util::{normalize_angle, SQRT3_2},
+    util::{normalize_angle, RPM_TO_RADS, SQRT3, SQRT3_2},
 };
 
 use super::{driver::PhaseState, BldcDriver};
@@ -26,9 +26,9 @@ pub struct BldcMotor<S: AngleSensor> {
 impl<S: AngleSensor> BldcMotor<S> {
     pub fn new(
         pole_pairs: i32,
-        phase_resistance: f32,
+        phase_resistance: Option<f32>,
         kv_rating: Option<f32>,
-        phase_inductance: f32,
+        phase_inductance: Option<f32>,
         driver: BldcDriver,
     ) -> Self {
         let mut motor = Self {
@@ -71,7 +71,138 @@ impl<S: AngleSensor> BldcMotor<S> {
         self.foc.enabled = true;
     }
 
-    pub fn update(&mut self) {
+    pub fn move_to(&mut self, new_target: f32) {
+        if self.foc.controller != MotionControlType::AngleOpenloop
+            && self.foc.controller != MotionControlType::VelocityOpenloop
+        {
+            self.foc.shaft_angle = self.foc.shaft_angle();
+        }
+        self.foc.shaft_velocity = self.foc.shaft_velocity();
+
+        if !self.foc.enabled {
+            return;
+        }
+        if new_target.is_finite() {
+            self.foc.target = new_target
+        }
+
+        if let Some(kv) = self.foc.kv_rating {
+            self.foc.voltage_bemf = self.foc.shaft_velocity / (kv * SQRT3) / RPM_TO_RADS;
+        }
+
+        if true {
+            //if self.current_sense.is_none() {
+            if let Some(r) = self.foc.phase_resistance {
+                self.foc.current.q = (self.foc.voltage.q - self.foc.voltage_bemf) / r;
+            }
+        }
+
+        match self.foc.controller {
+            MotionControlType::Torque => {
+                if self.foc.torque_controller == TorqueControlType::Voltage {
+                    if let Some(r) = self.foc.phase_resistance {
+                        self.foc.voltage.q = self.foc.target * r + self.foc.voltage_bemf;
+                    } else {
+                        self.foc.voltage.q = self.foc.target;
+                    }
+
+                    self.foc.voltage.q = self
+                        .foc
+                        .voltage
+                        .q
+                        .clamp(-self.foc.voltage_limit, self.foc.voltage_limit);
+
+                    self.foc.voltage.d = if let Some(l) = self.foc.phase_inductance {
+                        (-self.foc.target
+                            * self.foc.shaft_velocity
+                            * self.foc.pole_pairs as f32
+                            * l)
+                            .clamp(-self.foc.voltage_limit, self.foc.voltage_limit)
+                    } else {
+                        0.0
+                    };
+                } else {
+                    self.foc.current_sp = self.foc.target;
+                }
+            }
+            MotionControlType::Velocity => {
+                self.foc.shaft_velocity_sp = self.foc.target;
+                self.foc.current_sp = self
+                    .foc
+                    .pid_velocity
+                    .update(self.foc.shaft_velocity_sp - self.foc.shaft_velocity);
+
+                if self.foc.torque_controller == TorqueControlType::Voltage {
+                    if let Some(r) = self.foc.phase_resistance {
+                        self.foc.voltage.q = self.foc.current_sp * r
+                            + self
+                                .foc
+                                .voltage_bemf
+                                .clamp(-self.driver.voltage_limit, self.driver.voltage_limit);
+                    } else {
+                        self.foc.voltage.q = self.foc.current_sp;
+                    }
+
+                    self.foc.voltage.d = if let Some(l) = self.foc.phase_inductance {
+                        (-self.foc.current_sp
+                            * self.foc.shaft_velocity
+                            * self.foc.pole_pairs as f32
+                            * l)
+                            .clamp(-self.driver.voltage_limit, self.driver.voltage_limit)
+                    } else {
+                        0.0
+                    };
+                }
+            }
+            MotionControlType::Angle => {
+                self.foc.shaft_angle_sp = self.foc.target;
+                self.foc.shaft_velocity_sp = self.foc.feed_forward_velocity
+                    + self
+                        .foc
+                        .p_angle
+                        .update(self.foc.shaft_angle_sp - self.foc.shaft_angle);
+                self.foc.shaft_velocity_sp = self
+                    .foc
+                    .shaft_velocity_sp
+                    .clamp(-self.foc.velocity_limit, self.foc.velocity_limit);
+                self.foc.current_sp = self
+                    .foc
+                    .pid_velocity
+                    .update(self.foc.shaft_velocity_sp - self.foc.shaft_velocity);
+
+                if self.foc.torque_controller == TorqueControlType::Voltage {
+                    if let Some(r) = self.foc.phase_resistance {
+                        self.foc.voltage.q = (self.foc.current_sp * r + self.foc.voltage_bemf)
+                            .clamp(-self.foc.voltage_limit, self.foc.voltage_limit);
+                    } else {
+                        self.foc.voltage.q = self.foc.current_sp;
+                    }
+
+                    self.foc.voltage.d = if let Some(l) = self.foc.phase_inductance {
+                        (-self.foc.current_sp
+                            * self.foc.shaft_velocity
+                            * self.foc.pole_pairs as f32
+                            * l)
+                            .clamp(-self.foc.voltage_limit, self.driver.voltage_limit)
+                    } else {
+                        0.0
+                    };
+                }
+            }
+            MotionControlType::VelocityOpenloop => {
+                self.foc.shaft_velocity_sp = self.foc.target;
+                self.foc.voltage.q = self.velocity_openloop(self.foc.shaft_velocity_sp);
+                self.foc.voltage.d = 0.0;
+            }
+            MotionControlType::AngleOpenloop => {
+                self.foc.shaft_angle_sp = self.foc.target;
+                self.foc.voltage.q = self.angle_openloop(self.foc.shaft_angle_sp);
+                self.foc.voltage.d = 0.0;
+            }
+        }
+    }
+
+    pub fn update_foc(&mut self) {
         if self.foc.controller == MotionControlType::AngleOpenloop
             || self.foc.controller == MotionControlType::VelocityOpenloop
             || !self.foc.enabled
@@ -191,5 +322,6 @@ impl<S: AngleSensor> BldcMotor<S> {
                 }
             }
         }
+        self.driver.set_phase_duties(self.u_a, self.u_b, self.u_c);
     }
 }

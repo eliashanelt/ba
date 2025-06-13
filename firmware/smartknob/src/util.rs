@@ -2,6 +2,9 @@ use embassy_time::{Duration, Instant};
 use esp_hal::time::Rate;
 
 pub const SQRT3_2: f32 = 0.86602540378;
+pub const RPM_TO_RADS: f32 = 0.10471975512;
+pub const SQRT3: f32 = 1.73205080757;
+
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum Direction {
     CW,
