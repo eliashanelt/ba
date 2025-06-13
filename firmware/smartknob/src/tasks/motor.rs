@@ -1,3 +1,5 @@
+use core::f32::consts::PI;
+
 use defmt::info;
 use embassy_sync::{blocking_mutex::raw::CriticalSectionRawMutex, channel::Channel};
 use embassy_time::Delay;
@@ -5,16 +7,39 @@ use embedded_hal::delay::DelayNs;
 use libm::fabsf;
 
 use crate::{
+    bldc::BldcMotor,
     config::{PersistentConfiguration, SmartKnobConfig},
-    motor::{
-        BldcMotor, Command, Press, DEAD_ZONE_DETENT_PERCENT, DEAD_ZONE_RAD, FOC_PID_D, FOC_PID_I,
-        FOC_PID_LIMIT, FOC_PID_OUTPUT_RAMP, FOC_PID_P, IDLE_CORRECTION_DELAY_MILLIS,
-        IDLE_CORRECTION_MAX_ANGLE_RAD, IDLE_CORRECTION_RATE_ALPHA, IDLE_VELOCITY_EWMA_ALPHA,
-        IDLE_VELOCITY_RAD_PER_SEC,
-    },
+    foc::AngleSensor,
     pid,
     util::{millis, Direction},
 };
+
+pub const FOC_PID_P: f32 = 4.0;
+pub const FOC_PID_I: f32 = 0.0;
+pub const FOC_PID_D: f32 = 0.04;
+pub const FOC_PID_OUTPUT_RAMP: f32 = 10000.0;
+pub const FOC_PID_LIMIT: f32 = 10.0;
+
+pub const DEAD_ZONE_DETENT_PERCENT: f32 = 0.2;
+pub const DEAD_ZONE_RAD: f32 = 1.0 * PI / 180.0;
+
+pub const IDLE_VELOCITY_EWMA_ALPHA: f32 = 0.001;
+pub const IDLE_VELOCITY_RAD_PER_SEC: f32 = 0.05;
+pub const IDLE_CORRECTION_DELAY_MILLIS: u32 = 500;
+pub const IDLE_CORRECTION_MAX_ANGLE_RAD: f32 = 5.0 * PI / 180.0;
+pub const IDLE_CORRECTION_RATE_ALPHA: f32 = 0.0005;
+pub const FOC_VOLTAGE_LIMIT: f32 = 5.0;
+
+pub enum Command {
+    Calibrate,
+    Config(SmartKnobConfig),
+    Haptic(Press),
+}
+
+pub enum Press {
+    Short,
+    Long,
+}
 
 static MOTOR_CH: Channel<CriticalSectionRawMutex, Command, 1> = Channel::new();
 

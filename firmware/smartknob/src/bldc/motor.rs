@@ -14,8 +14,8 @@ use crate::{
 
 use super::{driver::PhaseState, BldcDriver};
 
-pub struct BldcMotor<S: AngleSensor> {
-    pub foc: Foc<S>,
+pub struct BldcMotor {
+    pub foc: Foc,
     pub driver: BldcDriver,
     pub u_a: f32,
     pub u_b: f32,
@@ -23,7 +23,7 @@ pub struct BldcMotor<S: AngleSensor> {
     open_loop_timestamp: Option<Instant>,
 }
 
-impl<S: AngleSensor> BldcMotor<S> {
+impl BldcMotor {
     pub fn new(
         pole_pairs: i32,
         phase_resistance: Option<f32>,

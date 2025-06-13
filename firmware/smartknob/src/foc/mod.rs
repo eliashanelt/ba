@@ -1,3 +1,4 @@
+use alloc::boxed::Box;
 use defmt::error;
 
 use crate::{
@@ -80,8 +81,7 @@ pub struct DQ {
     pub q: f32,
 }
 
-#[derive(Debug, Clone, Copy)]
-pub struct Foc<S: AngleSensor> {
+pub struct Foc {
     pub target: f32,
     pub feed_forward_velocity: f32,
     pub shaft_angle: f32,
@@ -151,11 +151,11 @@ pub struct Foc<S: AngleSensor> {
     monitor_cnt: u32,
 
     // References to external components
-    pub angle_sensor: Option<S>,
+    pub angle_sensor: Option<Box<dyn AngleSensor + 'static>>,
     //pub current_sense: Option<Box<dyn CurrentSense>>,
 }
 
-impl<S: AngleSensor> Default for Foc<S> {
+impl Default for Foc {
     fn default() -> Self {
         Self {
             target: 0.0,
@@ -223,7 +223,7 @@ impl<S: AngleSensor> Default for Foc<S> {
     }
 }
 
-impl<S: AngleSensor> Foc<S> {
+impl Foc {
     pub fn new() -> Self {
         Self::default()
     }
