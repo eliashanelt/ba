@@ -324,4 +324,104 @@ impl<S: AngleSensor> BldcMotor<S> {
         }
         self.driver.set_phase_duties(self.u_a, self.u_b, self.u_c);
     }
+
+    pub fn velocity_openloop(&mut self, target_velocity: f32) -> f32 {
+        let now = Instant::now();
+
+        // Calculate sample time from last call
+        let ts = if let Some(last_timestamp) = self.open_loop_timestamp {
+            let duration = now.duration_since(last_timestamp);
+            let ts_seconds = 1_000_000 as f32 / duration.as_micros() as f32;
+
+            // Quick fix for strange cases (timer overflow + timestamp not defined)
+            if ts_seconds <= 0.0 || ts_seconds > 0.5 {
+                1e-3 // 1ms default
+            } else {
+                ts_seconds
+            }
+        } else {
+            1e-3 // 1ms default for first call
+        };
+
+        // Calculate the necessary angle to achieve target velocity
+        self.foc.shaft_angle = normalize_angle(self.foc.shaft_angle + target_velocity * ts);
+        // For display purposes
+        self.foc.shaft_velocity = target_velocity;
+
+        // Use voltage limit or current limit
+        let mut u_q = self.foc.voltage_limit;
+
+        if let Some(phase_resistance) = self.foc.phase_resistance {
+            u_q = (self.foc.current_limit * phase_resistance + self.foc.voltage_bemf.abs())
+                .clamp(-self.foc.voltage_limit, self.foc.voltage_limit);
+
+            // Recalculate the current
+            self.foc.current.q = (u_q - self.foc.voltage_bemf.abs()) / phase_resistance;
+        }
+
+        // Set the maximal allowed voltage with the necessary angle
+        let electrical_angle = self.foc.shaft_angle * self.foc.pole_pairs as f32;
+        self.set_phase_voltage(u_q, 0.0, electrical_angle);
+
+        // Save timestamp for next call
+        self.open_loop_timestamp = Some(now);
+
+        u_q
+    }
+
+    /// Open loop angle control - generates movement towards target angle with velocity limit
+    pub fn angle_openloop(&mut self, target_angle: f32) -> f32 {
+        let now = Instant::now();
+
+        // Calculate sample time from last call
+        let ts = if let Some(last_timestamp) = self.open_loop_timestamp {
+            let duration = now.duration_since(last_timestamp);
+            let ts_seconds = 1_000_000 as f32 / duration.as_micros() as f32;
+
+            // Quick fix for strange cases (timer overflow + timestamp not defined)
+            if ts_seconds <= 0.0 || ts_seconds > 0.5 {
+                1e-3 // 1ms default
+            } else {
+                ts_seconds
+            }
+        } else {
+            1e-3 // 1ms default for first call
+        };
+
+        // Calculate the necessary angle to move from current position towards target angle
+        // with maximal velocity (velocity_limit)
+        let angle_diff = target_angle - self.foc.shaft_angle;
+        let max_angle_step = self.foc.velocity_limit.abs() * ts;
+
+        if angle_diff.abs() > max_angle_step {
+            let direction = if angle_diff > 0.0 { 1.0 } else { -1.0 };
+            self.foc.shaft_angle += direction * max_angle_step;
+            self.foc.shaft_velocity = self.foc.velocity_limit * direction;
+        } else {
+            self.foc.shaft_angle = target_angle;
+            self.foc.shaft_velocity = 0.0;
+        }
+
+        // Use voltage limit or current limit
+        let mut u_q = self.foc.voltage_limit;
+
+        if let Some(phase_resistance) = self.foc.phase_resistance {
+            u_q = (self.foc.current_limit * phase_resistance + self.foc.voltage_bemf.abs())
+                .clamp(-self.foc.voltage_limit, self.foc.voltage_limit);
+
+            // Recalculate the current
+            self.foc.current.q = (u_q - self.foc.voltage_bemf.abs()) / phase_resistance;
+        }
+
+        // Set the maximal allowed voltage with the necessary angle
+        // Normalize the angle before calculating electrical angle for precision
+        let normalized_shaft_angle = normalize_angle(self.foc.shaft_angle);
+        let electrical_angle = normalized_shaft_angle * self.foc.pole_pairs as f32;
+        self.set_phase_voltage(u_q, 0.0, electrical_angle);
+
+        // Save timestamp for next call
+        self.open_loop_timestamp = Some(now);
+
+        u_q
+    }
 }
