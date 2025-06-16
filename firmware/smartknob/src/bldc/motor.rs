@@ -1,14 +1,14 @@
 use core::f32::consts::{PI, TAU};
 
 use defmt::{debug, error, info};
-use embassy_time::{Delay, Instant};
+use embassy_time::{Delay, Duration, Instant, Timer};
 use embedded_hal::delay::DelayNs;
-use libm::{atan2f, cosf, fabsf, sinf};
+use libm::{atan2f, cosf, fabsf, floorf, sinf};
 
 use crate::{
     foc::{
         trap_maps::{HIGH_IMPEDANCE, TRAP_120_MAP, TRAP_150_MAP},
-        AngleSensor, Foc, ModulationType, MotionControlType, MotorStatus, TorqueControlType,
+        Foc, ModulationType, MotionControlType, MotorStatus, TorqueControlType,
     },
     tasks::motor::FOC_VOLTAGE_LIMIT,
     util::{normalize_angle, Direction, RPM_TO_RADS, SQRT3, SQRT3_2},
@@ -430,11 +430,6 @@ impl BldcMotor {
     pub async fn absolute_zero_search(&mut self) -> Result<(), ()> {
         info!("MOT: Index search...");
 
-        let Some(angle_sensor) = self.foc.angle_sensor.as_mut() else {
-            error!("No angle sensor available for absolute zero search");
-            return Err(());
-        };
-
         // Store current limits
         let limit_vel = self.foc.velocity_limit;
         let limit_volt = self.foc.voltage_limit;
@@ -445,7 +440,7 @@ impl BldcMotor {
         self.foc.shaft_angle = 0.0;
 
         // Search for the absolute zero with small velocity
-        while angle_sensor.needs_zero_search().await && self.foc.shaft_angle < TAU {
+        while self.foc.angle_sensor.needs_zero_search && self.foc.shaft_angle < TAU {
             self.angle_openloop(1.5 * TAU);
 
             // Call update - important for some sensors not to lose count
@@ -461,13 +456,17 @@ impl BldcMotor {
         self.foc.voltage_limit = limit_volt;
 
         // Check if the zero was found
-        if angle_sensor.needs_zero_search().await {
+        if self.foc.angle_sensor.needs_zero_search {
             error!("MOT: Error: Not found!");
             Err(())
         } else {
             error!("MOT: Success!");
             Ok(())
         }
+    }
+
+    pub async fn align_sensor(&mut self) -> Result<(), ()> {
+        Ok(())
     }
 
     pub async fn init_foc(&mut self) -> Result<(), ()> {
@@ -477,23 +476,17 @@ impl BldcMotor {
         self.foc.motor_status = MotorStatus::MotorCalibrating;
 
         // If angle sensor is available, initialize it
-        if let Some(angle_sensor) = self.foc.angle_sensor.as_mut() {
-            // Align sensor first
-            let align_result = self.align_sensor().await;
-            if align_result.is_err() {
-                error!("MOT: Sensor alignment failed during FOC initialization");
-                self.foc.motor_status = MotorStatus::MotorError;
-                return Err(());
-            }
-
-            // Update sensor and set initial shaft angle
-            angle_sensor.update().await;
-            self.foc.shaft_angle = self.foc.shaft_angle().await;
-
-            info!("MOT: Initial shaft angle: {}", self.foc.shaft_angle);
-        } else {
-            info!("MOT: No angle sensor configured - running in open loop mode only");
+        // Align sensor first
+        let align_result = self.align_sensor().await;
+        if align_result.is_err() {
+            error!("MOT: Sensor alignment failed during FOC initialization");
+            self.foc.motor_status = MotorStatus::MotorError;
+            return Err(());
         }
+
+        self.foc.shaft_angle = self.foc.shaft_angle().await;
+
+        info!("MOT: Initial shaft angle: {}", self.foc.shaft_angle);
 
         // Reset all controllers to known state
         self.foc.pid_velocity.reset();
@@ -522,39 +515,37 @@ impl BldcMotor {
         info!("MOT: FOC initialization complete");
         Ok(())
     }
-    async fn calibrate(&mut self) -> Result<(), ()> {
-        let Some(angle_sensor) = self.foc.angle_sensor.as_mut() else {
-            error!("error during calibration, no angle sensor configured");
-            return Err(());
-        };
-
+    pub async fn calibrate(&mut self) -> Result<(), ()> {
         self.foc.controller = MotionControlType::AngleOpenloop;
         self.foc.pole_pairs = 1;
         self.foc.zero_electric_angle = 0.0;
         self.foc.sensor_direction = Some(Direction::CW);
-        self.init_foc();
+        if let Err(_) = self.init_foc().await {
+            error!("error init foc");
+            return Err(());
+        }
 
         let mut alpha = 0.0;
 
         self.foc.voltage_limit = FOC_VOLTAGE_LIMIT;
-        self.move_to(alpha);
+        self.move_to(alpha).await;
 
         for _ in 0..200 {
-            self.move_to(alpha);
-            Delay.delay_ms(1);
+            self.move_to(alpha).await;
+            Timer::after(Duration::from_micros(1000)).await;
         }
-        let start_angle = angle_sensor.read_angle().await;
+        let start_angle = self.foc.angle_sensor.electrical_angle().await;
 
         while alpha < 3.0 * 2.0 * PI {
-            self.move_to(alpha);
-            Delay.delay_ms(1);
+            self.move_to(alpha).await;
+            Timer::after(Duration::from_micros(1000)).await;
             alpha += 0.01;
         }
 
-        let end_angle = angle_sensor.electrical_angle().await;
+        let end_angle = self.foc.angle_sensor.electrical_angle().await;
 
         self.foc.voltage_limit = 0.0;
-        self.move_to(alpha);
+        self.move_to(alpha).await;
 
         let moved_angle = (end_angle - start_angle).abs();
 
@@ -582,35 +573,47 @@ impl BldcMotor {
         );
         self.foc.zero_electric_angle = 0.0;
         self.foc.sensor_direction = Some(direction);
-        self.init_foc();
+        if let Err(e) = self.init_foc().await {
+            error!("Error init foc: {}", e);
+        }
 
         let elec_revs = 20;
         info!("Going to measure {} electrical revolutions", elec_revs);
         self.foc.voltage_limit = FOC_VOLTAGE_LIMIT;
-        self.move_to(alpha);
+        self.move_to(alpha).await;
         info!("Going to electrical zero");
         let dest = alpha + 2.0 * PI;
         while alpha < dest {
-            self.move_to(alpha);
+            self.move_to(alpha).await;
             alpha += 0.03;
         }
         info!("Pause");
-        Delay.delay_ms(1000);
+        Timer::after(Duration::from_secs(1)).await;
         info!("Measuring");
-        let start_angle = f32::from(self.foc.sensor_direction) * mt6701.read_angle().await;
+        let sensor_direction = self
+            .foc
+            .sensor_direction
+            .map(|s| f32::from(s))
+            .unwrap_or(0.0);
+        let start_angle = sensor_direction * self.foc.angle_sensor.electrical_angle().await;
         let dest = alpha + elec_revs as f32 * TAU;
         while alpha < dest {
-            self.move_to(alpha);
+            self.move_to(alpha).await;
             alpha += 0.03;
         }
         info!("Pause");
         for _ in 0..1000 {
-            self.move_by(alpha);
-            Delay.delay_ms(1);
+            //self.move_by(alpha);
+            Timer::after(Duration::from_millis(1)).await;
         }
-        let end_angle = f32::from(motor.sensor_direction) * mt6701.read_angle().await;
+        let sensor_direction = self
+            .foc
+            .sensor_direction
+            .map(|s| f32::from(s))
+            .unwrap_or(0.0);
+        let end_angle = sensor_direction * self.foc.angle_sensor.electrical_angle().await;
         self.foc.voltage_limit = 0.0;
-        self.move_to(alpha);
+        self.move_to(alpha).await;
 
         if fabsf(self.foc.shaft_angle - self.foc.target) > PI / 180.0 {
             error!("motor did not reach target");
@@ -632,21 +635,26 @@ impl BldcMotor {
 
         Delay.delay_ms(1000);
 
-        motor.voltage_limit = FOC_VOLTAGE_LIMIT;
-        motor.move_to(alpha);
+        self.foc.voltage_limit = FOC_VOLTAGE_LIMIT;
+        self.move_to(alpha).await;
         let mut offset_x = 0.0;
         let mut offset_y = 0.0;
         let dest1 = (floorf(alpha / 2.0 * PI) + measured_pole_pairs as f32 / 2.0) * 2.0 * PI;
         let dest2 = floorf(alpha / 2.0 * PI) * 2.0 * PI;
 
         while alpha < dest1 {
-            motor.move_to(alpha);
-            Delay.delay_ms(200);
+            self.move_to(alpha).await;
+            Timer::after(Duration::from_millis(200)).await;
+            let sensor_direction = self
+                .foc
+                .sensor_direction
+                .map(|s| f32::from(s))
+                .unwrap_or(0.0);
             let real_elec_angle = normalize_angle(alpha);
             let measured_elec_angle = normalize_angle(
-                f32::from(motor.sensor_direction)
+                f32::from(sensor_direction)
                     * measured_pole_pairs as f32
-                    * mt6701.read_angle().await,
+                    * self.foc.electrical_angle().await,
             );
 
             let offset_angle = measured_elec_angle - real_elec_angle;
@@ -661,13 +669,18 @@ impl BldcMotor {
             alpha += 0.4;
         }
         while alpha > dest2 {
-            self.move_to(alpha);
-            Delay.delay_ms(200);
+            self.move_to(alpha).await;
+            Timer::after(Duration::from_millis(200)).await;
             let real_elec_angle = normalize_angle(alpha);
+            let sensor_direction = self
+                .foc
+                .sensor_direction
+                .map(|s| f32::from(s))
+                .unwrap_or(0.0);
             let measured_elec_angle = normalize_angle(
-                f32::from(self.sensor_direction)
+                f32::from(sensor_direction)
                     * measured_pole_pairs as f32
-                    * mt6701.read_angle().await,
+                    * self.foc.electrical_angle().await,
             );
 
             let offset_angle = measured_elec_angle - real_elec_angle;
@@ -682,7 +695,7 @@ impl BldcMotor {
             alpha -= 0.4;
         }
         self.foc.voltage_limit = 0.0;
-        self.move_to(alpha);
+        self.move_to(alpha).await;
 
         let avg_offset_angle = atan2f(offset_y, offset_x);
 

@@ -21,12 +21,13 @@ use libm::{atan2f, cosf, fabsf, floorf, sinf};
 use panic_rtt_target as _;
 
 use smartknob::config::SmartKnobConfig;
-use smartknob::motor::mt6701::Mt6701;
-use smartknob::pid;
+use smartknob::foc::Motor;
+use smartknob::mt6701::Mt6701;
 use smartknob::sensor::strain::Hx711;
-use smartknob::tasks::led_ring;
 use smartknob::tasks::motor_angle::motor_angle;
 use smartknob::tasks::strain_gauge::strain_gauge;
+use smartknob::tasks::{led_ring, motor_task};
+use smartknob::{bldc, pid};
 
 const PWM_FREQUENCY: Rate = Rate::from_khz(20);
 
@@ -94,9 +95,10 @@ async fn main(spawner: Spawner) {
     let dout = Input::new(p.GPIO21, InputConfig::default());
     let hx711 = Hx711::new(clk, dout);
 
-    spawner
-        .spawn(motor_task(uh, ul, wh, wl, vh, vl, mt6701))
-        .unwrap();
+    let driver = bldc::BldcDriver::init(uh, ul, wh, wl, vh, vl);
+    let motor = bldc::BldcMotor::new(1, None, None, None, driver);
+
+    spawner.spawn(motor_task(motor)).unwrap();
 
     spawner.spawn(led_ring(led_pin)).unwrap();
     spawner.spawn(strain_gauge(hx711)).unwrap();

@@ -9,7 +9,6 @@ use libm::fabsf;
 use crate::{
     bldc::BldcMotor,
     config::{PersistentConfiguration, SmartKnobConfig},
-    foc::AngleSensor,
     pid,
     util::{millis, Direction},
 };
@@ -53,7 +52,7 @@ pub async fn motor_task(mut motor: BldcMotor) {
 
     //motor.init();
     motor.foc.zero_electric_angle = persistant_config.zero_electrical_offset;
-    motor.foc.init();
+    motor.init_foc();
     motor.foc.monitor_downsample = 0;
     let mut current_detent_center = motor.foc.shaft_angle;
     let mut config = SmartKnobConfig::default();
@@ -77,8 +76,8 @@ pub async fn motor_task(mut motor: BldcMotor) {
                         Some(FOC_PID_LIMIT),
                     );
 
-                    calibrate(motor);
-                    motor.foc.init();
+                    motor.calibrate().await;
+                    motor.init_foc().await;
                 }
                 Command::Config(new_config) => {
                     if let Err(e) = new_config.check() {

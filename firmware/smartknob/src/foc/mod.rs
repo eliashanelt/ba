@@ -4,6 +4,7 @@ use defmt::error;
 use crate::{
     bldc::BldcMotor,
     pid::PIDController,
+    tasks::motor_angle::AngleSensor,
     util::{normalize_angle, Direction, LowPassFilter},
 };
 
@@ -63,22 +64,6 @@ pub enum TorqueControlType {
     Voltage,
     DcCurrent,
     FocCurrent,
-}
-pub struct AngleSensor;
-
-impl AngleSensor {
-    pub async fn electrical_angle(&self) -> f32 {
-        0.0
-    }
-    pub async fn mechanical_angle(&self) -> f32 {
-        0.0
-    }
-    pub async fn velocity(&self) -> f32 {
-        0.0
-    }
-    pub async fn needs_zero_search(&self) -> bool {
-        false
-    }
 }
 
 pub trait Motor {
@@ -161,7 +146,7 @@ pub struct Foc {
     monitor_cnt: u32,
 
     // References to external components
-    pub angle_sensor: Option<AngleSensor>,
+    pub angle_sensor: AngleSensor,
     //pub current_sense: Option<Box<dyn CurrentSense>>,
 }
 
@@ -228,7 +213,7 @@ impl Default for Foc {
             monitor_variables: MON_TARGET | MON_VOLT_Q | MON_VEL | MON_ANGLE,
             monitor_cnt: 0,
 
-            angle_sensor: None,
+            angle_sensor: AngleSensor::new(),
         }
     }
 }
@@ -239,39 +224,29 @@ impl Foc {
     }
 
     pub async fn shaft_angle(&mut self) -> f32 {
-        if let Some(sensor) = &mut self.angle_sensor {
-            let angle = self.lpf_angle.update(sensor.electrical_angle().await);
-            match self.sensor_direction {
-                Some(Direction::CW) | None => angle - self.sensor_offset,
-                Some(Direction::CCW) => -angle - self.sensor_offset,
-            }
-        } else {
-            self.shaft_angle
+        let angle = self
+            .lpf_angle
+            .update(self.angle_sensor.electrical_angle().await);
+        match self.sensor_direction {
+            Some(Direction::CW) | None => angle - self.sensor_offset,
+            Some(Direction::CCW) => -angle - self.sensor_offset,
         }
     }
 
     pub async fn shaft_velocity(&mut self) -> f32 {
-        if let Some(sensor) = &mut self.angle_sensor {
-            let velocity = self.lpf_velocity.update(sensor.velocity().await);
-            velocity
-        } else {
-            self.shaft_velocity
-        }
+        let velocity = self.lpf_velocity.update(self.angle_sensor.velocity().await);
+        velocity
     }
 
     pub async fn electrical_angle(&mut self) -> f32 {
-        if let Some(sensor) = &mut self.angle_sensor {
-            let dir_multiplier = if sensor.velocity().await > 0.0 {
-                1.0
-            } else {
-                -1.0
-            };
-            normalize_angle(
-                dir_multiplier * (self.pole_pairs as f32) * sensor.mechanical_angle().await
-                    - self.zero_electric_angle,
-            )
+        let dir_multiplier = if self.angle_sensor.velocity().await > 0.0 {
+            1.0
         } else {
-            self.electrical_angle
-        }
+            -1.0
+        };
+        normalize_angle(
+            dir_multiplier * (self.pole_pairs as f32) * self.angle_sensor.mechanical_angle().await
+                - self.zero_electric_angle,
+        )
     }
 }
