@@ -106,10 +106,6 @@ async fn main(spawner: Spawner) {
     spawner.spawn(motor_angle(mt6701)).unwrap();
 
     let mut ticker = Ticker::every(Duration::from_secs(5));
-    MOTOR_CH
-        .sender()
-        .send(smartknob::tasks::motor::Command::Calibrate)
-        .await;
     loop {
         info!("Hello World");
         ticker.next().await;

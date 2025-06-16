@@ -615,8 +615,9 @@ impl BldcMotor {
         self.foc.voltage_limit = 0.0;
         self.move_to(alpha).await;
 
-        if fabsf(self.foc.shaft_angle - self.foc.target) > PI / 180.0 {
-            error!("motor did not reach target");
+        let error = fabsf(self.foc.shaft_angle - self.foc.target);
+        if error > PI / 180.0 {
+            error!("motor did not reach target by: {}", error);
             return Err(());
         }
         info!("moved: {}", end_angle - start_angle);

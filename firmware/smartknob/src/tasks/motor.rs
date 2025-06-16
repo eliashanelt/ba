@@ -50,6 +50,7 @@ pub async fn motor_task(mut motor: BldcMotor) {
     };
 
     //motor.init();
+    motor.enable();
     motor.foc.zero_electric_angle = persistant_config.zero_electrical_offset;
     motor.init_foc().await;
     motor.foc.monitor_downsample = 0;
