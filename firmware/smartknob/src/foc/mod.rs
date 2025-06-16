@@ -64,11 +64,21 @@ pub enum TorqueControlType {
     DcCurrent,
     FocCurrent,
 }
+pub struct AngleSensor;
 
-pub trait AngleSensor {
-    fn electrical_angle(&self) -> f32;
-    fn mechanical_angle(&self) -> f32;
-    fn velocity(&self) -> f32;
+impl AngleSensor {
+    pub async fn electrical_angle(&self) -> f32 {
+        0.0
+    }
+    pub async fn mechanical_angle(&self) -> f32 {
+        0.0
+    }
+    pub async fn velocity(&self) -> f32 {
+        0.0
+    }
+    pub async fn needs_zero_search(&self) -> bool {
+        false
+    }
 }
 
 pub trait Motor {
@@ -151,7 +161,7 @@ pub struct Foc {
     monitor_cnt: u32,
 
     // References to external components
-    pub angle_sensor: Option<Box<dyn AngleSensor + 'static>>,
+    pub angle_sensor: Option<AngleSensor>,
     //pub current_sense: Option<Box<dyn CurrentSense>>,
 }
 
@@ -228,9 +238,9 @@ impl Foc {
         Self::default()
     }
 
-    pub fn shaft_angle(&mut self) -> f32 {
+    pub async fn shaft_angle(&mut self) -> f32 {
         if let Some(sensor) = &mut self.angle_sensor {
-            let angle = self.lpf_angle.update(sensor.electrical_angle());
+            let angle = self.lpf_angle.update(sensor.electrical_angle().await);
             match self.sensor_direction {
                 Some(Direction::CW) | None => angle - self.sensor_offset,
                 Some(Direction::CCW) => -angle - self.sensor_offset,
@@ -240,20 +250,24 @@ impl Foc {
         }
     }
 
-    pub fn shaft_velocity(&mut self) -> f32 {
+    pub async fn shaft_velocity(&mut self) -> f32 {
         if let Some(sensor) = &mut self.angle_sensor {
-            let velocity = self.lpf_velocity.update(sensor.velocity());
+            let velocity = self.lpf_velocity.update(sensor.velocity().await);
             velocity
         } else {
             self.shaft_velocity
         }
     }
 
-    pub fn electrical_angle(&mut self) -> f32 {
+    pub async fn electrical_angle(&mut self) -> f32 {
         if let Some(sensor) = &mut self.angle_sensor {
-            let dir_multiplier = if sensor.velocity() > 0.0 { 1.0 } else { -1.0 };
+            let dir_multiplier = if sensor.velocity().await > 0.0 {
+                1.0
+            } else {
+                -1.0
+            };
             normalize_angle(
-                dir_multiplier * (self.pole_pairs as f32) * sensor.mechanical_angle()
+                dir_multiplier * (self.pole_pairs as f32) * sensor.mechanical_angle().await
                     - self.zero_electric_angle,
             )
         } else {
