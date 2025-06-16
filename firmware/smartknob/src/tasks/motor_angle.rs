@@ -1,7 +1,11 @@
 use crate::{mt6701::Mt6701, util::rate_to_duration};
 use core::f32::consts::{PI, TAU};
 use embassy_futures::select::{select, Either};
-use embassy_sync::{blocking_mutex::raw::CriticalSectionRawMutex, signal::Signal, watch::Watch};
+use embassy_sync::{
+    blocking_mutex::raw::CriticalSectionRawMutex,
+    signal::Signal,
+    watch::{Receiver, Watch},
+};
 use embassy_time::{Instant, Ticker};
 use esp_hal::time::Rate;
 
@@ -11,40 +15,39 @@ const POLLING_RATE: Rate = Rate::from_hz(100);
 
 pub struct AngleSensor {
     pub needs_zero_search: bool,
+    receiver: Receiver<'static, CriticalSectionRawMutex, RotorState, 1>,
 }
 
 impl AngleSensor {
     pub fn new() -> Self {
         Self {
             needs_zero_search: true,
+            receiver: WATCH.receiver().unwrap(),
         }
     }
 
-    pub async fn electrical_angle(&self) -> f32 {
+    pub async fn electrical_angle(&mut self) -> f32 {
         TRIGGER.signal(());
-        let mut receiver = WATCH.receiver().unwrap();
-        receiver.changed().await;
-        let new_state = receiver.get().await;
+        self.receiver.changed().await;
+        let new_state = self.receiver.get().await;
 
         new_state.angle
     }
 
-    pub async fn mechanical_angle(&self) -> f32 {
+    pub async fn mechanical_angle(&mut self) -> f32 {
         TRIGGER.signal(());
 
-        let mut receiver = WATCH.receiver().unwrap();
-        receiver.changed().await;
-        let state = receiver.get().await;
+        self.receiver.changed().await;
+        let state = self.receiver.get().await;
 
         state.mechanical_angle
     }
 
-    pub async fn velocity(&self) -> f32 {
+    pub async fn velocity(&mut self) -> f32 {
         TRIGGER.signal(());
 
-        let mut receiver = WATCH.receiver().unwrap();
-        receiver.changed().await;
-        let state = receiver.get().await;
+        self.receiver.changed().await;
+        let state = self.receiver.get().await;
 
         state.velocity
     }

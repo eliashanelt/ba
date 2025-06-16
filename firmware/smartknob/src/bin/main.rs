@@ -24,6 +24,7 @@ use smartknob::config::SmartKnobConfig;
 use smartknob::foc::Motor;
 use smartknob::mt6701::Mt6701;
 use smartknob::sensor::strain::Hx711;
+use smartknob::tasks::motor::MOTOR_CH;
 use smartknob::tasks::motor_angle::motor_angle;
 use smartknob::tasks::strain_gauge::strain_gauge;
 use smartknob::tasks::{led_ring, motor_task};
@@ -105,6 +106,10 @@ async fn main(spawner: Spawner) {
     spawner.spawn(motor_angle(mt6701)).unwrap();
 
     let mut ticker = Ticker::every(Duration::from_secs(5));
+    MOTOR_CH
+        .sender()
+        .send(smartknob::tasks::motor::Command::Calibrate)
+        .await;
     loop {
         info!("Hello World");
         ticker.next().await;

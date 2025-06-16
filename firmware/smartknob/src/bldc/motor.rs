@@ -603,7 +603,7 @@ impl BldcMotor {
         }
         info!("Pause");
         for _ in 0..1000 {
-            //self.move_by(alpha);
+            self.move_to(alpha).await;
             Timer::after(Duration::from_millis(1)).await;
         }
         let sensor_direction = self

@@ -2,8 +2,7 @@ use core::f32::consts::PI;
 
 use defmt::info;
 use embassy_sync::{blocking_mutex::raw::CriticalSectionRawMutex, channel::Channel};
-use embassy_time::Delay;
-use embedded_hal::delay::DelayNs;
+use embassy_time::{Duration, Timer};
 use libm::fabsf;
 
 use crate::{
@@ -40,7 +39,7 @@ pub enum Press {
     Long,
 }
 
-static MOTOR_CH: Channel<CriticalSectionRawMutex, Command, 1> = Channel::new();
+pub static MOTOR_CH: Channel<CriticalSectionRawMutex, Command, 1> = Channel::new();
 
 #[embassy_executor::task]
 pub async fn motor_task(mut motor: BldcMotor) {
@@ -52,7 +51,7 @@ pub async fn motor_task(mut motor: BldcMotor) {
 
     //motor.init();
     motor.foc.zero_electric_angle = persistant_config.zero_electrical_offset;
-    motor.init_foc();
+    motor.init_foc().await;
     motor.foc.monitor_downsample = 0;
     let mut current_detent_center = motor.foc.shaft_angle;
     let mut config = SmartKnobConfig::default();
@@ -64,7 +63,7 @@ pub async fn motor_task(mut motor: BldcMotor) {
     let mut last_idle_start: u32 = 0;
     let mut last_publish: u32 = 0;
     loop {
-        motor.update_foc();
+        motor.update_foc().await;
         if let Ok(command) = MOTOR_CH.try_receive() {
             match command {
                 Command::Calibrate => {
@@ -145,18 +144,18 @@ pub async fn motor_task(mut motor: BldcMotor) {
                         Press::Short => (5.0, 3),
                         Press::Long => (20.0, 6),
                     };
-                    motor.move_to(strength);
+                    motor.move_to(strength).await;
                     for _ in 0..foc_ticks {
-                        motor.update_foc();
-                        Delay.delay_ms(1);
+                        motor.update_foc().await;
+                        Timer::after(Duration::from_millis(1)).await;
                     }
-                    motor.move_to(-strength);
+                    motor.move_to(-strength).await;
                     for _ in 0..foc_ticks {
-                        motor.update_foc();
-                        Delay.delay_ms(1);
+                        motor.update_foc().await;
+                        Timer::after(Duration::from_millis(1)).await;
                     }
-                    motor.move_to(0.0);
-                    motor.update_foc();
+                    motor.move_to(0.0).await;
+                    motor.update_foc().await;
                 }
             }
 
@@ -235,12 +234,12 @@ pub async fn motor_task(mut motor: BldcMotor) {
                 config.detent_strength_unit * 4.0
             };
             if fabsf(motor.foc.shaft_velocity) > 60.0 {
-                motor.move_to(0.0);
+                motor.move_to(0.0).await;
             } else {
                 //let input = -angle
             }
             let torque = 0.0; //motor.foc.pid_velocity()
-            motor.move_to(torque);
+            motor.move_to(torque).await;
         }
     }
 }
