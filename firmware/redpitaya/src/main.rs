@@ -9,6 +9,7 @@ use std::{
 use embedded_hal::i2c::I2c;
 use linux_embedded_hal::I2cdev;
 use memmap2::{MmapMut, MmapOptions};
+use std::process::Command;
 
 const FREQ_HZ: f64 = 125_000_000.0; // 125 MHz
 const BASE_ADDR: u64 = 0x4200_0000; // same physical address you used
@@ -30,6 +31,10 @@ fn main() -> io::Result<()> {
         ),
         _ => (1, 1.0),
     };
+
+    let output = Command::new("fpgautil -b /root/fpga.bit.bin")
+        .output()
+        .expect("failed to execute command");
 
     let phase_inc: u32 = (2.147_482 * freq_in) as u32; // same constant factor
     let ncycles: u32 = 1 << log2_ncycles;

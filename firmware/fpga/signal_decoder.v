@@ -24,7 +24,7 @@ module signal_decoder #
 (
     parameter ADC_WIDTH = 14,
     parameter AXIS_TDATA_WIDTH = 32,
-    parameter BIT_OFFSET = 4 // 4 for +/-20 V or 0 for +/-1 V ADC voltage range setting
+    parameter BIT_OFFSET = 0 // 4 for +/-20 V or 0 for +/-1 V ADC voltage range setting
 )
 (
     (* X_INTERFACE_PARAMETER = "FREQ_HZ 125000000" *)
