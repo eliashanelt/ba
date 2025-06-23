@@ -516,6 +516,7 @@ impl BldcMotor {
         Ok(())
     }
     pub async fn calibrate(&mut self) -> Result<(), ()> {
+        info!("STARTING CALIBRATION");
         self.foc.controller = MotionControlType::AngleOpenloop;
         self.foc.pole_pairs = 1;
         self.foc.zero_electric_angle = 0.0;

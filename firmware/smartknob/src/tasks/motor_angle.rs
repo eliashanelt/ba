@@ -1,5 +1,6 @@
 use crate::{mt6701::Mt6701, util::rate_to_duration};
 use core::f32::consts::{PI, TAU};
+use defmt::info;
 use embassy_futures::select::{select, Either};
 use embassy_sync::{
     blocking_mutex::raw::CriticalSectionRawMutex,
@@ -11,7 +12,7 @@ use esp_hal::time::Rate;
 
 static WATCH: Watch<CriticalSectionRawMutex, RotorState, 1> = Watch::new();
 static TRIGGER: Signal<CriticalSectionRawMutex, ()> = Signal::new();
-const POLLING_RATE: Rate = Rate::from_hz(100);
+const POLLING_RATE: Rate = Rate::from_hz(50);
 
 pub struct AngleSensor {
     pub needs_zero_search: bool,
@@ -30,7 +31,7 @@ impl AngleSensor {
         TRIGGER.signal(());
         self.receiver.changed().await;
         let new_state = self.receiver.get().await;
-
+        info!("measured angle: {}", new_state.angle);
         new_state.angle
     }
 
@@ -69,7 +70,7 @@ pub async fn motor_angle(mut mt6701: Mt6701) {
     loop {
         let mechanical = mt6701.read_angle().await;
         let now = Instant::now();
-
+        let prev_rotations = full_rotations;
         if let Some((prev_angle, _prev_time)) = last {
             let delta = mechanical - prev_angle;
             if delta > PI {
@@ -82,22 +83,24 @@ pub async fn motor_angle(mut mt6701: Mt6701) {
         let continuous = full_rotations as f32 * TAU + mechanical;
         let velocity = if let Some((prev_angle, prev_time)) = last {
             let dt = 1_000_000.0 / now.duration_since(prev_time).as_micros() as f32;
-            let prev_continuous = full_rotations as f32 * TAU + prev_angle;
+            let prev_continuous = prev_rotations as f32 * TAU + prev_angle;
             (continuous - prev_continuous) / dt
         } else {
             0.0
         };
-
         last = Some((mechanical, now));
-
+        info!(
+            "mech: {} | cont: {} | vel: {}",
+            mechanical, continuous, velocity
+        );
         WATCH.sender().send(RotorState {
             mechanical_angle: mechanical,
             angle: continuous,
             velocity,
         });
-
+        ticker.next().await;
         // Wait for either the next tick or a trigger
-        match select(ticker.next(), TRIGGER.wait()).await {
+        /*match select(ticker.next(), TRIGGER.wait()).await {
             Either::First(_) => {
                 // Regular polling tick
             }
@@ -105,6 +108,6 @@ pub async fn motor_angle(mut mt6701: Mt6701) {
                 // Triggered measurement - loop again immediately
                 TRIGGER.reset();
             }
-        }
+        }*/
     }
 }
