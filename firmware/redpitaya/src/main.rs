@@ -27,18 +27,12 @@ struct RpRegs {
 }
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
-    let args: Vec<String> = env::args().collect();
-    let (log2_ncycles, freq_in) = match args.as_slice() {
-        [_, l2, f] => (
-            l2.parse::<u32>().unwrap_or(1),
-            f.parse::<f64>().unwrap_or(1.0),
-        ),
-        _ => (1, 1.0),
-    };
-
     let output = Command::new("fpgautil -b /root/fpga.bit.bin")
         .output()
         .expect("failed to execute command");
+
+    println!("{}\n{}\nerror: {}", output.stdout, output.stderr, output.exit_ok());
+    return Ok(())
 
     let phase_inc: u32 = (2.147_482 * freq_in) as u32; // same constant factor
     let ncycles: u32 = 1 << log2_ncycles;
@@ -68,16 +62,20 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         let Ok(ethernet_connected) = is_ethernet_connected(ETHERNET_INTERFACE) else {
             continue;
         };
-        let msg = Message::Status(Status { ethernet_connected });
-        println!("{:?}", msg);
+
+        let connection_status = if ethernet_connected {
+            ConnectionStatus::EthernetConnected
+        } else {
+            ConnectionStatus::EthernetDisconnected
+        };
+        let msg = RedpitayaStatus {
+            connection_status,
+            fpga_status: todo!(),
+            frequency: todo!(),
+        };
         let msg_bytes = postcard::to_stdvec(&msg)?;
         spi.transfer(&mut SpidevTransfer::write(&msg_bytes))?;
-        std::thread::sleep(Duration::from_secs(5));
-    }
 
-    return Ok(());
-
-    loop {
         let count: u32 = unsafe { core::ptr::read_volatile(&(*regs).count) };
         let freq_est = (ncycles as f64 / count as f64) * FREQ_HZ;
         print!(
@@ -89,6 +87,12 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     }
 }
 
+fn random_array() -> [f32; 128] {
+    let mut rng = thread_rng();
+    let uniform = Uniform::new(-1.0f32, 1.0f32);
+    std::array::from_fn(|_| uniform.sample(&mut rng))
+}
+
 fn is_ethernet_connected(interface: &str) -> io::Result<bool> {
     let path = format!("/sys/class/net/{}/carrier", interface);
     let contents = std::fs::read_to_string(path)?;
@@ -96,11 +100,26 @@ fn is_ethernet_connected(interface: &str) -> io::Result<bool> {
 }
 
 #[derive(Serialize, Deserialize, Debug, PartialEq)]
-enum Message {
-    Status(Status),
+struct RedpitayaStatus {
+    connection_status: ConnectionStatus,
+    fpga_status: FpgaStatus,
+    frequency: f32, //[Hz]
 }
 
 #[derive(Serialize, Deserialize, Debug, PartialEq)]
-struct Status {
-    ethernet_connected: bool,
+enum ConnectionStatus {
+    EthernetConnected,
+    EthernetDisconnected,
 }
+
+#[derive(Serialize, Deserialize, Debug, PartialEq)]
+enum FpgaStatus {
+    BinNotFound,
+    ProgrammingError,
+}
+
+#[derive(Serialize, Deserialize, Debug, PartialEq)]
+struct ButtonSettings {}
+
+#[derive(Serialize, Deserialize, Debug, PartialEq)]
+struct SystemStatus {}

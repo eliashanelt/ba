@@ -156,11 +156,12 @@ fn six_step_commutation(angle: f32, amplitude: f32) -> (u8, u8, u8) {
 use defmt::info;
 use embassy_executor::Spawner;
 use embassy_time::{Duration, Timer};
-use embedded_hal::pwm::SetDutyCycle;
+use embedded_hal::{pwm::SetDutyCycle, spi::SpiBus};
 use esp_hal::{
     clock::CpuClock,
     gpio::{Io, Level, Output},
     mcpwm::{operator::PwmPinConfig, timer::PwmWorkingMode, McPwm, PeripheralClockConfig},
+    spi,
     time::Rate,
     timer::timg::TimerGroup,
 };
@@ -247,7 +248,14 @@ async fn main(spawner: Spawner) {
     let amplitude_ramp_rate = 0.001; // Gradual amplitude increase
     let angle_increment = TAU * MOTOR_SPEED / 1000.0;
 
+    let mut spi = spi::slave::Spi::new(p.SPI2, spi::Mode::_0)
+        .with_sck(p.GPIO45)
+        .with_mosi(p.GPIO46)
+        .with_miso(p.GPIO47)
+        .with_cs(p.GPIO48);
+
     loop {
+        continue;
         // Gradually ramp up amplitude for smooth startup
         if current_amplitude < target_amplitude {
             current_amplitude += amplitude_ramp_rate;
