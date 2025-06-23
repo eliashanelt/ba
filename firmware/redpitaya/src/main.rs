@@ -6,14 +6,18 @@ use std::{
     time::Duration,
 };
 
-use embedded_hal::i2c::I2c;
-use linux_embedded_hal::I2cdev;
 use memmap2::{MmapMut, MmapOptions};
 use std::process::Command;
+
+use embedded_hal::spi::SpiBus;
+use embedded_hal::spi::SpiDevice;
+use linux_embedded_hal::spidev::{SpiModeFlags, Spidev, SpidevOptions, SpidevTransfer};
+use serde::{Deserialize, Serialize};
 
 const FREQ_HZ: f64 = 125_000_000.0; // 125 MHz
 const BASE_ADDR: u64 = 0x4200_0000; // same physical address you used
 const PAGE_SIZE: usize = 4096; // assumes 4 KiB pages on ARM
+const ETHERNET_INTERFACE: &str = "eth0";
 
 #[repr(C)]
 struct RpRegs {
@@ -22,7 +26,7 @@ struct RpRegs {
     config: u32,    // 0x08 – R/W   {phase_inc[31:5], log2_Ncycles[4:0]}
 }
 
-fn main() -> io::Result<()> {
+fn main() -> Result<(), Box<dyn std::error::Error>> {
     let args: Vec<String> = env::args().collect();
     let (log2_ncycles, freq_in) = match args.as_slice() {
         [_, l2, f] => (
@@ -51,12 +55,27 @@ fn main() -> io::Result<()> {
     let cfg_word = (log2_ncycles & 0x1F) | (phase_inc << 5);
     unsafe { core::ptr::write_volatile(&mut (*regs).config, cfg_word) };
 
-    let mut i2c = I2cdev::new("/dev/i2c-0")?;
-    let addr: u8 = 0x68;
-    let mut buf = [0u8; 2];
-    i2c.write_read(addr, &[0x0F], &mut buf)
-        .expect("Failed to i2c::write_read");
-    println!("Read 0x0F → {:02X} {:02X}", buf[0], buf[1]);
+    let mut spi = Spidev::open("/dev/spidev1.0")?;
+    let options = SpidevOptions::new()
+        .bits_per_word(8)
+        .max_speed_hz(1_000_000) // 1 MHz
+        .mode(SpiModeFlags::SPI_MODE_0)
+        .build();
+    spi.configure(&options)?;
+
+    println!("transfered");
+    loop {
+        let Ok(ethernet_connected) = is_ethernet_connected(ETHERNET_INTERFACE) else {
+            continue;
+        };
+        let msg = Message::Status(Status { ethernet_connected });
+        println!("{:?}", msg);
+        let msg_bytes = postcard::to_stdvec(&msg)?;
+        spi.transfer(&mut SpidevTransfer::write(&msg_bytes))?;
+        std::thread::sleep(Duration::from_secs(5));
+    }
+
+    return Ok(());
 
     loop {
         let count: u32 = unsafe { core::ptr::read_volatile(&(*regs).count) };
@@ -68,4 +87,20 @@ fn main() -> io::Result<()> {
         io::stdout().flush().ok();
         sleep(Duration::from_secs(3));
     }
+}
+
+fn is_ethernet_connected(interface: &str) -> io::Result<bool> {
+    let path = format!("/sys/class/net/{}/carrier", interface);
+    let contents = std::fs::read_to_string(path)?;
+    Ok(contents.trim() == "1")
+}
+
+#[derive(Serialize, Deserialize, Debug, PartialEq)]
+enum Message {
+    Status(Status),
+}
+
+#[derive(Serialize, Deserialize, Debug, PartialEq)]
+struct Status {
+    ethernet_connected: bool,
 }
