@@ -12,6 +12,9 @@ use std::process::Command;
 use embedded_hal::spi::SpiBus;
 use embedded_hal::spi::SpiDevice;
 use linux_embedded_hal::spidev::{SpiModeFlags, Spidev, SpidevOptions, SpidevTransfer};
+
+use rand_distr::{Distribution, Uniform};
+
 use serde::{Deserialize, Serialize};
 
 const FREQ_HZ: f64 = 125_000_000.0; // 125 MHz
@@ -27,12 +30,26 @@ struct RpRegs {
 }
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
-    let output = Command::new("fpgautil -b /root/fpga.bit.bin")
-        .output()
-        .expect("failed to execute command");
+    let output = Command::new("fpgautil")
+        .args(&["-b", "/root/fpga.bit.bin"])
+        .output() // returns io::Result<Output>
+        .expect("Failed to launch fpgautil");
 
-    println!("{}\n{}\nerror: {}", output.stdout, output.stderr, output.exit_ok());
-    return Ok(())
+    // check if the command itself returned a zero exit code
+    if output.status.success() {
+        println!("✅ FPGA programmed successfully!");
+    } else {
+        // non-zero exit code → failure
+        let code = output.status.code().map_or(-1, |c| c);
+        eprintln!("❌ fpgautil failed (exit code {})", code);
+        eprintln!("stdout:\n{}", String::from_utf8_lossy(&output.stdout));
+        eprintln!("stderr:\n{}", String::from_utf8_lossy(&output.stderr));
+        // you can also return an Err here if you want to bail out
+    }
+
+    return Ok(());
+
+    let (log2_ncycles, freq_in) = (1, 1.0);
 
     let phase_inc: u32 = (2.147_482 * freq_in) as u32; // same constant factor
     let ncycles: u32 = 1 << log2_ncycles;
@@ -88,8 +105,8 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 }
 
 fn random_array() -> [f32; 128] {
-    let mut rng = thread_rng();
-    let uniform = Uniform::new(-1.0f32, 1.0f32);
+    let mut rng = rand::thread_rng();
+    let uniform = Uniform::new(-1.0f32, 1.0f32).expect("try create uniform");
     std::array::from_fn(|_| uniform.sample(&mut rng))
 }
 
