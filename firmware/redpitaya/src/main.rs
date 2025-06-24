@@ -1,7 +1,7 @@
 use std::{
     env,
     fs::OpenOptions,
-    io::{self, Write},
+    io::{self, Read, Write},
     thread::sleep,
     time::Duration,
 };
@@ -85,14 +85,23 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         } else {
             ConnectionStatus::EthernetDisconnected
         };
+
+        let wave_form = random_array();
         let msg = RedpitayaStatus {
             connection_status,
-            fpga_status: todo!(),
-            frequency: todo!(),
+            fpga_status: FpgaStatus::BinNotFound,
+            frequency: 69.0,
+            wave_form,
         };
         let msg_bytes = postcard::to_stdvec(&msg)?;
+        let receive_buffer = Vec::with_capacity(1024);
+        let mut transfers = [
+            &mut SpidevTransfer::write(&msg_bytes),
+            &mut SpidevTransfer::read(&mut receive_buffer),
+        ];
         spi.transfer(&mut SpidevTransfer::write(&msg_bytes))?;
 
+        println!("{receive_buffer:?}");
         let count: u32 = unsafe { core::ptr::read_volatile(&(*regs).count) };
         let freq_est = (ncycles as f64 / count as f64) * FREQ_HZ;
         print!(
@@ -121,6 +130,7 @@ struct RedpitayaStatus {
     connection_status: ConnectionStatus,
     fpga_status: FpgaStatus,
     frequency: f32, //[Hz]
+    wave_form: [f32; 128],
 }
 
 #[derive(Serialize, Deserialize, Debug, PartialEq)]

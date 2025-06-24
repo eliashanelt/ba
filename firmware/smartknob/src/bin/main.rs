@@ -159,6 +159,7 @@ use embassy_time::{Duration, Timer};
 use embedded_hal::{pwm::SetDutyCycle, spi::SpiBus};
 use esp_hal::{
     clock::CpuClock,
+    dma_buffers,
     gpio::{Io, Level, Output},
     mcpwm::{operator::PwmPinConfig, timer::PwmWorkingMode, McPwm, PeripheralClockConfig},
     spi,
@@ -248,13 +249,32 @@ async fn main(spawner: Spawner) {
     let amplitude_ramp_rate = 0.001; // Gradual amplitude increase
     let angle_increment = TAU * MOTOR_SPEED / 1000.0;
 
+    let (mut rx_buf, rx_desc, mut tx_buf, tx_desc) = dma_buffers!(1024);
+
+    tx_buf.copy_from_slice(b"Hello from slave!\0\0\0\0");
+
     let mut spi = spi::slave::Spi::new(p.SPI2, spi::Mode::_0)
-        .with_sck(p.GPIO45)
-        .with_mosi(p.GPIO46)
+        .with_cs(p.GPIO45)
+        .with_sck(p.GPIO46)
         .with_miso(p.GPIO47)
-        .with_cs(p.GPIO48);
+        .with_mosi(p.GPIO48)
+        .with_dma(p.DMA_CH0, rx_desc, tx_desc);
+
+    let mut transfer = spi
+        .transfer(&mut rx_buf, &tx_buf)
+        .expect("failed to start transfer");
+
+    // 6) Wait for the master to finish the transaction
+    transfer.wait().expect("SPI transfer error");
 
     loop {
+        let mut transfer = spi
+            .transfer(&mut rx_buf, &tx_buf)
+            .expect("failed to start transfer");
+
+        // 6) Wait for the master to finish the transaction
+        transfer.wait().expect("SPI transfer error");
+        Timer::after(Duration::from_secs(1)).await;
         continue;
         // Gradually ramp up amplitude for smooth startup
         if current_amplitude < target_amplitude {
