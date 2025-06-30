@@ -102,11 +102,9 @@ set_property used_in_implementation false [get_files -all c:/Users/elias/dev/ba/
 set_property used_in_implementation false [get_files -all c:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ip/system_clk_wiz_0_0/system_clk_wiz_0_0_board.xdc]
 set_property used_in_implementation false [get_files -all c:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ip/system_clk_wiz_0_0/system_clk_wiz_0_0.xdc]
 set_property used_in_implementation false [get_files -all c:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ip/system_clk_wiz_0_0/system_clk_wiz_0_0_ooc.xdc]
-set_property used_in_implementation false [get_files -all c:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ip/system_dds_compiler_0_0/system_dds_compiler_0_0_ooc.xdc]
 set_property used_in_implementation false [get_files -all c:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ip/system_auto_pc_0/system_auto_pc_0_ooc.xdc]
 set_property used_in_implementation false [get_files -all c:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ip/system_rst_ps7_0_125M_0/system_rst_ps7_0_125M_0_board.xdc]
 set_property used_in_implementation false [get_files -all c:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ip/system_rst_ps7_0_125M_0/system_rst_ps7_0_125M_0.xdc]
-set_property used_in_implementation false [get_files -all c:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ip/system_rst_ps7_0_125M_0/system_rst_ps7_0_125M_0_ooc.xdc]
 set_property used_in_implementation false [get_files -all C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/system_ooc.xdc]
 
 OPTRACE "Adding files" END { }

@@ -2,12 +2,13 @@
 # Vivado v2020.1 (64-bit)
 # SW Build 2902540 on Wed May 27 19:54:49 MDT 2020
 # IP Build 2902112 on Wed May 27 22:43:36 MDT 2020
-# Start of session at: Thu Jun 19 18:47:05 2025
-# Process ID: 3020
+# Start of session at: Mon Jun 30 13:57:36 2025
+# Process ID: 23500
 # Current directory: C:/Users/elias/dev/ba/firmware/project
-# Command line: vivado.exe -gui_launcher_event rodinguilauncherevent12492 C:\Users\elias\dev\ba\firmware\project\redpitaya.xpr
+# Command line: vivado.exe -gui_launcher_event rodinguilauncherevent7324 C:\Users\elias\dev\ba\firmware\project\redpitaya.xpr
 # Log file: C:/Users/elias/dev/ba/firmware/project/vivado.log
 # Journal file: C:/Users/elias/dev/ba/firmware/project\vivado.jou
 #-----------------------------------------------------------
 start_gui
 open_project C:/Users/elias/dev/ba/firmware/project/redpitaya.xpr
+update_compile_order -fileset sources_1

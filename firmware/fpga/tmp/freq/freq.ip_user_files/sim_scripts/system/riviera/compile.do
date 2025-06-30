@@ -20,12 +20,12 @@ vlib riviera/xbip_dsp48_wrapper_v3_0_4
 vlib riviera/xbip_dsp48_addsub_v3_0_6
 vlib riviera/xbip_dsp48_multadd_v3_0_6
 vlib riviera/dds_compiler_v6_0_20
-vlib riviera/proc_sys_reset_v5_0_13
 vlib riviera/generic_baseblocks_v2_1_0
 vlib riviera/fifo_generator_v13_2_5
 vlib riviera/axi_data_fifo_v2_1_20
 vlib riviera/axi_register_slice_v2_1_21
 vlib riviera/axi_protocol_converter_v2_1_21
+vlib riviera/proc_sys_reset_v5_0_13
 
 vmap xilinx_vip riviera/xilinx_vip
 vmap xpm riviera/xpm
@@ -46,12 +46,12 @@ vmap xbip_dsp48_wrapper_v3_0_4 riviera/xbip_dsp48_wrapper_v3_0_4
 vmap xbip_dsp48_addsub_v3_0_6 riviera/xbip_dsp48_addsub_v3_0_6
 vmap xbip_dsp48_multadd_v3_0_6 riviera/xbip_dsp48_multadd_v3_0_6
 vmap dds_compiler_v6_0_20 riviera/dds_compiler_v6_0_20
-vmap proc_sys_reset_v5_0_13 riviera/proc_sys_reset_v5_0_13
 vmap generic_baseblocks_v2_1_0 riviera/generic_baseblocks_v2_1_0
 vmap fifo_generator_v13_2_5 riviera/fifo_generator_v13_2_5
 vmap axi_data_fifo_v2_1_20 riviera/axi_data_fifo_v2_1_20
 vmap axi_register_slice_v2_1_21 riviera/axi_register_slice_v2_1_21
 vmap axi_protocol_converter_v2_1_21 riviera/axi_protocol_converter_v2_1_21
+vmap proc_sys_reset_v5_0_13 riviera/proc_sys_reset_v5_0_13
 
 vlog -work xilinx_vip  -sv2k12 "+incdir+C:/Xilinx/Vivado/2020.1/data/xilinx_vip/include" \
 "C:/Xilinx/Vivado/2020.1/data/xilinx_vip/hdl/axi4stream_vip_axi4streampc.sv" \
@@ -141,15 +141,6 @@ vcom -work dds_compiler_v6_0_20 -93 \
 vcom -work xil_defaultlib -93 \
 "../../../bd/system/ip/system_dds_compiler_0_0/sim/system_dds_compiler_0_0.vhd" \
 
-vcom -work proc_sys_reset_v5_0_13 -93 \
-"../../../../freq.srcs/sources_1/bd/system/ipshared/8842/hdl/proc_sys_reset_v5_0_vh_rfs.vhd" \
-
-vcom -work xil_defaultlib -93 \
-"../../../bd/system/ip/system_rst_ps7_0_125M_0/sim/system_rst_ps7_0_125M_0.vhd" \
-
-vlog -work xil_defaultlib  -v2k5 "+incdir+../../../../freq.srcs/sources_1/bd/system/ipshared/ec67/hdl" "+incdir+../../../../freq.srcs/sources_1/bd/system/ipshared/6b56/hdl" "+incdir+../../../../freq.srcs/sources_1/bd/system/ipshared/8b3d" "+incdir+C:/Xilinx/Vivado/2020.1/data/xilinx_vip/include" \
-"../../../bd/system/sim/system.v" \
-
 vlog -work generic_baseblocks_v2_1_0  -v2k5 "+incdir+../../../../freq.srcs/sources_1/bd/system/ipshared/ec67/hdl" "+incdir+../../../../freq.srcs/sources_1/bd/system/ipshared/6b56/hdl" "+incdir+../../../../freq.srcs/sources_1/bd/system/ipshared/8b3d" "+incdir+C:/Xilinx/Vivado/2020.1/data/xilinx_vip/include" \
 "../../../../freq.srcs/sources_1/bd/system/ipshared/b752/hdl/generic_baseblocks_v2_1_vl_rfs.v" \
 
@@ -173,6 +164,15 @@ vlog -work axi_protocol_converter_v2_1_21  -v2k5 "+incdir+../../../../freq.srcs/
 
 vlog -work xil_defaultlib  -v2k5 "+incdir+../../../../freq.srcs/sources_1/bd/system/ipshared/ec67/hdl" "+incdir+../../../../freq.srcs/sources_1/bd/system/ipshared/6b56/hdl" "+incdir+../../../../freq.srcs/sources_1/bd/system/ipshared/8b3d" "+incdir+C:/Xilinx/Vivado/2020.1/data/xilinx_vip/include" \
 "../../../bd/system/ip/system_auto_pc_0/sim/system_auto_pc_0.v" \
+
+vcom -work proc_sys_reset_v5_0_13 -93 \
+"../../../../freq.srcs/sources_1/bd/system/ipshared/8842/hdl/proc_sys_reset_v5_0_vh_rfs.vhd" \
+
+vcom -work xil_defaultlib -93 \
+"../../../bd/system/ip/system_rst_ps7_0_125M_0/sim/system_rst_ps7_0_125M_0.vhd" \
+
+vlog -work xil_defaultlib  -v2k5 "+incdir+../../../../freq.srcs/sources_1/bd/system/ipshared/ec67/hdl" "+incdir+../../../../freq.srcs/sources_1/bd/system/ipshared/6b56/hdl" "+incdir+../../../../freq.srcs/sources_1/bd/system/ipshared/8b3d" "+incdir+C:/Xilinx/Vivado/2020.1/data/xilinx_vip/include" \
+"../../../bd/system/sim/system.v" \
 
 vlog -work xil_defaultlib \
 "glbl.v"

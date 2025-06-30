@@ -86,15 +86,6 @@
 -makelib xcelium_lib/xil_defaultlib \
   "../../../bd/system/ip/system_dds_compiler_0_0/sim/system_dds_compiler_0_0.vhd" \
 -endlib
--makelib xcelium_lib/proc_sys_reset_v5_0_13 \
-  "../../../../freq.srcs/sources_1/bd/system/ipshared/8842/hdl/proc_sys_reset_v5_0_vh_rfs.vhd" \
--endlib
--makelib xcelium_lib/xil_defaultlib \
-  "../../../bd/system/ip/system_rst_ps7_0_125M_0/sim/system_rst_ps7_0_125M_0.vhd" \
--endlib
--makelib xcelium_lib/xil_defaultlib \
-  "../../../bd/system/sim/system.v" \
--endlib
 -makelib xcelium_lib/generic_baseblocks_v2_1_0 \
   "../../../../freq.srcs/sources_1/bd/system/ipshared/b752/hdl/generic_baseblocks_v2_1_vl_rfs.v" \
 -endlib
@@ -118,6 +109,15 @@
 -endlib
 -makelib xcelium_lib/xil_defaultlib \
   "../../../bd/system/ip/system_auto_pc_0/sim/system_auto_pc_0.v" \
+-endlib
+-makelib xcelium_lib/proc_sys_reset_v5_0_13 \
+  "../../../../freq.srcs/sources_1/bd/system/ipshared/8842/hdl/proc_sys_reset_v5_0_vh_rfs.vhd" \
+-endlib
+-makelib xcelium_lib/xil_defaultlib \
+  "../../../bd/system/ip/system_rst_ps7_0_125M_0/sim/system_rst_ps7_0_125M_0.vhd" \
+-endlib
+-makelib xcelium_lib/xil_defaultlib \
+  "../../../bd/system/sim/system.v" \
 -endlib
 -makelib xcelium_lib/xil_defaultlib \
   glbl.v
