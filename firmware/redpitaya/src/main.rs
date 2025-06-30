@@ -1,19 +1,26 @@
 use std::{
     env,
     fs::OpenOptions,
-    io::{self, Write},
+    io::{self, Read, Write},
     thread::sleep,
     time::Duration,
 };
 
-use embedded_hal::i2c::I2c;
-use linux_embedded_hal::I2cdev;
 use memmap2::{MmapMut, MmapOptions};
 use std::process::Command;
+
+use embedded_hal::spi::SpiBus;
+use embedded_hal::spi::SpiDevice;
+use linux_embedded_hal::spidev::{SpiModeFlags, Spidev, SpidevOptions, SpidevTransfer};
+
+use rand_distr::{Distribution, Uniform};
+
+use serde::{Deserialize, Serialize};
 
 const FREQ_HZ: f64 = 125_000_000.0; // 125 MHz
 const BASE_ADDR: u64 = 0x4200_0000; // same physical address you used
 const PAGE_SIZE: usize = 4096; // assumes 4 KiB pages on ARM
+const ETHERNET_INTERFACE: &str = "eth0";
 
 #[repr(C)]
 struct RpRegs {
@@ -22,19 +29,27 @@ struct RpRegs {
     config: u32,    // 0x08 – R/W   {phase_inc[31:5], log2_Ncycles[4:0]}
 }
 
-fn main() -> io::Result<()> {
-    let args: Vec<String> = env::args().collect();
-    let (log2_ncycles, freq_in) = match args.as_slice() {
-        [_, l2, f] => (
-            l2.parse::<u32>().unwrap_or(1),
-            f.parse::<f64>().unwrap_or(1.0),
-        ),
-        _ => (1, 1.0),
-    };
+fn main() -> Result<(), Box<dyn std::error::Error>> {
+    let output = Command::new("fpgautil")
+        .args(&["-b", "/root/fpga.bit.bin"])
+        .output() // returns io::Result<Output>
+        .expect("Failed to launch fpgautil");
 
-    let output = Command::new("fpgautil -b /root/fpga.bit.bin")
-        .output()
-        .expect("failed to execute command");
+    // check if the command itself returned a zero exit code
+    if output.status.success() {
+        println!("✅ FPGA programmed successfully!");
+    } else {
+        // non-zero exit code → failure
+        let code = output.status.code().map_or(-1, |c| c);
+        eprintln!("❌ fpgautil failed (exit code {})", code);
+        eprintln!("stdout:\n{}", String::from_utf8_lossy(&output.stdout));
+        eprintln!("stderr:\n{}", String::from_utf8_lossy(&output.stderr));
+        // you can also return an Err here if you want to bail out
+    }
+
+    return Ok(());
+
+    let (log2_ncycles, freq_in) = (1, 1.0);
 
     let phase_inc: u32 = (2.147_482 * freq_in) as u32; // same constant factor
     let ncycles: u32 = 1 << log2_ncycles;
@@ -51,14 +66,42 @@ fn main() -> io::Result<()> {
     let cfg_word = (log2_ncycles & 0x1F) | (phase_inc << 5);
     unsafe { core::ptr::write_volatile(&mut (*regs).config, cfg_word) };
 
-    let mut i2c = I2cdev::new("/dev/i2c-0")?;
-    let addr: u8 = 0x68;
-    let mut buf = [0u8; 2];
-    i2c.write_read(addr, &[0x0F], &mut buf)
-        .expect("Failed to i2c::write_read");
-    println!("Read 0x0F → {:02X} {:02X}", buf[0], buf[1]);
+    let mut spi = Spidev::open("/dev/spidev1.0")?;
+    let options = SpidevOptions::new()
+        .bits_per_word(8)
+        .max_speed_hz(1_000_000) // 1 MHz
+        .mode(SpiModeFlags::SPI_MODE_0)
+        .build();
+    spi.configure(&options)?;
 
+    println!("transfered");
     loop {
+        let Ok(ethernet_connected) = is_ethernet_connected(ETHERNET_INTERFACE) else {
+            continue;
+        };
+
+        let connection_status = if ethernet_connected {
+            ConnectionStatus::EthernetConnected
+        } else {
+            ConnectionStatus::EthernetDisconnected
+        };
+
+        let wave_form = random_array();
+        let msg = RedpitayaStatus {
+            connection_status,
+            fpga_status: FpgaStatus::BinNotFound,
+            frequency: 69.0,
+            wave_form,
+        };
+        let msg_bytes = postcard::to_stdvec(&msg)?;
+        let receive_buffer = Vec::with_capacity(1024);
+        let mut transfers = [
+            &mut SpidevTransfer::write(&msg_bytes),
+            &mut SpidevTransfer::read(&mut receive_buffer),
+        ];
+        spi.transfer(&mut SpidevTransfer::write(&msg_bytes))?;
+
+        println!("{receive_buffer:?}");
         let count: u32 = unsafe { core::ptr::read_volatile(&(*regs).count) };
         let freq_est = (ncycles as f64 / count as f64) * FREQ_HZ;
         print!(
@@ -69,3 +112,41 @@ fn main() -> io::Result<()> {
         sleep(Duration::from_secs(3));
     }
 }
+
+fn random_array() -> [f32; 128] {
+    let mut rng = rand::thread_rng();
+    let uniform = Uniform::new(-1.0f32, 1.0f32).expect("try create uniform");
+    std::array::from_fn(|_| uniform.sample(&mut rng))
+}
+
+fn is_ethernet_connected(interface: &str) -> io::Result<bool> {
+    let path = format!("/sys/class/net/{}/carrier", interface);
+    let contents = std::fs::read_to_string(path)?;
+    Ok(contents.trim() == "1")
+}
+
+#[derive(Serialize, Deserialize, Debug, PartialEq)]
+struct RedpitayaStatus {
+    connection_status: ConnectionStatus,
+    fpga_status: FpgaStatus,
+    frequency: f32, //[Hz]
+    wave_form: [f32; 128],
+}
+
+#[derive(Serialize, Deserialize, Debug, PartialEq)]
+enum ConnectionStatus {
+    EthernetConnected,
+    EthernetDisconnected,
+}
+
+#[derive(Serialize, Deserialize, Debug, PartialEq)]
+enum FpgaStatus {
+    BinNotFound,
+    ProgrammingError,
+}
+
+#[derive(Serialize, Deserialize, Debug, PartialEq)]
+struct ButtonSettings {}
+
+#[derive(Serialize, Deserialize, Debug, PartialEq)]
+struct SystemStatus {}

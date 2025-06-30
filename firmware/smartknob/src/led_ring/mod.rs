@@ -24,7 +24,7 @@ pub enum Effect {
 
 const FADE_STEPS: usize = 6;
 // how fast the bright pixel moves (e.g. every 100 ms)
-const WANDER_INTERVAL: Duration = Duration::from_millis(40);
+const WANDER_INTERVAL: Duration = Duration::from_millis(10);
 
 pub struct LedRing {
     leds: [RGB8; LED_COUNT],
@@ -67,7 +67,7 @@ impl LedRing {
 
                     if dist <= FADE_STEPS {
                         let b = 1.0 - (dist as f32 / (FADE_STEPS + 2) as f32);
-                        self.leds[i] = hsv_to_rgb(hue) * b * b * b;
+                        self.leds[i] = hsv_to_rgb(hue) * b * b * b * 0.5;
                     } else {
                         self.leds[i] = RGB8::default();
                     }
