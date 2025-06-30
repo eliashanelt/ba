@@ -80,7 +80,9 @@ ENTITY system_axi_gpio_0_0 IS
     gpio_io_i : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
     gpio_io_o : OUT STD_LOGIC_VECTOR(31 DOWNTO 0);
     gpio_io_t : OUT STD_LOGIC_VECTOR(31 DOWNTO 0);
-    gpio2_io_i : IN STD_LOGIC_VECTOR(31 DOWNTO 0)
+    gpio2_io_i : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
+    gpio2_io_o : OUT STD_LOGIC_VECTOR(31 DOWNTO 0);
+    gpio2_io_t : OUT STD_LOGIC_VECTOR(31 DOWNTO 0)
   );
 END system_axi_gpio_0_0;
 
@@ -139,9 +141,11 @@ ARCHITECTURE system_axi_gpio_0_0_arch OF system_axi_gpio_0_0 IS
   ATTRIBUTE CHECK_LICENSE_TYPE : STRING;
   ATTRIBUTE CHECK_LICENSE_TYPE OF system_axi_gpio_0_0_arch : ARCHITECTURE IS "system_axi_gpio_0_0,axi_gpio,{}";
   ATTRIBUTE CORE_GENERATION_INFO : STRING;
-  ATTRIBUTE CORE_GENERATION_INFO OF system_axi_gpio_0_0_arch: ARCHITECTURE IS "system_axi_gpio_0_0,axi_gpio,{x_ipProduct=Vivado 2020.1,x_ipVendor=xilinx.com,x_ipLibrary=ip,x_ipName=axi_gpio,x_ipVersion=2.0,x_ipCoreRevision=23,x_ipLanguage=VERILOG,x_ipSimLanguage=MIXED,C_FAMILY=zynq,C_S_AXI_ADDR_WIDTH=9,C_S_AXI_DATA_WIDTH=32,C_GPIO_WIDTH=32,C_GPIO2_WIDTH=32,C_ALL_INPUTS=0,C_ALL_INPUTS_2=1,C_ALL_OUTPUTS=0,C_ALL_OUTPUTS_2=0,C_INTERRUPT_PRESENT=0,C_DOUT_DEFAULT=0x00000000,C_TRI_DEFAULT=0xFFFFFFFF,C_IS_DUAL=1,C_DOUT_DEFAULT_2=0x00000000,C_TRI_DEFAULT_2=0xFFFFFFFF}";
+  ATTRIBUTE CORE_GENERATION_INFO OF system_axi_gpio_0_0_arch: ARCHITECTURE IS "system_axi_gpio_0_0,axi_gpio,{x_ipProduct=Vivado 2020.1,x_ipVendor=xilinx.com,x_ipLibrary=ip,x_ipName=axi_gpio,x_ipVersion=2.0,x_ipCoreRevision=23,x_ipLanguage=VERILOG,x_ipSimLanguage=MIXED,C_FAMILY=zynq,C_S_AXI_ADDR_WIDTH=9,C_S_AXI_DATA_WIDTH=32,C_GPIO_WIDTH=32,C_GPIO2_WIDTH=32,C_ALL_INPUTS=0,C_ALL_INPUTS_2=0,C_ALL_OUTPUTS=0,C_ALL_OUTPUTS_2=0,C_INTERRUPT_PRESENT=0,C_DOUT_DEFAULT=0x00000000,C_TRI_DEFAULT=0xFFFFFFFF,C_IS_DUAL=1,C_DOUT_DEFAULT_2=0x00000000,C_TRI_DEFAULT_2=0xFFFFFFFF}";
   ATTRIBUTE X_INTERFACE_INFO : STRING;
   ATTRIBUTE X_INTERFACE_PARAMETER : STRING;
+  ATTRIBUTE X_INTERFACE_INFO OF gpio2_io_t: SIGNAL IS "xilinx.com:interface:gpio:1.0 GPIO2 TRI_T";
+  ATTRIBUTE X_INTERFACE_INFO OF gpio2_io_o: SIGNAL IS "xilinx.com:interface:gpio:1.0 GPIO2 TRI_O";
   ATTRIBUTE X_INTERFACE_PARAMETER OF gpio2_io_i: SIGNAL IS "XIL_INTERFACENAME GPIO2, BOARD.ASSOCIATED_PARAM GPIO2_BOARD_INTERFACE";
   ATTRIBUTE X_INTERFACE_INFO OF gpio2_io_i: SIGNAL IS "xilinx.com:interface:gpio:1.0 GPIO2 TRI_I";
   ATTRIBUTE X_INTERFACE_INFO OF gpio_io_t: SIGNAL IS "xilinx.com:interface:gpio:1.0 GPIO TRI_T";
@@ -180,7 +184,7 @@ BEGIN
       C_GPIO_WIDTH => 32,
       C_GPIO2_WIDTH => 32,
       C_ALL_INPUTS => 0,
-      C_ALL_INPUTS_2 => 1,
+      C_ALL_INPUTS_2 => 0,
       C_ALL_OUTPUTS => 0,
       C_ALL_OUTPUTS_2 => 0,
       C_INTERRUPT_PRESENT => 0,
@@ -213,6 +217,8 @@ BEGIN
       gpio_io_i => gpio_io_i,
       gpio_io_o => gpio_io_o,
       gpio_io_t => gpio_io_t,
-      gpio2_io_i => gpio2_io_i
+      gpio2_io_i => gpio2_io_i,
+      gpio2_io_o => gpio2_io_o,
+      gpio2_io_t => gpio2_io_t
     );
 END system_axi_gpio_0_0_arch;

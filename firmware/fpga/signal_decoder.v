@@ -42,8 +42,7 @@ module signal_decoder #
        if (~rst)
           led_out <= 8'hFF;
        else
-           led_out <= 8'b01010101;
-          /*case (value)
+          case (value)
              3'b011  : led_out <= 8'b00000001;
              3'b010  : led_out <= 8'b00000010;
              3'b001  : led_out <= 8'b00000100;
@@ -53,5 +52,5 @@ module signal_decoder #
              3'b101  : led_out <= 8'b01000000;
              3'b100  : led_out <= 8'b10000000;
              default : led_out <= 8'b00000000;
-          endcase*/
+          endcase
 endmodule

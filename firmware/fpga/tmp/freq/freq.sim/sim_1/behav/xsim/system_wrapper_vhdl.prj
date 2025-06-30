@@ -1,0 +1,11 @@
+# compile vhdl design source files
+vhdl xil_defaultlib  \
+"../../../../freq.ip_user_files/bd/system/ip/system_util_ds_buf_1_0/util_ds_buf.vhd" \
+"../../../../freq.ip_user_files/bd/system/ip/system_util_ds_buf_1_0/sim/system_util_ds_buf_1_0.vhd" \
+"../../../../freq.ip_user_files/bd/system/ip/system_util_ds_buf_2_0/sim/system_util_ds_buf_2_0.vhd" \
+"../../../../freq.ip_user_files/bd/system/ip/system_axi_gpio_0_0/sim/system_axi_gpio_0_0.vhd" \
+"../../../../freq.ip_user_files/bd/system/ip/system_dds_compiler_0_0/sim/system_dds_compiler_0_0.vhd" \
+"../../../../freq.ip_user_files/bd/system/ip/system_rst_ps7_0_125M_0/sim/system_rst_ps7_0_125M_0.vhd" \
+
+# Do not sort compile order
+nosort

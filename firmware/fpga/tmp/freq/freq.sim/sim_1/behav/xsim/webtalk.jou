@@ -1,0 +1,12 @@
+#-----------------------------------------------------------
+# Webtalk v2020.1 (64-bit)
+# SW Build 2902540 on Wed May 27 19:54:49 MDT 2020
+# IP Build 2902112 on Wed May 27 22:43:36 MDT 2020
+# Start of session at: Mon Jun 30 18:08:51 2025
+# Process ID: 4476
+# Current directory: C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.sim/sim_1/behav/xsim
+# Command line: wbtcv.exe -mode batch -source C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.sim/sim_1/behav/xsim/xsim.dir/system_wrapper_behav/webtalk/xsim_webtalk.tcl -notrace
+# Log file: C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.sim/sim_1/behav/xsim/webtalk.log
+# Journal file: C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.sim/sim_1/behav/xsim\webtalk.jou
+#-----------------------------------------------------------
+source C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.sim/sim_1/behav/xsim/xsim.dir/system_wrapper_behav/webtalk/xsim_webtalk.tcl -notrace

@@ -1,0 +1,36 @@
+{
+   "ActiveEmotionalView":"Default View",
+   "Default View_ScaleFactor":"1.0",
+   "Default View_TopLeft":"-818,-273",
+   "ExpandedHierarchyInLayout":"",
+   "guistr":"# # String gsaved with Nlview 7.0r6  2020-01-29 bk=1.5227 VDI=41 GEI=36 GUI=JA:9.0 non-TLS
+#  -string -flagsOSRD
+preplace port clk_in1 -pg 1 -lvl 0 -x 0 -y 20 -defaultsOSRD
+preplace port dac_clk_o -pg 1 -lvl 5 -x 1060 -y 80 -defaultsOSRD
+preplace port dac_rst_o -pg 1 -lvl 5 -x 1060 -y 100 -defaultsOSRD
+preplace port dac_sel_o -pg 1 -lvl 5 -x 1060 -y 120 -defaultsOSRD
+preplace port dac_wrt_o -pg 1 -lvl 5 -x 1060 -y 140 -defaultsOSRD
+preplace portBus dac_dat_o -pg 1 -lvl 5 -x 1060 -y 160 -defaultsOSRD
+preplace portBus Din -pg 1 -lvl 0 -x 0 -y 90 -defaultsOSRD
+preplace inst axis_red_pitaya_dac_0 -pg 1 -lvl 4 -x 920 -y 120 -defaultsOSRD
+preplace inst axis_constant_0 -pg 1 -lvl 2 -x 360 -y 80 -defaultsOSRD
+preplace inst dds_compiler_0 -pg 1 -lvl 3 -x 630 -y 90 -defaultsOSRD
+preplace inst clk_wiz_0 -pg 1 -lvl 3 -x 630 -y 230 -defaultsOSRD
+preplace inst xls_phase -pg 1 -lvl 1 -x 130 -y 90 -defaultsOSRD
+preplace netloc clk_wiz_0_clk_out1 1 3 1 780 130n
+preplace netloc clk_wiz_0_locked 1 3 1 790 150n
+preplace netloc xls_phase_Dout 1 1 1 NJ 90
+preplace netloc axis_red_pitaya_adc_0_adc_clk 1 0 4 NJ 20 230 10 480 20 780J
+preplace netloc axis_red_pitaya_dac_0_dac_clk 1 4 1 NJ 80
+preplace netloc axis_red_pitaya_dac_0_dac_rst 1 4 1 NJ 100
+preplace netloc axis_red_pitaya_dac_0_dac_sel 1 4 1 NJ 120
+preplace netloc axis_red_pitaya_dac_0_dac_wrt 1 4 1 NJ 140
+preplace netloc axis_red_pitaya_dac_0_dac_dat 1 4 1 NJ 160
+preplace netloc frequency_counter_0_counter_output 1 0 1 NJ 90
+preplace netloc dds_compiler_0_M_AXIS_DATA 1 3 1 N 90
+preplace netloc axis_constant_0_M_AXIS 1 2 1 N 80
+levelinfo -pg 1 0 130 360 630 920 1060
+pagesize -pg 1 -db -bbox -sgen -110 0 1220 300
+"
+}
+

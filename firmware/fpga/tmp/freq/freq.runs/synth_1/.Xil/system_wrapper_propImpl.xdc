@@ -1,7 +1,7 @@
-set_property SRC_FILE_INFO {cfile:c:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ip/system_processing_system7_0_0/system_processing_system7_0_0.xdc rfile:../../../freq.srcs/sources_1/bd/system/ip/system_processing_system7_0_0/system_processing_system7_0_0.xdc id:1 order:EARLY scoped_inst:system_i/processing_system7_0/inst} [current_design]
-set_property SRC_FILE_INFO {cfile:c:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ip/system_clk_wiz_0_0/system_clk_wiz_0_0.xdc rfile:../../../freq.srcs/sources_1/bd/system/ip/system_clk_wiz_0_0/system_clk_wiz_0_0.xdc id:2 order:EARLY scoped_inst:system_i/clk_wiz_0/inst} [current_design]
-set_property SRC_FILE_INFO {cfile:C:/Users/elias/dev/ba/firmware/fpga/cfg/ports.xdc rfile:../../../../../cfg/ports.xdc id:3} [current_design]
-current_instance system_i/processing_system7_0/inst
+set_property SRC_FILE_INFO {cfile:c:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ip/system_processing_system7_0_0/system_processing_system7_0_0.xdc rfile:../../../freq.srcs/sources_1/bd/system/ip/system_processing_system7_0_0/system_processing_system7_0_0.xdc id:1 order:EARLY scoped_inst:system_i/PS7/processing_system7_0/inst} [current_design]
+set_property SRC_FILE_INFO {cfile:c:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ip/system_clk_wiz_0_0/system_clk_wiz_0_0.xdc rfile:../../../freq.srcs/sources_1/bd/system/ip/system_clk_wiz_0_0/system_clk_wiz_0_0.xdc id:2 order:EARLY scoped_inst:system_i/SignalGenerator/clk_wiz_0/inst} [current_design]
+set_property SRC_FILE_INFO {cfile:C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/constrs_1/imports/cfg/ports.xdc rfile:../../../freq.srcs/constrs_1/imports/cfg/ports.xdc id:3} [current_design]
+current_instance system_i/PS7/processing_system7_0/inst
 set_property src_info {type:SCOPED_XDC file:1 line:21 export:INPUT save:INPUT read:READ} [current_design]
 set_input_jitter clk_fpga_0 0.24
 set_property src_info {type:SCOPED_XDC file:1 line:31 export:INPUT save:INPUT read:READ} [current_design]
@@ -263,7 +263,7 @@ set_property PACKAGE_PIN "B10" [get_ports "PS_SRSTB"]
 set_property src_info {type:SCOPED_XDC file:1 line:702 export:INPUT save:INPUT read:READ} [current_design]
 set_property PACKAGE_PIN "E7" [get_ports "PS_CLK"]
 current_instance
-current_instance system_i/clk_wiz_0/inst
+current_instance system_i/SignalGenerator/clk_wiz_0/inst
 set_property src_info {type:SCOPED_XDC file:2 line:57 export:INPUT save:INPUT read:READ} [current_design]
 set_input_jitter [get_clocks -of_objects [get_ports clk_in1]] 0.08
 current_instance
