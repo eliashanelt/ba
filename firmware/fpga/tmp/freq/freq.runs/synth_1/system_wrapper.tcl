@@ -96,6 +96,7 @@ read_verilog -library xil_defaultlib {
   C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/imports/fpga/frequency_counter.v
   C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/imports/fpga/signal_decoder.v
   C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/imports/fpga/pow2.v
+  C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/new/freq_to_voltage.v
   C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/hdl/system_wrapper.v
 }
 add_files C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/system.bd

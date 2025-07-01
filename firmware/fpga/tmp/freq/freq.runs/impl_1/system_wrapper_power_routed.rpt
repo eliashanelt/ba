@@ -1,7 +1,7 @@
 Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version     : Vivado v.2020.1 (win64) Build 2902540 Wed May 27 19:54:49 MDT 2020
-| Date             : Mon Jun 30 22:25:10 2025
+| Date             : Tue Jul  1 03:10:45 2025
 | Host             : DESKTOP-93GTNQD running 64-bit major release  (build 9200)
 | Command          : report_power -file system_wrapper_power_routed.rpt -pb system_wrapper_power_summary_routed.pb -rpx system_wrapper_power_routed.rpx
 | Design           : system_wrapper
@@ -30,7 +30,7 @@ Table of Contents
 ----------
 
 +--------------------------+--------------+
-| Total On-Chip Power (W)  | 2.046        |
+| Total On-Chip Power (W)  | 2.047        |
 | Design Power Budget (W)  | Unspecified* |
 | Power Budget Margin (W)  | NA           |
 | Dynamic (W)              | 1.913        |
@@ -52,20 +52,20 @@ Table of Contents
 +-------------------------+-----------+----------+-----------+-----------------+
 | On-Chip                 | Power (W) | Used     | Available | Utilization (%) |
 +-------------------------+-----------+----------+-----------+-----------------+
-| Clocks                  |     0.012 |        8 |       --- |             --- |
-| Slice Logic             |     0.003 |     2999 |       --- |             --- |
-|   LUT as Logic          |     0.003 |      953 |     17600 |            5.41 |
-|   Register              |    <0.001 |     1611 |     35200 |            4.58 |
-|   CARRY4                |    <0.001 |       63 |      4400 |            1.43 |
+| Clocks                  |     0.013 |        8 |       --- |             --- |
+| Slice Logic             |     0.005 |     3564 |       --- |             --- |
+|   LUT as Logic          |     0.005 |     1358 |     17600 |            7.72 |
+|   CARRY4                |    <0.001 |      148 |      4400 |            3.36 |
+|   Register              |    <0.001 |     1619 |     35200 |            4.60 |
 |   LUT as Shift Register |    <0.001 |       47 |      6000 |            0.78 |
 |   Others                |     0.000 |      247 |       --- |             --- |
-| Signals                 |     0.005 |     2275 |       --- |             --- |
+| Signals                 |     0.007 |     2722 |       --- |             --- |
 | Block RAM               |     0.003 |      0.5 |        60 |            0.83 |
 | MMCM                    |     0.107 |        1 |         2 |           50.00 |
-| I/O                     |     0.501 |       57 |       100 |           57.00 |
+| I/O                     |     0.496 |       57 |       100 |           57.00 |
 | PS7                     |     1.282 |        1 |       --- |             --- |
 | Static Power            |     0.133 |          |           |                 |
-| Total                   |     2.046 |          |           |                 |
+| Total                   |     2.047 |          |           |                 |
 +-------------------------+-----------+----------+-----------+-----------------+
 
 
@@ -75,9 +75,9 @@ Table of Contents
 +-----------+-------------+-----------+-------------+------------+-------------+-------------+------------+
 | Source    | Voltage (V) | Total (A) | Dynamic (A) | Static (A) | Powerup (A) | Budget (A)  | Margin (A) |
 +-----------+-------------+-----------+-------------+------------+-------------+-------------+------------+
-| Vccint    |       1.000 |     0.037 |       0.029 |      0.008 |       NA    | Unspecified | NA         |
+| Vccint    |       1.000 |     0.042 |       0.034 |      0.008 |       NA    | Unspecified | NA         |
 | Vccaux    |       1.800 |     0.080 |       0.071 |      0.009 |       NA    | Unspecified | NA         |
-| Vcco33    |       3.300 |     0.138 |       0.137 |      0.001 |       NA    | Unspecified | NA         |
+| Vcco33    |       3.300 |     0.137 |       0.136 |      0.001 |       NA    | Unspecified | NA         |
 | Vcco25    |       2.500 |     0.000 |       0.000 |      0.000 |       NA    | Unspecified | NA         |
 | Vcco18    |       1.800 |     0.013 |       0.012 |      0.001 |       NA    | Unspecified | NA         |
 | Vcco15    |       1.500 |     0.000 |       0.000 |      0.000 |       NA    | Unspecified | NA         |
@@ -157,7 +157,7 @@ Table of Contents
 | Name                        | Power (W) |
 +-----------------------------+-----------+
 | system_wrapper              |     1.913 |
-|   system_i                  |     1.446 |
+|   system_i                  |     1.451 |
 |     FrequencyCounter        |     0.001 |
 |       frequency_counter_0   |     0.001 |
 |     PS7                     |     1.289 |
@@ -169,6 +169,8 @@ Table of Contents
 |       dds_compiler_0        |     0.008 |
 |     axi_gpio_0              |     0.005 |
 |       U0                    |     0.005 |
+|     freq_to_voltage_0       |     0.004 |
+|       inst                  |     0.004 |
 |     util_ds_buf_2           |     0.030 |
 |       U0                    |     0.030 |
 +-----------------------------+-----------+

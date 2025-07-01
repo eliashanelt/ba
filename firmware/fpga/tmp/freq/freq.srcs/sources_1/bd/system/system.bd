@@ -35,11 +35,13 @@
         "xls_phase": ""
       },
       "FrequencyCounter": {
-        "pow2_0": "",
+        "xlslice_0": "",
         "frequency_counter_0": "",
-        "xlslice_0": ""
+        "pow2_0": ""
       },
-      "signal_decoder_0": ""
+      "signal_decoder_0": "",
+      "freq_to_voltage_0": "",
+      "xlslice_0": ""
     },
     "interface_ports": {
       "Vp_Vn": {
@@ -1972,16 +1974,16 @@
                   }
                 },
                 "interface_nets": {
-                  "auto_pc_to_s00_couplers": {
-                    "interface_ports": [
-                      "M_AXI",
-                      "auto_pc/M_AXI"
-                    ]
-                  },
                   "s00_couplers_to_auto_pc": {
                     "interface_ports": [
                       "S_AXI",
                       "auto_pc/S_AXI"
+                    ]
+                  },
+                  "auto_pc_to_s00_couplers": {
+                    "interface_ports": [
+                      "M_AXI",
+                      "auto_pc/M_AXI"
                     ]
                   }
                 },
@@ -2044,10 +2046,10 @@
           }
         },
         "interface_nets": {
-          "processing_system7_0_M_AXI_GP0": {
+          "processing_system7_0_FIXED_IO": {
             "interface_ports": [
-              "processing_system7_0/M_AXI_GP0",
-              "ps7_0_axi_periph/S00_AXI"
+              "FIXED_IO",
+              "processing_system7_0/FIXED_IO"
             ]
           },
           "processing_system7_0_DDR": {
@@ -2056,16 +2058,16 @@
               "processing_system7_0/DDR"
             ]
           },
-          "processing_system7_0_FIXED_IO": {
-            "interface_ports": [
-              "FIXED_IO",
-              "processing_system7_0/FIXED_IO"
-            ]
-          },
           "ps7_0_axi_periph_M00_AXI": {
             "interface_ports": [
               "M00_AXI",
               "ps7_0_axi_periph/M00_AXI"
+            ]
+          },
+          "processing_system7_0_M_AXI_GP0": {
+            "interface_ports": [
+              "processing_system7_0/M_AXI_GP0",
+              "ps7_0_axi_periph/S00_AXI"
             ]
           }
         },
@@ -2315,16 +2317,16 @@
           }
         },
         "interface_nets": {
-          "axis_red_pitaya_adc_0_M_AXIS": {
-            "interface_ports": [
-              "axis_red_pitaya_adc_0/M_AXIS",
-              "signal_split_0/S_AXIS"
-            ]
-          },
           "signal_split_0_M_AXIS_PORT1": {
             "interface_ports": [
               "M_AXIS_PORT1",
               "signal_split_0/M_AXIS_PORT1"
+            ]
+          },
+          "axis_red_pitaya_adc_0_M_AXIS": {
+            "interface_ports": [
+              "axis_red_pitaya_adc_0/M_AXIS",
+              "signal_split_0/S_AXIS"
             ]
           }
         },
@@ -2520,16 +2522,16 @@
           }
         },
         "interface_nets": {
-          "dds_compiler_0_M_AXIS_DATA": {
-            "interface_ports": [
-              "dds_compiler_0/M_AXIS_DATA",
-              "axis_red_pitaya_dac_0/S_AXIS"
-            ]
-          },
           "axis_constant_0_M_AXIS": {
             "interface_ports": [
               "axis_constant_0/M_AXIS",
               "dds_compiler_0/S_AXIS_PHASE"
+            ]
+          },
+          "dds_compiler_0_M_AXIS_DATA": {
+            "interface_ports": [
+              "dds_compiler_0/M_AXIS_DATA",
+              "axis_red_pitaya_dac_0/S_AXIS"
             ]
           }
         },
@@ -2631,24 +2633,15 @@
           }
         },
         "components": {
-          "pow2_0": {
-            "vlnv": "xilinx.com:module_ref:pow2:1.0",
-            "xci_name": "system_pow2_0_0",
-            "reference_info": {
-              "ref_type": "hdl",
-              "ref_name": "pow2",
-              "boundary_crc": "0x0"
-            },
-            "ports": {
-              "log2N": {
-                "direction": "I",
-                "left": "4",
-                "right": "0"
+          "xlslice_0": {
+            "vlnv": "xilinx.com:ip:xlslice:1.0",
+            "xci_name": "system_xlslice_0_1",
+            "parameters": {
+              "DIN_FROM": {
+                "value": "4"
               },
-              "N": {
-                "direction": "O",
-                "left": "31",
-                "right": "0"
+              "DOUT_WIDTH": {
+                "value": "5"
               }
             }
           },
@@ -2817,15 +2810,24 @@
               }
             }
           },
-          "xlslice_0": {
-            "vlnv": "xilinx.com:ip:xlslice:1.0",
-            "xci_name": "system_xlslice_0_1",
-            "parameters": {
-              "DIN_FROM": {
-                "value": "4"
+          "pow2_0": {
+            "vlnv": "xilinx.com:module_ref:pow2:1.0",
+            "xci_name": "system_pow2_0_0",
+            "reference_info": {
+              "ref_type": "hdl",
+              "ref_name": "pow2",
+              "boundary_crc": "0x0"
+            },
+            "ports": {
+              "log2N": {
+                "direction": "I",
+                "left": "4",
+                "right": "0"
               },
-              "DOUT_WIDTH": {
-                "value": "5"
+              "N": {
+                "direction": "O",
+                "left": "31",
+                "right": "0"
               }
             }
           }
@@ -2984,19 +2986,63 @@
             "right": "0"
           }
         }
+      },
+      "freq_to_voltage_0": {
+        "vlnv": "xilinx.com:module_ref:freq_to_voltage:1.0",
+        "xci_name": "system_freq_to_voltage_0_0",
+        "reference_info": {
+          "ref_type": "hdl",
+          "ref_name": "freq_to_voltage",
+          "boundary_crc": "0x0"
+        },
+        "ports": {
+          "clk": {
+            "type": "clk",
+            "direction": "I",
+            "parameters": {
+              "CLK_DOMAIN": {
+                "value": "system_axis_red_pitaya_adc_0_0_adc_clk",
+                "value_src": "default_prop"
+              },
+              "FREQ_HZ": {
+                "value": "125000000",
+                "value_src": "const_prop"
+              }
+            }
+          },
+          "frequency_in": {
+            "direction": "I",
+            "left": "31",
+            "right": "0"
+          },
+          "voltage_out": {
+            "direction": "O",
+            "left": "13",
+            "right": "0"
+          }
+        }
+      },
+      "xlslice_0": {
+        "vlnv": "xilinx.com:ip:xlslice:1.0",
+        "xci_name": "system_xlslice_0_2",
+        "parameters": {
+          "DIN_FROM": {
+            "value": "7"
+          },
+          "DIN_WIDTH": {
+            "value": "14"
+          },
+          "DOUT_WIDTH": {
+            "value": "8"
+          }
+        }
       }
     },
     "interface_nets": {
-      "ps7_0_axi_periph_M00_AXI": {
+      "processing_system7_0_FIXED_IO": {
         "interface_ports": [
-          "PS7/M00_AXI",
-          "axi_gpio_0/S_AXI"
-        ]
-      },
-      "processing_system7_0_DDR": {
-        "interface_ports": [
-          "DDR",
-          "PS7/DDR"
+          "FIXED_IO",
+          "PS7/FIXED_IO"
         ]
       },
       "frequency_counter_0_M_AXIS_OUT": {
@@ -3011,10 +3057,16 @@
           "FrequencyCounter/S_AXIS_IN"
         ]
       },
-      "processing_system7_0_FIXED_IO": {
+      "processing_system7_0_DDR": {
         "interface_ports": [
-          "FIXED_IO",
-          "PS7/FIXED_IO"
+          "DDR",
+          "PS7/DDR"
+        ]
+      },
+      "ps7_0_axi_periph_M00_AXI": {
+        "interface_ports": [
+          "PS7/M00_AXI",
+          "axi_gpio_0/S_AXI"
         ]
       }
     },
@@ -3085,42 +3137,13 @@
           "adc_csn_o"
         ]
       },
-      "axis_red_pitaya_dac_0_dac_clk": {
-        "ports": [
-          "SignalGenerator/dac_clk_o",
-          "dac_clk_o"
-        ]
-      },
-      "axis_red_pitaya_dac_0_dac_rst": {
-        "ports": [
-          "SignalGenerator/dac_rst_o",
-          "dac_rst_o"
-        ]
-      },
-      "axis_red_pitaya_dac_0_dac_sel": {
-        "ports": [
-          "SignalGenerator/dac_sel_o",
-          "dac_sel_o"
-        ]
-      },
-      "axis_red_pitaya_dac_0_dac_wrt": {
-        "ports": [
-          "SignalGenerator/dac_wrt_o",
-          "dac_wrt_o"
-        ]
-      },
-      "axis_red_pitaya_dac_0_dac_dat": {
-        "ports": [
-          "SignalGenerator/dac_dat_o",
-          "dac_dat_o"
-        ]
-      },
       "axis_red_pitaya_adc_0_adc_clk": {
         "ports": [
           "DataAcquisition/adc_clk",
           "SignalGenerator/clk_in1",
           "FrequencyCounter/clk",
-          "signal_decoder_0/clk"
+          "signal_decoder_0/clk",
+          "freq_to_voltage_0/clk"
         ]
       },
       "rst_ps7_0_125M_peripheral_aresetn": {
@@ -3136,12 +3159,6 @@
           "signal_decoder_0/rst"
         ]
       },
-      "signal_decoder_0_led_out": {
-        "ports": [
-          "signal_decoder_0/led_out",
-          "led_o"
-        ]
-      },
       "Net": {
         "ports": [
           "axi_gpio_0/gpio2_io_o",
@@ -3153,7 +3170,50 @@
       "FrequencyCounter_counter_output": {
         "ports": [
           "FrequencyCounter/counter_output",
-          "axi_gpio_0/gpio_io_i"
+          "axi_gpio_0/gpio_io_i",
+          "freq_to_voltage_0/frequency_in"
+        ]
+      },
+      "SignalGenerator_dac_dat_o": {
+        "ports": [
+          "SignalGenerator/dac_dat_o",
+          "dac_dat_o"
+        ]
+      },
+      "SignalGenerator_dac_wrt_o": {
+        "ports": [
+          "SignalGenerator/dac_wrt_o",
+          "dac_wrt_o"
+        ]
+      },
+      "SignalGenerator_dac_sel_o": {
+        "ports": [
+          "SignalGenerator/dac_sel_o",
+          "dac_sel_o"
+        ]
+      },
+      "SignalGenerator_dac_rst_o": {
+        "ports": [
+          "SignalGenerator/dac_rst_o",
+          "dac_rst_o"
+        ]
+      },
+      "SignalGenerator_dac_clk_o": {
+        "ports": [
+          "SignalGenerator/dac_clk_o",
+          "dac_clk_o"
+        ]
+      },
+      "freq_to_voltage_0_voltage_out": {
+        "ports": [
+          "freq_to_voltage_0/voltage_out",
+          "xlslice_0/Din"
+        ]
+      },
+      "xlslice_0_Dout": {
+        "ports": [
+          "xlslice_0/Dout",
+          "led_o"
         ]
       }
     },

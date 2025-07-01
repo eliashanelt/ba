@@ -40,7 +40,7 @@ if { [string first $scripts_vivado_version $current_vivado_version] == -1 } {
 
 # The design that will be created by this Tcl script contains the following 
 # module references:
-# signal_decoder, signal_split, frequency_counter, pow2
+# freq_to_voltage, signal_decoder, signal_split, frequency_counter, pow2
 
 # Please add the sources of those modules before sourcing this Tcl script.
 
@@ -1227,6 +1227,17 @@ proc create_root_design { parentCell } {
    CONFIG.C_IS_DUAL {1} \
  ] $axi_gpio_0
 
+  # Create instance: freq_to_voltage_0, and set properties
+  set block_name freq_to_voltage
+  set block_cell_name freq_to_voltage_0
+  if { [catch {set freq_to_voltage_0 [create_bd_cell -type module -reference $block_name $block_cell_name] } errmsg] } {
+     catch {common::send_gid_msg -ssname BD::TCL -id 2095 -severity "ERROR" "Unable to add referenced block <$block_name>. Please add the files for ${block_name}'s definition into the project."}
+     return 1
+   } elseif { $freq_to_voltage_0 eq "" } {
+     catch {common::send_gid_msg -ssname BD::TCL -id 2096 -severity "ERROR" "Unable to referenced block <$block_name>. Please add the files for ${block_name}'s definition into the project."}
+     return 1
+   }
+  
   # Create instance: signal_decoder_0, and set properties
   set block_name signal_decoder
   set block_cell_name signal_decoder_0
@@ -1254,6 +1265,14 @@ proc create_root_design { parentCell } {
   # Create instance: xlc_reset, and set properties
   set xlc_reset [ create_bd_cell -type ip -vlnv xilinx.com:ip:xlconstant:1.1 xlc_reset ]
 
+  # Create instance: xlslice_0, and set properties
+  set xlslice_0 [ create_bd_cell -type ip -vlnv xilinx.com:ip:xlslice:1.0 xlslice_0 ]
+  set_property -dict [ list \
+   CONFIG.DIN_FROM {7} \
+   CONFIG.DIN_WIDTH {14} \
+   CONFIG.DOUT_WIDTH {8} \
+ ] $xlslice_0
+
   # Create interface connections
   connect_bd_intf_net -intf_net frequency_counter_0_M_AXIS_OUT [get_bd_intf_pins FrequencyCounter/M_AXIS_OUT] [get_bd_intf_pins signal_decoder_0/S_AXIS]
   connect_bd_intf_net -intf_net processing_system7_0_DDR [get_bd_intf_ports DDR] [get_bd_intf_pins PS7/DDR]
@@ -1262,28 +1281,29 @@ proc create_root_design { parentCell } {
   connect_bd_intf_net -intf_net signal_split_0_M_AXIS_PORT1 [get_bd_intf_pins DataAcquisition/M_AXIS_PORT1] [get_bd_intf_pins FrequencyCounter/S_AXIS_IN]
 
   # Create port connections
-  connect_bd_net -net FrequencyCounter_counter_output [get_bd_pins FrequencyCounter/counter_output] [get_bd_pins axi_gpio_0/gpio_io_i]
+  connect_bd_net -net FrequencyCounter_counter_output [get_bd_pins FrequencyCounter/counter_output] [get_bd_pins axi_gpio_0/gpio_io_i] [get_bd_pins freq_to_voltage_0/frequency_in]
   connect_bd_net -net Net [get_bd_pins FrequencyCounter/Din] [get_bd_pins SignalGenerator/Din] [get_bd_pins axi_gpio_0/gpio2_io_i] [get_bd_pins axi_gpio_0/gpio2_io_o]
+  connect_bd_net -net SignalGenerator_dac_clk_o [get_bd_ports dac_clk_o] [get_bd_pins SignalGenerator/dac_clk_o]
+  connect_bd_net -net SignalGenerator_dac_dat_o [get_bd_ports dac_dat_o] [get_bd_pins SignalGenerator/dac_dat_o]
+  connect_bd_net -net SignalGenerator_dac_rst_o [get_bd_ports dac_rst_o] [get_bd_pins SignalGenerator/dac_rst_o]
+  connect_bd_net -net SignalGenerator_dac_sel_o [get_bd_ports dac_sel_o] [get_bd_pins SignalGenerator/dac_sel_o]
+  connect_bd_net -net SignalGenerator_dac_wrt_o [get_bd_ports dac_wrt_o] [get_bd_pins SignalGenerator/dac_wrt_o]
   connect_bd_net -net adc_clk_n_i_1 [get_bd_ports adc_clk_n_i] [get_bd_pins DataAcquisition/adc_clk_n_i]
   connect_bd_net -net adc_clk_p_i_1 [get_bd_ports adc_clk_p_i] [get_bd_pins DataAcquisition/adc_clk_p_i]
   connect_bd_net -net adc_dat_a_i_1 [get_bd_ports adc_dat_a_i] [get_bd_pins DataAcquisition/adc_dat_a_i]
   connect_bd_net -net adc_dat_b_i_1 [get_bd_ports adc_dat_b_i] [get_bd_pins DataAcquisition/adc_dat_b_i]
-  connect_bd_net -net axis_red_pitaya_adc_0_adc_clk [get_bd_pins DataAcquisition/adc_clk] [get_bd_pins FrequencyCounter/clk] [get_bd_pins SignalGenerator/clk_in1] [get_bd_pins signal_decoder_0/clk]
+  connect_bd_net -net axis_red_pitaya_adc_0_adc_clk [get_bd_pins DataAcquisition/adc_clk] [get_bd_pins FrequencyCounter/clk] [get_bd_pins SignalGenerator/clk_in1] [get_bd_pins freq_to_voltage_0/clk] [get_bd_pins signal_decoder_0/clk]
   connect_bd_net -net axis_red_pitaya_adc_0_adc_csn [get_bd_ports adc_csn_o] [get_bd_pins DataAcquisition/adc_csn_o]
-  connect_bd_net -net axis_red_pitaya_dac_0_dac_clk [get_bd_ports dac_clk_o] [get_bd_pins SignalGenerator/dac_clk_o]
-  connect_bd_net -net axis_red_pitaya_dac_0_dac_dat [get_bd_ports dac_dat_o] [get_bd_pins SignalGenerator/dac_dat_o]
-  connect_bd_net -net axis_red_pitaya_dac_0_dac_rst [get_bd_ports dac_rst_o] [get_bd_pins SignalGenerator/dac_rst_o]
-  connect_bd_net -net axis_red_pitaya_dac_0_dac_sel [get_bd_ports dac_sel_o] [get_bd_pins SignalGenerator/dac_sel_o]
-  connect_bd_net -net axis_red_pitaya_dac_0_dac_wrt [get_bd_ports dac_wrt_o] [get_bd_pins SignalGenerator/dac_wrt_o]
   connect_bd_net -net daisy_n_i_1 [get_bd_ports daisy_n_i] [get_bd_pins util_ds_buf_1/IBUF_DS_N]
   connect_bd_net -net daisy_p_i_1 [get_bd_ports daisy_p_i] [get_bd_pins util_ds_buf_1/IBUF_DS_P]
+  connect_bd_net -net freq_to_voltage_0_voltage_out [get_bd_pins freq_to_voltage_0/voltage_out] [get_bd_pins xlslice_0/Din]
   connect_bd_net -net processing_system7_0_FCLK_CLK0 [get_bd_pins PS7/FCLK_CLK0] [get_bd_pins axi_gpio_0/s_axi_aclk]
   connect_bd_net -net rst_ps7_0_125M_peripheral_aresetn [get_bd_pins PS7/S00_ARESETN] [get_bd_pins axi_gpio_0/s_axi_aresetn]
-  connect_bd_net -net signal_decoder_0_led_out [get_bd_ports led_o] [get_bd_pins signal_decoder_0/led_out]
   connect_bd_net -net util_ds_buf_1_IBUF_OUT [get_bd_pins util_ds_buf_1/IBUF_OUT] [get_bd_pins util_ds_buf_2/OBUF_IN]
   connect_bd_net -net util_ds_buf_2_OBUF_DS_N [get_bd_ports daisy_n_o] [get_bd_pins util_ds_buf_2/OBUF_DS_N]
   connect_bd_net -net util_ds_buf_2_OBUF_DS_P [get_bd_ports daisy_p_o] [get_bd_pins util_ds_buf_2/OBUF_DS_P]
   connect_bd_net -net xlc_reset_dout [get_bd_pins FrequencyCounter/rst] [get_bd_pins signal_decoder_0/rst] [get_bd_pins xlc_reset/dout]
+  connect_bd_net -net xlslice_0_Dout [get_bd_ports led_o] [get_bd_pins xlslice_0/Dout]
 
   # Create address segments
   assign_bd_address -offset 0x42000000 -range 0x00001000 -target_address_space [get_bd_addr_spaces PS7/processing_system7_0/Data] [get_bd_addr_segs axi_gpio_0/S_AXI/Reg] -force

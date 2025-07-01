@@ -1,0 +1,7 @@
+srcscan starts
+INFO: analyzing module freq_to_voltage (VERI-9002)
+Listing tops:
+VeriTop library:xil_defaultlib mod:freq_to_voltage
+END of tops
+C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/new/freq_to_voltage.v(22): INFO: compiling module 'freq_to_voltage_default' (VERI-1018)
+srcscan exits with return value 0

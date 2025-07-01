@@ -62,6 +62,12 @@ set_property DONT_TOUCH TRUE [get_cells -hier -filter {REF_NAME==system_pow2_0_0
 # IP: bd/system/ip/system_xlslice_0_1/system_xlslice_0_1.xci
 set_property DONT_TOUCH TRUE [get_cells -hier -filter {REF_NAME==system_xlslice_0_1 || ORIG_REF_NAME==system_xlslice_0_1} -quiet] -quiet
 
+# IP: bd/system/ip/system_freq_to_voltage_0_0_1/system_freq_to_voltage_0_0.xci
+set_property DONT_TOUCH TRUE [get_cells -hier -filter {REF_NAME==system_freq_to_voltage_0_0 || ORIG_REF_NAME==system_freq_to_voltage_0_0} -quiet] -quiet
+
+# IP: bd/system/ip/system_xlslice_0_2/system_xlslice_0_2.xci
+set_property DONT_TOUCH TRUE [get_cells -hier -filter {REF_NAME==system_xlslice_0_2 || ORIG_REF_NAME==system_xlslice_0_2} -quiet] -quiet
+
 # IP: bd/system/ip/system_auto_pc_0/system_auto_pc_0.xci
 set_property DONT_TOUCH TRUE [get_cells -hier -filter {REF_NAME==system_auto_pc_0 || ORIG_REF_NAME==system_auto_pc_0} -quiet] -quiet
 

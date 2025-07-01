@@ -1,0 +1,8 @@
+srcscan starts
+INFO: analyzing module signal_split (VERI-9002)
+INFO: analyzing module system_signal_split_0_0 (VERI-9002)
+Listing tops:
+VeriTop library:xil_defaultlib mod:system_signal_split_0_0
+END of tops
+c:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ip/system_signal_split_0_0/synth/system_signal_split_0_0.v(58): INFO: compiling module 'system_signal_split_0_0_default' (VERI-1018)
+srcscan exits with return value 0
