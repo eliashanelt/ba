@@ -1,7 +1,7 @@
 //Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
 //--------------------------------------------------------------------------------
 //Tool Version: Vivado v.2020.1 (win64) Build 2902540 Wed May 27 19:54:49 MDT 2020
-//Date        : Tue Jul  1 03:05:05 2025
+//Date        : Tue Jul  1 04:12:28 2025
 //Host        : DESKTOP-93GTNQD running 64-bit major release  (build 9200)
 //Command     : generate_target system.bd
 //Design      : system
@@ -831,7 +831,7 @@ module s00_couplers_imp_15HE6GA
         .s_axi_wvalid(s00_couplers_to_auto_pc_WVALID));
 endmodule
 
-(* CORE_GENERATION_INFO = "system,IP_Integrator,{x_ipVendor=xilinx.com,x_ipLibrary=BlockDiagram,x_ipName=system,x_ipVersion=1.00.a,x_ipLanguage=VERILOG,numBlks=26,numReposBlks=20,numNonXlnxBlks=3,numHierBlks=6,maxHierDepth=1,numSysgenBlks=0,numHlsBlks=0,numHdlrefBlks=5,numPkgbdBlks=0,bdsource=USER,synth_mode=Global}" *) (* HW_HANDOFF = "system.hwdef" *) 
+(* CORE_GENERATION_INFO = "system,IP_Integrator,{x_ipVendor=xilinx.com,x_ipLibrary=BlockDiagram,x_ipName=system,x_ipVersion=1.00.a,x_ipLanguage=VERILOG,numBlks=28,numReposBlks=22,numNonXlnxBlks=4,numHierBlks=6,maxHierDepth=1,numSysgenBlks=0,numHlsBlks=0,numHdlrefBlks=5,numPkgbdBlks=0,bdsource=USER,synth_mode=Global}" *) (* HW_HANDOFF = "system.hwdef" *) 
 module system
    (DDR_addr,
     DDR_ba,
@@ -916,24 +916,26 @@ module system
   inout [7:0]exp_p_tri_io;
   output [7:0]led_o;
 
+  wire [31:0]FrequencyCounter_M_AXIS_OUT_TDATA;
+  wire FrequencyCounter_M_AXIS_OUT_TVALID;
   wire [31:0]FrequencyCounter_counter_output;
   wire [31:0]Net;
-  wire SignalGenerator_dac_clk_o;
-  wire [13:0]SignalGenerator_dac_dat_o;
-  wire SignalGenerator_dac_rst_o;
-  wire SignalGenerator_dac_sel_o;
-  wire SignalGenerator_dac_wrt_o;
   wire adc_clk_n_i_1;
   wire adc_clk_p_i_1;
   wire [13:0]adc_dat_a_i_1;
   wire [13:0]adc_dat_b_i_1;
   wire axis_red_pitaya_adc_0_adc_clk;
   wire axis_red_pitaya_adc_0_adc_csn;
+  wire axis_red_pitaya_dac_0_dac_clk;
+  wire [13:0]axis_red_pitaya_dac_0_dac_dat;
+  wire axis_red_pitaya_dac_0_dac_rst;
+  wire axis_red_pitaya_dac_0_dac_sel;
+  wire axis_red_pitaya_dac_0_dac_wrt;
+  wire clk_wiz_0_clk_out1;
+  wire clk_wiz_0_locked;
   wire [1:0]daisy_n_i_1;
   wire [1:0]daisy_p_i_1;
   wire [13:0]freq_to_voltage_0_voltage_out;
-  wire [31:0]frequency_counter_0_M_AXIS_OUT_TDATA;
-  wire frequency_counter_0_M_AXIS_OUT_TVALID;
   wire [14:0]processing_system7_0_DDR_ADDR;
   wire [2:0]processing_system7_0_DDR_BA;
   wire processing_system7_0_DDR_CAS_N;
@@ -987,11 +989,11 @@ module system
   assign adc_csn_o = axis_red_pitaya_adc_0_adc_csn;
   assign adc_dat_a_i_1 = adc_dat_a_i[13:0];
   assign adc_dat_b_i_1 = adc_dat_b_i[13:0];
-  assign dac_clk_o = SignalGenerator_dac_clk_o;
-  assign dac_dat_o[13:0] = SignalGenerator_dac_dat_o;
-  assign dac_rst_o = SignalGenerator_dac_rst_o;
-  assign dac_sel_o = SignalGenerator_dac_sel_o;
-  assign dac_wrt_o = SignalGenerator_dac_wrt_o;
+  assign dac_clk_o = axis_red_pitaya_dac_0_dac_clk;
+  assign dac_dat_o[13:0] = axis_red_pitaya_dac_0_dac_dat;
+  assign dac_rst_o = axis_red_pitaya_dac_0_dac_rst;
+  assign dac_sel_o = axis_red_pitaya_dac_0_dac_sel;
+  assign dac_wrt_o = axis_red_pitaya_dac_0_dac_wrt;
   assign daisy_n_i_1 = daisy_n_i[1:0];
   assign daisy_n_o[1:0] = util_ds_buf_2_OBUF_DS_N;
   assign daisy_p_i_1 = daisy_p_i[1:0];
@@ -1008,8 +1010,8 @@ module system
         .adc_dat_b_i(adc_dat_b_i_1));
   FrequencyCounter_imp_MPHDEJ FrequencyCounter
        (.Din(Net),
-        .M_AXIS_OUT_tdata(frequency_counter_0_M_AXIS_OUT_TDATA),
-        .M_AXIS_OUT_tvalid(frequency_counter_0_M_AXIS_OUT_TVALID),
+        .M_AXIS_OUT_tdata(FrequencyCounter_M_AXIS_OUT_TDATA),
+        .M_AXIS_OUT_tvalid(FrequencyCounter_M_AXIS_OUT_TVALID),
         .S_AXIS_IN_tdata(signal_split_0_M_AXIS_PORT1_TDATA),
         .S_AXIS_IN_tvalid(signal_split_0_M_AXIS_PORT1_TVALID),
         .clk(axis_red_pitaya_adc_0_adc_clk),
@@ -1058,12 +1060,7 @@ module system
         .S00_ARESETN(rst_ps7_0_125M_peripheral_aresetn));
   SignalGenerator_imp_XB4TXX SignalGenerator
        (.Din(Net),
-        .clk_in1(axis_red_pitaya_adc_0_adc_clk),
-        .dac_clk_o(SignalGenerator_dac_clk_o),
-        .dac_dat_o(SignalGenerator_dac_dat_o),
-        .dac_rst_o(SignalGenerator_dac_rst_o),
-        .dac_sel_o(SignalGenerator_dac_sel_o),
-        .dac_wrt_o(SignalGenerator_dac_wrt_o));
+        .clk_in1(axis_red_pitaya_adc_0_adc_clk));
   system_axi_gpio_0_0 axi_gpio_0
        (.gpio2_io_i(Net),
         .gpio2_io_o(Net),
@@ -1087,13 +1084,28 @@ module system
         .s_axi_wready(ps7_0_axi_periph_M00_AXI_WREADY),
         .s_axi_wstrb(ps7_0_axi_periph_M00_AXI_WSTRB),
         .s_axi_wvalid(ps7_0_axi_periph_M00_AXI_WVALID));
+  system_axis_red_pitaya_dac_0_1 axis_red_pitaya_dac_0
+       (.aclk(axis_red_pitaya_adc_0_adc_clk),
+        .dac_clk(axis_red_pitaya_dac_0_dac_clk),
+        .dac_dat(axis_red_pitaya_dac_0_dac_dat),
+        .dac_rst(axis_red_pitaya_dac_0_dac_rst),
+        .dac_sel(axis_red_pitaya_dac_0_dac_sel),
+        .dac_wrt(axis_red_pitaya_dac_0_dac_wrt),
+        .ddr_clk(clk_wiz_0_clk_out1),
+        .locked(clk_wiz_0_locked),
+        .s_axis_tdata(FrequencyCounter_M_AXIS_OUT_TDATA),
+        .s_axis_tvalid(FrequencyCounter_M_AXIS_OUT_TVALID));
+  system_clk_wiz_0_1 clk_wiz_0
+       (.clk_in1(axis_red_pitaya_adc_0_adc_clk),
+        .clk_out1(clk_wiz_0_clk_out1),
+        .locked(clk_wiz_0_locked));
   system_freq_to_voltage_0_0 freq_to_voltage_0
        (.clk(axis_red_pitaya_adc_0_adc_clk),
         .frequency_in(FrequencyCounter_counter_output),
         .voltage_out(freq_to_voltage_0_voltage_out));
   system_signal_decoder_0_0 signal_decoder_0
-       (.S_AXIS_tdata(frequency_counter_0_M_AXIS_OUT_TDATA),
-        .S_AXIS_tvalid(frequency_counter_0_M_AXIS_OUT_TVALID),
+       (.S_AXIS_tdata({1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0}),
+        .S_AXIS_tvalid(1'b0),
         .clk(axis_red_pitaya_adc_0_adc_clk),
         .rst(xlc_reset_dout));
   system_util_ds_buf_1_0 util_ds_buf_1

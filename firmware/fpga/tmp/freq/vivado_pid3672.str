@@ -108,3 +108,803 @@ Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
 // Tcl Message: open_project C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.xpr 
 // Tcl Message: Scanning sources... Finished scanning sources 
 // Tcl Message: INFO: [IP_Flow 19-234] Refreshing IP repositories INFO: [IP_Flow 19-1700] Loaded user IP repository 'c:/Users/elias/dev/ba/firmware/fpga/tmp/cores'. INFO: [IP_Flow 19-2313] Loaded Vivado IP repository 'C:/Xilinx/Vivado/2020.1/data/ip'. 
+// Project name: freq; location: C:/Users/elias/dev/ba/firmware/fpga/tmp/freq; part: xc7z010clg400-1
+dismissDialog("Open Project"); // bz (cs)
+// HMemoryUtils.trashcanNow. Engine heap size: 1,106 MB. GUI used memory: 71 MB. Current time: 7/1/25, 2:37:40 AM CEST
+// Tcl Command: 'rdi::info_commands {device::*}'
+// Tcl Command: 'rdi::info_commands {debug::*}'
+// Tcl Command: 'rdi::info_commands {*}'
+selectTree(PAResourceEtoH.FlowNavigatorTreePanel_FLOW_NAVIGATOR_TREE, "[, IP Integrator, Open Block Design]", 7, false); // u (J, cs)
+// Run Command: PAResourceCommand.PACommandNames_OPEN_BLOCK_DESIGN
+// bz (cs):  Open Block Design : addNotify
+// TclEventType: LOAD_FEATURE
+// Tcl Message: open_bd_design {C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/system.bd} 
+// TclEventType: RSB_CHANGE_CURRENT_DIAGRAM
+// TclEventType: RSB_PROPERTY_CHANGE
+// TclEventType: LOAD_FEATURE
+// TclEventType: RSB_PROPERTY_CHANGE
+// TclEventType: IP_LOCK_CHANGE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: DG_GRAPH_STALE
+// Tcl Message: Adding component instance block -- xilinx.com:ip:util_ds_buf:2.1 - util_ds_buf_1 Adding component instance block -- xilinx.com:ip:util_ds_buf:2.1 - util_ds_buf_2 Adding component instance block -- xilinx.com:ip:axi_gpio:2.0 - axi_gpio_0 Adding component instance block -- xilinx.com:ip:processing_system7:5.5 - processing_system7_0 
+// Tcl Message: Adding component instance block -- xilinx.com:ip:proc_sys_reset:5.0 - rst_ps7_0_125M Adding component instance block -- xilinx.com:ip:axi_interconnect:2.1 - ps7_0_axi_periph Adding component instance block -- xilinx.com:ip:axi_protocol_converter:2.1 - auto_pc Adding component instance block -- xilinx.com:ip:xlconstant:1.1 - xlc_reset Adding component instance block -- pavel-demin:user:axis_red_pitaya_adc:1.0 - axis_red_pitaya_adc_0 Adding component instance block -- xilinx.com:module_ref:signal_split:1.0 - signal_split_0 
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: DG_GRAPH_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: IP_LOCK_CHANGE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: IP_LOCK_CHANGE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: DG_GRAPH_STALE
+// TclEventType: RSB_PROPERTY_CHANGE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_OPEN_DIAGRAM
+// TclEventType: RSB_CONNECTION_CHANGE
+closeView(PAResourceOtoP.PAViews_PROJECT_SUMMARY, "Project Summary"); // v
+// TclEventType: RSB_LOCK_CHANGE
+// 'bJ' command handler elapsed time: 3 seconds
+// [GUI Memory]: 153 MB (+5012kb) [00:00:12]
+dismissDialog("Open Block Design"); // bz (cs)
+// Tcl Message: update_compile_order -fileset sources_1 
+// Elapsed time: 10 seconds
+selectTab("PlanAheadTabBaseWorkspace_JideTabbedPane", (HResource) null, "System", 0); // m (l, cs)
+// Run Command: PAResourceCommand.PACommandNames_CUSTOMIZE_RSB_BLOC
+// r (cs): Re-customize IP: addNotify
+// Elapsed time: 43 seconds
+selectButton(RDIResource.BaseDialog_CANCEL, "Cancel"); // a (r)
+dismissDialog("Re-customize IP"); // r (cs)
+selectTab("PlanAheadTabBaseWorkspace_JideTabbedPane", (HResource) null, "System", 0); // m (l, cs)
+selectView(PAResourceOtoP.PAViews_SYSTEM, "System", 792, 195, 2742, 853, false, false, false, true, false); // hq (m, cs) - Popup Trigger
+selectMenu(PAResourceQtoS.SelectMenu_HIGHLIGHT, "Highlight"); // af (ao, cs)
+selectMenuItem(PAResourceQtoS.SystemBuilderMenu_ADD_IP, "Add IP..."); // ai (ao, cs)
+setText("PAResourceAtoD.CoreTreeTablePanel_CORE_TREE_TABLE_SEARCH_FIELD", "dac"); // OverlayTextField (az, ResizableWindow)
+selectTreeTable(PAResourceAtoD.CoreTreeTablePanel_CORE_TREE_TABLE, "AXI4-Stream Red Pitaya DAC", 0, "AXI4-Stream Red Pitaya DAC", 0, false); // L (J, ResizableWindow)
+selectTreeTable(PAResourceAtoD.CoreTreeTablePanel_CORE_TREE_TABLE, "AXI4-Stream Red Pitaya DAC", 0, "AXI4-Stream Red Pitaya DAC", 0, false); // L (J, ResizableWindow)
+expandTreeTable(PAResourceAtoD.CoreTreeTablePanel_CORE_TREE_TABLE, "AXI4-Stream Red Pitaya DAC", 0); // L (J, ResizableWindow)
+selectTreeTable(PAResourceAtoD.CoreTreeTablePanel_CORE_TREE_TABLE, "AXI4-Stream Red Pitaya DAC", 0, "AXI4-Stream Red Pitaya DAC", 0, false, false, false, false, false, true); // L (J, ResizableWindow) - Double Click
+// TclEventType: REPORT_IP_STATUS_STALE
+// TclEventType: RSB_REMOVE_ADDRNETWORK
+// TclEventType: RSB_INSERT_ADDRNETWORK
+// TclEventType: DG_GRAPH_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_REMOVE_ADDRNETWORK
+// TclEventType: RSB_INSERT_ADDRNETWORK
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: REPORT_IP_STATUS_STALE
+// TclEventType: RSB_ADD_OBJECT
+// Tcl Message: startgroup 
+// Tcl Message: create_bd_cell -type ip -vlnv pavel-demin:user:axis_red_pitaya_dac:1.0 axis_red_pitaya_dac_0 
+// Tcl Message: endgroup 
+// Run Command: PAResourceCommand.PACommandNames_CUSTOMIZE_RSB_BLOC
+// r (cs): Re-customize IP: addNotify
+selectButton(RDIResource.BaseDialog_CANCEL, "Cancel"); // a (r)
+dismissDialog("Re-customize IP"); // r (cs)
+selectView(PAResourceOtoP.PAViews_SYSTEM, "System", 734, 208, 2742, 853, false, false, false, true, false); // hq (m, cs) - Popup Trigger
+selectMenu(PAResourceQtoS.SelectMenu_HIGHLIGHT, "Highlight"); // af (ao, cs)
+selectMenuItem(RDIResourceCommand.RDICommands_DELETE, "Delete"); // ai (ao, cs)
+// Run Command: RDIResourceCommand.RDICommands_DELETE
+// TclEventType: RSB_REMOVE_OBJECT
+// TclEventType: DG_GRAPH_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_REMOVE_ADDRNETWORK
+// TclEventType: RSB_INSERT_ADDRNETWORK
+// TclEventType: RSB_REMOVE_OBJECT
+// TclEventType: REPORT_IP_STATUS_STALE
+// Tcl Message: delete_bd_objs [get_bd_cells axis_red_pitaya_dac_0] 
+// Elapsed time: 26 seconds
+selectTree(PAResourceQtoS.SystemTreeView_SYSTEM_TREE, "[system, Ports]", 3, true); // a (J, cs) - Node
+selectTree(PAResourceQtoS.SystemTreeView_SYSTEM_TREE, "[system, Ports]", 3, true, false, false, false, true, false); // a (J, cs) - Popup Trigger - Node
+selectMenuItem(PAResourceQtoS.SystemBuilderMenu_CREATE_PORT, "Create Port..."); // ai (ao, cs)
+// bM (cs): Create Port: addNotify
+selectComboBox(PAResourceAtoD.CreateRSBPortDialog_DIRECTION, "Output", 1); // e (Q, bM)
+selectComboBox(PAResourceAtoD.CreateRSBPortDialog_TYPE, "Data", 3); // e (Q, bM)
+selectButton(RDIResource.BaseDialog_CANCEL, "Cancel"); // a (bM)
+dismissDialog("Create Port"); // bM (cs)
+// Run Command: PAResourceCommand.PACommandNames_CUSTOMIZE_RSB_BLOC
+// r (cs): Re-customize IP: addNotify
+// Elapsed time: 22 seconds
+selectButton(RDIResource.BaseDialog_CANCEL, "Cancel"); // a (r)
+dismissDialog("Re-customize IP"); // r (cs)
+selectView(PAResourceOtoP.PAViews_SYSTEM, "System", 1392, 442, 2742, 853, false, false, false, true, false); // hq (m, cs) - Popup Trigger
+selectMenu(PAResourceQtoS.SelectMenu_HIGHLIGHT, "Highlight"); // af (ao, cs)
+// [GUI Memory]: 162 MB (+1515kb) [00:02:45]
+selectTab("PlanAheadTabBaseWorkspace_JideTabbedPane", (HResource) null, "System", 0); // m (l, cs)
+selectView(PAResourceOtoP.PAViews_SYSTEM, "System", 1040, 198, 2742, 853, false, false, false, true, false); // hq (m, cs) - Popup Trigger
+selectMenu(PAResourceQtoS.SelectMenu_HIGHLIGHT, "Highlight"); // af (ao, cs)
+selectMenuItem(PAResourceQtoS.SystemBuilderMenu_ADD_IP, "Add IP..."); // ai (ao, cs)
+setText("PAResourceAtoD.CoreTreeTablePanel_CORE_TREE_TABLE_SEARCH_FIELD", "ada"); // OverlayTextField (az, ResizableWindow)
+setText("PAResourceAtoD.CoreTreeTablePanel_CORE_TREE_TABLE_SEARCH_FIELD", "dac"); // OverlayTextField (az)
+selectView(PAResourceOtoP.PAViews_SYSTEM, "System", 1157, 230, 2742, 853, false, false, false, true, false); // hq (m, cs) - Popup Trigger
+selectMenu(PAResourceQtoS.SelectMenu_HIGHLIGHT, "Highlight"); // af (ao, cs)
+selectMenu(PAResourceQtoS.SystemBuilderView_PINNING, "Pinning"); // af (ao, cs)
+selectMenu(PAResourceQtoS.SystemBuilderView_EXPAND_COLLAPSE, "Expand/Collapse"); // af (ao, cs)
+selectView(PAResourceOtoP.PAViews_SYSTEM, "System", 1540, 577, 2742, 853, false, false, false, true, false); // hq (m, cs) - Popup Trigger
+selectMenu(PAResourceQtoS.SystemBuilderView_PINNING, "Pinning"); // af (ao, cs)
+selectMenu(PAResourceQtoS.SystemBuilderView_EXPAND_COLLAPSE, "Expand/Collapse"); // af (ao, cs)
+selectMenuItem(PAResourceQtoS.SystemBuilderMenu_CREATE_INTERFACE_PORT, "Create Interface Port..."); // ai (ao, cs)
+// bz (cs):  Create Interface Port : addNotify
+// bx (cs): Create Interface Port: addNotify
+// Elapsed time: 31 seconds
+setText(PAResourceAtoD.CreateRSBInterfaceDialog_INTERFACE_NAME, "dac", true); // ac (Q, bx)
+// HOptionPane Warning: 'Please select a valid VLNV for the new interface port (Vivado)'
+selectButton(RDIResource.BaseDialog_OK, "OK"); // a (bx)
+selectButton("OptionPane.button", "OK"); // JButton (v, C)
+selectButton(RDIResource.BaseDialog_CANCEL, "Cancel"); // a (bx)
+// [GUI Memory]: 177 MB (+7761kb) [00:03:40]
+dismissDialog("Create Interface Port"); // bx (cs)
+selectView(PAResourceOtoP.PAViews_SYSTEM, "System", 1116, 181, 2742, 853, false, false, false, true, false); // hq (m, cs) - Popup Trigger
+selectMenu(PAResourceQtoS.SystemBuilderView_PINNING, "Pinning"); // af (ao, cs)
+selectMenu(PAResourceQtoS.SystemBuilderView_EXPAND_COLLAPSE, "Expand/Collapse"); // af (ao, cs)
+selectMenuItem(PAResourceQtoS.SystemBuilderMenu_CREATE_PORT, "Create Port..."); // ai (ao, cs)
+// bM (cs): Create Port: addNotify
+setText(PAResourceAtoD.CreateRSBPortDialog_PORT_NAME, (String) null); // ac (Q, bM)
+selectButton(RDIResource.BaseDialog_CANCEL, "Cancel"); // a (bM)
+dismissDialog("Create Port"); // bM (cs)
+// Run Command: PAResourceCommand.PACommandNames_FIND_IN_FILES
+// Find in Files: addNotify
+selectComboBox("pa.FindAndReplaceAllDialog_FIND_COMBO_BOX", "dac_dat_o", -1); // JComboBox (b, a)
+selectButton(PAResourceEtoH.FindAndReplaceAllDialog_FIND, "Find"); // f (a)
+// bz (cs):  Find in Files : addNotify
+// HMemoryUtils.trashcanNow. Engine heap size: 1,106 MB. GUI used memory: 181 MB. Current time: 7/1/25, 2:41:29 AM CEST
+// 'f' command handler elapsed time: 5 seconds
+// [GUI Memory]: 199 MB (+14075kb) [00:03:56]
+// [GUI Memory]: 226 MB (+17303kb) [00:03:56]
+// [GUI Memory]: 241 MB (+3858kb) [00:03:56]
+// HMemoryUtils.trashcanNow. Engine heap size: 1,106 MB. GUI used memory: 133 MB. Current time: 7/1/25, 2:41:29 AM CEST
+dismissDialog("Find in Files"); // bz (cs)
+selectTree(PAResourceEtoH.FindInFilesView_ROOT, "[ROOT]", 1, true); // G (J, cs) - Node
+selectTree(PAResourceEtoH.FindInFilesView_ROOT, "[ROOT]", 1, true, false, false, false, false, true); // G (J, cs) - Double Click - Node
+// Elapsed time: 15 seconds
+selectTree(PAResourceEtoH.FindInFilesView_ROOT, "[ROOT]", 1, true); // G (J, cs) - Node
+selectTree(PAResourceEtoH.FindInFilesView_ROOT, "[ROOT]", 1, true); // G (J, cs) - Node
+selectTree(PAResourceEtoH.FindInFilesView_ROOT, "[ROOT]", 1, true, false, false, false, false, true); // G (J, cs) - Double Click - Node
+selectTree(PAResourceEtoH.FindInFilesView_ROOT, "[ROOT]", 2, true); // G (J, cs) - Node
+selectTree(PAResourceEtoH.FindInFilesView_ROOT, "[ROOT]", 2, true, false, false, false, false, true); // G (J, cs) - Double Click - Node
+selectTree(PAResourceEtoH.FindInFilesView_ROOT, "[ROOT]", 2, true); // G (J, cs) - Node
+selectTree(PAResourceEtoH.FindInFilesView_ROOT, "[ROOT]", 2, true, false, false, false, false, true); // G (J, cs) - Double Click - Node
+selectTree(PAResourceEtoH.FindInFilesView_ROOT, "[ROOT]", 4, true); // G (J, cs) - Node
+selectTree(PAResourceEtoH.FindInFilesView_ROOT, "[ROOT]", 4, true, false, false, false, false, true); // G (J, cs) - Double Click - Node
+// Run Command: RDIResourceCommand.RDICommands_COPY
+// TclEventType: RSB_SCRIPT_TASK
+// TclEventType: RSB_COPY_OBJECT
+// TclEventType: RSB_SCRIPT_TASK
+// Tcl Message: copy_bd_objs /  [get_bd_ports {dac_dat_o}] 
+// Tcl Command: 'set_property location {2083 874} [get_bd_ports dac_dat_o]'
+// TclEventType: RSB_CANVAS_LOCATION
+// Tcl Message: set_property location {2083 874} [get_bd_ports dac_dat_o] 
+// Run Command: RDIResourceCommand.RDICommands_UNDO
+// Elapsed time: 27 seconds
+typeControlKey(null, null, 'z');
+// TclEventType: RSB_CANVAS_LOCATION
+// Tcl Message: undo 
+// Tcl Message: INFO: [Common 17-17] undo 'set_property location {2083 874} [get_bd_ports dac_dat_o]' 
+selectTree(PAResourceQtoS.SystemTreeView_SYSTEM_TREE, "[system, Ports, dac_dat_o1]", 13, false); // a (J, cs)
+selectTree(PAResourceQtoS.SystemTreeView_SYSTEM_TREE, "[system, Ports, dac_dat_o1]", 13, false, false, false, false, false, true); // a (J, cs) - Double Click
+selectTree(PAResourceQtoS.SystemTreeView_SYSTEM_TREE, "[system, Ports, dac_dat_o1]", 13, false); // a (J, cs)
+selectTree(PAResourceQtoS.SystemTreeView_SYSTEM_TREE, "[system, Ports, dac_dat_o1]", 13, false); // a (J, cs)
+selectTree(PAResourceQtoS.SystemTreeView_SYSTEM_TREE, "[system, Ports, dac_dat_o1]", 13, false); // a (J, cs)
+selectTree(PAResourceQtoS.SystemTreeView_SYSTEM_TREE, "[system, Ports, dac_dat_o1]", 13, false, false, false, false, true, false); // a (J, cs) - Popup Trigger
+selectMenuItem(RDIResourceCommand.RDICommands_DELETE, "Delete"); // ai (ao, cs)
+// Run Command: RDIResourceCommand.RDICommands_DELETE
+// TclEventType: RSB_REMOVE_OBJECT
+// Tcl Message: delete_bd_objs [get_bd_ports dac_dat_o1] 
+selectLabel((HResource) null, "axis_red_pitaya_dac_0_dac_dat"); // l (eu, cs)
+// TclEventType: RSB_CANVAS_LOCATION
+selectTab(RDIResource.PropertiesView_TABBED_PANE, (HResource) null, "Properties", 1); // i (c, cs)
+collapseTree(PAResourceQtoS.SystemTreeView_SYSTEM_TREE, "[system, Ports]", 3); // a (J, cs)
+selectTree(PAResourceQtoS.SystemTreeView_SYSTEM_TREE, "[system]", 0, true); // a (J, cs) - Node
+expandTree(PAResourceQtoS.SystemTreeView_SYSTEM_TREE, "[system, Interface Connections]", 2); // a (J, cs)
+collapseTree(PAResourceQtoS.SystemTreeView_SYSTEM_TREE, "[system, Interface Connections]", 2); // a (J, cs)
+selectTab((HResource) null, (HResource) null, "Sources", 0); // aL (aI, cs)
+expandTree(PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE, "[root, Design Sources, system_wrapper (system_wrapper.v)]", 1); // B (F, cs)
+selectTree(PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE, "[root, Design Sources, system_wrapper (system_wrapper.v), system_i : system (system.bd), system (system.v)]", 3, true); // B (F, cs) - Node
+selectTree(PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE, "[root, Design Sources, system_wrapper (system_wrapper.v), system_i : system (system.bd), system (system.v)]", 3, true, false, false, false, false, true); // B (F, cs) - Double Click - Node
+// Elapsed time: 22 seconds
+selectCodeEditor("system.v", 260, 374, false, false, false, true, false); // G (w, cs) - Popup Trigger
+selectCodeEditor("system.v", 160, 631); // G (w, cs)
+selectCodeEditor("system.v", 235, 616, false, false, false, true, false); // G (w, cs) - Popup Trigger
+selectCodeEditor("system.v", 242, 534); // G (w, cs)
+selectCodeEditor("system.v", 448, 577); // G (w, cs)
+typeControlKey((HResource) null, "system.v", 'c'); // G (w, cs)
+// Elapsed time: 94 seconds
+selectCodeEditor("system.v", 1151, 514); // G (w, cs)
+// Elapsed time: 32 seconds
+selectCodeEditor("system.v", 1353, 346); // G (w, cs)
+setText(RDIResource.HCodeEditor_SEARCH_TEXT_COMBO_BOX, "axis_red_pitaya_dac_0_da"); // l (au, cs)
+selectCodeEditor("system.v", 330, 540); // G (w, cs)
+// Elapsed time: 27 seconds
+selectCodeEditor("system.v", 1276, 456); // G (w, cs)
+setText(RDIResource.HCodeEditor_SEARCH_TEXT_COMBO_BOX, "output [13:0]dac_dat_a_o", true); // l (au, cs)
+setText(RDIResource.HCodeEditor_SEARCH_TEXT_COMBO_BOX, "dac_dat_a_o", true); // l (au, cs)
+selectCodeEditor("system.v", 214, 331); // G (w, cs)
+selectCodeEditor("system.v", 210, 321); // G (w, cs)
+selectCodeEditor("system.v", 190, 315); // G (w, cs)
+typeControlKey((HResource) null, "system.v", 'c'); // G (w, cs)
+selectCodeEditor("system.v", 211, 321); // G (w, cs)
+// Elapsed time: 23 seconds
+selectTab("PlanAheadTabBaseWorkspace_JideTabbedPane", (HResource) null, "System", 0); // m (l, cs)
+// Elapsed time: 10 seconds
+selectView(PAResourceOtoP.PAViews_SYSTEM, "System", 961, 568, 2742, 853, false, false, false, true, false); // hq (m, cs) - Popup Trigger
+selectMenu(PAResourceQtoS.SystemBuilderView_PINNING, "Pinning"); // af (ao, cs)
+selectMenu(PAResourceQtoS.SystemBuilderView_PINNING, "Pinning"); // af (ao, cs)
+selectView(PAResourceOtoP.PAViews_SYSTEM, "System", 1209, 656, 2742, 853, false, false, false, true, false); // hq (m, cs) - Popup Trigger
+selectMenu(PAResourceQtoS.SystemBuilderView_PINNING, "Pinning"); // af (ao, cs)
+selectMenuItem(PAResourceQtoS.SystemBuilderMenu_ADD_MODULE, "Add Module..."); // ai (ao, cs)
+// cU (cs): Add Module: addNotify
+selectList(PAResourceQtoS.RSBAddModuleDialog_MODULE_LIST, "frequency_counter (frequency_counter.v)", 1); // cY (J, cU)
+selectList(PAResourceQtoS.RSBAddModuleDialog_MODULE_LIST, "frequency_counter (frequency_counter.v)", 1, false, false, false, false, true); // cY (J, cU) - Double Click
+dismissDialog("Add Module"); // cU (cs)
+// TclEventType: REPORT_IP_STATUS_STALE
+// TclEventType: IP_LOCK_CHANGE
+// TclEventType: REPORT_IP_STATUS_STALE
+// TclEventType: RSB_REMOVE_ADDRNETWORK
+// TclEventType: RSB_INSERT_ADDRNETWORK
+// TclEventType: DG_GRAPH_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_REMOVE_ADDRNETWORK
+// TclEventType: RSB_INSERT_ADDRNETWORK
+// TclEventType: REPORT_IP_STATUS_STALE
+// TclEventType: RSB_ADD_OBJECT
+// Tcl Message: create_bd_cell -type module -reference frequency_counter frequency_counter_0 
+selectView(PAResourceOtoP.PAViews_SYSTEM, "System", 1349, 628, 2742, 853, false, false, false, true, false); // hq (m, cs) - Popup Trigger
+selectMenuItem(RDIResourceCommand.RDICommands_DELETE, "Delete"); // ai (ao, Popup.HeavyWeightWindow)
+// Run Command: RDIResourceCommand.RDICommands_DELETE
+// TclEventType: RSB_REMOVE_OBJECT
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_REMOVE_ADDRNETWORK
+// TclEventType: RSB_INSERT_ADDRNETWORK
+// TclEventType: RSB_REMOVE_OBJECT
+// TclEventType: REPORT_IP_STATUS_STALE
+// Tcl Message: delete_bd_objs [get_bd_cells frequency_counter_0] 
+selectView(PAResourceOtoP.PAViews_SYSTEM, "System", 1420, 682, 2742, 853, false, false, false, true, false); // hq (m, cs) - Popup Trigger
+selectMenuItem(PAResourceQtoS.SystemBuilderMenu_ADD_MODULE, "Add Module..."); // ai (ao, cs)
+// HOptionPane Warning: 'Module references are still updating. Please try again after Sources | Hierarchy view is up-to-date. (Add Module)'
+selectButton("OptionPane.button", "OK"); // JButton (v, B)
+selectView(PAResourceOtoP.PAViews_SYSTEM, "System", 1499, 420, 2742, 853, false, false, false, true, false); // hq (m, cs) - Popup Trigger
+selectMenuItem(PAResourceQtoS.SystemBuilderMenu_ADD_MODULE, "Add Module..."); // ai (ao, cs)
+// HOptionPane Warning: 'Module references are still updating. Please try again after Sources | Hierarchy view is up-to-date. (Add Module)'
+selectButton("OptionPane.button", "OK"); // JButton (v, B)
+// TclEventType: RSB_CANVAS_LOCATION
+// Run Command: PAResourceCommand.PACommandNames_SAVE_RSB_DESIGN
+// TclEventType: RSB_CANVAS_LOCATION
+// TclEventType: RSB_SAVE_DIAGRAM
+// TclEventType: DG_GRAPH_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_SAVE_DIAGRAM
+// Tcl Message: save_bd_design 
+// Tcl Message: Wrote  : <C:\Users\elias\dev\ba\firmware\fpga\tmp\freq\freq.srcs\sources_1\bd\system\system.bd>  Wrote  : <C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ui/bd_c954508f.ui>  Wrote  : <C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ui/bd_fb15793c.ui>  Wrote  : <C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ui/bd_8707aecf.ui>  
+// TclEventType: RSB_CANVAS_LOCATION
+selectView(PAResourceOtoP.PAViews_SYSTEM, "System", 1562, 511, 2742, 853, false, false, false, true, false); // hq (m, cs) - Popup Trigger
+selectMenuItem(PAResourceQtoS.SystemBuilderMenu_ADD_MODULE, "Add Module..."); // ai (ao, cs)
+// HOptionPane Warning: 'Module references are still updating. Please try again after Sources | Hierarchy view is up-to-date. (Add Module)'
+// TclEventType: RSB_CANVAS_LOCATION
+selectButton("OptionPane.button", "OK"); // JButton (v, B)
+selectButton(PAResourceOtoP.PlanAheadTab_REFRESH_CHANGED_MODULES, "Refresh Changed Modules"); // h (ds, cs)
+// TclEventType: IP_LOCK_CHANGE
+// TclEventType: RSB_CANVAS_LOCATION
+// TclEventType: IP_LOCK_CHANGE
+// TclEventType: PACKAGER_OBJECT_ADD
+// TclEventType: PACKAGER_MESSAGE_RESET
+// TclEventType: IP_LOCK_CHANGE
+// TclEventType: BDCELL_LOCK_CHANGE
+// TclEventType: RSB_OPEN_DIAGRAM
+// TclEventType: RSB_CANVAS_LOCATION
+// TclEventType: RSB_OPEN_DIAGRAM
+// TclEventType: RSB_CANVAS_LOCATION
+// TclEventType: RSB_OPEN_DIAGRAM
+// TclEventType: RSB_SCRIPT_TASK
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: DG_GRAPH_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_REMOVE_OBJECT
+// TclEventType: RSB_SCRIPT_TASK
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_SAVE_DIAGRAM
+// TclEventType: RSB_CANVAS_LOCATION
+// TclEventType: RSB_SAVE_DIAGRAM
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_SAVE_DIAGRAM
+// TclEventType: FILESET_UPDATE_IP
+// TclEventType: IP_UPGRADE_COMPLETE
+// Tcl Message: update_module_reference system_frequency_counter_0_0 
+// Tcl Message: Upgrading 'C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/system.bd' 
+// Tcl Message: INFO: [IP_Flow 19-1972] Upgraded system_frequency_counter_0_0 from frequency_counter_v1_0 1.0 to frequency_counter_v1_0 1.0 
+// Tcl Message: Wrote  : <C:\Users\elias\dev\ba\firmware\fpga\tmp\freq\freq.srcs\sources_1\bd\system\system.bd>  Wrote  : <C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ui/bd_c954508f.ui>  Wrote  : <C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ui/bd_fb15793c.ui>  Wrote  : <C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ui/bd_8707aecf.ui>  
+// TclEventType: RSB_CANVAS_LOCATION
+// bz (cs):  Refresh Changed Modules : addNotify
+// Tcl Message: update_module_reference system_pow2_0_0 
+// TclEventType: PACKAGER_OBJECT_ADD
+// TclEventType: PACKAGER_MESSAGE_RESET
+// TclEventType: BDCELL_LOCK_CHANGE
+// TclEventType: RSB_OPEN_DIAGRAM
+// TclEventType: RSB_SCRIPT_TASK
+// TclEventType: DG_GRAPH_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_REMOVE_OBJECT
+// TclEventType: RSB_SCRIPT_TASK
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_SAVE_DIAGRAM
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_SAVE_DIAGRAM
+// TclEventType: FILESET_UPDATE_IP
+// TclEventType: IP_UPGRADE_COMPLETE
+// Tcl Message: INFO: [IP_Flow 19-234] Refreshing IP repositories INFO: [IP_Flow 19-1700] Loaded user IP repository 'c:/Users/elias/dev/ba/firmware/fpga/tmp/cores'. 
+// Tcl Message: Upgrading 'C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/system.bd' 
+// Tcl Message: INFO: [IP_Flow 19-1972] Upgraded system_pow2_0_0 from pow2_v1_0 1.0 to pow2_v1_0 1.0 
+// Tcl Message: Wrote  : <C:\Users\elias\dev\ba\firmware\fpga\tmp\freq\freq.srcs\sources_1\bd\system\system.bd>  Wrote  : <C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ui/bd_c954508f.ui>  Wrote  : <C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ui/bd_fb15793c.ui>  Wrote  : <C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ui/bd_8707aecf.ui>  
+// TclEventType: RSB_CANVAS_LOCATION
+dismissDialog("Refresh Changed Modules"); // bz (cs)
+selectView(PAResourceOtoP.PAViews_SYSTEM, "System", 1442, 431, 2742, 881, false, false, false, true, false); // hq (m, cs) - Popup Trigger
+selectMenuItem(PAResourceQtoS.SystemBuilderMenu_ADD_MODULE, "Add Module..."); // ai (ao, cs)
+// HOptionPane Warning: 'Module references are still updating. Please try again after Sources | Hierarchy view is up-to-date. (Add Module)'
+// TclEventType: RSB_CANVAS_LOCATION
+selectButton("OptionPane.button", "OK"); // JButton (v, B)
+collapseTree(PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE, "[root, Design Sources, system_wrapper (system_wrapper.v)]", 1); // B (F, cs)
+selectView(PAResourceOtoP.PAViews_SYSTEM, "System", 1000, 296, 2742, 881, false, false, false, true, false); // hq (m, cs) - Popup Trigger
+selectMenuItem(PAResourceQtoS.SystemBuilderMenu_ADD_MODULE, "Add Module..."); // ai (ao, cs)
+// cU (cs): Add Module: addNotify
+// TclEventType: RSB_CANVAS_LOCATION
+selectButton(RDIResource.BaseDialog_OK, "OK"); // a (cU)
+dismissDialog("Add Module"); // cU (cs)
+// TclEventType: REPORT_IP_STATUS_STALE
+// TclEventType: RSB_CANVAS_LOCATION
+// TclEventType: REPORT_IP_STATUS_STALE
+// TclEventType: RSB_REMOVE_ADDRNETWORK
+// TclEventType: RSB_INSERT_ADDRNETWORK
+// TclEventType: DG_GRAPH_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_REMOVE_ADDRNETWORK
+// TclEventType: RSB_INSERT_ADDRNETWORK
+// TclEventType: REPORT_IP_STATUS_STALE
+// TclEventType: RSB_ADD_OBJECT
+// Tcl Message: create_bd_cell -type module -reference freq_to_voltage freq_to_voltage_0 
+// TclEventType: RSB_CANVAS_LOCATION
+// Tcl Command: 'set_property location {5 1505 953} [get_bd_cells freq_to_voltage_0]'
+// TclEventType: RSB_CANVAS_LOCATION
+// Tcl Message: set_property location {5 1505 953} [get_bd_cells freq_to_voltage_0] 
+// TclEventType: RSB_CONNECTION_CHANGE
+// Tcl Message: connect_bd_net [get_bd_pins freq_to_voltage_0/frequency_in] [get_bd_pins FrequencyCounter/counter_output] 
+// TclEventType: RSB_CONNECTION_CHANGE
+// Tcl Message: connect_bd_net [get_bd_pins freq_to_voltage_0/clk] [get_bd_pins DataAcquisition/adc_clk] 
+// Elapsed time: 40 seconds
+selectView(PAResourceOtoP.PAViews_SYSTEM, "System", 1717, 570, 2742, 881, false, false, false, true, false); // hq (m, cs) - Popup Trigger
+selectMenu(PAResourceQtoS.SelectMenu_HIGHLIGHT, "Highlight"); // af (ao, Popup.HeavyWeightWindow)
+selectMenuItem(RDIResourceCommand.RDICommands_DELETE, "Delete"); // ai (ao, Popup.HeavyWeightWindow)
+// Run Command: RDIResourceCommand.RDICommands_DELETE
+// TclEventType: RSB_REMOVE_OBJECT
+// Tcl Message: delete_bd_objs [get_bd_nets axis_red_pitaya_dac_0_dac_dat] 
+selectView(PAResourceOtoP.PAViews_SYSTEM, "System", 1557, 531, 2742, 881, false, false, false, true, false); // hq (m, cs) - Popup Trigger
+selectMenu(PAResourceQtoS.SelectMenu_HIGHLIGHT, "Highlight"); // af (ao, cs)
+selectMenuItem(RDIResourceCommand.RDICommands_DELETE, "Delete"); // ai (ao, cs)
+// Run Command: RDIResourceCommand.RDICommands_DELETE
+// TclEventType: RSB_REMOVE_OBJECT
+// Tcl Message: delete_bd_objs [get_bd_nets axis_red_pitaya_dac_0_dac_wrt] 
+selectView(PAResourceOtoP.PAViews_SYSTEM, "System", 1460, 495, 2742, 881, false, false, false, true, false); // hq (m, cs) - Popup Trigger
+selectMenu(PAResourceQtoS.SelectMenu_HIGHLIGHT, "Highlight"); // af (ao, cs)
+selectMenuItem(RDIResourceCommand.RDICommands_DELETE, "Delete"); // ai (ao, cs)
+// Run Command: RDIResourceCommand.RDICommands_DELETE
+// TclEventType: RSB_REMOVE_OBJECT
+// Tcl Message: delete_bd_objs [get_bd_nets axis_red_pitaya_dac_0_dac_sel] 
+selectView(PAResourceOtoP.PAViews_SYSTEM, "System", 1442, 453, 2742, 881, false, false, false, true, false); // hq (m, cs) - Popup Trigger
+selectMenu(PAResourceQtoS.SelectMenu_HIGHLIGHT, "Highlight"); // af (ao, cs)
+selectMenuItem(RDIResourceCommand.RDICommands_DELETE, "Delete"); // ai (ao, cs)
+// Run Command: RDIResourceCommand.RDICommands_DELETE
+// TclEventType: RSB_REMOVE_OBJECT
+// Tcl Message: delete_bd_objs [get_bd_nets axis_red_pitaya_dac_0_dac_rst] 
+selectView(PAResourceOtoP.PAViews_SYSTEM, "System", 1438, 418, 2742, 881, false, false, false, true, false); // hq (m, cs) - Popup Trigger
+selectMenu(PAResourceQtoS.SelectMenu_HIGHLIGHT, "Highlight"); // af (ao, cs)
+selectMenuItem(RDIResourceCommand.RDICommands_DELETE, "Delete"); // ai (ao, cs)
+// Run Command: RDIResourceCommand.RDICommands_DELETE
+// TclEventType: RSB_REMOVE_OBJECT
+// Tcl Message: delete_bd_objs [get_bd_nets axis_red_pitaya_dac_0_dac_clk] 
+// TclEventType: RSB_CONNECTION_CHANGE
+// Tcl Message: connect_bd_net [get_bd_ports dac_dat_o] [get_bd_pins freq_to_voltage_0/voltage_out] 
+selectTree(PAResourceEtoH.FlowNavigatorTreePanel_FLOW_NAVIGATOR_TREE, "[, Program and Debug, Generate Bitstream]", 20, false); // u (J, cs)
+// Run Command: PAResourceCommand.PACommandNames_RUN_BITGEN
+// am (cs): Save Project: addNotify
+selectButton(PAResourceQtoS.SaveProjectUtils_SAVE, "Save"); // a (am)
+// bz (cs):  Save Constraints : addNotify
+// TclEventType: RSB_SAVE_DIAGRAM
+dismissDialog("Save Project"); // am (cs)
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: DG_GRAPH_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_SAVE_DIAGRAM
+// Tcl Message: save_bd_design 
+// Tcl Message: Wrote  : <C:\Users\elias\dev\ba\firmware\fpga\tmp\freq\freq.srcs\sources_1\bd\system\system.bd>  Wrote  : <C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ui/bd_c954508f.ui>  Wrote  : <C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ui/bd_fb15793c.ui>  Wrote  : <C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ui/bd_8707aecf.ui>  
+// A (cs): Synthesis is Out-of-date: addNotify
+dismissDialog("Save Constraints"); // bz (cs)
+selectButton(RDIResource.BaseDialog_YES, "Yes"); // a (A)
+// bz (cs):  Resetting Runs : addNotify
+dismissDialog("Synthesis is Out-of-date"); // A (cs)
+// TclEventType: RUN_MODIFY
+// TclEventType: RUN_RESET
+// TclEventType: RUN_STATUS_CHANGE
+// TclEventType: RUN_RESET
+// TclEventType: RUN_STATUS_CHANGE
+// TclEventType: RUN_RESET
+// TclEventType: RUN_MODIFY
+// Tcl Message: reset_run synth_1 
+// f (cs): Launch Runs: addNotify
+selectButton(RDIResource.BaseDialog_OK, "OK"); // a (f)
+// 'cD' command handler elapsed time: 3 seconds
+// TclEventType: RSB_SCRIPT_TASK
+dismissDialog("Launch Runs"); // f (cs)
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_SCRIPT_TASK
+// TclEventType: RSB_REMOVE_OBJECT
+// TclEventType: RSB_SCRIPT_TASK
+// TclEventType: RSB_REMOVE_OBJECT
+// TclEventType: RSB_SCRIPT_TASK
+// TclEventType: RSB_REMOVE_OBJECT
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: REPORT_IP_STATUS_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_REMOVE_OBJECT
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_REMOVE_OBJECT
+// TclEventType: REPORT_IP_STATUS_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: REPORT_IP_STATUS_STALE
+// TclEventType: FILE_SET_CHANGE
+// bz (cs):  Generate Bitstream : addNotify
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_SCRIPT_TASK
+// TclEventType: RSB_SAVE_DIAGRAM
+// TclEventType: DG_GRAPH_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_SAVE_DIAGRAM
+// Tcl Message: launch_runs impl_1 -to_step write_bitstream -jobs 12 
+// Tcl Message: INFO: [xilinx.com:ip:clk_wiz:6.0-1] /SignalGenerator/clk_wiz_0 clk_wiz propagate 
+// Tcl Message: Wrote  : <C:\Users\elias\dev\ba\firmware\fpga\tmp\freq\freq.srcs\sources_1\bd\system\system.bd>  Wrote  : <C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ui/bd_c954508f.ui>  Wrote  : <C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ui/bd_fb15793c.ui>  Wrote  : <C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ui/bd_8707aecf.ui>  
+// TclEventType: DG_GRAPH_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_SAVE_DIAGRAM
+// TclEventType: REPORT_IP_STATUS_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: REPORT_IP_STATUS_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_SCRIPT_TASK
+// TclEventType: FILE_SET_CHANGE
+// Tcl Message: VHDL Output written to : C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/synth/system.v 
+// Tcl Message: VHDL Output written to : C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/sim/system.v VHDL Output written to : C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/hdl/system_wrapper.v Wrote  : <C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ui/bd_c954508f.ui>  Wrote  : <C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ui/bd_fb15793c.ui>  Wrote  : <C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ui/bd_8707aecf.ui>  
+// Tcl Message: INFO: [BD 41-1029] Generation completed for the IP Integrator block FrequencyCounter/frequency_counter_0 . INFO: [BD 41-1029] Generation completed for the IP Integrator block FrequencyCounter/pow2_0 . INFO: [BD 41-1029] Generation completed for the IP Integrator block freq_to_voltage_0 . 
+// Tcl Message: INFO: [BD 41-1029] Generation completed for the IP Integrator block PS7/ps7_0_axi_periph/s00_couplers/auto_pc . 
+// Tcl Message: Exporting to file C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/hw_handoff/system.hwh Generated Block Design Tcl file C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/hw_handoff/system_bd.tcl Generated Hardware Definition File C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/synth/system.hwdef 
+// TclEventType: DG_GRAPH_STALE
+// TclEventType: FILE_SET_CHANGE
+// HMemoryUtils.trashcanNow. Engine heap size: 1,166 MB. GUI used memory: 134 MB. Current time: 7/1/25, 2:49:20 AM CEST
+// TclEventType: RUN_LAUNCH
+// TclEventType: RUN_MODIFY
+// Tcl Message: [Tue Jul  1 02:49:24 2025] Launched synth_1... Run output will be captured here: C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.runs/synth_1/runme.log [Tue Jul  1 02:49:24 2025] Launched impl_1... Run output will be captured here: C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.runs/impl_1/runme.log 
+// Tcl Message: launch_runs: Time (s): cpu = 00:00:03 ; elapsed = 00:00:13 . Memory (MB): peak = 1265.859 ; gain = 0.000 
+// [Engine Memory]: 1,175 MB (+14185kb) [00:11:51]
+// aZ (cs): Launch Run Critical Messages: addNotify
+// TclEventType: RUN_STATUS_CHANGE
+// Elapsed time: 19 seconds
+selectButton(PAResourceAtoD.CmdMsgDialog_OK, "OK"); // f (aZ)
+dismissDialog("Launch Run Critical Messages"); // aZ (cs)
+// TclEventType: RUN_COMPLETED
+// TclEventType: RUN_STATUS_CHANGE
+// TclEventType: RUN_STEP_COMPLETED
+// TclEventType: RUN_STATUS_CHANGE
+// TclEventType: RUN_STEP_COMPLETED
+// TclEventType: RUN_COMPLETED
+// TclEventType: RUN_STATUS_CHANGE
+// ag (cs): Bitstream Generation Completed: addNotify
+// Elapsed time: 266 seconds
+selectButton(RDIResource.BaseDialog_OK, "OK"); // a (ag)
+// Run Command: PAResourceCommand.PACommandNames_GOTO_IMPLEMENTED_DESIGN
+// bz (cs):  Open Implemented Design : addNotify
+// Tcl Message: open_run impl_1 
+// HMemoryUtils.trashcanNow. Engine heap size: 1,476 MB. GUI used memory: 141 MB. Current time: 7/1/25, 2:54:00 AM CEST
+// TclEventType: SDC_CONSTRAINT_ADD
+// TclEventType: POWER_CNS_STALE
+// TclEventType: SDC_CONSTRAINT_ADD
+// TclEventType: POWER_REPORT_STALE
+// TclEventType: SDC_CONSTRAINT_ADD
+// TclEventType: POWER_REPORT_STALE
+// TclEventType: SDC_CONSTRAINT_ADD
+// TclEventType: FLOORPLAN_MODIFY
+// TclEventType: DESIGN_NEW
+// HMemoryUtils.trashcanNow. Engine heap size: 1,977 MB. GUI used memory: 140 MB. Current time: 7/1/25, 2:54:05 AM CEST
+// [Engine Memory]: 1,977 MB (+779623kb) [00:16:32]
+// [Engine Memory]: 2,108 MB (+33363kb) [00:16:32]
+// TclEventType: DESIGN_NEW
+// TclEventType: HFED_INIT_ROUTE_STORAGE_COMPLETED
+// Device: addNotify
+// DeviceView Instantiated
+// WARNING: HEventQueue.dispatchEvent() is taking  1041 ms.
+// TclEventType: CURR_DESIGN_SET
+// Tcl Message: INFO: [Device 21-403] Loading part xc7z010clg400-1 
+// Tcl Message: Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.032 . Memory (MB): peak = 1328.113 ; gain = 0.000 
+// Tcl Message: INFO: [Netlist 29-17] Analyzing 140 Unisim elements for replacement INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds INFO: [Project 1-479] Netlist was created with Vivado 2020.1 INFO: [Project 1-570] Preparing netlist for logic optimization INFO: [Timing 38-478] Restoring timing data from binary archive. INFO: [Timing 38-479] Binary timing data restore complete. INFO: [Project 1-856] Restoring constraints from binary archive. INFO: [Project 1-853] Binary constraint restore complete. 
+// Tcl Message: Reading XDEF placement. Reading placer database... Reading XDEF routing. 
+// Tcl Message: Read XDEF File: Time (s): cpu = 00:00:01 ; elapsed = 00:00:00.197 . Memory (MB): peak = 2023.398 ; gain = 0.000 
+// Tcl Message: Restored from archive | CPU: 1.000000 secs | Memory: 0.000000 MB | 
+// Tcl Message: Finished XDEF File Restore: Time (s): cpu = 00:00:01 ; elapsed = 00:00:00.198 . Memory (MB): peak = 2023.398 ; gain = 0.000 Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.001 . Memory (MB): peak = 2023.398 ; gain = 0.000 
+// Tcl Message: INFO: [Project 1-111] Unisim Transformation Summary:   A total of 2 instances were transformed.   OBUFDS => OBUFDS_DUAL_BUF (INV, OBUFDS(x2)): 2 instances  
+// TclEventType: DRC_ADDED
+// Device view-level: 0.0
+// RouteApi: Init Delay Mediator Swing Worker Finished
+// Tcl Message: open_run: Time (s): cpu = 00:00:12 ; elapsed = 00:00:09 . Memory (MB): peak = 2183.496 ; gain = 917.637 
+// TclEventType: DRC_ADDED
+// TclEventType: METHODOLOGY_ADDED
+// TclEventType: POWER_UPDATED
+// TclEventType: TIMING_SUMMARY_UPDATED
+// 'dZ' command handler elapsed time: 11 seconds
+// V (cs): Critical Messages: addNotify
+// Elapsed time: 11 seconds
+dismissDialog("Open Implemented Design"); // bz (cs)
+// Elapsed time: 277 seconds
+selectButton(PAResourceAtoD.CmdMsgDialog_OK, "OK"); // f (V)
+dismissDialog("Critical Messages"); // V (cs)
+selectTab("PlanAheadTabBaseWorkspace_JideTabbedPane", (HResource) null, "Project Summary", 0); // m (l, cs)
+selectTab((HResource) null, (HResource) null, "Sources", 0); // aL (aI, cs)
+selectTree(PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE, "[root, Design Sources, freq_to_voltage (freq_to_voltage.v)]", 2, false); // B (F, cs)
+selectTree(PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE, "[root, Design Sources, freq_to_voltage (freq_to_voltage.v)]", 2, false, false, false, false, false, true); // B (F, cs) - Double Click
+selectTree(PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE, "[root, Design Sources, frequency_counter (frequency_counter.v)]", 3, false); // B (F, cs)
+selectTree(PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE, "[root, Design Sources, frequency_counter (frequency_counter.v)]", 3, false, false, false, false, false, true); // B (F, cs) - Double Click
+selectTree(PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE, "[root, Design Sources, system_wrapper (system_wrapper.v)]", 1, true); // B (F, cs) - Node
+// [GUI Memory]: 255 MB (+1595kb) [00:21:20]
+selectTree(PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE, "[root, Design Sources, system_wrapper (system_wrapper.v)]", 1, true, false, false, false, false, true); // B (F, cs) - Double Click - Node
+selectTree(PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE, "[root, Design Sources, pow2 (pow2.v)]", 6, false); // B (F, cs)
+selectTree(PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE, "[root, Design Sources, system_wrapper (system_wrapper.v)]", 1, true); // B (F, cs) - Node
+selectTree(PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE, "[root, Design Sources, system_wrapper (system_wrapper.v)]", 1, true, false, false, false, false, true); // B (F, cs) - Double Click - Node
+selectTree(PAResourceEtoH.FlowNavigatorTreePanel_FLOW_NAVIGATOR_TREE, "[, IP Integrator, Open Block Design]", 7, false); // u (J, cs)
+// Run Command: PAResourceCommand.PACommandNames_OPEN_BLOCK_DESIGN
+// bz (cs):  Open Block Design : addNotify
+// TclEventType: RSB_OPEN_DIAGRAM
+closeView(PAResourceOtoP.PAViews_PROJECT_SUMMARY, "Project Summary"); // v
+// Tcl Message: open_bd_design {C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/system.bd} 
+dismissDialog("Open Block Design"); // bz (cs)
+expandTree(PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE, "[root, Design Sources, system_wrapper (system_wrapper.v)]", 1); // B (F, cs)
+expandTree(PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE, "[root, Design Sources, system_wrapper (system_wrapper.v), system_i : system (system.bd), system (system.v)]", 3); // B (F, cs)
+selectTree(PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE, "[root, Design Sources, system_wrapper (system_wrapper.v), system_i : system (system.bd), system (system.v)]", 3, true); // B (F, cs) - Node
+selectTree(PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE, "[root, Design Sources, system_wrapper (system_wrapper.v), system_i : system (system.bd), system (system.v)]", 3, true, false, false, false, false, true); // B (F, cs) - Double Click - Node
+// Elapsed time: 79 seconds
+selectCodeEditor("system.v", 1539, 531); // G (w, cs)
+selectTab("PlanAheadTabBaseWorkspace_JideTabbedPane", (HResource) null, "System", 0); // m (l, cs)
+// Elapsed time: 10 seconds
+selectView(PAResourceOtoP.PAViews_SYSTEM, "System", 1313, 496, 2742, 881, false, false, false, true, false); // hq (m, cs) - Popup Trigger
+// Elapsed time: 23 seconds
+selectView(PAResourceOtoP.PAViews_SYSTEM, "System", 1619, 403, 2742, 881, false, false, false, true, false); // hq (m, cs) - Popup Trigger
+selectMenu(PAResourceQtoS.SelectMenu_HIGHLIGHT, "Highlight"); // af (ao, cs)
+selectMenuItem(RDIResourceCommand.RDICommands_COPY, "Copy"); // ai (ao, cs)
+// Run Command: RDIResourceCommand.RDICommands_COPY
+selectView(PAResourceOtoP.PAViews_SYSTEM, "System", 1590, 445, 2742, 881, false, false, false, true, false); // hq (m, cs) - Popup Trigger
+selectMenu(PAResourceQtoS.SelectMenu_HIGHLIGHT, "Highlight"); // af (ao, cs)
+selectMenuItem(RDIResourceCommand.RDICommands_COPY, "Copy"); // ai (ao, cs)
+// Run Command: RDIResourceCommand.RDICommands_COPY
+selectTab("PlanAheadTabBaseWorkspace_JideTabbedPane", (HResource) null, "System", 0); // m (l, cs)
+// Elapsed time: 98 seconds
+selectView(PAResourceOtoP.PAViews_SYSTEM, "System", 1945, 689, 2742, 881, false, false, false, true, false); // hq (m, cs) - Popup Trigger
+selectMenuItem(RDIResourceCommand.RDICommands_DELETE, "Delete"); // ai (ao, Popup.HeavyWeightWindow)
+// Run Command: RDIResourceCommand.RDICommands_DELETE
+// TclEventType: DG_GRAPH_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_REMOVE_OBJECT
+// Tcl Message: delete_bd_objs [get_bd_nets freq_to_voltage_0_voltage_out] 
+// TclEventType: RSB_CONNECTION_CHANGE
+// Tcl Message: connect_bd_net [get_bd_ports dac_dat_o] [get_bd_pins SignalGenerator/dac_dat_o] 
+// TclEventType: RSB_CONNECTION_CHANGE
+// Tcl Message: connect_bd_net [get_bd_ports dac_wrt_o] [get_bd_pins SignalGenerator/dac_wrt_o] 
+// TclEventType: RSB_CONNECTION_CHANGE
+// Tcl Message: connect_bd_net [get_bd_ports dac_sel_o] [get_bd_pins SignalGenerator/dac_sel_o] 
+// TclEventType: RSB_CONNECTION_CHANGE
+// Tcl Message: connect_bd_net [get_bd_ports dac_rst_o] [get_bd_pins SignalGenerator/dac_rst_o] 
+// TclEventType: RSB_CONNECTION_CHANGE
+// Tcl Message: connect_bd_net [get_bd_ports dac_clk_o] [get_bd_pins SignalGenerator/dac_clk_o] 
+// Run Command: PAResourceCommand.PACommandNames_SAVE_RSB_DESIGN
+// TclEventType: RSB_SAVE_DIAGRAM
+// TclEventType: DG_GRAPH_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_SAVE_DIAGRAM
+// Tcl Message: save_bd_design 
+// Tcl Message: Wrote  : <C:\Users\elias\dev\ba\firmware\fpga\tmp\freq\freq.srcs\sources_1\bd\system\system.bd>  Wrote  : <C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ui/bd_c954508f.ui>  Wrote  : <C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ui/bd_fb15793c.ui>  Wrote  : <C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ui/bd_8707aecf.ui>  
+// TclEventType: RSB_CANVAS_LOCATION
+// Elapsed time: 29 seconds
+selectView(PAResourceOtoP.PAViews_SYSTEM, "System", 1866, 330, 2742, 881, false, false, false, true, false); // hq (m, cs) - Popup Trigger
+selectMenu(PAResourceQtoS.SelectMenu_HIGHLIGHT, "Highlight"); // af (ao, cs)
+selectMenuItem(RDIResourceCommand.RDICommands_DELETE, "Delete"); // ai (ao, cs)
+// Run Command: RDIResourceCommand.RDICommands_DELETE
+// TclEventType: RSB_REMOVE_OBJECT
+// Tcl Message: delete_bd_objs [get_bd_nets signal_decoder_0_led_out] 
+// TclEventType: RSB_CANVAS_LOCATION
+// Tcl Command: 'set_property location {2116 941} [get_bd_ports led_o]'
+// TclEventType: RSB_CANVAS_LOCATION
+// Tcl Message: set_property location {2116 941} [get_bd_ports led_o] 
+// TclEventType: RSB_CANVAS_LOCATION
+selectView(PAResourceOtoP.PAViews_SYSTEM, "System", 1614, 736, 2742, 881, false, false, false, true, false); // hq (m, cs) - Popup Trigger
+selectMenuItem(PAResourceQtoS.SystemBuilderMenu_ADD_IP, "Add IP..."); // ai (ao, Popup.HeavyWeightWindow)
+setText("PAResourceAtoD.CoreTreeTablePanel_CORE_TREE_TABLE_SEARCH_FIELD", "Slice"); // OverlayTextField (az, ResizableWindow)
+setText("PAResourceAtoD.CoreTreeTablePanel_CORE_TREE_TABLE_SEARCH_FIELD", "Slice"); // OverlayTextField (az, ResizableWindow)
+setText("PAResourceAtoD.CoreTreeTablePanel_CORE_TREE_TABLE_SEARCH_FIELD", "Slice"); // OverlayTextField (az, ResizableWindow)
+setText("PAResourceAtoD.CoreTreeTablePanel_CORE_TREE_TABLE_SEARCH_FIELD", "Slice"); // OverlayTextField (az, ResizableWindow)
+applyEnter(PAResourceAtoD.CoreTreeTablePanel_CORE_TREE_TABLE, (String) null); // L (J, ResizableWindow)
+// TclEventType: REPORT_IP_STATUS_STALE
+// TclEventType: RSB_REMOVE_ADDRNETWORK
+// TclEventType: RSB_INSERT_ADDRNETWORK
+// TclEventType: DG_GRAPH_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_REMOVE_ADDRNETWORK
+// TclEventType: RSB_INSERT_ADDRNETWORK
+// TclEventType: REPORT_IP_STATUS_STALE
+// TclEventType: RSB_ADD_OBJECT
+// TclEventType: RSB_CANVAS_LOCATION
+// Tcl Message: startgroup 
+// Tcl Message: create_bd_cell -type ip -vlnv xilinx.com:ip:xlslice:1.0 xlslice_0 
+// Tcl Message: endgroup 
+// TclEventType: RSB_CANVAS_LOCATION
+// TclEventType: RSB_CONNECTION_CHANGE
+// Tcl Message: startgroup 
+// Tcl Message: connect_bd_net [get_bd_ports led_o] [get_bd_pins xlslice_0/Dout] 
+// Tcl Message: connect_bd_net [get_bd_pins xlslice_0/Dout] [get_bd_pins xlslice_0/Din] 
+// Tcl Message: endgroup 
+selectView(PAResourceOtoP.PAViews_SYSTEM, "System", 1573, 737, 2742, 881, false, false, false, true, false); // hq (m, cs) - Popup Trigger
+selectMenuItem(RDIResourceCommand.RDICommands_DELETE, "Delete"); // ai (ao, Popup.HeavyWeightWindow)
+// Run Command: RDIResourceCommand.RDICommands_DELETE
+// TclEventType: RSB_REMOVE_OBJECT
+// Tcl Message: delete_bd_objs [get_bd_nets xlslice_0_Dout] 
+// TclEventType: RSB_CONNECTION_CHANGE
+// Tcl Message: connect_bd_net [get_bd_pins freq_to_voltage_0/voltage_out] [get_bd_pins xlslice_0/Din] 
+// TclEventType: RSB_CONNECTION_CHANGE
+// Tcl Message: connect_bd_net [get_bd_ports led_o] [get_bd_pins xlslice_0/Dout] 
+// Run Command: PAResourceCommand.PACommandNames_CUSTOMIZE_RSB_BLOC
+// r (cs): Re-customize IP: addNotify
+// Elapsed time: 12 seconds
+setText("Din Width", "14"); // D (bj, r)
+setText("Din From", (String) null); // D (bj, r)
+setText("Dout Width", "8"); // D (bj, r)
+setText("Din From", "7"); // D (bj, r)
+selectButton(RDIResource.BaseDialog_OK, "OK"); // a (r)
+dismissDialog("Re-customize IP"); // r (cs)
+// Tcl Command: 'set_property -dict [list CONFIG.DIN_FROM {7} CONFIG.DIN_WIDTH {14} CONFIG.DOUT_WIDTH {8}] [get_bd_cells xlslice_0]'
+// TclEventType: RSB_REMOVE_ADDRNETWORK
+// TclEventType: RSB_INSERT_ADDRNETWORK
+// TclEventType: RSB_PROPERTY_CHANGE
+// Tcl Message: startgroup 
+// Tcl Message: set_property -dict [list CONFIG.DIN_FROM {7} CONFIG.DIN_WIDTH {14} CONFIG.DOUT_WIDTH {8}] [get_bd_cells xlslice_0] 
+// Tcl Message: endgroup 
+// Run Command: PAResourceCommand.PACommandNames_SAVE_RSB_DESIGN
+// TclEventType: RSB_SAVE_DIAGRAM
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: DG_GRAPH_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_SAVE_DIAGRAM
+// Tcl Message: save_bd_design 
+// Tcl Message: Wrote  : <C:\Users\elias\dev\ba\firmware\fpga\tmp\freq\freq.srcs\sources_1\bd\system\system.bd>  Wrote  : <C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ui/bd_c954508f.ui>  Wrote  : <C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ui/bd_fb15793c.ui>  Wrote  : <C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ui/bd_8707aecf.ui>  
+// Elapsed time: 40 seconds
+selectTree(PAResourceEtoH.FlowNavigatorTreePanel_FLOW_NAVIGATOR_TREE, "[, Program and Debug, Generate Bitstream]", 29, false); // u (J, cs)
+// Run Command: PAResourceCommand.PACommandNames_RUN_BITGEN
+// A (cs): Synthesis is Out-of-date: addNotify
+selectButton(RDIResource.BaseDialog_YES, "Yes"); // a (A)
+// bz (cs):  Resetting Runs : addNotify
+// TclEventType: RUN_MODIFY
+dismissDialog("Synthesis is Out-of-date"); // A (cs)
+// TclEventType: RUN_RESET
+// TclEventType: RUN_STATUS_CHANGE
+// TclEventType: RUN_RESET
+// TclEventType: RUN_STATUS_CHANGE
+// TclEventType: RUN_RESET
+// TclEventType: RUN_MODIFY
+// Tcl Message: reset_run synth_1 
+// f (cs): Launch Runs: addNotify
+selectButton(RDIResource.BaseDialog_OK, "OK"); // a (f)
+// 'cD' command handler elapsed time: 5 seconds
+// TclEventType: RSB_SCRIPT_TASK
+dismissDialog("Launch Runs"); // f (cs)
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_SCRIPT_TASK
+// TclEventType: RSB_REMOVE_OBJECT
+// TclEventType: RSB_SCRIPT_TASK
+// TclEventType: RSB_REMOVE_OBJECT
+// TclEventType: RSB_SCRIPT_TASK
+// TclEventType: RSB_REMOVE_OBJECT
+// TclEventType: DG_GRAPH_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: REPORT_IP_STATUS_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_REMOVE_OBJECT
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_REMOVE_OBJECT
+// TclEventType: REPORT_IP_STATUS_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: REPORT_IP_STATUS_STALE
+// TclEventType: FILE_SET_CHANGE
+// bz (cs):  Generate Bitstream : addNotify
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_SCRIPT_TASK
+// TclEventType: RSB_SAVE_DIAGRAM
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_SAVE_DIAGRAM
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_SAVE_DIAGRAM
+// TclEventType: RSB_SCRIPT_TASK
+// [GUI Memory]: 268 MB (+351kb) [00:27:32]
+// TclEventType: FILE_SET_CHANGE
+// Tcl Message: launch_runs impl_1 -to_step write_bitstream -jobs 12 
+// Tcl Message: INFO: [xilinx.com:ip:clk_wiz:6.0-1] /SignalGenerator/clk_wiz_0 clk_wiz propagate 
+// Tcl Message: Wrote  : <C:\Users\elias\dev\ba\firmware\fpga\tmp\freq\freq.srcs\sources_1\bd\system\system.bd>  Wrote  : <C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ui/bd_c954508f.ui>  Wrote  : <C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ui/bd_fb15793c.ui>  Wrote  : <C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ui/bd_8707aecf.ui>  
+// Tcl Message: VHDL Output written to : C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/synth/system.v 
+// Tcl Message: VHDL Output written to : C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/sim/system.v VHDL Output written to : C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/hdl/system_wrapper.v Wrote  : <C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ui/bd_c954508f.ui>  Wrote  : <C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ui/bd_fb15793c.ui>  Wrote  : <C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ui/bd_8707aecf.ui>  
+// Tcl Message: INFO: [BD 41-1029] Generation completed for the IP Integrator block xlslice_0 . 
+// Tcl Message: INFO: [BD 41-1029] Generation completed for the IP Integrator block PS7/ps7_0_axi_periph/s00_couplers/auto_pc . 
+// Tcl Message: Exporting to file C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/hw_handoff/system.hwh Generated Block Design Tcl file C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/hw_handoff/system_bd.tcl Generated Hardware Definition File C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/synth/system.hwdef 
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RUN_LAUNCH
+// TclEventType: DESIGN_STALE
+// TclEventType: RUN_LAUNCH
+// TclEventType: RUN_MODIFY
+// Tcl Message: [Tue Jul  1 03:05:10 2025] Launched synth_1... Run output will be captured here: C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.runs/synth_1/runme.log [Tue Jul  1 03:05:10 2025] Launched impl_1... Run output will be captured here: C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.runs/impl_1/runme.log 
+// Tcl Message: launch_runs: Time (s): cpu = 00:00:02 ; elapsed = 00:00:05 . Memory (MB): peak = 2194.934 ; gain = 0.793 
+// aZ (cs): Launch Run Critical Messages: addNotify
+// TclEventType: RUN_STATUS_CHANGE
+selectButton(PAResourceAtoD.CmdMsgDialog_OK, "OK"); // f (aZ)
+dismissDialog("Launch Run Critical Messages"); // aZ (cs)
+// TclEventType: RUN_COMPLETED
+// TclEventType: RUN_STATUS_CHANGE
+// TclEventType: RUN_STEP_COMPLETED
+// TclEventType: RUN_STATUS_CHANGE
+// TclEventType: RUN_STEP_COMPLETED
+// TclEventType: RSB_CANVAS_LOCATION
+// Run Command: PAResourceCommand.PACommandNames_CUSTOMIZE_RSB_BLOC
+// r (cs): Re-customize Module Reference: addNotify
+// Elapsed time: 227 seconds
+setText("Max Freq", "62500000"); // D (bj, r)
+// Elapsed time: 21 seconds
+dismissDialog("Re-customize Module Reference"); // r (cs)
+// Run Command: PAResourceCommand.PACommandNames_CUSTOMIZE_RSB_BLOC
+// r (cs): Re-customize Module Reference: addNotify
+selectButton(RDIResource.BaseDialog_CANCEL, "Cancel"); // a (r)
+dismissDialog("Re-customize Module Reference"); // r (cs)
+selectView(PAResourceOtoP.PAViews_SYSTEM, "System", 1384, 721, 2742, 881, false, false, false, true, false); // hq (m, cs) - Popup Trigger
+selectMenu(PAResourceQtoS.SelectMenu_HIGHLIGHT, "Highlight"); // af (ao, Popup.HeavyWeightWindow)
+selectMenu(PAResourceQtoS.SelectMenu_HIGHLIGHT, "Highlight"); // af (ao, Popup.HeavyWeightWindow)
+selectTree(PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE, "[root, Design Sources, freq_to_voltage (freq_to_voltage.v)]", 4, false); // B (F, cs)
+selectTree(PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE, "[root, Design Sources, freq_to_voltage (freq_to_voltage.v)]", 4, false, false, false, false, false, true); // B (F, cs) - Double Click
+selectTree(PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE, "[root, Design Sources, freq_to_voltage (freq_to_voltage.v)]", 4, false); // B (F, cs)
+// TclEventType: RUN_STEP_COMPLETED
+// Elapsed time: 25 seconds
+selectTab("PlanAheadTabBaseWorkspace_JideTabbedPane", (HResource) null, "System", 0); // m (l, cs)
+// TclEventType: RUN_COMPLETED
+// TclEventType: RUN_STATUS_CHANGE
+// ag (cs): Bitstream Generation Completed: addNotify
+// HMemoryUtils.trashcanNow. Engine heap size: 2,159 MB. GUI used memory: 198 MB. Current time: 7/1/25, 3:24:06 AM CEST
+// WARNING: HEventQueue.dispatchEvent() is taking  591223 ms.
+// WARNING: HSwingWorker (Update Runs Swing Worker) is taking 591890 ms. Increasing delay to 3000 ms.
+// Elapsed time: 2371 seconds
+selectButton(RDIResource.BaseDialog_OK, "OK"); // a (ag)
+// Run Command: PAResourceCommand.PACommandNames_REPORTS_WINDOW
+dismissDialog("Bitstream Generation Completed"); // ag (cs)
+selectView(PAResourceOtoP.PAViews_SYSTEM, "System", 1064, 133, 2742, 881, false, false, false, true, false); // hq (m, cs) - Popup Trigger
+selectMenuItem(PAResourceQtoS.SystemBuilderMenu_ADD_IP, "Add IP..."); // ai (ao, cs)
+setText("PAResourceAtoD.CoreTreeTablePanel_CORE_TREE_TABLE_SEARCH_FIELD", "dac"); // OverlayTextField (az, ResizableWindow)
+selectTreeTable(PAResourceAtoD.CoreTreeTablePanel_CORE_TREE_TABLE, "AXI4-Stream Red Pitaya DAC", 0, "AXI4-Stream Red Pitaya DAC", 0, false); // L (J, ResizableWindow)
+// HMemoryUtils.trashcanNow. Engine heap size: 2,179 MB. GUI used memory: 188 MB. Current time: 7/1/25, 3:49:38 AM CEST
+// Run Command: PAResourceCommand.PACommandNames_CUSTOMIZE_RSB_BLOC
+// O (cs):  Re-customize IP : addNotify
+// r (cs): Re-customize IP: addNotify
+// Elapsed time: 13 seconds
+dismissDialog("Re-customize IP"); // O (cs)
+selectTab(PAResourceTtoZ.XPG_TabbedPane_TABBED_PANE, (HResource) null, "Implementation", 1); // cV (E, r)
+selectTab(PAResourceTtoZ.XPG_TabbedPane_TABBED_PANE, (HResource) null, "Detailed Implementation", 2); // cV (E, r)
+selectTab(PAResourceTtoZ.XPG_TabbedPane_TABBED_PANE, (HResource) null, "Output Frequencies", 3); // cV (E, r)
+selectTab(PAResourceTtoZ.XPG_TabbedPane_TABBED_PANE, (HResource) null, "Summary", 4); // cV (E, r)
+selectTab(PAResourceTtoZ.XPG_TabbedPane_TABBED_PANE, (HResource) null, "Additional Summary", 5); // cV (E, r)
+selectTab(PAResourceTtoZ.XPG_TabbedPane_TABBED_PANE, (HResource) null, "Configuration", 0); // cV (E, r)
+selectButton(RDIResource.BaseDialog_CANCEL, "Cancel"); // a (r)
+dismissDialog("Re-customize IP"); // r (cs)
+selectTab("PlanAheadTabBaseWorkspace_JideTabbedPane", (HResource) null, "System", 0); // m (l, cs)
+selectView(PAResourceOtoP.PAViews_SYSTEM, "System", 971, 553, 2742, 881, false, false, false, true, false); // hq (m, cs) - Popup Trigger
+selectMenu(PAResourceQtoS.SelectMenu_HIGHLIGHT, "Highlight"); // af (ao, cs)
+selectView(PAResourceOtoP.PAViews_SYSTEM, "System", 924, 574, 2742, 881, false, false, false, true, false); // hq (m, cs) - Popup Trigger
+selectMenu(PAResourceQtoS.SelectMenu_HIGHLIGHT, "Highlight"); // af (ao, cs)
+selectMenuItem(PAResourceQtoS.SystemBuilderMenu_ADD_IP, "Add IP..."); // ai (ao, cs)
+setText("PAResourceAtoD.CoreTreeTablePanel_CORE_TREE_TABLE_SEARCH_FIELD", "a"); // OverlayTextField (az)
+// Elapsed time: 24 seconds
+selectTab("PlanAheadTabBaseWorkspace_JideTabbedPane", (HResource) null, "System", 0); // m (l, cs)
+// WARNING: HSwingWorker (Monitor File Timestamp Swing Worker) is taking 879 ms to process. Increasing delay to 2000 ms.
+// WARNING: HSwingWorker (Monitor File Timestamp Swing Worker) is taking 1230 ms to process. Increasing delay to 2000 ms.
+// WARNING: HSwingWorker (Monitor File Timestamp Swing Worker) is taking 1350 ms to process. Increasing delay to 2000 ms.
+// WARNING: HSwingWorker (Refresh Filesets Swing Worker) is taking 1314 ms. Increasing delay to 3942 ms.

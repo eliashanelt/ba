@@ -402,13 +402,13 @@
 						"WVALID": { "actual": "s_axi_wvalid"}
 					}
 				},
-				"/signal_decoder_0/S_AXIS": {
+				"/axis_red_pitaya_dac_0/S_AXIS": {
 					"interface": "xilinx.com:interface:axis:1.0",
 					"ports": {
-						"ACLK": { "actual": "clk"},
-						"ARESETN": { "actual": "rst"},
-						"TDATA": { "actual": "S_AXIS_tdata"},
-						"TVALID": { "actual": "S_AXIS_tvalid"}
+						"ACLK": { "actual": "aclk"},
+						"TDATA": { "actual": "s_axis_tdata"},
+						"TREADY": { "actual": "s_axis_tready"},
+						"TVALID": { "actual": "s_axis_tvalid"}
 					}
 				}
 			}

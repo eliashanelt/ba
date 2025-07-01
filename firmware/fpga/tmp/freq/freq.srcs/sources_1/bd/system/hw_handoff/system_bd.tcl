@@ -1227,6 +1227,24 @@ proc create_root_design { parentCell } {
    CONFIG.C_IS_DUAL {1} \
  ] $axi_gpio_0
 
+  # Create instance: axis_red_pitaya_dac_0, and set properties
+  set axis_red_pitaya_dac_0 [ create_bd_cell -type ip -vlnv pavel-demin:user:axis_red_pitaya_dac:1.0 axis_red_pitaya_dac_0 ]
+
+  # Create instance: clk_wiz_0, and set properties
+  set clk_wiz_0 [ create_bd_cell -type ip -vlnv xilinx.com:ip:clk_wiz:6.0 clk_wiz_0 ]
+  set_property -dict [ list \
+   CONFIG.CLKIN1_JITTER_PS {80.0} \
+   CONFIG.CLKOUT1_JITTER {104.759} \
+   CONFIG.CLKOUT1_PHASE_ERROR {96.948} \
+   CONFIG.CLKOUT1_REQUESTED_OUT_FREQ {250.000} \
+   CONFIG.MMCM_CLKFBOUT_MULT_F {8.000} \
+   CONFIG.MMCM_CLKIN1_PERIOD {8.000} \
+   CONFIG.MMCM_CLKOUT0_DIVIDE_F {4.000} \
+   CONFIG.MMCM_DIVCLK_DIVIDE {1} \
+   CONFIG.PRIM_IN_FREQ {125.000} \
+   CONFIG.USE_RESET {false} \
+ ] $clk_wiz_0
+
   # Create instance: freq_to_voltage_0, and set properties
   set block_name freq_to_voltage
   set block_cell_name freq_to_voltage_0
@@ -1274,7 +1292,7 @@ proc create_root_design { parentCell } {
  ] $xlslice_0
 
   # Create interface connections
-  connect_bd_intf_net -intf_net frequency_counter_0_M_AXIS_OUT [get_bd_intf_pins FrequencyCounter/M_AXIS_OUT] [get_bd_intf_pins signal_decoder_0/S_AXIS]
+  connect_bd_intf_net -intf_net FrequencyCounter_M_AXIS_OUT [get_bd_intf_pins FrequencyCounter/M_AXIS_OUT] [get_bd_intf_pins axis_red_pitaya_dac_0/S_AXIS]
   connect_bd_intf_net -intf_net processing_system7_0_DDR [get_bd_intf_ports DDR] [get_bd_intf_pins PS7/DDR]
   connect_bd_intf_net -intf_net processing_system7_0_FIXED_IO [get_bd_intf_ports FIXED_IO] [get_bd_intf_pins PS7/FIXED_IO]
   connect_bd_intf_net -intf_net ps7_0_axi_periph_M00_AXI [get_bd_intf_pins PS7/M00_AXI] [get_bd_intf_pins axi_gpio_0/S_AXI]
@@ -1283,17 +1301,19 @@ proc create_root_design { parentCell } {
   # Create port connections
   connect_bd_net -net FrequencyCounter_counter_output [get_bd_pins FrequencyCounter/counter_output] [get_bd_pins axi_gpio_0/gpio_io_i] [get_bd_pins freq_to_voltage_0/frequency_in]
   connect_bd_net -net Net [get_bd_pins FrequencyCounter/Din] [get_bd_pins SignalGenerator/Din] [get_bd_pins axi_gpio_0/gpio2_io_i] [get_bd_pins axi_gpio_0/gpio2_io_o]
-  connect_bd_net -net SignalGenerator_dac_clk_o [get_bd_ports dac_clk_o] [get_bd_pins SignalGenerator/dac_clk_o]
-  connect_bd_net -net SignalGenerator_dac_dat_o [get_bd_ports dac_dat_o] [get_bd_pins SignalGenerator/dac_dat_o]
-  connect_bd_net -net SignalGenerator_dac_rst_o [get_bd_ports dac_rst_o] [get_bd_pins SignalGenerator/dac_rst_o]
-  connect_bd_net -net SignalGenerator_dac_sel_o [get_bd_ports dac_sel_o] [get_bd_pins SignalGenerator/dac_sel_o]
-  connect_bd_net -net SignalGenerator_dac_wrt_o [get_bd_ports dac_wrt_o] [get_bd_pins SignalGenerator/dac_wrt_o]
   connect_bd_net -net adc_clk_n_i_1 [get_bd_ports adc_clk_n_i] [get_bd_pins DataAcquisition/adc_clk_n_i]
   connect_bd_net -net adc_clk_p_i_1 [get_bd_ports adc_clk_p_i] [get_bd_pins DataAcquisition/adc_clk_p_i]
   connect_bd_net -net adc_dat_a_i_1 [get_bd_ports adc_dat_a_i] [get_bd_pins DataAcquisition/adc_dat_a_i]
   connect_bd_net -net adc_dat_b_i_1 [get_bd_ports adc_dat_b_i] [get_bd_pins DataAcquisition/adc_dat_b_i]
-  connect_bd_net -net axis_red_pitaya_adc_0_adc_clk [get_bd_pins DataAcquisition/adc_clk] [get_bd_pins FrequencyCounter/clk] [get_bd_pins SignalGenerator/clk_in1] [get_bd_pins freq_to_voltage_0/clk] [get_bd_pins signal_decoder_0/clk]
+  connect_bd_net -net axis_red_pitaya_adc_0_adc_clk [get_bd_pins DataAcquisition/adc_clk] [get_bd_pins FrequencyCounter/clk] [get_bd_pins SignalGenerator/clk_in1] [get_bd_pins axis_red_pitaya_dac_0/aclk] [get_bd_pins clk_wiz_0/clk_in1] [get_bd_pins freq_to_voltage_0/clk] [get_bd_pins signal_decoder_0/clk]
   connect_bd_net -net axis_red_pitaya_adc_0_adc_csn [get_bd_ports adc_csn_o] [get_bd_pins DataAcquisition/adc_csn_o]
+  connect_bd_net -net axis_red_pitaya_dac_0_dac_clk [get_bd_ports dac_clk_o] [get_bd_pins axis_red_pitaya_dac_0/dac_clk]
+  connect_bd_net -net axis_red_pitaya_dac_0_dac_dat [get_bd_ports dac_dat_o] [get_bd_pins axis_red_pitaya_dac_0/dac_dat]
+  connect_bd_net -net axis_red_pitaya_dac_0_dac_rst [get_bd_ports dac_rst_o] [get_bd_pins axis_red_pitaya_dac_0/dac_rst]
+  connect_bd_net -net axis_red_pitaya_dac_0_dac_sel [get_bd_ports dac_sel_o] [get_bd_pins axis_red_pitaya_dac_0/dac_sel]
+  connect_bd_net -net axis_red_pitaya_dac_0_dac_wrt [get_bd_ports dac_wrt_o] [get_bd_pins axis_red_pitaya_dac_0/dac_wrt]
+  connect_bd_net -net clk_wiz_0_clk_out1 [get_bd_pins axis_red_pitaya_dac_0/ddr_clk] [get_bd_pins clk_wiz_0/clk_out1]
+  connect_bd_net -net clk_wiz_0_locked [get_bd_pins axis_red_pitaya_dac_0/locked] [get_bd_pins clk_wiz_0/locked]
   connect_bd_net -net daisy_n_i_1 [get_bd_ports daisy_n_i] [get_bd_pins util_ds_buf_1/IBUF_DS_N]
   connect_bd_net -net daisy_p_i_1 [get_bd_ports daisy_p_i] [get_bd_pins util_ds_buf_1/IBUF_DS_P]
   connect_bd_net -net freq_to_voltage_0_voltage_out [get_bd_pins freq_to_voltage_0/voltage_out] [get_bd_pins xlslice_0/Din]

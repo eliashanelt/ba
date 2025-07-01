@@ -13,7 +13,7 @@ _ETZ E 60.1_
 open firmware/fpga/tmp/freq/freq.xpr with vivado
 generate bitstream file with 'Generate Bitstream'
 
-in firmware/fpga/freq/freq.runs/impl_1 create system_wrapper.bif containing:
+in firmware/fpga/tmp/freq/freq.runs/impl_1 create system_wrapper.bif containing:
 all: { system_wrapper.bit }
 
 also navigate there with the tcl shell and run

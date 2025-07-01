@@ -1,7 +1,7 @@
 Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
 -----------------------------------------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2020.1 (win64) Build 2902540 Wed May 27 19:54:49 MDT 2020
-| Date         : Tue Jul  1 03:05:45 2025
+| Date         : Tue Jul  1 04:13:10 2025
 | Host         : DESKTOP-93GTNQD running 64-bit major release  (build 9200)
 | Command      : report_utilization -file system_wrapper_utilization_synth.rpt -pb system_wrapper_utilization_synth.pb
 | Design       : system_wrapper
@@ -30,13 +30,13 @@ Table of Contents
 +----------------------------+------+-------+-----------+-------+
 |          Site Type         | Used | Fixed | Available | Util% |
 +----------------------------+------+-------+-----------+-------+
-| Slice LUTs*                | 1652 |     0 |     17600 |  9.39 |
-|   LUT as Logic             | 1603 |     0 |     17600 |  9.11 |
+| Slice LUTs*                | 1679 |     0 |     17600 |  9.54 |
+|   LUT as Logic             | 1630 |     0 |     17600 |  9.26 |
 |   LUT as Memory            |   49 |     0 |      6000 |  0.82 |
 |     LUT as Distributed RAM |    0 |     0 |           |       |
 |     LUT as Shift Register  |   49 |     0 |           |       |
-| Slice Registers            | 1790 |     0 |     35200 |  5.09 |
-|   Register as Flip Flop    | 1790 |     0 |     35200 |  5.09 |
+| Slice Registers            | 1819 |     0 |     35200 |  5.17 |
+|   Register as Flip Flop    | 1819 |     0 |     35200 |  5.17 |
 |   Register as Latch        |    0 |     0 |     35200 |  0.00 |
 | F7 Muxes                   |    0 |     0 |      8800 |  0.00 |
 | F8 Muxes                   |    0 |     0 |      4400 |  0.00 |
@@ -59,7 +59,7 @@ Table of Contents
 | 0     |          Yes |           - |          Set |
 | 0     |          Yes |           - |        Reset |
 | 107   |          Yes |         Set |            - |
-| 1683  |          Yes |       Reset |            - |
+| 1712  |          Yes |       Reset |            - |
 +-------+--------------+-------------+--------------+
 
 
@@ -106,25 +106,25 @@ Table of Contents
 | PHASER_IN/PHASER_IN_PHY     |    0 |     0 |         8 |   0.00 |
 | IDELAYE2/IDELAYE2_FINEDELAY |    0 |     0 |       100 |   0.00 |
 | ILOGIC                      |    0 |     0 |       100 |   0.00 |
-| OLOGIC                      |   18 |     0 |       100 |  18.00 |
-|   ODDR                      |   18 |       |           |        |
+| OLOGIC                      |   36 |     0 |       100 |  36.00 |
+|   ODDR                      |   36 |       |           |        |
 +-----------------------------+------+-------+-----------+--------+
 
 
 5. Clocking
 -----------
 
-+------------+------+-------+-----------+-------+
-|  Site Type | Used | Fixed | Available | Util% |
-+------------+------+-------+-----------+-------+
-| BUFGCTRL   |    4 |     0 |        32 | 12.50 |
-| BUFIO      |    0 |     0 |         8 |  0.00 |
-| MMCME2_ADV |    1 |     0 |         2 | 50.00 |
-| PLLE2_ADV  |    0 |     0 |         2 |  0.00 |
-| BUFMRCE    |    0 |     0 |         4 |  0.00 |
-| BUFHCE     |    0 |     0 |        48 |  0.00 |
-| BUFR       |    0 |     0 |         8 |  0.00 |
-+------------+------+-------+-----------+-------+
++------------+------+-------+-----------+--------+
+|  Site Type | Used | Fixed | Available |  Util% |
++------------+------+-------+-----------+--------+
+| BUFGCTRL   |    6 |     0 |        32 |  18.75 |
+| BUFIO      |    0 |     0 |         8 |   0.00 |
+| MMCME2_ADV |    2 |     0 |         2 | 100.00 |
+| PLLE2_ADV  |    0 |     0 |         2 |   0.00 |
+| BUFMRCE    |    0 |     0 |         4 |   0.00 |
+| BUFHCE     |    0 |     0 |        48 |   0.00 |
+| BUFR       |    0 |     0 |         8 |   0.00 |
++------------+------+-------+-----------+--------+
 
 
 6. Specific Feature
@@ -150,29 +150,29 @@ Table of Contents
 +------------+------+----------------------+
 |  Ref Name  | Used |  Functional Category |
 +------------+------+----------------------+
-| FDRE       | 1683 |         Flop & Latch |
+| FDRE       | 1712 |         Flop & Latch |
 | LUT6       |  364 |                  LUT |
-| LUT2       |  355 |                  LUT |
+| LUT2       |  356 |                  LUT |
 | LUT3       |  349 |                  LUT |
+| LUT1       |  272 |                  LUT |
 | LUT5       |  261 |                  LUT |
-| LUT1       |  246 |                  LUT |
 | CARRY4     |  149 |           CarryLogic |
 | BIBUF      |  130 |                   IO |
 | LUT4       |  129 |                  LUT |
 | FDSE       |  107 |         Flop & Latch |
 | SRLC32E    |   47 |   Distributed Memory |
 | IBUF       |   44 |                   IO |
+| ODDR       |   36 |                   IO |
 | OBUF       |   27 |                   IO |
-| ODDR       |   18 |                   IO |
 | OBUFT      |    6 |                   IO |
+| BUFG       |    6 |                Clock |
 | OBUFDS     |    4 |                   IO |
-| BUFG       |    4 |                Clock |
 | IBUFDS     |    3 |                   IO |
 | SRL16E     |    2 |   Distributed Memory |
+| MMCME2_ADV |    2 |                Clock |
 | INV        |    2 |                  LUT |
 | RAMB18E1   |    1 |         Block Memory |
 | PS7        |    1 | Specialized Resource |
-| MMCME2_ADV |    1 |                Clock |
 +------------+------+----------------------+
 
 

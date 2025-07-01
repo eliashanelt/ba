@@ -68,6 +68,12 @@ set_property DONT_TOUCH TRUE [get_cells -hier -filter {REF_NAME==system_freq_to_
 # IP: bd/system/ip/system_xlslice_0_2/system_xlslice_0_2.xci
 set_property DONT_TOUCH TRUE [get_cells -hier -filter {REF_NAME==system_xlslice_0_2 || ORIG_REF_NAME==system_xlslice_0_2} -quiet] -quiet
 
+# IP: bd/system/ip/system_axis_red_pitaya_dac_0_1/system_axis_red_pitaya_dac_0_1.xci
+set_property DONT_TOUCH TRUE [get_cells -hier -filter {REF_NAME==system_axis_red_pitaya_dac_0_1 || ORIG_REF_NAME==system_axis_red_pitaya_dac_0_1} -quiet] -quiet
+
+# IP: bd/system/ip/system_clk_wiz_0_1/system_clk_wiz_0_1.xci
+set_property DONT_TOUCH TRUE [get_cells -hier -filter {REF_NAME==system_clk_wiz_0_1 || ORIG_REF_NAME==system_clk_wiz_0_1} -quiet] -quiet
+
 # IP: bd/system/ip/system_auto_pc_0/system_auto_pc_0.xci
 set_property DONT_TOUCH TRUE [get_cells -hier -filter {REF_NAME==system_auto_pc_0 || ORIG_REF_NAME==system_auto_pc_0} -quiet] -quiet
 
@@ -105,6 +111,14 @@ set_property DONT_TOUCH TRUE [get_cells [split [join [get_cells -hier -filter {R
 
 # XDC: bd/system/ip/system_rst_ps7_0_125M_0/system_rst_ps7_0_125M_0.xdc
 #dup# set_property DONT_TOUCH TRUE [get_cells [split [join [get_cells -hier -filter {REF_NAME==system_rst_ps7_0_125M_0 || ORIG_REF_NAME==system_rst_ps7_0_125M_0} -quiet] {/U0 } ]/U0 ] -quiet] -quiet
+
+# XDC: bd/system/ip/system_clk_wiz_0_1/system_clk_wiz_0_1_board.xdc
+set_property DONT_TOUCH TRUE [get_cells [split [join [get_cells -hier -filter {REF_NAME==system_clk_wiz_0_1 || ORIG_REF_NAME==system_clk_wiz_0_1} -quiet] {/inst } ]/inst ] -quiet] -quiet
+
+# XDC: bd/system/ip/system_clk_wiz_0_1/system_clk_wiz_0_1.xdc
+#dup# set_property DONT_TOUCH TRUE [get_cells [split [join [get_cells -hier -filter {REF_NAME==system_clk_wiz_0_1 || ORIG_REF_NAME==system_clk_wiz_0_1} -quiet] {/inst } ]/inst ] -quiet] -quiet
+
+# XDC: bd/system/ip/system_clk_wiz_0_1/system_clk_wiz_0_1_ooc.xdc
 
 # XDC: bd/system/ip/system_auto_pc_0/system_auto_pc_0_ooc.xdc
 
