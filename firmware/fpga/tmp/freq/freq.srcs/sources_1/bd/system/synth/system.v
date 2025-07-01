@@ -1,7 +1,7 @@
 //Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
 //--------------------------------------------------------------------------------
 //Tool Version: Vivado v.2020.1 (win64) Build 2902540 Wed May 27 19:54:49 MDT 2020
-//Date        : Tue Jul  1 04:12:28 2025
+//Date        : Tue Jul  1 12:59:34 2025
 //Host        : DESKTOP-93GTNQD running 64-bit major release  (build 9200)
 //Command     : generate_target system.bd
 //Design      : system
@@ -831,7 +831,7 @@ module s00_couplers_imp_15HE6GA
         .s_axi_wvalid(s00_couplers_to_auto_pc_WVALID));
 endmodule
 
-(* CORE_GENERATION_INFO = "system,IP_Integrator,{x_ipVendor=xilinx.com,x_ipLibrary=BlockDiagram,x_ipName=system,x_ipVersion=1.00.a,x_ipLanguage=VERILOG,numBlks=28,numReposBlks=22,numNonXlnxBlks=4,numHierBlks=6,maxHierDepth=1,numSysgenBlks=0,numHlsBlks=0,numHdlrefBlks=5,numPkgbdBlks=0,bdsource=USER,synth_mode=Global}" *) (* HW_HANDOFF = "system.hwdef" *) 
+(* CORE_GENERATION_INFO = "system,IP_Integrator,{x_ipVendor=xilinx.com,x_ipLibrary=BlockDiagram,x_ipName=system,x_ipVersion=1.00.a,x_ipLanguage=VERILOG,numBlks=29,numReposBlks=23,numNonXlnxBlks=4,numHierBlks=6,maxHierDepth=1,numSysgenBlks=0,numHlsBlks=0,numHdlrefBlks=6,numPkgbdBlks=0,bdsource=USER,synth_mode=Global}" *) (* HW_HANDOFF = "system.hwdef" *) 
 module system
    (DDR_addr,
     DDR_ba,
@@ -976,6 +976,8 @@ module system
   wire [3:0]ps7_0_axi_periph_M00_AXI_WSTRB;
   wire ps7_0_axi_periph_M00_AXI_WVALID;
   wire [0:0]rst_ps7_0_125M_peripheral_aresetn;
+  wire [31:0]signal_clipper_0_M_AXIS_OUT_TDATA;
+  wire signal_clipper_0_M_AXIS_OUT_TVALID;
   wire [31:0]signal_split_0_M_AXIS_PORT1_TDATA;
   wire signal_split_0_M_AXIS_PORT1_TVALID;
   wire [1:0]util_ds_buf_1_IBUF_OUT;
@@ -1093,8 +1095,8 @@ module system
         .dac_wrt(axis_red_pitaya_dac_0_dac_wrt),
         .ddr_clk(clk_wiz_0_clk_out1),
         .locked(clk_wiz_0_locked),
-        .s_axis_tdata(FrequencyCounter_M_AXIS_OUT_TDATA),
-        .s_axis_tvalid(FrequencyCounter_M_AXIS_OUT_TVALID));
+        .s_axis_tdata(signal_clipper_0_M_AXIS_OUT_TDATA),
+        .s_axis_tvalid(signal_clipper_0_M_AXIS_OUT_TVALID));
   system_clk_wiz_0_1 clk_wiz_0
        (.clk_in1(axis_red_pitaya_adc_0_adc_clk),
         .clk_out1(clk_wiz_0_clk_out1),
@@ -1103,6 +1105,13 @@ module system
        (.clk(axis_red_pitaya_adc_0_adc_clk),
         .frequency_in(FrequencyCounter_counter_output),
         .voltage_out(freq_to_voltage_0_voltage_out));
+  system_signal_clipper_0_0 signal_clipper_0
+       (.M_AXIS_OUT_tdata(signal_clipper_0_M_AXIS_OUT_TDATA),
+        .M_AXIS_OUT_tvalid(signal_clipper_0_M_AXIS_OUT_TVALID),
+        .S_AXIS_IN_tdata(FrequencyCounter_M_AXIS_OUT_TDATA),
+        .S_AXIS_IN_tvalid(FrequencyCounter_M_AXIS_OUT_TVALID),
+        .clk(axis_red_pitaya_adc_0_adc_clk),
+        .rst(xlc_reset_dout));
   system_signal_decoder_0_0 signal_decoder_0
        (.S_AXIS_tdata({1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0}),
         .S_AXIS_tvalid(1'b0),
