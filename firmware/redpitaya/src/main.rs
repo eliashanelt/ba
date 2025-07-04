@@ -32,9 +32,10 @@ struct RpRegs {
     config: u32,    // 0x08 – R/W   {phase_inc[31:5], log2_Ncycles[4:0]}
 }
 
-fn main() -> Result<(), Box<dyn std::error::Error>> {
+#[tokio::main]
+async fn main() {
     /*let output = Command::new("fpgautil")
-        .args(&["-b", "/root/fpga.bit.bin"])
+        .args(&["-b", "/root/passthrough.bit.bin"])
         .output() // returns io::Result<Output>
         .expect("Failed to launch fpgautil");
 
@@ -52,6 +53,34 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     return Ok(());*/
 
+    std::thread::spawn(|| {
+        let (log2_ncycles, freq_in) = (10, 1000.0);
+
+        let phase_inc: u32 = (2.147_482 * freq_in) as u32; // same constant factor
+        let ncycles: u32 = 1 << log2_ncycles;
+        // ─────────────────── open /dev/mem and mmap it ───────────────────
+        let file = OpenOptions::new().read(true).write(true).open("/dev/mem")?;
+
+        let map: MmapMut = unsafe {
+            MmapOptions::new()
+                .offset(BASE_ADDR)
+                .len(PAGE_SIZE)
+                .map_mut(&file)?
+        };
+        let regs = map.as_ptr() as *mut RpRegs;
+        let cfg_word = (log2_ncycles & 0x1F) | (phase_inc << 5);
+        unsafe { core::ptr::write_volatile(&mut (*regs).config, cfg_word) }; 
+        loop {
+            let count: u32 = unsafe { core::ptr::read_volatile(&(*regs).count) };
+            let freq_est = (ncycles as f64 / count as f64) * FREQ_HZ;
+            print!(
+                "\rCounts: {:5} | cycles/avg: {:5} | est. frequency: {:10.5} Hz",
+                count, ncycles, freq_est
+            );
+            io::stdout().flush().ok();
+            sleep(Duration::from_secs(3));
+        }
+    });
     let (log2_ncycles, freq_in) = (10, 1000.0);
 
     let phase_inc: u32 = (2.147_482 * freq_in) as u32; // same constant factor

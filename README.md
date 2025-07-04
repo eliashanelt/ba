@@ -29,3 +29,5 @@ password: root
 on the redpitaya then run:
 fpgautil - b system_wrapper.bit.bin
 
+
+SCREWS M2 [smartknob] and M3 [redpitaya]
