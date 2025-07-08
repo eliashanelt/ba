@@ -1,0 +1,125 @@
+#-----------------------------------------------------------
+# Vivado v2020.1 (64-bit)
+# SW Build 2902540 on Wed May 27 19:54:49 MDT 2020
+# IP Build 2902112 on Wed May 27 22:43:36 MDT 2020
+# Start of session at: Tue Jul  1 12:43:25 2025
+# Process ID: 10848
+# Current directory: C:/Users/elias/dev/ba/firmware/fpga/tmp/freq
+# Command line: vivado.exe -gui_launcher_event rodinguilauncherevent4280 C:\Users\elias\dev\ba\firmware\fpga\tmp\freq\freq.xpr
+# Log file: C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/vivado.log
+# Journal file: C:/Users/elias/dev/ba/firmware/fpga/tmp/freq\vivado.jou
+#-----------------------------------------------------------
+start_gui
+open_project C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.xpr
+open_bd_design {C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/system.bd}
+update_compile_order -fileset sources_1
+create_bd_cell -type module -reference signal_clipper signal_clipper_0
+update_module_reference system_signal_clipper_0_0
+update_compile_order -fileset sources_1
+set_property location {4 905 506} [get_bd_cells signal_clipper_0]
+connect_bd_net [get_bd_pins signal_clipper_0/rst] [get_bd_pins xlc_reset/dout]
+connect_bd_net [get_bd_pins signal_clipper_0/freq_counter_output] [get_bd_pins FrequencyCounter/counter_output]
+delete_bd_objs [get_bd_intf_nets FrequencyCounter_M_AXIS_OUT]
+connect_bd_intf_net -boundary_type upper [get_bd_intf_pins FrequencyCounter/M_AXIS_OUT] [get_bd_intf_pins signal_clipper_0/S_AXIS_IN]
+connect_bd_intf_net [get_bd_intf_pins signal_clipper_0/M_AXIS_OUT] [get_bd_intf_pins signal_decoder_0/S_AXIS]
+connect_bd_net [get_bd_pins signal_clipper_0/clk] [get_bd_pins DataAcquisition/adc_clk]
+delete_bd_objs [get_bd_intf_nets signal_clipper_0_M_AXIS_OUT]
+delete_bd_objs [get_bd_intf_nets FrequencyCounter_M_AXIS_OUT]
+delete_bd_objs [get_bd_nets xlc_reset_dout]
+undo
+undo
+undo
+update_module_reference system_signal_clipper_0_0
+startgroup
+set_property -dict [list CONFIG.LIMIT_VALUE {3000}] [get_bd_cells signal_clipper_0]
+endgroup
+save_bd_design
+reset_run synth_1
+launch_runs impl_1 -to_step write_bitstream -jobs 12
+wait_on_run impl_1
+reset_run synth_1
+delete_bd_objs [get_bd_intf_nets signal_clipper_0_M_AXIS_OUT]
+connect_bd_intf_net [get_bd_intf_pins signal_clipper_0/M_AXIS_OUT] [get_bd_intf_pins axis_red_pitaya_dac_0/S_AXIS]
+save_bd_design
+launch_runs impl_1 -to_step write_bitstream -jobs 12
+wait_on_run impl_1
+startgroup
+set_property -dict [list CONFIG.LIMIT_VALUE {300}] [get_bd_cells signal_clipper_0]
+endgroup
+save_bd_design
+reset_run synth_1
+launch_runs impl_1 -to_step write_bitstream -jobs 12
+wait_on_run impl_1
+open_run impl_1
+open_bd_design {C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/system.bd}
+startgroup
+endgroup
+close [ open C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/new/signal_offset.v w ]
+add_files C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/new/signal_offset.v
+update_compile_order -fileset sources_1
+create_bd_cell -type module -reference signal_decoder signal_decoder_1
+delete_bd_objs [get_bd_cells signal_decoder_1]
+create_bd_cell -type module -reference signal_offset signal_offset_0
+set_property location {5 1329 350} [get_bd_cells signal_offset_0]
+create_bd_cell -type module -reference signal_split signal_split_0
+delete_bd_objs [get_bd_cells signal_split_0]
+delete_bd_objs [get_bd_intf_nets signal_clipper_0_M_AXIS_OUT]
+connect_bd_intf_net [get_bd_intf_pins axis_red_pitaya_dac_0/S_AXIS] [get_bd_intf_pins signal_offset_0/M_AXIS_OUT]
+connect_bd_intf_net [get_bd_intf_pins signal_clipper_0/M_AXIS_OUT] [get_bd_intf_pins signal_offset_0/S_AXIS_IN]
+set_property location {5 1301 507} [get_bd_cells signal_offset_0]
+connect_bd_net [get_bd_pins signal_offset_0/rst] [get_bd_pins xlc_reset/dout]
+connect_bd_net [get_bd_pins signal_offset_0/clk] [get_bd_pins DataAcquisition/adc_clk]
+save_bd_design
+update_compile_order -fileset sources_1
+startgroup
+set_property -dict [list CONFIG.OFFSET_VALUE {500}] [get_bd_cells signal_offset_0]
+endgroup
+save_bd_design
+reset_run synth_1
+launch_runs impl_1 -to_step write_bitstream -jobs 12
+wait_on_run impl_1
+set_property location {6 1418 508} [get_bd_cells signal_offset_0]
+set_property location {4.5 1191 512} [get_bd_cells signal_clipper_0]
+delete_bd_objs [get_bd_intf_nets FrequencyCounter_M_AXIS_OUT]
+copy_bd_objs /  [get_bd_cells {signal_offset_0}]
+set_property location {3.5 963 415} [get_bd_cells signal_offset_1]
+connect_bd_intf_net -boundary_type upper [get_bd_intf_pins FrequencyCounter/M_AXIS_OUT] [get_bd_intf_pins signal_offset_1/S_AXIS_IN]
+connect_bd_intf_net [get_bd_intf_pins signal_offset_1/M_AXIS_OUT] [get_bd_intf_pins signal_clipper_0/S_AXIS_IN]
+connect_bd_net [get_bd_pins signal_offset_1/clk] [get_bd_pins DataAcquisition/adc_clk]
+connect_bd_net [get_bd_pins signal_offset_1/rst] [get_bd_pins FrequencyCounter/counter_output]
+set_property location {4 955 409} [get_bd_cells signal_offset_1]
+set_property location {4 929 493} [get_bd_cells signal_offset_1]
+set_property location {6 1613 517} [get_bd_cells signal_offset_0]
+save_bd_design
+set_property location {6 1619 531} [get_bd_cells signal_offset_0]
+update_module_reference system_signal_offset_0_1
+update_module_reference system_signal_offset_0_0
+startgroup
+create_bd_cell -type ip -vlnv xilinx.com:ip:xlslice:1.0 xlslice_1
+endgroup
+set_property location {5 1311 324} [get_bd_cells xlslice_1]
+set_property -dict [list CONFIG.DIN_FROM {13} CONFIG.DOUT_WIDTH {14}] [get_bd_cells xlslice_1]
+startgroup
+connect_bd_net [get_bd_pins xlslice_1/Dout] [get_bd_pins signal_offset_0/offset_value]
+endgroup
+copy_bd_objs /  [get_bd_cells {xlslice_1}]
+set_property location {3 680 187} [get_bd_cells xlslice_2]
+connect_bd_net [get_bd_pins signal_offset_1/offset_value] [get_bd_pins xlslice_2/Dout]
+startgroup
+set_property -dict [list CONFIG.DIN_TO {14} CONFIG.DIN_FROM {27} CONFIG.DOUT_WIDTH {14}] [get_bd_cells xlslice_2]
+endgroup
+startgroup
+endgroup
+connect_bd_net [get_bd_pins xlslice_2/Din] [get_bd_pins xlslice_1/Din]
+delete_bd_objs [get_bd_intf_nets signal_offset_1_M_AXIS_OUT] [get_bd_intf_nets FrequencyCounter_M_AXIS_OUT] [get_bd_nets xlslice_2_Dout] [get_bd_cells signal_offset_1]
+update_module_reference system_signal_clipper_0_0
+set_property location {4.5 1230 494} [get_bd_cells signal_clipper_0]
+set_property location {4.5 1314 480} [get_bd_cells signal_clipper_0]
+close [ open C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/new/period_capture.v w ]
+add_files C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/new/period_capture.v
+update_compile_order -fileset sources_1
+create_bd_cell -type module -reference period_capture period_capture_0
+update_module_reference system_period_capture_0_0
+update_compile_order -fileset sources_1
+set_property location {4 1355 141} [get_bd_cells period_capture_0]
+delete_bd_objs [get_bd_cells period_capture_0]

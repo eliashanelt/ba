@@ -94,10 +94,8 @@ OPTRACE "Adding files" START { }
 read_verilog -library xil_defaultlib {
   C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/imports/fpga/signal_split.v
   C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/imports/fpga/frequency_counter.v
-  C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/imports/fpga/signal_decoder.v
   C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/imports/fpga/pow2.v
-  C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/new/freq_to_voltage.v
-  C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/new/signal_clipper.v
+  C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/new/signal_merge.v
   C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/hdl/system_wrapper.v
 }
 add_files C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/system.bd
@@ -109,9 +107,6 @@ set_property used_in_implementation false [get_files -all c:/Users/elias/dev/ba/
 set_property used_in_implementation false [get_files -all c:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ip/system_axi_gpio_0_0/system_axi_gpio_0_0_board.xdc]
 set_property used_in_implementation false [get_files -all c:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ip/system_axi_gpio_0_0/system_axi_gpio_0_0_ooc.xdc]
 set_property used_in_implementation false [get_files -all c:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ip/system_axi_gpio_0_0/system_axi_gpio_0_0.xdc]
-set_property used_in_implementation false [get_files -all c:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ip/system_clk_wiz_0_0/system_clk_wiz_0_0_board.xdc]
-set_property used_in_implementation false [get_files -all c:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ip/system_clk_wiz_0_0/system_clk_wiz_0_0.xdc]
-set_property used_in_implementation false [get_files -all c:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ip/system_clk_wiz_0_0/system_clk_wiz_0_0_ooc.xdc]
 set_property used_in_implementation false [get_files -all c:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ip/system_rst_ps7_0_125M_0/system_rst_ps7_0_125M_0_board.xdc]
 set_property used_in_implementation false [get_files -all c:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ip/system_rst_ps7_0_125M_0/system_rst_ps7_0_125M_0.xdc]
 set_property used_in_implementation false [get_files -all c:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ip/system_clk_wiz_0_1/system_clk_wiz_0_1_board.xdc]

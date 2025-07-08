@@ -345,39 +345,6 @@
 						"WVALID": { "actual": "s_axi_wvalid"}
 					}
 				},
-				"/SignalGenerator/axis_constant_0/M_AXIS": {
-					"interface": "xilinx.com:interface:axis:1.0",
-					"ports": {
-						"ACLK": { "actual": "aclk"},
-						"TDATA": { "actual": "m_axis_tdata"},
-						"TVALID": { "actual": "m_axis_tvalid"}
-					}
-				},
-				"/SignalGenerator/axis_red_pitaya_dac_0/S_AXIS": {
-					"interface": "xilinx.com:interface:axis:1.0",
-					"ports": {
-						"ACLK": { "actual": "aclk"},
-						"TDATA": { "actual": "s_axis_tdata"},
-						"TREADY": { "actual": "s_axis_tready"},
-						"TVALID": { "actual": "s_axis_tvalid"}
-					}
-				},
-				"/SignalGenerator/dds_compiler_0/M_AXIS_DATA": {
-					"interface": "xilinx.com:interface:axis:1.0",
-					"ports": {
-						"ACLK": { "actual": "aclk"},
-						"TDATA": { "actual": "m_axis_data_tdata"},
-						"TVALID": { "actual": "m_axis_data_tvalid"}
-					}
-				},
-				"/SignalGenerator/dds_compiler_0/S_AXIS_PHASE": {
-					"interface": "xilinx.com:interface:axis:1.0",
-					"ports": {
-						"ACLK": { "actual": "aclk"},
-						"TDATA": { "actual": "s_axis_phase_tdata"},
-						"TVALID": { "actual": "s_axis_phase_tvalid"}
-					}
-				},
 				"/axi_gpio_0/S_AXI": {
 					"interface": "xilinx.com:interface:aximm:1.0",
 					"ports": {
@@ -411,22 +378,18 @@
 						"TVALID": { "actual": "s_axis_tvalid"}
 					}
 				},
-				"/signal_clipper_0/M_AXIS_OUT": {
+				"/signal_merge_0/M_AXIS": {
 					"interface": "xilinx.com:interface:axis:1.0",
 					"ports": {
-						"ACLK": { "actual": "clk"},
-						"ARESETN": { "actual": "rst"},
-						"TDATA": { "actual": "M_AXIS_OUT_tdata"},
-						"TVALID": { "actual": "M_AXIS_OUT_tvalid"}
+						"TDATA": { "actual": "M_AXIS_tdata"},
+						"TVALID": { "actual": "M_AXIS_tvalid"}
 					}
 				},
-				"/signal_clipper_0/S_AXIS_IN": {
+				"/signal_merge_0/S_AXIS": {
 					"interface": "xilinx.com:interface:axis:1.0",
 					"ports": {
-						"ACLK": { "actual": "clk"},
-						"ARESETN": { "actual": "rst"},
-						"TDATA": { "actual": "S_AXIS_IN_tdata"},
-						"TVALID": { "actual": "S_AXIS_IN_tvalid"}
+						"TDATA": { "actual": "S_AXIS_tdata"},
+						"TVALID": { "actual": "S_AXIS_tvalid"}
 					}
 				}
 			}

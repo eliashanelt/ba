@@ -23,15 +23,6 @@ set_property DONT_TOUCH TRUE [get_cells -hier -filter {REF_NAME==system_axi_gpio
 # IP: bd/system/ip/system_axis_red_pitaya_adc_0_0/system_axis_red_pitaya_adc_0_0.xci
 set_property DONT_TOUCH TRUE [get_cells -hier -filter {REF_NAME==system_axis_red_pitaya_adc_0_0 || ORIG_REF_NAME==system_axis_red_pitaya_adc_0_0} -quiet] -quiet
 
-# IP: bd/system/ip/system_axis_red_pitaya_dac_0_0/system_axis_red_pitaya_dac_0_0.xci
-set_property DONT_TOUCH TRUE [get_cells -hier -filter {REF_NAME==system_axis_red_pitaya_dac_0_0 || ORIG_REF_NAME==system_axis_red_pitaya_dac_0_0} -quiet] -quiet
-
-# IP: bd/system/ip/system_clk_wiz_0_0/system_clk_wiz_0_0.xci
-set_property DONT_TOUCH TRUE [get_cells -hier -filter {REF_NAME==system_clk_wiz_0_0 || ORIG_REF_NAME==system_clk_wiz_0_0} -quiet] -quiet
-
-# IP: bd/system/ip/system_dds_compiler_0_0/system_dds_compiler_0_0.xci
-set_property DONT_TOUCH TRUE [get_cells -hier -filter {REF_NAME==system_dds_compiler_0_0 || ORIG_REF_NAME==system_dds_compiler_0_0} -quiet] -quiet
-
 # IP: bd/system/ip/system_ps7_0_axi_periph_0/system_ps7_0_axi_periph_0.xci
 set_property DONT_TOUCH TRUE [get_cells -hier -filter {REF_NAME==system_ps7_0_axi_periph_0 || ORIG_REF_NAME==system_ps7_0_axi_periph_0} -quiet] -quiet
 
@@ -47,26 +38,11 @@ set_property DONT_TOUCH TRUE [get_cells -hier -filter {REF_NAME==system_frequenc
 # IP: bd/system/ip/system_xlconstant_0_0/system_xlconstant_0_0.xci
 set_property DONT_TOUCH TRUE [get_cells -hier -filter {REF_NAME==system_xlconstant_0_0 || ORIG_REF_NAME==system_xlconstant_0_0} -quiet] -quiet
 
-# IP: bd/system/ip/system_signal_decoder_0_0/system_signal_decoder_0_0.xci
-set_property DONT_TOUCH TRUE [get_cells -hier -filter {REF_NAME==system_signal_decoder_0_0 || ORIG_REF_NAME==system_signal_decoder_0_0} -quiet] -quiet
-
-# IP: bd/system/ip/system_xlslice_0_0/system_xlslice_0_0.xci
-set_property DONT_TOUCH TRUE [get_cells -hier -filter {REF_NAME==system_xlslice_0_0 || ORIG_REF_NAME==system_xlslice_0_0} -quiet] -quiet
-
-# IP: bd/system/ip/system_axis_constant_0_0/system_axis_constant_0_0.xci
-set_property DONT_TOUCH TRUE [get_cells -hier -filter {REF_NAME==system_axis_constant_0_0 || ORIG_REF_NAME==system_axis_constant_0_0} -quiet] -quiet
-
 # IP: bd/system/ip/system_pow2_0_0/system_pow2_0_0.xci
 set_property DONT_TOUCH TRUE [get_cells -hier -filter {REF_NAME==system_pow2_0_0 || ORIG_REF_NAME==system_pow2_0_0} -quiet] -quiet
 
 # IP: bd/system/ip/system_xlslice_0_1/system_xlslice_0_1.xci
 set_property DONT_TOUCH TRUE [get_cells -hier -filter {REF_NAME==system_xlslice_0_1 || ORIG_REF_NAME==system_xlslice_0_1} -quiet] -quiet
-
-# IP: bd/system/ip/system_freq_to_voltage_0_0_1/system_freq_to_voltage_0_0.xci
-set_property DONT_TOUCH TRUE [get_cells -hier -filter {REF_NAME==system_freq_to_voltage_0_0 || ORIG_REF_NAME==system_freq_to_voltage_0_0} -quiet] -quiet
-
-# IP: bd/system/ip/system_xlslice_0_2/system_xlslice_0_2.xci
-set_property DONT_TOUCH TRUE [get_cells -hier -filter {REF_NAME==system_xlslice_0_2 || ORIG_REF_NAME==system_xlslice_0_2} -quiet] -quiet
 
 # IP: bd/system/ip/system_axis_red_pitaya_dac_0_1/system_axis_red_pitaya_dac_0_1.xci
 set_property DONT_TOUCH TRUE [get_cells -hier -filter {REF_NAME==system_axis_red_pitaya_dac_0_1 || ORIG_REF_NAME==system_axis_red_pitaya_dac_0_1} -quiet] -quiet
@@ -74,8 +50,8 @@ set_property DONT_TOUCH TRUE [get_cells -hier -filter {REF_NAME==system_axis_red
 # IP: bd/system/ip/system_clk_wiz_0_1/system_clk_wiz_0_1.xci
 set_property DONT_TOUCH TRUE [get_cells -hier -filter {REF_NAME==system_clk_wiz_0_1 || ORIG_REF_NAME==system_clk_wiz_0_1} -quiet] -quiet
 
-# IP: bd/system/ip/system_signal_clipper_0_0/system_signal_clipper_0_0.xci
-set_property DONT_TOUCH TRUE [get_cells -hier -filter {REF_NAME==system_signal_clipper_0_0 || ORIG_REF_NAME==system_signal_clipper_0_0} -quiet] -quiet
+# IP: bd/system/ip/system_signal_merge_0_0/system_signal_merge_0_0.xci
+set_property DONT_TOUCH TRUE [get_cells -hier -filter {REF_NAME==system_signal_merge_0_0 || ORIG_REF_NAME==system_signal_merge_0_0} -quiet] -quiet
 
 # IP: bd/system/ip/system_auto_pc_0/system_auto_pc_0.xci
 set_property DONT_TOUCH TRUE [get_cells -hier -filter {REF_NAME==system_auto_pc_0 || ORIG_REF_NAME==system_auto_pc_0} -quiet] -quiet
@@ -100,14 +76,6 @@ set_property DONT_TOUCH TRUE [get_cells [split [join [get_cells -hier -filter {R
 
 # XDC: bd/system/ip/system_axi_gpio_0_0/system_axi_gpio_0_0.xdc
 #dup# set_property DONT_TOUCH TRUE [get_cells [split [join [get_cells -hier -filter {REF_NAME==system_axi_gpio_0_0 || ORIG_REF_NAME==system_axi_gpio_0_0} -quiet] {/U0 } ]/U0 ] -quiet] -quiet
-
-# XDC: bd/system/ip/system_clk_wiz_0_0/system_clk_wiz_0_0_board.xdc
-set_property DONT_TOUCH TRUE [get_cells [split [join [get_cells -hier -filter {REF_NAME==system_clk_wiz_0_0 || ORIG_REF_NAME==system_clk_wiz_0_0} -quiet] {/inst } ]/inst ] -quiet] -quiet
-
-# XDC: bd/system/ip/system_clk_wiz_0_0/system_clk_wiz_0_0.xdc
-#dup# set_property DONT_TOUCH TRUE [get_cells [split [join [get_cells -hier -filter {REF_NAME==system_clk_wiz_0_0 || ORIG_REF_NAME==system_clk_wiz_0_0} -quiet] {/inst } ]/inst ] -quiet] -quiet
-
-# XDC: bd/system/ip/system_clk_wiz_0_0/system_clk_wiz_0_0_ooc.xdc
 
 # XDC: bd/system/ip/system_rst_ps7_0_125M_0/system_rst_ps7_0_125M_0_board.xdc
 set_property DONT_TOUCH TRUE [get_cells [split [join [get_cells -hier -filter {REF_NAME==system_rst_ps7_0_125M_0 || ORIG_REF_NAME==system_rst_ps7_0_125M_0} -quiet] {/U0 } ]/U0 ] -quiet] -quiet

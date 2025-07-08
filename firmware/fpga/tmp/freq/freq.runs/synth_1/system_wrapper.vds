@@ -2,8 +2,8 @@
 # Vivado v2020.1 (64-bit)
 # SW Build 2902540 on Wed May 27 19:54:49 MDT 2020
 # IP Build 2902112 on Wed May 27 22:43:36 MDT 2020
-# Start of session at: Tue Jul  1 12:59:40 2025
-# Process ID: 5192
+# Start of session at: Tue Jul  8 21:27:33 2025
+# Process ID: 15056
 # Current directory: C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.runs/synth_1
 # Command line: vivado.exe -log system_wrapper.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source system_wrapper.tcl
 # Log file: C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.runs/synth_1/system_wrapper.vds
@@ -22,26 +22,12 @@ INFO: [IP_Flow 19-4728] Bus Interface 'clk': Added interface parameter 'ASSOCIAT
 INFO: [IP_Flow 19-4728] Bus Interface 'S_AXIS_IN': Added interface parameter 'FREQ_HZ' with value '125000000'.
 INFO: [IP_Flow 19-234] Refreshing IP repositories
 INFO: [IP_Flow 19-1700] Loaded user IP repository 'c:/Users/elias/dev/ba/firmware/fpga/tmp/cores'.
+INFO: [IP_Flow 19-234] Refreshing IP repositories
+INFO: [IP_Flow 19-1700] Loaded user IP repository 'c:/Users/elias/dev/ba/firmware/fpga/tmp/cores'.
+INFO: [IP_Flow 19-5107] Inferred bus interface 'M_AXIS' of definition 'xilinx.com:interface:axis:1.0' (from Xilinx Repository).
 INFO: [IP_Flow 19-5107] Inferred bus interface 'S_AXIS' of definition 'xilinx.com:interface:axis:1.0' (from Xilinx Repository).
-INFO: [IP_Flow 19-5107] Inferred bus interface 'rst' of definition 'xilinx.com:signal:reset:1.0' (from Xilinx Repository).
-INFO: [IP_Flow 19-5107] Inferred bus interface 'clk' of definition 'xilinx.com:signal:clock:1.0' (from Xilinx Repository).
-INFO: [IP_Flow 19-4728] Bus Interface 'clk': Added interface parameter 'ASSOCIATED_BUSIF' with value 'S_AXIS'.
-INFO: [IP_Flow 19-4728] Bus Interface 'clk': Added interface parameter 'ASSOCIATED_RESET' with value 'rst'.
+INFO: [IP_Flow 19-4728] Bus Interface 'M_AXIS': Added interface parameter 'FREQ_HZ' with value '125000000'.
 INFO: [IP_Flow 19-4728] Bus Interface 'S_AXIS': Added interface parameter 'FREQ_HZ' with value '125000000'.
-INFO: [IP_Flow 19-234] Refreshing IP repositories
-INFO: [IP_Flow 19-1700] Loaded user IP repository 'c:/Users/elias/dev/ba/firmware/fpga/tmp/cores'.
-INFO: [IP_Flow 19-234] Refreshing IP repositories
-INFO: [IP_Flow 19-1700] Loaded user IP repository 'c:/Users/elias/dev/ba/firmware/fpga/tmp/cores'.
-INFO: [IP_Flow 19-5107] Inferred bus interface 'clk' of definition 'xilinx.com:signal:clock:1.0' (from Xilinx Repository).
-WARNING: [IP_Flow 19-5661] Bus Interface 'clk' does not have any bus interfaces associated with it.
-INFO: [IP_Flow 19-234] Refreshing IP repositories
-INFO: [IP_Flow 19-1700] Loaded user IP repository 'c:/Users/elias/dev/ba/firmware/fpga/tmp/cores'.
-INFO: [IP_Flow 19-5107] Inferred bus interface 'M_AXIS_OUT' of definition 'xilinx.com:interface:axis:1.0' (from Xilinx Repository).
-INFO: [IP_Flow 19-5107] Inferred bus interface 'S_AXIS_IN' of definition 'xilinx.com:interface:axis:1.0' (from Xilinx Repository).
-INFO: [IP_Flow 19-5107] Inferred bus interface 'rst' of definition 'xilinx.com:signal:reset:1.0' (from Xilinx Repository).
-INFO: [IP_Flow 19-5107] Inferred bus interface 'clk' of definition 'xilinx.com:signal:clock:1.0' (from Xilinx Repository).
-INFO: [IP_Flow 19-4728] Bus Interface 'clk': Added interface parameter 'ASSOCIATED_BUSIF' with value 'M_AXIS_OUT'.
-INFO: [IP_Flow 19-4728] Bus Interface 'clk': Added interface parameter 'ASSOCIATED_RESET' with value 'rst'.
 INFO: [IP_Flow 19-234] Refreshing IP repositories
 INFO: [IP_Flow 19-1700] Loaded user IP repository 'c:/Users/elias/dev/ba/firmware/fpga/tmp/cores'.
 INFO: [IP_Flow 19-5107] Inferred bus interface 'M_AXIS_PORT1' of definition 'xilinx.com:interface:axis:1.0' (from Xilinx Repository).
@@ -59,15 +45,15 @@ INFO: [Common 17-349] Got license for feature 'Synthesis' and/or device 'xc7z010
 INFO: [Device 21-403] Loading part xc7z010clg400-1
 INFO: [Synth 8-7079] Multithreading enabled for synth_design using a maximum of 2 processes.
 INFO: [Synth 8-7078] Launching helper process for spawning children vivado processes
-INFO: [Synth 8-7075] Helper process launched with PID 14248
+INFO: [Synth 8-7075] Helper process launched with PID 12328
 WARNING: [Synth 8-2611] redeclaration of ansi port counter_output is not allowed [C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/imports/fpga/frequency_counter.v:46]
 WARNING: [Synth 8-2277] keyword 'unsigned' is not allowed here in this mode of verilog [C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/imports/fpga/pow2.v:29]
 WARNING: [Synth 8-2277] keyword 'unsigned' is not allowed here in this mode of verilog [C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/imports/fpga/pow2.v:30]
 ---------------------------------------------------------------------------------
-Starting RTL Elaboration : Time (s): cpu = 00:00:04 ; elapsed = 00:00:04 . Memory (MB): peak = 1031.719 ; gain = 0.000
+Starting RTL Elaboration : Time (s): cpu = 00:00:03 ; elapsed = 00:00:04 . Memory (MB): peak = 1031.246 ; gain = 0.000
 ---------------------------------------------------------------------------------
 INFO: [Synth 8-6157] synthesizing module 'system_wrapper' [C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/hdl/system_wrapper.v:12]
-INFO: [Synth 8-6157] synthesizing module 'system' [C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/synth/system.v:835]
+INFO: [Synth 8-6157] synthesizing module 'system' [C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/synth/system.v:766]
 INFO: [Synth 8-6157] synthesizing module 'DataAcquisition_imp_11FS564' [C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/synth/system.v:12]
 INFO: [Synth 8-6157] synthesizing module 'system_axis_red_pitaya_adc_0_0' [c:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ip/system_axis_red_pitaya_adc_0_0/synth/system_axis_red_pitaya_adc_0_0.v:57]
 INFO: [Synth 8-6157] synthesizing module 'axis_red_pitaya_adc' [c:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ipshared/d32c/src/axis_red_pitaya_adc.v:4]
@@ -232,8 +218,8 @@ WARNING: [Synth 8-7071] port 'S_AXI_HP0_WCOUNT' of module 'system_processing_sys
 WARNING: [Synth 8-7071] port 'S_AXI_HP0_RACOUNT' of module 'system_processing_system7_0_0' is unconnected for instance 'processing_system7_0' [C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/synth/system.v:300]
 WARNING: [Synth 8-7071] port 'S_AXI_HP0_WACOUNT' of module 'system_processing_system7_0_0' is unconnected for instance 'processing_system7_0' [C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/synth/system.v:300]
 WARNING: [Synth 8-7023] instance 'processing_system7_0' of module 'system_processing_system7_0_0' has 131 connections declared, but only 98 given [C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/synth/system.v:300]
-INFO: [Synth 8-6157] synthesizing module 'system_ps7_0_axi_periph_0' [C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/synth/system.v:1135]
-INFO: [Synth 8-6157] synthesizing module 's00_couplers_imp_15HE6GA' [C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/synth/system.v:539]
+INFO: [Synth 8-6157] synthesizing module 'system_ps7_0_axi_periph_0' [C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/synth/system.v:1046]
+INFO: [Synth 8-6157] synthesizing module 's00_couplers_imp_15HE6GA' [C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/synth/system.v:470]
 INFO: [Synth 8-6157] synthesizing module 'system_auto_pc_0' [c:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ip/system_auto_pc_0/synth/system_auto_pc_0.v:58]
 INFO: [Synth 8-6157] synthesizing module 'axi_protocol_converter_v2_1_21_axi_protocol_converter' [c:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ipshared/8dfa/hdl/axi_protocol_converter_v2_1_vl_rfs.v:4808]
 	Parameter C_FAMILY bound to: zynq - type: string 
@@ -1008,11 +994,11 @@ WARNING: [Synth 8-7023] instance 'MI_REG' of module 'axi_register_slice_v2_1_21_
 INFO: [Synth 8-6155] done synthesizing module 'axi_protocol_converter_v2_1_21_b2s' (33#1) [c:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ipshared/8dfa/hdl/axi_protocol_converter_v2_1_vl_rfs.v:4226]
 INFO: [Synth 8-6155] done synthesizing module 'axi_protocol_converter_v2_1_21_axi_protocol_converter' (34#1) [c:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ipshared/8dfa/hdl/axi_protocol_converter_v2_1_vl_rfs.v:4808]
 INFO: [Synth 8-6155] done synthesizing module 'system_auto_pc_0' (35#1) [c:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ip/system_auto_pc_0/synth/system_auto_pc_0.v:58]
-WARNING: [Synth 8-7071] port 'm_axi_awprot' of module 'system_auto_pc_0' is unconnected for instance 'auto_pc' [C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/synth/system.v:774]
-WARNING: [Synth 8-7071] port 'm_axi_arprot' of module 'system_auto_pc_0' is unconnected for instance 'auto_pc' [C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/synth/system.v:774]
-WARNING: [Synth 8-7023] instance 'auto_pc' of module 'system_auto_pc_0' has 59 connections declared, but only 57 given [C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/synth/system.v:774]
-INFO: [Synth 8-6155] done synthesizing module 's00_couplers_imp_15HE6GA' (36#1) [C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/synth/system.v:539]
-INFO: [Synth 8-6155] done synthesizing module 'system_ps7_0_axi_periph_0' (37#1) [C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/synth/system.v:1135]
+WARNING: [Synth 8-7071] port 'm_axi_awprot' of module 'system_auto_pc_0' is unconnected for instance 'auto_pc' [C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/synth/system.v:705]
+WARNING: [Synth 8-7071] port 'm_axi_arprot' of module 'system_auto_pc_0' is unconnected for instance 'auto_pc' [C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/synth/system.v:705]
+WARNING: [Synth 8-7023] instance 'auto_pc' of module 'system_auto_pc_0' has 59 connections declared, but only 57 given [C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/synth/system.v:705]
+INFO: [Synth 8-6155] done synthesizing module 's00_couplers_imp_15HE6GA' (36#1) [C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/synth/system.v:470]
+INFO: [Synth 8-6155] done synthesizing module 'system_ps7_0_axi_periph_0' (37#1) [C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/synth/system.v:1046]
 INFO: [Synth 8-638] synthesizing module 'system_rst_ps7_0_125M_0' [c:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ip/system_rst_ps7_0_125M_0/synth/system_rst_ps7_0_125M_0.vhd:74]
 	Parameter C_FAMILY bound to: zynq - type: string 
 	Parameter C_EXT_RST_WIDTH bound to: 4 - type: integer 
@@ -1102,161 +1088,6 @@ WARNING: [Synth 8-7071] port 'peripheral_reset' of module 'system_rst_ps7_0_125M
 WARNING: [Synth 8-7071] port 'interconnect_aresetn' of module 'system_rst_ps7_0_125M_0' is unconnected for instance 'rst_ps7_0_125M' [C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/synth/system.v:461]
 WARNING: [Synth 8-7023] instance 'rst_ps7_0_125M' of module 'system_rst_ps7_0_125M_0' has 10 connections declared, but only 6 given [C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/synth/system.v:461]
 INFO: [Synth 8-6155] done synthesizing module 'PS7_imp_1QJPAX8' (45#1) [C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/synth/system.v:119]
-WARNING: [Synth 8-4446] all outputs are unconnected for this instance and logic may be removed [C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/synth/system.v:1063]
-INFO: [Synth 8-6157] synthesizing module 'SignalGenerator_imp_XB4TXX' [C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/synth/system.v:470]
-INFO: [Synth 8-6157] synthesizing module 'system_axis_constant_0_0' [c:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ip/system_axis_constant_0_0/synth/system_axis_constant_0_0.v:57]
-INFO: [Synth 8-6157] synthesizing module 'axis_constant' [c:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ipshared/e867/src/axis_constant.v:4]
-	Parameter AXIS_TDATA_WIDTH bound to: 32 - type: integer 
-INFO: [Synth 8-6155] done synthesizing module 'axis_constant' (46#1) [c:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ipshared/e867/src/axis_constant.v:4]
-INFO: [Synth 8-6155] done synthesizing module 'system_axis_constant_0_0' (47#1) [c:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ip/system_axis_constant_0_0/synth/system_axis_constant_0_0.v:57]
-INFO: [Synth 8-6157] synthesizing module 'system_axis_red_pitaya_dac_0_0' [c:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ip/system_axis_red_pitaya_dac_0_0/synth/system_axis_red_pitaya_dac_0_0.v:57]
-INFO: [Synth 8-6157] synthesizing module 'axis_red_pitaya_dac' [c:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ipshared/8b85/src/axis_red_pitaya_dac.v:4]
-	Parameter DAC_DATA_WIDTH bound to: 14 - type: integer 
-	Parameter AXIS_TDATA_WIDTH bound to: 32 - type: integer 
-INFO: [Synth 8-6157] synthesizing module 'ODDR' [C:/Xilinx/Vivado/2020.1/scripts/rt/data/unisim_comp.v:49784]
-	Parameter DDR_CLK_EDGE bound to: OPPOSITE_EDGE - type: string 
-	Parameter INIT bound to: 1'b0 
-	Parameter IS_C_INVERTED bound to: 1'b0 
-	Parameter IS_D1_INVERTED bound to: 1'b0 
-	Parameter IS_D2_INVERTED bound to: 1'b0 
-	Parameter SRTYPE bound to: SYNC - type: string 
-INFO: [Synth 8-6155] done synthesizing module 'ODDR' (48#1) [C:/Xilinx/Vivado/2020.1/scripts/rt/data/unisim_comp.v:49784]
-INFO: [Synth 8-6155] done synthesizing module 'axis_red_pitaya_dac' (49#1) [c:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ipshared/8b85/src/axis_red_pitaya_dac.v:4]
-INFO: [Synth 8-6155] done synthesizing module 'system_axis_red_pitaya_dac_0_0' (50#1) [c:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ip/system_axis_red_pitaya_dac_0_0/synth/system_axis_red_pitaya_dac_0_0.v:57]
-WARNING: [Synth 8-7071] port 's_axis_tready' of module 'system_axis_red_pitaya_dac_0_0' is unconnected for instance 'axis_red_pitaya_dac_0' [C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/synth/system.v:513]
-WARNING: [Synth 8-7023] instance 'axis_red_pitaya_dac_0' of module 'system_axis_red_pitaya_dac_0_0' has 11 connections declared, but only 10 given [C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/synth/system.v:513]
-INFO: [Synth 8-6157] synthesizing module 'system_clk_wiz_0_0' [c:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ip/system_clk_wiz_0_0/system_clk_wiz_0_0.v:70]
-INFO: [Synth 8-6157] synthesizing module 'system_clk_wiz_0_0_clk_wiz' [c:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ip/system_clk_wiz_0_0/system_clk_wiz_0_0_clk_wiz.v:68]
-INFO: [Synth 8-6157] synthesizing module 'IBUF' [C:/Xilinx/Vivado/2020.1/scripts/rt/data/unisim_comp.v:32977]
-	Parameter CAPACITANCE bound to: DONT_CARE - type: string 
-	Parameter IBUF_DELAY_VALUE bound to: 0 - type: string 
-	Parameter IBUF_LOW_PWR bound to: TRUE - type: string 
-	Parameter IFD_DELAY_VALUE bound to: AUTO - type: string 
-	Parameter IOSTANDARD bound to: DEFAULT - type: string 
-INFO: [Synth 8-6155] done synthesizing module 'IBUF' (51#1) [C:/Xilinx/Vivado/2020.1/scripts/rt/data/unisim_comp.v:32977]
-INFO: [Synth 8-6157] synthesizing module 'MMCME2_ADV' [C:/Xilinx/Vivado/2020.1/scripts/rt/data/unisim_comp.v:39994]
-	Parameter BANDWIDTH bound to: OPTIMIZED - type: string 
-	Parameter CLKFBOUT_MULT_F bound to: 8.000000 - type: double 
-	Parameter CLKFBOUT_PHASE bound to: 0.000000 - type: double 
-	Parameter CLKFBOUT_USE_FINE_PS bound to: FALSE - type: string 
-	Parameter CLKIN1_PERIOD bound to: 8.000000 - type: double 
-	Parameter CLKIN2_PERIOD bound to: 0.000000 - type: double 
-	Parameter CLKOUT0_DIVIDE_F bound to: 4.000000 - type: double 
-	Parameter CLKOUT0_DUTY_CYCLE bound to: 0.500000 - type: double 
-	Parameter CLKOUT0_PHASE bound to: 0.000000 - type: double 
-	Parameter CLKOUT0_USE_FINE_PS bound to: FALSE - type: string 
-	Parameter CLKOUT1_DIVIDE bound to: 1 - type: integer 
-	Parameter CLKOUT1_DUTY_CYCLE bound to: 0.500000 - type: double 
-	Parameter CLKOUT1_PHASE bound to: 0.000000 - type: double 
-	Parameter CLKOUT1_USE_FINE_PS bound to: FALSE - type: string 
-	Parameter CLKOUT2_DIVIDE bound to: 1 - type: integer 
-	Parameter CLKOUT2_DUTY_CYCLE bound to: 0.500000 - type: double 
-	Parameter CLKOUT2_PHASE bound to: 0.000000 - type: double 
-	Parameter CLKOUT2_USE_FINE_PS bound to: FALSE - type: string 
-	Parameter CLKOUT3_DIVIDE bound to: 1 - type: integer 
-	Parameter CLKOUT3_DUTY_CYCLE bound to: 0.500000 - type: double 
-	Parameter CLKOUT3_PHASE bound to: 0.000000 - type: double 
-	Parameter CLKOUT3_USE_FINE_PS bound to: FALSE - type: string 
-	Parameter CLKOUT4_CASCADE bound to: FALSE - type: string 
-	Parameter CLKOUT4_DIVIDE bound to: 1 - type: integer 
-	Parameter CLKOUT4_DUTY_CYCLE bound to: 0.500000 - type: double 
-	Parameter CLKOUT4_PHASE bound to: 0.000000 - type: double 
-	Parameter CLKOUT4_USE_FINE_PS bound to: FALSE - type: string 
-	Parameter CLKOUT5_DIVIDE bound to: 1 - type: integer 
-	Parameter CLKOUT5_DUTY_CYCLE bound to: 0.500000 - type: double 
-	Parameter CLKOUT5_PHASE bound to: 0.000000 - type: double 
-	Parameter CLKOUT5_USE_FINE_PS bound to: FALSE - type: string 
-	Parameter CLKOUT6_DIVIDE bound to: 1 - type: integer 
-	Parameter CLKOUT6_DUTY_CYCLE bound to: 0.500000 - type: double 
-	Parameter CLKOUT6_PHASE bound to: 0.000000 - type: double 
-	Parameter CLKOUT6_USE_FINE_PS bound to: FALSE - type: string 
-	Parameter COMPENSATION bound to: ZHOLD - type: string 
-	Parameter DIVCLK_DIVIDE bound to: 1 - type: integer 
-	Parameter IS_CLKINSEL_INVERTED bound to: 1'b0 
-	Parameter IS_PSEN_INVERTED bound to: 1'b0 
-	Parameter IS_PSINCDEC_INVERTED bound to: 1'b0 
-	Parameter IS_PWRDWN_INVERTED bound to: 1'b0 
-	Parameter IS_RST_INVERTED bound to: 1'b0 
-	Parameter REF_JITTER1 bound to: 0.010000 - type: double 
-	Parameter REF_JITTER2 bound to: 0.010000 - type: double 
-	Parameter SS_EN bound to: FALSE - type: string 
-	Parameter SS_MODE bound to: CENTER_HIGH - type: string 
-	Parameter SS_MOD_PERIOD bound to: 10000 - type: integer 
-	Parameter STARTUP_WAIT bound to: FALSE - type: string 
-INFO: [Synth 8-6155] done synthesizing module 'MMCME2_ADV' (52#1) [C:/Xilinx/Vivado/2020.1/scripts/rt/data/unisim_comp.v:39994]
-INFO: [Synth 8-6155] done synthesizing module 'system_clk_wiz_0_0_clk_wiz' (53#1) [c:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ip/system_clk_wiz_0_0/system_clk_wiz_0_0_clk_wiz.v:68]
-INFO: [Synth 8-6155] done synthesizing module 'system_clk_wiz_0_0' (54#1) [c:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ip/system_clk_wiz_0_0/system_clk_wiz_0_0.v:70]
-INFO: [Synth 8-638] synthesizing module 'system_dds_compiler_0_0' [c:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ip/system_dds_compiler_0_0/synth/system_dds_compiler_0_0.vhd:69]
-WARNING: [Synth 8-5640] Port 'debug_axi_pinc_in' is missing in component declaration [c:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ip/system_dds_compiler_0_0/synth/system_dds_compiler_0_0.vhd:72]
-WARNING: [Synth 8-5640] Port 'debug_axi_poff_in' is missing in component declaration [c:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ip/system_dds_compiler_0_0/synth/system_dds_compiler_0_0.vhd:72]
-WARNING: [Synth 8-5640] Port 'debug_axi_resync_in' is missing in component declaration [c:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ip/system_dds_compiler_0_0/synth/system_dds_compiler_0_0.vhd:72]
-WARNING: [Synth 8-5640] Port 'debug_axi_chan_in' is missing in component declaration [c:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ip/system_dds_compiler_0_0/synth/system_dds_compiler_0_0.vhd:72]
-WARNING: [Synth 8-5640] Port 'debug_core_nd' is missing in component declaration [c:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ip/system_dds_compiler_0_0/synth/system_dds_compiler_0_0.vhd:72]
-WARNING: [Synth 8-5640] Port 'debug_phase' is missing in component declaration [c:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ip/system_dds_compiler_0_0/synth/system_dds_compiler_0_0.vhd:72]
-WARNING: [Synth 8-5640] Port 'debug_phase_nd' is missing in component declaration [c:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ip/system_dds_compiler_0_0/synth/system_dds_compiler_0_0.vhd:72]
-	Parameter C_XDEVICEFAMILY bound to: zynq - type: string 
-	Parameter C_MODE_OF_OPERATION bound to: 0 - type: integer 
-	Parameter C_MODULUS bound to: 9 - type: integer 
-	Parameter C_ACCUMULATOR_WIDTH bound to: 28 - type: integer 
-	Parameter C_CHANNELS bound to: 1 - type: integer 
-	Parameter C_HAS_PHASE_OUT bound to: 0 - type: integer 
-	Parameter C_HAS_PHASEGEN bound to: 1 - type: integer 
-	Parameter C_HAS_SINCOS bound to: 1 - type: integer 
-	Parameter C_LATENCY bound to: 9 - type: integer 
-	Parameter C_MEM_TYPE bound to: 1 - type: integer 
-	Parameter C_NEGATIVE_COSINE bound to: 0 - type: integer 
-	Parameter C_NEGATIVE_SINE bound to: 0 - type: integer 
-	Parameter C_NOISE_SHAPING bound to: 1 - type: integer 
-	Parameter C_OUTPUTS_REQUIRED bound to: 2 - type: integer 
-	Parameter C_OUTPUT_FORM bound to: 0 - type: integer 
-	Parameter C_OUTPUT_WIDTH bound to: 14 - type: integer 
-	Parameter C_PHASE_ANGLE_WIDTH bound to: 12 - type: integer 
-	Parameter C_PHASE_INCREMENT bound to: 2 - type: integer 
-	Parameter C_PHASE_INCREMENT_VALUE bound to: 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 - type: string 
-	Parameter C_RESYNC bound to: 0 - type: integer 
-	Parameter C_PHASE_OFFSET bound to: 3 - type: integer 
-	Parameter C_PHASE_OFFSET_VALUE bound to: 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 - type: string 
-	Parameter C_OPTIMISE_GOAL bound to: 0 - type: integer 
-	Parameter C_USE_DSP48 bound to: 0 - type: integer 
-	Parameter C_POR_MODE bound to: 0 - type: integer 
-	Parameter C_AMPLITUDE bound to: 1 - type: integer 
-	Parameter C_HAS_ACLKEN bound to: 0 - type: integer 
-	Parameter C_HAS_ARESETN bound to: 0 - type: integer 
-	Parameter C_HAS_TLAST bound to: 0 - type: integer 
-	Parameter C_HAS_TREADY bound to: 0 - type: integer 
-	Parameter C_HAS_S_PHASE bound to: 1 - type: integer 
-	Parameter C_S_PHASE_TDATA_WIDTH bound to: 32 - type: integer 
-	Parameter C_S_PHASE_HAS_TUSER bound to: 0 - type: integer 
-	Parameter C_S_PHASE_TUSER_WIDTH bound to: 1 - type: integer 
-	Parameter C_HAS_S_CONFIG bound to: 0 - type: integer 
-	Parameter C_S_CONFIG_SYNC_MODE bound to: 0 - type: integer 
-	Parameter C_S_CONFIG_TDATA_WIDTH bound to: 1 - type: integer 
-	Parameter C_HAS_M_DATA bound to: 1 - type: integer 
-	Parameter C_M_DATA_TDATA_WIDTH bound to: 32 - type: integer 
-	Parameter C_M_DATA_HAS_TUSER bound to: 0 - type: integer 
-	Parameter C_M_DATA_TUSER_WIDTH bound to: 1 - type: integer 
-	Parameter C_HAS_M_PHASE bound to: 0 - type: integer 
-	Parameter C_M_PHASE_TDATA_WIDTH bound to: 1 - type: integer 
-	Parameter C_M_PHASE_HAS_TUSER bound to: 0 - type: integer 
-	Parameter C_M_PHASE_TUSER_WIDTH bound to: 1 - type: integer 
-	Parameter C_DEBUG_INTERFACE bound to: 0 - type: integer 
-	Parameter C_CHAN_WIDTH bound to: 1 - type: integer 
-INFO: [Synth 8-3491] module 'dds_compiler_v6_0_20' declared at 'c:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ipshared/398e/hdl/dds_compiler_v6_0_vh_rfs.vhd:47308' bound to instance 'U0' of component 'dds_compiler_v6_0_20' [c:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ip/system_dds_compiler_0_0/synth/system_dds_compiler_0_0.vhd:182]
-INFO: [Synth 8-256] done synthesizing module 'system_dds_compiler_0_0' (64#1) [c:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ip/system_dds_compiler_0_0/synth/system_dds_compiler_0_0.vhd:69]
-INFO: [Synth 8-6157] synthesizing module 'system_xlslice_0_0' [c:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ip/system_xlslice_0_0/synth/system_xlslice_0_0.v:57]
-INFO: [Synth 8-6157] synthesizing module 'xlslice_v1_0_2_xlslice__parameterized0' [c:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ipshared/11d0/hdl/xlslice_v1_0_vl_rfs.v:13]
-	Parameter DIN_WIDTH bound to: 32 - type: integer 
-	Parameter DIN_FROM bound to: 26 - type: integer 
-	Parameter DIN_TO bound to: 0 - type: integer 
-INFO: [Synth 8-6155] done synthesizing module 'xlslice_v1_0_2_xlslice__parameterized0' (64#1) [c:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ipshared/11d0/hdl/xlslice_v1_0_vl_rfs.v:13]
-INFO: [Synth 8-6155] done synthesizing module 'system_xlslice_0_0' (65#1) [c:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ip/system_xlslice_0_0/synth/system_xlslice_0_0.v:57]
-INFO: [Synth 8-6155] done synthesizing module 'SignalGenerator_imp_XB4TXX' (66#1) [C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/synth/system.v:470]
-WARNING: [Synth 8-7071] port 'dac_clk_o' of module 'SignalGenerator_imp_XB4TXX' is unconnected for instance 'SignalGenerator' [C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/synth/system.v:1063]
-WARNING: [Synth 8-7071] port 'dac_dat_o' of module 'SignalGenerator_imp_XB4TXX' is unconnected for instance 'SignalGenerator' [C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/synth/system.v:1063]
-WARNING: [Synth 8-7071] port 'dac_rst_o' of module 'SignalGenerator_imp_XB4TXX' is unconnected for instance 'SignalGenerator' [C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/synth/system.v:1063]
-WARNING: [Synth 8-7071] port 'dac_sel_o' of module 'SignalGenerator_imp_XB4TXX' is unconnected for instance 'SignalGenerator' [C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/synth/system.v:1063]
-WARNING: [Synth 8-7071] port 'dac_wrt_o' of module 'SignalGenerator_imp_XB4TXX' is unconnected for instance 'SignalGenerator' [C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/synth/system.v:1063]
-WARNING: [Synth 8-7023] instance 'SignalGenerator' of module 'SignalGenerator_imp_XB4TXX' has 7 connections declared, but only 2 given [C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/synth/system.v:1063]
 INFO: [Synth 8-638] synthesizing module 'system_axi_gpio_0_0' [c:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ip/system_axi_gpio_0_0/synth/system_axi_gpio_0_0.vhd:89]
 	Parameter C_FAMILY bound to: zynq - type: string 
 	Parameter C_S_AXI_ADDR_WIDTH bound to: 9 - type: integer 
@@ -1319,29 +1150,29 @@ INFO: [Synth 8-638] synthesizing module 'pselect_f' [c:/Users/elias/dev/ba/firmw
 	Parameter C_AW bound to: 2 - type: integer 
 	Parameter C_BAR bound to: 2'b00 
 	Parameter C_FAMILY bound to: nofamily - type: string 
-INFO: [Synth 8-256] done synthesizing module 'pselect_f' (67#1) [c:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ipshared/66ea/hdl/axi_lite_ipif_v3_0_vh_rfs.vhd:1534]
+INFO: [Synth 8-256] done synthesizing module 'pselect_f' (46#1) [c:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ipshared/66ea/hdl/axi_lite_ipif_v3_0_vh_rfs.vhd:1534]
 INFO: [Synth 8-638] synthesizing module 'pselect_f__parameterized0' [c:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ipshared/66ea/hdl/axi_lite_ipif_v3_0_vh_rfs.vhd:1534]
 	Parameter C_AB bound to: 2 - type: integer 
 	Parameter C_AW bound to: 2 - type: integer 
 	Parameter C_BAR bound to: 2'b01 
 	Parameter C_FAMILY bound to: nofamily - type: string 
-INFO: [Synth 8-256] done synthesizing module 'pselect_f__parameterized0' (67#1) [c:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ipshared/66ea/hdl/axi_lite_ipif_v3_0_vh_rfs.vhd:1534]
+INFO: [Synth 8-256] done synthesizing module 'pselect_f__parameterized0' (46#1) [c:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ipshared/66ea/hdl/axi_lite_ipif_v3_0_vh_rfs.vhd:1534]
 INFO: [Synth 8-638] synthesizing module 'pselect_f__parameterized1' [c:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ipshared/66ea/hdl/axi_lite_ipif_v3_0_vh_rfs.vhd:1534]
 	Parameter C_AB bound to: 2 - type: integer 
 	Parameter C_AW bound to: 2 - type: integer 
 	Parameter C_BAR bound to: 2'b10 
 	Parameter C_FAMILY bound to: nofamily - type: string 
-INFO: [Synth 8-256] done synthesizing module 'pselect_f__parameterized1' (67#1) [c:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ipshared/66ea/hdl/axi_lite_ipif_v3_0_vh_rfs.vhd:1534]
+INFO: [Synth 8-256] done synthesizing module 'pselect_f__parameterized1' (46#1) [c:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ipshared/66ea/hdl/axi_lite_ipif_v3_0_vh_rfs.vhd:1534]
 INFO: [Synth 8-638] synthesizing module 'pselect_f__parameterized2' [c:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ipshared/66ea/hdl/axi_lite_ipif_v3_0_vh_rfs.vhd:1534]
 	Parameter C_AB bound to: 2 - type: integer 
 	Parameter C_AW bound to: 2 - type: integer 
 	Parameter C_BAR bound to: 2'b11 
 	Parameter C_FAMILY bound to: nofamily - type: string 
-INFO: [Synth 8-256] done synthesizing module 'pselect_f__parameterized2' (67#1) [c:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ipshared/66ea/hdl/axi_lite_ipif_v3_0_vh_rfs.vhd:1534]
-INFO: [Synth 8-256] done synthesizing module 'address_decoder' (68#1) [c:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ipshared/66ea/hdl/axi_lite_ipif_v3_0_vh_rfs.vhd:1775]
+INFO: [Synth 8-256] done synthesizing module 'pselect_f__parameterized2' (46#1) [c:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ipshared/66ea/hdl/axi_lite_ipif_v3_0_vh_rfs.vhd:1534]
+INFO: [Synth 8-256] done synthesizing module 'address_decoder' (47#1) [c:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ipshared/66ea/hdl/axi_lite_ipif_v3_0_vh_rfs.vhd:1775]
 INFO: [Synth 8-226] default block is never used [c:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ipshared/66ea/hdl/axi_lite_ipif_v3_0_vh_rfs.vhd:2550]
-INFO: [Synth 8-256] done synthesizing module 'slave_attachment' (69#1) [c:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ipshared/66ea/hdl/axi_lite_ipif_v3_0_vh_rfs.vhd:2341]
-INFO: [Synth 8-256] done synthesizing module 'axi_lite_ipif' (70#1) [c:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ipshared/66ea/hdl/axi_lite_ipif_v3_0_vh_rfs.vhd:2948]
+INFO: [Synth 8-256] done synthesizing module 'slave_attachment' (48#1) [c:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ipshared/66ea/hdl/axi_lite_ipif_v3_0_vh_rfs.vhd:2341]
+INFO: [Synth 8-256] done synthesizing module 'axi_lite_ipif' (49#1) [c:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ipshared/66ea/hdl/axi_lite_ipif_v3_0_vh_rfs.vhd:2948]
 INFO: [Synth 8-638] synthesizing module 'GPIO_Core' [c:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ipshared/bb35/hdl/axi_gpio_v2_0_vh_rfs.vhd:178]
 	Parameter C_DW bound to: 32 - type: integer 
 	Parameter C_AW bound to: 9 - type: integer 
@@ -1649,48 +1480,98 @@ INFO: [Common 17-14] Message 'Synth 8-113' appears 100 times and further instanc
 	Parameter INIT bound to: 1'b0 
 	Parameter INIT bound to: 1'b0 
 	Parameter INIT bound to: 1'b0 
-INFO: [Synth 8-256] done synthesizing module 'cdc_sync__parameterized0' (70#1) [c:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ipshared/ef1e/hdl/lib_cdc_v1_0_rfs.vhd:106]
-INFO: [Synth 8-256] done synthesizing module 'GPIO_Core' (71#1) [c:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ipshared/bb35/hdl/axi_gpio_v2_0_vh_rfs.vhd:178]
-INFO: [Synth 8-256] done synthesizing module 'axi_gpio' (72#1) [c:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ipshared/bb35/hdl/axi_gpio_v2_0_vh_rfs.vhd:1351]
-INFO: [Synth 8-256] done synthesizing module 'system_axi_gpio_0_0' (73#1) [c:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ip/system_axi_gpio_0_0/synth/system_axi_gpio_0_0.vhd:89]
-WARNING: [Synth 8-7071] port 'gpio_io_o' of module 'system_axi_gpio_0_0' is unconnected for instance 'axi_gpio_0' [C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/synth/system.v:1066]
-WARNING: [Synth 8-7071] port 'gpio_io_t' of module 'system_axi_gpio_0_0' is unconnected for instance 'axi_gpio_0' [C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/synth/system.v:1066]
-WARNING: [Synth 8-7071] port 'gpio2_io_t' of module 'system_axi_gpio_0_0' is unconnected for instance 'axi_gpio_0' [C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/synth/system.v:1066]
-WARNING: [Synth 8-7023] instance 'axi_gpio_0' of module 'system_axi_gpio_0_0' has 25 connections declared, but only 22 given [C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/synth/system.v:1066]
+INFO: [Synth 8-256] done synthesizing module 'cdc_sync__parameterized0' (49#1) [c:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ipshared/ef1e/hdl/lib_cdc_v1_0_rfs.vhd:106]
+INFO: [Synth 8-256] done synthesizing module 'GPIO_Core' (50#1) [c:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ipshared/bb35/hdl/axi_gpio_v2_0_vh_rfs.vhd:178]
+INFO: [Synth 8-256] done synthesizing module 'axi_gpio' (51#1) [c:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ipshared/bb35/hdl/axi_gpio_v2_0_vh_rfs.vhd:1351]
+INFO: [Synth 8-256] done synthesizing module 'system_axi_gpio_0_0' (52#1) [c:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ip/system_axi_gpio_0_0/synth/system_axi_gpio_0_0.vhd:89]
+WARNING: [Synth 8-7071] port 'gpio_io_o' of module 'system_axi_gpio_0_0' is unconnected for instance 'axi_gpio_0' [C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/synth/system.v:991]
+WARNING: [Synth 8-7071] port 'gpio_io_t' of module 'system_axi_gpio_0_0' is unconnected for instance 'axi_gpio_0' [C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/synth/system.v:991]
+WARNING: [Synth 8-7071] port 'gpio2_io_t' of module 'system_axi_gpio_0_0' is unconnected for instance 'axi_gpio_0' [C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/synth/system.v:991]
+WARNING: [Synth 8-7023] instance 'axi_gpio_0' of module 'system_axi_gpio_0_0' has 25 connections declared, but only 22 given [C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/synth/system.v:991]
 INFO: [Synth 8-6157] synthesizing module 'system_axis_red_pitaya_dac_0_1' [c:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ip/system_axis_red_pitaya_dac_0_1/synth/system_axis_red_pitaya_dac_0_1.v:57]
-INFO: [Synth 8-6155] done synthesizing module 'system_axis_red_pitaya_dac_0_1' (74#1) [c:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ip/system_axis_red_pitaya_dac_0_1/synth/system_axis_red_pitaya_dac_0_1.v:57]
-WARNING: [Synth 8-7071] port 's_axis_tready' of module 'system_axis_red_pitaya_dac_0_1' is unconnected for instance 'axis_red_pitaya_dac_0' [C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/synth/system.v:1089]
-WARNING: [Synth 8-7023] instance 'axis_red_pitaya_dac_0' of module 'system_axis_red_pitaya_dac_0_1' has 11 connections declared, but only 10 given [C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/synth/system.v:1089]
+INFO: [Synth 8-6157] synthesizing module 'axis_red_pitaya_dac' [c:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ipshared/8b85/src/axis_red_pitaya_dac.v:4]
+	Parameter DAC_DATA_WIDTH bound to: 14 - type: integer 
+	Parameter AXIS_TDATA_WIDTH bound to: 32 - type: integer 
+INFO: [Synth 8-6157] synthesizing module 'ODDR' [C:/Xilinx/Vivado/2020.1/scripts/rt/data/unisim_comp.v:49784]
+	Parameter DDR_CLK_EDGE bound to: OPPOSITE_EDGE - type: string 
+	Parameter INIT bound to: 1'b0 
+	Parameter IS_C_INVERTED bound to: 1'b0 
+	Parameter IS_D1_INVERTED bound to: 1'b0 
+	Parameter IS_D2_INVERTED bound to: 1'b0 
+	Parameter SRTYPE bound to: SYNC - type: string 
+INFO: [Synth 8-6155] done synthesizing module 'ODDR' (53#1) [C:/Xilinx/Vivado/2020.1/scripts/rt/data/unisim_comp.v:49784]
+INFO: [Synth 8-6155] done synthesizing module 'axis_red_pitaya_dac' (54#1) [c:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ipshared/8b85/src/axis_red_pitaya_dac.v:4]
+INFO: [Synth 8-6155] done synthesizing module 'system_axis_red_pitaya_dac_0_1' (55#1) [c:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ip/system_axis_red_pitaya_dac_0_1/synth/system_axis_red_pitaya_dac_0_1.v:57]
+WARNING: [Synth 8-7071] port 's_axis_tready' of module 'system_axis_red_pitaya_dac_0_1' is unconnected for instance 'axis_red_pitaya_dac_0' [C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/synth/system.v:1014]
+WARNING: [Synth 8-7023] instance 'axis_red_pitaya_dac_0' of module 'system_axis_red_pitaya_dac_0_1' has 11 connections declared, but only 10 given [C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/synth/system.v:1014]
 INFO: [Synth 8-6157] synthesizing module 'system_clk_wiz_0_1' [c:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ip/system_clk_wiz_0_1/system_clk_wiz_0_1.v:70]
 INFO: [Synth 8-6157] synthesizing module 'system_clk_wiz_0_1_clk_wiz' [c:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ip/system_clk_wiz_0_1/system_clk_wiz_0_1_clk_wiz.v:68]
-INFO: [Synth 8-6155] done synthesizing module 'system_clk_wiz_0_1_clk_wiz' (75#1) [c:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ip/system_clk_wiz_0_1/system_clk_wiz_0_1_clk_wiz.v:68]
-INFO: [Synth 8-6155] done synthesizing module 'system_clk_wiz_0_1' (76#1) [c:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ip/system_clk_wiz_0_1/system_clk_wiz_0_1.v:70]
-INFO: [Synth 8-6157] synthesizing module 'system_freq_to_voltage_0_0' [c:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ip/system_freq_to_voltage_0_0_1/synth/system_freq_to_voltage_0_0.v:58]
-INFO: [Synth 8-6157] synthesizing module 'freq_to_voltage' [C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/new/freq_to_voltage.v:22]
-	Parameter FREQ_WIDTH bound to: 32 - type: integer 
-	Parameter DAC_WIDTH bound to: 14 - type: integer 
-	Parameter MAX_FREQ bound to: 62500000 - type: integer 
-	Parameter MIN_FREQ bound to: 1000 - type: integer 
-INFO: [Synth 8-6155] done synthesizing module 'freq_to_voltage' (77#1) [C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/new/freq_to_voltage.v:22]
-INFO: [Synth 8-6155] done synthesizing module 'system_freq_to_voltage_0_0' (78#1) [c:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ip/system_freq_to_voltage_0_0_1/synth/system_freq_to_voltage_0_0.v:58]
-INFO: [Synth 8-6157] synthesizing module 'system_signal_clipper_0_0' [c:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ip/system_signal_clipper_0_0/synth/system_signal_clipper_0_0.v:58]
-INFO: [Synth 8-6157] synthesizing module 'signal_clipper' [C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/new/signal_clipper.v:21]
-	Parameter DATA_WIDTH bound to: 14 - type: integer 
+INFO: [Synth 8-6157] synthesizing module 'IBUF' [C:/Xilinx/Vivado/2020.1/scripts/rt/data/unisim_comp.v:32977]
+	Parameter CAPACITANCE bound to: DONT_CARE - type: string 
+	Parameter IBUF_DELAY_VALUE bound to: 0 - type: string 
+	Parameter IBUF_LOW_PWR bound to: TRUE - type: string 
+	Parameter IFD_DELAY_VALUE bound to: AUTO - type: string 
+	Parameter IOSTANDARD bound to: DEFAULT - type: string 
+INFO: [Synth 8-6155] done synthesizing module 'IBUF' (56#1) [C:/Xilinx/Vivado/2020.1/scripts/rt/data/unisim_comp.v:32977]
+INFO: [Synth 8-6157] synthesizing module 'MMCME2_ADV' [C:/Xilinx/Vivado/2020.1/scripts/rt/data/unisim_comp.v:39994]
+	Parameter BANDWIDTH bound to: OPTIMIZED - type: string 
+	Parameter CLKFBOUT_MULT_F bound to: 8.000000 - type: double 
+	Parameter CLKFBOUT_PHASE bound to: 0.000000 - type: double 
+	Parameter CLKFBOUT_USE_FINE_PS bound to: FALSE - type: string 
+	Parameter CLKIN1_PERIOD bound to: 8.000000 - type: double 
+	Parameter CLKIN2_PERIOD bound to: 0.000000 - type: double 
+	Parameter CLKOUT0_DIVIDE_F bound to: 4.000000 - type: double 
+	Parameter CLKOUT0_DUTY_CYCLE bound to: 0.500000 - type: double 
+	Parameter CLKOUT0_PHASE bound to: 0.000000 - type: double 
+	Parameter CLKOUT0_USE_FINE_PS bound to: FALSE - type: string 
+	Parameter CLKOUT1_DIVIDE bound to: 1 - type: integer 
+	Parameter CLKOUT1_DUTY_CYCLE bound to: 0.500000 - type: double 
+	Parameter CLKOUT1_PHASE bound to: 0.000000 - type: double 
+	Parameter CLKOUT1_USE_FINE_PS bound to: FALSE - type: string 
+	Parameter CLKOUT2_DIVIDE bound to: 1 - type: integer 
+	Parameter CLKOUT2_DUTY_CYCLE bound to: 0.500000 - type: double 
+	Parameter CLKOUT2_PHASE bound to: 0.000000 - type: double 
+	Parameter CLKOUT2_USE_FINE_PS bound to: FALSE - type: string 
+	Parameter CLKOUT3_DIVIDE bound to: 1 - type: integer 
+	Parameter CLKOUT3_DUTY_CYCLE bound to: 0.500000 - type: double 
+	Parameter CLKOUT3_PHASE bound to: 0.000000 - type: double 
+	Parameter CLKOUT3_USE_FINE_PS bound to: FALSE - type: string 
+	Parameter CLKOUT4_CASCADE bound to: FALSE - type: string 
+	Parameter CLKOUT4_DIVIDE bound to: 1 - type: integer 
+	Parameter CLKOUT4_DUTY_CYCLE bound to: 0.500000 - type: double 
+	Parameter CLKOUT4_PHASE bound to: 0.000000 - type: double 
+	Parameter CLKOUT4_USE_FINE_PS bound to: FALSE - type: string 
+	Parameter CLKOUT5_DIVIDE bound to: 1 - type: integer 
+	Parameter CLKOUT5_DUTY_CYCLE bound to: 0.500000 - type: double 
+	Parameter CLKOUT5_PHASE bound to: 0.000000 - type: double 
+	Parameter CLKOUT5_USE_FINE_PS bound to: FALSE - type: string 
+	Parameter CLKOUT6_DIVIDE bound to: 1 - type: integer 
+	Parameter CLKOUT6_DUTY_CYCLE bound to: 0.500000 - type: double 
+	Parameter CLKOUT6_PHASE bound to: 0.000000 - type: double 
+	Parameter CLKOUT6_USE_FINE_PS bound to: FALSE - type: string 
+	Parameter COMPENSATION bound to: ZHOLD - type: string 
+	Parameter DIVCLK_DIVIDE bound to: 1 - type: integer 
+	Parameter IS_CLKINSEL_INVERTED bound to: 1'b0 
+	Parameter IS_PSEN_INVERTED bound to: 1'b0 
+	Parameter IS_PSINCDEC_INVERTED bound to: 1'b0 
+	Parameter IS_PWRDWN_INVERTED bound to: 1'b0 
+	Parameter IS_RST_INVERTED bound to: 1'b0 
+	Parameter REF_JITTER1 bound to: 0.010000 - type: double 
+	Parameter REF_JITTER2 bound to: 0.010000 - type: double 
+	Parameter SS_EN bound to: FALSE - type: string 
+	Parameter SS_MODE bound to: CENTER_HIGH - type: string 
+	Parameter SS_MOD_PERIOD bound to: 10000 - type: integer 
+	Parameter STARTUP_WAIT bound to: FALSE - type: string 
+INFO: [Synth 8-6155] done synthesizing module 'MMCME2_ADV' (57#1) [C:/Xilinx/Vivado/2020.1/scripts/rt/data/unisim_comp.v:39994]
+INFO: [Synth 8-6155] done synthesizing module 'system_clk_wiz_0_1_clk_wiz' (58#1) [c:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ip/system_clk_wiz_0_1/system_clk_wiz_0_1_clk_wiz.v:68]
+INFO: [Synth 8-6155] done synthesizing module 'system_clk_wiz_0_1' (59#1) [c:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ip/system_clk_wiz_0_1/system_clk_wiz_0_1.v:70]
+INFO: [Synth 8-6157] synthesizing module 'system_signal_merge_0_0' [c:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ip/system_signal_merge_0_0/synth/system_signal_merge_0_0.v:58]
+INFO: [Synth 8-6157] synthesizing module 'signal_merge' [C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/new/signal_merge.v:33]
+	Parameter ADC_DATA_WIDTH bound to: 16 - type: integer 
 	Parameter AXIS_TDATA_WIDTH bound to: 32 - type: integer 
-	Parameter LIMIT_VALUE bound to: 300 - type: integer 
-INFO: [Synth 8-6155] done synthesizing module 'signal_clipper' (79#1) [C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/new/signal_clipper.v:21]
-INFO: [Synth 8-6155] done synthesizing module 'system_signal_clipper_0_0' (80#1) [c:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ip/system_signal_clipper_0_0/synth/system_signal_clipper_0_0.v:58]
-WARNING: [Synth 8-4446] all outputs are unconnected for this instance and logic may be removed [C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/synth/system.v:1115]
-INFO: [Synth 8-6157] synthesizing module 'system_signal_decoder_0_0' [c:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ip/system_signal_decoder_0_0/synth/system_signal_decoder_0_0.v:58]
-INFO: [Synth 8-6157] synthesizing module 'signal_decoder' [C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/imports/fpga/signal_decoder.v:23]
-	Parameter ADC_WIDTH bound to: 14 - type: integer 
-	Parameter AXIS_TDATA_WIDTH bound to: 32 - type: integer 
-	Parameter BIT_OFFSET bound to: 0 - type: integer 
-INFO: [Synth 8-226] default block is never used [C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/imports/fpga/signal_decoder.v:45]
-INFO: [Synth 8-6155] done synthesizing module 'signal_decoder' (81#1) [C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/imports/fpga/signal_decoder.v:23]
-INFO: [Synth 8-6155] done synthesizing module 'system_signal_decoder_0_0' (82#1) [c:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ip/system_signal_decoder_0_0/synth/system_signal_decoder_0_0.v:58]
-WARNING: [Synth 8-7071] port 'led_out' of module 'system_signal_decoder_0_0' is unconnected for instance 'signal_decoder_0' [C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/synth/system.v:1115]
-WARNING: [Synth 8-7023] instance 'signal_decoder_0' of module 'system_signal_decoder_0_0' has 5 connections declared, but only 4 given [C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/synth/system.v:1115]
+	Parameter CONST_8191 bound to: 16'b0001111111111111 
+INFO: [Synth 8-6155] done synthesizing module 'signal_merge' (60#1) [C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/new/signal_merge.v:33]
+INFO: [Synth 8-6155] done synthesizing module 'system_signal_merge_0_0' (61#1) [c:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ip/system_signal_merge_0_0/synth/system_signal_merge_0_0.v:58]
 INFO: [Synth 8-638] synthesizing module 'system_util_ds_buf_1_0' [c:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ip/system_util_ds_buf_1_0/synth/system_util_ds_buf_1_0.vhd:64]
 	Parameter C_BUF_TYPE bound to: IBUFDS - type: string 
 	Parameter C_SIZE bound to: 2 - type: integer 
@@ -1722,8 +1603,8 @@ INFO: [Synth 8-638] synthesizing module 'util_ds_buf' [c:/Users/elias/dev/ba/fir
 	Parameter IBUF_LOW_PWR bound to: 1 - type: bool 
 	Parameter IFD_DELAY_VALUE bound to: AUTO - type: string 
 	Parameter IOSTANDARD bound to: DEFAULT - type: string 
-INFO: [Synth 8-256] done synthesizing module 'util_ds_buf' (83#1) [c:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ip/system_util_ds_buf_1_0/util_ds_buf.vhd:219]
-INFO: [Synth 8-256] done synthesizing module 'system_util_ds_buf_1_0' (84#1) [c:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ip/system_util_ds_buf_1_0/synth/system_util_ds_buf_1_0.vhd:64]
+INFO: [Synth 8-256] done synthesizing module 'util_ds_buf' (62#1) [c:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ip/system_util_ds_buf_1_0/util_ds_buf.vhd:219]
+INFO: [Synth 8-256] done synthesizing module 'system_util_ds_buf_1_0' (63#1) [c:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ip/system_util_ds_buf_1_0/synth/system_util_ds_buf_1_0.vhd:64]
 INFO: [Synth 8-638] synthesizing module 'system_util_ds_buf_2_0' [c:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ip/system_util_ds_buf_2_0/synth/system_util_ds_buf_2_0.vhd:64]
 	Parameter C_BUF_TYPE bound to: OBUFDS - type: string 
 	Parameter C_SIZE bound to: 2 - type: integer 
@@ -1747,37 +1628,30 @@ INFO: [Synth 8-638] synthesizing module 'util_ds_buf__parameterized1' [c:/Users/
 	Parameter CAPACITANCE bound to: DONT_CARE - type: string 
 	Parameter IOSTANDARD bound to: DEFAULT - type: string 
 	Parameter SLEW bound to: SLOW - type: string 
-INFO: [Synth 8-256] done synthesizing module 'util_ds_buf__parameterized1' (84#1) [c:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ip/system_util_ds_buf_1_0/util_ds_buf.vhd:219]
-INFO: [Synth 8-256] done synthesizing module 'system_util_ds_buf_2_0' (85#1) [c:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ip/system_util_ds_buf_2_0/synth/system_util_ds_buf_2_0.vhd:64]
+INFO: [Synth 8-256] done synthesizing module 'util_ds_buf__parameterized1' (63#1) [c:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ip/system_util_ds_buf_1_0/util_ds_buf.vhd:219]
+INFO: [Synth 8-256] done synthesizing module 'system_util_ds_buf_2_0' (64#1) [c:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ip/system_util_ds_buf_2_0/synth/system_util_ds_buf_2_0.vhd:64]
 INFO: [Synth 8-6157] synthesizing module 'system_xlconstant_0_0' [c:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ip/system_xlconstant_0_0/synth/system_xlconstant_0_0.v:57]
 INFO: [Synth 8-6157] synthesizing module 'xlconstant_v1_1_7_xlconstant' [c:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ipshared/fcfc/hdl/xlconstant_v1_1_vl_rfs.v:23]
 	Parameter CONST_VAL bound to: 1 - type: integer 
 	Parameter CONST_WIDTH bound to: 1 - type: integer 
-INFO: [Synth 8-6155] done synthesizing module 'xlconstant_v1_1_7_xlconstant' (86#1) [c:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ipshared/fcfc/hdl/xlconstant_v1_1_vl_rfs.v:23]
-INFO: [Synth 8-6155] done synthesizing module 'system_xlconstant_0_0' (87#1) [c:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ip/system_xlconstant_0_0/synth/system_xlconstant_0_0.v:57]
-INFO: [Synth 8-6157] synthesizing module 'system_xlslice_0_2' [c:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ip/system_xlslice_0_2/synth/system_xlslice_0_2.v:57]
-INFO: [Synth 8-6157] synthesizing module 'xlslice_v1_0_2_xlslice__parameterized1' [c:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ipshared/11d0/hdl/xlslice_v1_0_vl_rfs.v:13]
-	Parameter DIN_WIDTH bound to: 14 - type: integer 
-	Parameter DIN_FROM bound to: 7 - type: integer 
-	Parameter DIN_TO bound to: 0 - type: integer 
-INFO: [Synth 8-6155] done synthesizing module 'xlslice_v1_0_2_xlslice__parameterized1' (87#1) [c:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ipshared/11d0/hdl/xlslice_v1_0_vl_rfs.v:13]
-INFO: [Synth 8-6155] done synthesizing module 'system_xlslice_0_2' (88#1) [c:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ip/system_xlslice_0_2/synth/system_xlslice_0_2.v:57]
-INFO: [Synth 8-6155] done synthesizing module 'system' (89#1) [C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/synth/system.v:835]
-INFO: [Synth 8-6155] done synthesizing module 'system_wrapper' (90#1) [C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/hdl/system_wrapper.v:12]
+INFO: [Synth 8-6155] done synthesizing module 'xlconstant_v1_1_7_xlconstant' (65#1) [c:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ipshared/fcfc/hdl/xlconstant_v1_1_vl_rfs.v:23]
+INFO: [Synth 8-6155] done synthesizing module 'system_xlconstant_0_0' (66#1) [c:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ip/system_xlconstant_0_0/synth/system_xlconstant_0_0.v:57]
+INFO: [Synth 8-6155] done synthesizing module 'system' (67#1) [C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/synth/system.v:766]
+INFO: [Synth 8-6155] done synthesizing module 'system_wrapper' (68#1) [C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/hdl/system_wrapper.v:12]
 ---------------------------------------------------------------------------------
-Finished RTL Elaboration : Time (s): cpu = 00:00:08 ; elapsed = 00:00:09 . Memory (MB): peak = 1063.004 ; gain = 31.285
+Finished RTL Elaboration : Time (s): cpu = 00:00:06 ; elapsed = 00:00:07 . Memory (MB): peak = 1031.246 ; gain = 0.000
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Handling Custom Attributes
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Handling Custom Attributes : Time (s): cpu = 00:00:09 ; elapsed = 00:00:09 . Memory (MB): peak = 1063.004 ; gain = 31.285
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:06 ; elapsed = 00:00:08 . Memory (MB): peak = 1031.246 ; gain = 0.000
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:09 ; elapsed = 00:00:09 . Memory (MB): peak = 1063.004 ; gain = 31.285
+Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:06 ; elapsed = 00:00:08 . Memory (MB): peak = 1031.246 ; gain = 0.000
 ---------------------------------------------------------------------------------
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.057 . Memory (MB): peak = 1063.004 ; gain = 0.000
-INFO: [Netlist 29-17] Analyzing 440 Unisim elements for replacement
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.049 . Memory (MB): peak = 1032.910 ; gain = 0.000
+INFO: [Netlist 29-17] Analyzing 421 Unisim elements for replacement
 INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
 INFO: [Project 1-570] Preparing netlist for logic optimization
 
@@ -1795,12 +1669,6 @@ Parsing XDC File [c:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources
 Finished Parsing XDC File [c:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ip/system_axi_gpio_0_0/system_axi_gpio_0_0_board.xdc] for cell 'system_i/axi_gpio_0/U0'
 Parsing XDC File [c:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ip/system_axi_gpio_0_0/system_axi_gpio_0_0.xdc] for cell 'system_i/axi_gpio_0/U0'
 Finished Parsing XDC File [c:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ip/system_axi_gpio_0_0/system_axi_gpio_0_0.xdc] for cell 'system_i/axi_gpio_0/U0'
-Parsing XDC File [c:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ip/system_clk_wiz_0_0/system_clk_wiz_0_0_board.xdc] for cell 'system_i/SignalGenerator/clk_wiz_0/inst'
-Finished Parsing XDC File [c:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ip/system_clk_wiz_0_0/system_clk_wiz_0_0_board.xdc] for cell 'system_i/SignalGenerator/clk_wiz_0/inst'
-Parsing XDC File [c:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ip/system_clk_wiz_0_0/system_clk_wiz_0_0.xdc] for cell 'system_i/SignalGenerator/clk_wiz_0/inst'
-Finished Parsing XDC File [c:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ip/system_clk_wiz_0_0/system_clk_wiz_0_0.xdc] for cell 'system_i/SignalGenerator/clk_wiz_0/inst'
-INFO: [Project 1-236] Implementation specific constraints were found while reading constraint file [c:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ip/system_clk_wiz_0_0/system_clk_wiz_0_0.xdc]. These constraints will be ignored for synthesis but will be used in implementation. Impacted constraints are listed in the file [.Xil/system_wrapper_propImpl.xdc].
-Resolution: To avoid this warning, move constraints listed in [.Xil/system_wrapper_propImpl.xdc] to another XDC file and exclude this new file from synthesis with the used_in_synthesis property (File Properties dialog in GUI) and re-run elaboration/synthesis.
 Parsing XDC File [c:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ip/system_rst_ps7_0_125M_0/system_rst_ps7_0_125M_0_board.xdc] for cell 'system_i/PS7/rst_ps7_0_125M/U0'
 Finished Parsing XDC File [c:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ip/system_rst_ps7_0_125M_0/system_rst_ps7_0_125M_0_board.xdc] for cell 'system_i/PS7/rst_ps7_0_125M/U0'
 Parsing XDC File [c:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ip/system_rst_ps7_0_125M_0/system_rst_ps7_0_125M_0.xdc] for cell 'system_i/PS7/rst_ps7_0_125M/U0'
@@ -1816,38 +1684,99 @@ Parsing XDC File [C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/constrs
 Finished Parsing XDC File [C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/constrs_1/imports/cfg/clocks.xdc]
 Parsing XDC File [C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/constrs_1/imports/cfg/ports.xdc]
 WARNING: [Vivado 12-584] No ports matched 'Vp_Vn_v_p'. [C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/constrs_1/imports/cfg/ports.xdc:123]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/constrs_1/imports/cfg/ports.xdc:123]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
 WARNING: [Vivado 12-584] No ports matched 'Vp_Vn_v_n'. [C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/constrs_1/imports/cfg/ports.xdc:124]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/constrs_1/imports/cfg/ports.xdc:124]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
 WARNING: [Vivado 12-584] No ports matched 'Vaux0_v_p'. [C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/constrs_1/imports/cfg/ports.xdc:125]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/constrs_1/imports/cfg/ports.xdc:125]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
 WARNING: [Vivado 12-584] No ports matched 'Vaux0_v_n'. [C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/constrs_1/imports/cfg/ports.xdc:126]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/constrs_1/imports/cfg/ports.xdc:126]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
 WARNING: [Vivado 12-584] No ports matched 'Vaux1_v_p'. [C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/constrs_1/imports/cfg/ports.xdc:127]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/constrs_1/imports/cfg/ports.xdc:127]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
 WARNING: [Vivado 12-584] No ports matched 'Vaux1_v_n'. [C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/constrs_1/imports/cfg/ports.xdc:128]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/constrs_1/imports/cfg/ports.xdc:128]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
 WARNING: [Vivado 12-584] No ports matched 'Vaux8_v_p'. [C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/constrs_1/imports/cfg/ports.xdc:129]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/constrs_1/imports/cfg/ports.xdc:129]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
 WARNING: [Vivado 12-584] No ports matched 'Vaux8_v_n'. [C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/constrs_1/imports/cfg/ports.xdc:130]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/constrs_1/imports/cfg/ports.xdc:130]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
 WARNING: [Vivado 12-584] No ports matched 'Vaux9_v_p'. [C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/constrs_1/imports/cfg/ports.xdc:131]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/constrs_1/imports/cfg/ports.xdc:131]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
 WARNING: [Vivado 12-584] No ports matched 'Vaux9_v_n'. [C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/constrs_1/imports/cfg/ports.xdc:132]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/constrs_1/imports/cfg/ports.xdc:132]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
 WARNING: [Vivado 12-584] No ports matched 'Vp_Vn_v_p'. [C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/constrs_1/imports/cfg/ports.xdc:134]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/constrs_1/imports/cfg/ports.xdc:134]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
 WARNING: [Vivado 12-584] No ports matched 'Vp_Vn_v_n'. [C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/constrs_1/imports/cfg/ports.xdc:135]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/constrs_1/imports/cfg/ports.xdc:135]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
 WARNING: [Vivado 12-584] No ports matched 'Vaux0_v_p'. [C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/constrs_1/imports/cfg/ports.xdc:136]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/constrs_1/imports/cfg/ports.xdc:136]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
 WARNING: [Vivado 12-584] No ports matched 'Vaux0_v_n'. [C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/constrs_1/imports/cfg/ports.xdc:137]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/constrs_1/imports/cfg/ports.xdc:137]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
 WARNING: [Vivado 12-584] No ports matched 'Vaux1_v_p'. [C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/constrs_1/imports/cfg/ports.xdc:138]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/constrs_1/imports/cfg/ports.xdc:138]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
 WARNING: [Vivado 12-584] No ports matched 'Vaux1_v_n'. [C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/constrs_1/imports/cfg/ports.xdc:139]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/constrs_1/imports/cfg/ports.xdc:139]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
 WARNING: [Vivado 12-584] No ports matched 'Vaux8_v_p'. [C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/constrs_1/imports/cfg/ports.xdc:140]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/constrs_1/imports/cfg/ports.xdc:140]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
 WARNING: [Vivado 12-584] No ports matched 'Vaux8_v_n'. [C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/constrs_1/imports/cfg/ports.xdc:141]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/constrs_1/imports/cfg/ports.xdc:141]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
 WARNING: [Vivado 12-584] No ports matched 'Vaux9_v_p'. [C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/constrs_1/imports/cfg/ports.xdc:142]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/constrs_1/imports/cfg/ports.xdc:142]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
 WARNING: [Vivado 12-584] No ports matched 'Vaux9_v_n'. [C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/constrs_1/imports/cfg/ports.xdc:143]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/constrs_1/imports/cfg/ports.xdc:143]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
 WARNING: [Vivado 12-584] No ports matched 'exp_p_trg'. [C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/constrs_1/imports/cfg/ports.xdc:173]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/constrs_1/imports/cfg/ports.xdc:173]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
 WARNING: [Vivado 12-584] No ports matched 'exp_p_trg'. [C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/constrs_1/imports/cfg/ports.xdc:174]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/constrs_1/imports/cfg/ports.xdc:174]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
 WARNING: [Vivado 12-584] No ports matched 'exp_p_trg'. [C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/constrs_1/imports/cfg/ports.xdc:175]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/constrs_1/imports/cfg/ports.xdc:175]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
 WARNING: [Vivado 12-584] No ports matched 'exp_p_trg'. [C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/constrs_1/imports/cfg/ports.xdc:177]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/constrs_1/imports/cfg/ports.xdc:177]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
 WARNING: [Vivado 12-584] No ports matched 'exp_n_alex[*]'. [C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/constrs_1/imports/cfg/ports.xdc:179]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/constrs_1/imports/cfg/ports.xdc:179]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
 WARNING: [Vivado 12-584] No ports matched 'exp_n_alex[*]'. [C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/constrs_1/imports/cfg/ports.xdc:180]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/constrs_1/imports/cfg/ports.xdc:180]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
 WARNING: [Vivado 12-584] No ports matched 'exp_n_alex[*]'. [C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/constrs_1/imports/cfg/ports.xdc:181]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/constrs_1/imports/cfg/ports.xdc:181]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
 WARNING: [Vivado 12-584] No ports matched 'exp_n_alex[0]'. [C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/constrs_1/imports/cfg/ports.xdc:183]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/constrs_1/imports/cfg/ports.xdc:183]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
 WARNING: [Vivado 12-584] No ports matched 'exp_n_alex[1]'. [C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/constrs_1/imports/cfg/ports.xdc:184]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/constrs_1/imports/cfg/ports.xdc:184]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
 WARNING: [Vivado 12-584] No ports matched 'exp_n_alex[2]'. [C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/constrs_1/imports/cfg/ports.xdc:185]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/constrs_1/imports/cfg/ports.xdc:185]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
 WARNING: [Vivado 12-584] No ports matched 'exp_n_alex[3]'. [C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/constrs_1/imports/cfg/ports.xdc:186]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/constrs_1/imports/cfg/ports.xdc:186]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
 Finished Parsing XDC File [C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/constrs_1/imports/cfg/ports.xdc]
-WARNING: [Project 1-498] One or more constraints failed evaluation while reading constraint file [C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/constrs_1/imports/cfg/ports.xdc] and the design contains unresolved black boxes. These constraints will be read post-synthesis (as long as their source constraint file is marked as used_in_implementation) and should be applied correctly then. You should review the constraints listed in the file [.Xil/system_wrapper_propImpl.xdc] and check the run log file to verify that these constraints were correctly applied.
 INFO: [Project 1-236] Implementation specific constraints were found while reading constraint file [C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/constrs_1/imports/cfg/ports.xdc]. These constraints will be ignored for synthesis but will be used in implementation. Impacted constraints are listed in the file [.Xil/system_wrapper_propImpl.xdc].
 Resolution: To avoid this warning, move constraints listed in [.Xil/system_wrapper_propImpl.xdc] to another XDC file and exclude this new file from synthesis with the used_in_synthesis property (File Properties dialog in GUI) and re-run elaboration/synthesis.
 Parsing XDC File [C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.runs/synth_1/dont_touch.xdc]
@@ -1856,7 +1785,7 @@ INFO: [Project 1-236] Implementation specific constraints were found while readi
 Resolution: To avoid this warning, move constraints listed in [.Xil/system_wrapper_propImpl.xdc] to another XDC file and exclude this new file from synthesis with the used_in_synthesis property (File Properties dialog in GUI) and re-run elaboration/synthesis.
 Completed Processing XDC Constraints
 
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.001 . Memory (MB): peak = 1097.770 ; gain = 0.000
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.001 . Memory (MB): peak = 1131.730 ; gain = 0.000
 INFO: [Project 1-111] Unisim Transformation Summary:
   A total of 400 instances were transformed.
   FDR => FDRE: 396 instances
@@ -1864,59 +1793,48 @@ INFO: [Project 1-111] Unisim Transformation Summary:
   OBUFDS => OBUFDS_DUAL_BUF (INV, OBUFDS(x2)): 2 instances
   SRL16 => SRL16E: 1 instance 
 
-Constraint Validation Runtime : Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.023 . Memory (MB): peak = 1097.770 ; gain = 0.000
+Constraint Validation Runtime : Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.018 . Memory (MB): peak = 1131.730 ; gain = 0.000
 ---------------------------------------------------------------------------------
-Finished Constraint Validation : Time (s): cpu = 00:00:12 ; elapsed = 00:00:13 . Memory (MB): peak = 1097.770 ; gain = 66.051
+Finished Constraint Validation : Time (s): cpu = 00:00:10 ; elapsed = 00:00:11 . Memory (MB): peak = 1131.730 ; gain = 100.484
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Loading Part and Timing Information
 ---------------------------------------------------------------------------------
 Loading part: xc7z010clg400-1
 ---------------------------------------------------------------------------------
-Finished Loading Part and Timing Information : Time (s): cpu = 00:00:12 ; elapsed = 00:00:13 . Memory (MB): peak = 1097.770 ; gain = 66.051
+Finished Loading Part and Timing Information : Time (s): cpu = 00:00:10 ; elapsed = 00:00:11 . Memory (MB): peak = 1131.730 ; gain = 100.484
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Applying 'set_property' XDC Constraints
 ---------------------------------------------------------------------------------
-Applied set_property DONT_TOUCH = true for system_i/PS7/processing_system7_0/inst. (constraint file  C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.runs/synth_1/dont_touch.xdc, line 84).
-Applied set_property DONT_TOUCH = true for system_i/util_ds_buf_1/U0. (constraint file  C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.runs/synth_1/dont_touch.xdc, line 87).
-Applied set_property DONT_TOUCH = true for system_i/util_ds_buf_2/U0. (constraint file  C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.runs/synth_1/dont_touch.xdc, line 92).
-Applied set_property DONT_TOUCH = true for system_i/axi_gpio_0/U0. (constraint file  C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.runs/synth_1/dont_touch.xdc, line 97).
-Applied set_property DONT_TOUCH = true for system_i/SignalGenerator/clk_wiz_0/inst. (constraint file  C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.runs/synth_1/dont_touch.xdc, line 105).
-Applied set_property DONT_TOUCH = true for system_i/PS7/rst_ps7_0_125M/U0. (constraint file  C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.runs/synth_1/dont_touch.xdc, line 113).
-Applied set_property DONT_TOUCH = true for system_i/clk_wiz_0/inst. (constraint file  C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.runs/synth_1/dont_touch.xdc, line 119).
+Applied set_property DONT_TOUCH = true for system_i/PS7/processing_system7_0/inst. (constraint file  C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.runs/synth_1/dont_touch.xdc, line 60).
+Applied set_property DONT_TOUCH = true for system_i/util_ds_buf_1/U0. (constraint file  C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.runs/synth_1/dont_touch.xdc, line 63).
+Applied set_property DONT_TOUCH = true for system_i/util_ds_buf_2/U0. (constraint file  C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.runs/synth_1/dont_touch.xdc, line 68).
+Applied set_property DONT_TOUCH = true for system_i/axi_gpio_0/U0. (constraint file  C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.runs/synth_1/dont_touch.xdc, line 73).
+Applied set_property DONT_TOUCH = true for system_i/PS7/rst_ps7_0_125M/U0. (constraint file  C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.runs/synth_1/dont_touch.xdc, line 81).
+Applied set_property DONT_TOUCH = true for system_i/clk_wiz_0/inst. (constraint file  C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.runs/synth_1/dont_touch.xdc, line 87).
 Applied set_property DONT_TOUCH = true for system_i. (constraint file  auto generated constraint, line ).
 Applied set_property DONT_TOUCH = true for system_i/PS7/processing_system7_0. (constraint file  auto generated constraint, line ).
 Applied set_property DONT_TOUCH = true for system_i/util_ds_buf_1. (constraint file  auto generated constraint, line ).
 Applied set_property DONT_TOUCH = true for system_i/util_ds_buf_2. (constraint file  auto generated constraint, line ).
 Applied set_property DONT_TOUCH = true for system_i/axi_gpio_0. (constraint file  auto generated constraint, line ).
 Applied set_property DONT_TOUCH = true for system_i/DataAcquisition/axis_red_pitaya_adc_0. (constraint file  auto generated constraint, line ).
-Applied set_property DONT_TOUCH = true for system_i/SignalGenerator/axis_red_pitaya_dac_0. (constraint file  auto generated constraint, line ).
-Applied set_property DONT_TOUCH = true for system_i/SignalGenerator/clk_wiz_0. (constraint file  auto generated constraint, line ).
-Applied set_property DONT_TOUCH = true for system_i/SignalGenerator/dds_compiler_0. (constraint file  auto generated constraint, line ).
 Applied set_property DONT_TOUCH = true for system_i/PS7/ps7_0_axi_periph. (constraint file  auto generated constraint, line ).
 Applied set_property DONT_TOUCH = true for system_i/PS7/rst_ps7_0_125M. (constraint file  auto generated constraint, line ).
 Applied set_property DONT_TOUCH = true for system_i/DataAcquisition/signal_split_0. (constraint file  auto generated constraint, line ).
 Applied set_property DONT_TOUCH = true for system_i/FrequencyCounter/frequency_counter_0. (constraint file  auto generated constraint, line ).
 Applied set_property DONT_TOUCH = true for system_i/xlc_reset. (constraint file  auto generated constraint, line ).
-Applied set_property DONT_TOUCH = true for system_i/signal_decoder_0. (constraint file  auto generated constraint, line ).
-Applied set_property DONT_TOUCH = true for system_i/SignalGenerator/xls_phase. (constraint file  auto generated constraint, line ).
-Applied set_property DONT_TOUCH = true for system_i/SignalGenerator/axis_constant_0. (constraint file  auto generated constraint, line ).
 Applied set_property DONT_TOUCH = true for system_i/FrequencyCounter/pow2_0. (constraint file  auto generated constraint, line ).
 Applied set_property DONT_TOUCH = true for system_i/FrequencyCounter/xlslice_0. (constraint file  auto generated constraint, line ).
-Applied set_property DONT_TOUCH = true for system_i/freq_to_voltage_0. (constraint file  auto generated constraint, line ).
-Applied set_property DONT_TOUCH = true for system_i/xlslice_0. (constraint file  auto generated constraint, line ).
 Applied set_property DONT_TOUCH = true for system_i/axis_red_pitaya_dac_0. (constraint file  auto generated constraint, line ).
 Applied set_property DONT_TOUCH = true for system_i/clk_wiz_0. (constraint file  auto generated constraint, line ).
-Applied set_property DONT_TOUCH = true for system_i/signal_clipper_0. (constraint file  auto generated constraint, line ).
+Applied set_property DONT_TOUCH = true for system_i/signal_merge_0. (constraint file  auto generated constraint, line ).
 Applied set_property DONT_TOUCH = true for system_i/PS7/ps7_0_axi_periph/s00_couplers/auto_pc. (constraint file  auto generated constraint, line ).
 ---------------------------------------------------------------------------------
-Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:12 ; elapsed = 00:00:13 . Memory (MB): peak = 1097.770 ; gain = 66.051
+Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:10 ; elapsed = 00:00:11 . Memory (MB): peak = 1131.730 ; gain = 100.484
 ---------------------------------------------------------------------------------
 INFO: [Synth 8-802] inferred FSM for state register 'state_reg' in module 'axi_protocol_converter_v2_1_21_b2s_wr_cmd_fsm'
 INFO: [Synth 8-802] inferred FSM for state register 'state_reg' in module 'axi_protocol_converter_v2_1_21_b2s_rd_cmd_fsm'
-WARNING: [Synth 8-6040] Register i_rtl.i_quarter_table.i_has_sin.i_addr_mod_stage1.mod_sin_addr_reg driving address of a ROM cannot be packed in BRAM/URAM because of presence of initial value.
-WARNING: [Synth 8-6040] Register i_rtl.i_quarter_table.i_has_cos.i_addr_mod_stage1.mod_cos_addr_reg driving address of a ROM cannot be packed in BRAM/URAM because of presence of initial value.
 INFO: [Synth 8-802] inferred FSM for state register 'state_reg' in module 'slave_attachment'
 ---------------------------------------------------------------------------------------------------
                    State |                     New Encoding |                Previous Encoding 
@@ -1946,11 +1864,53 @@ INFO: [Synth 8-3354] encoded FSM with state register 'state_reg' using encoding 
 ---------------------------------------------------------------------------------------------------
 INFO: [Synth 8-3354] encoded FSM with state register 'state_reg' using encoding 'one-hot' in module 'slave_attachment'
 ---------------------------------------------------------------------------------
-Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:13 ; elapsed = 00:00:14 . Memory (MB): peak = 1097.770 ; gain = 66.051
+Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:11 ; elapsed = 00:00:12 . Memory (MB): peak = 1131.730 ; gain = 100.484
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start RTL Component Statistics 
 ---------------------------------------------------------------------------------
+Detailed RTL Component Info : 
++---Adders : 
+	   2 Input   32 Bit       Adders := 3     
+	   2 Input   12 Bit       Adders := 8     
+	   2 Input    9 Bit       Adders := 2     
+	   2 Input    8 Bit       Adders := 1     
+	   2 Input    6 Bit       Adders := 1     
+	   2 Input    5 Bit       Adders := 6     
+	   2 Input    4 Bit       Adders := 5     
+	   2 Input    2 Bit       Adders := 2     
++---Registers : 
+	               66 Bit    Registers := 4     
+	               47 Bit    Registers := 2     
+	               32 Bit    Registers := 11    
+	               20 Bit    Registers := 4     
+	               14 Bit    Registers := 6     
+	               12 Bit    Registers := 9     
+	                9 Bit    Registers := 3     
+	                8 Bit    Registers := 2     
+	                6 Bit    Registers := 1     
+	                5 Bit    Registers := 4     
+	                4 Bit    Registers := 7     
+	                3 Bit    Registers := 3     
+	                2 Bit    Registers := 14    
+	                1 Bit    Registers := 185   
++---Muxes : 
+	   2 Input   66 Bit        Muxes := 4     
+	   2 Input   47 Bit        Muxes := 2     
+	   2 Input   32 Bit        Muxes := 13    
+	   4 Input   20 Bit        Muxes := 1     
+	   2 Input   14 Bit        Muxes := 2     
+	   2 Input   12 Bit        Muxes := 6     
+	   2 Input    9 Bit        Muxes := 5     
+	   2 Input    6 Bit        Muxes := 1     
+	   2 Input    5 Bit        Muxes := 6     
+	   2 Input    4 Bit        Muxes := 32    
+	   4 Input    4 Bit        Muxes := 3     
+	   2 Input    2 Bit        Muxes := 8     
+	   4 Input    2 Bit        Muxes := 5     
+	   7 Input    2 Bit        Muxes := 1     
+	   2 Input    1 Bit        Muxes := 108   
+	   4 Input    1 Bit        Muxes := 3     
 ---------------------------------------------------------------------------------
 Finished RTL Component Statistics 
 ---------------------------------------------------------------------------------
@@ -1967,28 +1927,27 @@ Finished Part Resource Summary
 Start Cross Boundary and Area Optimization
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:00:15 ; elapsed = 00:00:17 . Memory (MB): peak = 1097.770 ; gain = 66.051
+Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:00:13 ; elapsed = 00:00:14 . Memory (MB): peak = 1131.730 ; gain = 100.484
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Applying XDC Timing Constraints
 ---------------------------------------------------------------------------------
-INFO: [Synth 8-5578] Moved timing constraint from pin 'system_i/SignalGenerator/clk_wiz_0/inst/clk_in1' to pin 'system_i/DataAcquisition/axis_red_pitaya_adc_0/inst/adc_clk_inst/O'
 INFO: [Synth 8-5578] Moved timing constraint from pin 'system_i/clk_wiz_0/inst/clk_in1' to pin 'system_i/DataAcquisition/axis_red_pitaya_adc_0/inst/adc_clk_inst/O'
-INFO: [Synth 8-5819] Moved 2 constraints on hierarchical pins to their respective driving/loading pins
+INFO: [Synth 8-5819] Moved 1 constraints on hierarchical pins to their respective driving/loading pins
 ---------------------------------------------------------------------------------
-Finished Applying XDC Timing Constraints : Time (s): cpu = 00:00:19 ; elapsed = 00:00:20 . Memory (MB): peak = 1163.242 ; gain = 131.523
+Finished Applying XDC Timing Constraints : Time (s): cpu = 00:00:16 ; elapsed = 00:00:17 . Memory (MB): peak = 1149.070 ; gain = 117.824
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Timing Optimization
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Timing Optimization : Time (s): cpu = 00:00:20 ; elapsed = 00:00:21 . Memory (MB): peak = 1207.934 ; gain = 176.215
+Finished Timing Optimization : Time (s): cpu = 00:00:16 ; elapsed = 00:00:18 . Memory (MB): peak = 1172.816 ; gain = 141.570
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Technology Mapping
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Technology Mapping : Time (s): cpu = 00:00:21 ; elapsed = 00:00:22 . Memory (MB): peak = 1225.145 ; gain = 193.426
+Finished Technology Mapping : Time (s): cpu = 00:00:17 ; elapsed = 00:00:18 . Memory (MB): peak = 1195.234 ; gain = 163.988
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start IO Insertion
@@ -2006,37 +1965,52 @@ Start Final Netlist Cleanup
 Finished Final Netlist Cleanup
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished IO Insertion : Time (s): cpu = 00:00:22 ; elapsed = 00:00:23 . Memory (MB): peak = 1225.145 ; gain = 193.426
+Finished IO Insertion : Time (s): cpu = 00:00:19 ; elapsed = 00:00:20 . Memory (MB): peak = 1199.027 ; gain = 167.781
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Instances
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Instances : Time (s): cpu = 00:00:22 ; elapsed = 00:00:23 . Memory (MB): peak = 1225.145 ; gain = 193.426
+Finished Renaming Generated Instances : Time (s): cpu = 00:00:19 ; elapsed = 00:00:20 . Memory (MB): peak = 1199.027 ; gain = 167.781
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Rebuilding User Hierarchy
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Rebuilding User Hierarchy : Time (s): cpu = 00:00:22 ; elapsed = 00:00:23 . Memory (MB): peak = 1225.145 ; gain = 193.426
+Finished Rebuilding User Hierarchy : Time (s): cpu = 00:00:19 ; elapsed = 00:00:20 . Memory (MB): peak = 1199.027 ; gain = 167.781
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Ports
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Ports : Time (s): cpu = 00:00:22 ; elapsed = 00:00:24 . Memory (MB): peak = 1225.145 ; gain = 193.426
+Finished Renaming Generated Ports : Time (s): cpu = 00:00:19 ; elapsed = 00:00:20 . Memory (MB): peak = 1199.027 ; gain = 167.781
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Handling Custom Attributes
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Handling Custom Attributes : Time (s): cpu = 00:00:22 ; elapsed = 00:00:24 . Memory (MB): peak = 1225.145 ; gain = 193.426
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:19 ; elapsed = 00:00:20 . Memory (MB): peak = 1199.027 ; gain = 167.781
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Nets
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Nets : Time (s): cpu = 00:00:22 ; elapsed = 00:00:24 . Memory (MB): peak = 1225.145 ; gain = 193.426
+Finished Renaming Generated Nets : Time (s): cpu = 00:00:19 ; elapsed = 00:00:20 . Memory (MB): peak = 1199.027 ; gain = 167.781
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start ROM, RAM, DSP and Shift Register Reporting
+---------------------------------------------------------------------------------
+
+Dynamic Shift Register Report:
++------------+----------------+--------+------------+--------+---------+--------+--------+--------+
+|Module Name | RTL Name       | Length | Data Width | SRL16E | SRLC32E | Mux F7 | Mux F8 | Mux F9 | 
++------------+----------------+--------+------------+--------+---------+--------+--------+--------+
+|dsrl        | memory_reg[31] | 34     | 34         | 0      | 34      | 0      | 0      | 0      | 
+|dsrl__1     | memory_reg[31] | 13     | 13         | 0      | 13      | 0      | 0      | 0      | 
++------------+----------------+--------+------------+--------+---------+--------+--------+--------+
+
+---------------------------------------------------------------------------------
+Finished ROM, RAM, DSP and Shift Register Reporting
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Writing Synthesis Report
@@ -2053,48 +2027,44 @@ Report Cell Usage:
 |      |Cell       |Count |
 +------+-----------+------+
 |1     |BIBUF      |   130|
-|2     |BUFG       |     6|
-|3     |CARRY4     |   153|
-|4     |LUT1       |   274|
-|5     |LUT2       |   379|
-|6     |LUT3       |   363|
-|7     |LUT4       |   129|
-|8     |LUT5       |   261|
-|9     |LUT6       |   364|
-|10    |MMCME2_ADV |     2|
-|11    |ODDR       |    36|
+|2     |BUFG       |     4|
+|3     |CARRY4     |    50|
+|4     |LUT1       |   213|
+|5     |LUT2       |    67|
+|6     |LUT3       |   233|
+|7     |LUT4       |    79|
+|8     |LUT5       |   208|
+|9     |LUT6       |   283|
+|10    |MMCME2_ADV |     1|
+|11    |ODDR       |    18|
 |12    |PS7        |     1|
-|13    |RAMB18E1   |     1|
-|14    |SRL16      |     1|
-|15    |SRL16E     |     1|
-|16    |SRLC32E    |    47|
-|17    |FDR        |   264|
-|18    |FDRE       |  1491|
-|19    |FDSE       |   111|
-|20    |IBUF       |    46|
-|21    |IBUFDS     |     2|
-|22    |IBUFGDS    |     1|
-|23    |OBUF       |    27|
-|24    |OBUFDS     |     2|
-|25    |OBUFT      |     6|
+|13    |SRL16      |     1|
+|14    |SRLC32E    |    47|
+|15    |FDR        |   264|
+|16    |FDRE       |  1164|
+|17    |FDSE       |    86|
+|18    |IBUF       |    45|
+|19    |IBUFDS     |     2|
+|20    |IBUFGDS    |     1|
+|21    |OBUF       |    19|
+|22    |OBUFDS     |     2|
+|23    |OBUFT      |    14|
 +------+-----------+------+
 ---------------------------------------------------------------------------------
-Finished Writing Synthesis Report : Time (s): cpu = 00:00:22 ; elapsed = 00:00:24 . Memory (MB): peak = 1225.145 ; gain = 193.426
+Finished Writing Synthesis Report : Time (s): cpu = 00:00:19 ; elapsed = 00:00:20 . Memory (MB): peak = 1199.027 ; gain = 167.781
 ---------------------------------------------------------------------------------
-Synthesis finished with 0 errors, 0 critical warnings and 2 warnings.
-Synthesis Optimization Runtime : Time (s): cpu = 00:00:12 ; elapsed = 00:00:22 . Memory (MB): peak = 1225.145 ; gain = 158.660
-Synthesis Optimization Complete : Time (s): cpu = 00:00:22 ; elapsed = 00:00:24 . Memory (MB): peak = 1225.145 ; gain = 193.426
+Synthesis finished with 0 errors, 0 critical warnings and 0 warnings.
+Synthesis Optimization Runtime : Time (s): cpu = 00:00:11 ; elapsed = 00:00:18 . Memory (MB): peak = 1199.027 ; gain = 67.297
+Synthesis Optimization Complete : Time (s): cpu = 00:00:19 ; elapsed = 00:00:20 . Memory (MB): peak = 1199.027 ; gain = 167.781
 INFO: [Project 1-571] Translating synthesized netlist
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.044 . Memory (MB): peak = 1225.145 ; gain = 0.000
-INFO: [Netlist 29-17] Analyzing 462 Unisim elements for replacement
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.037 . Memory (MB): peak = 1199.027 ; gain = 0.000
+INFO: [Netlist 29-17] Analyzing 339 Unisim elements for replacement
 INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
 INFO: [Project 1-570] Preparing netlist for logic optimization
-WARNING: [Opt 31-32] Removing redundant IBUF since it is not being driven by a top-level port. system_i/SignalGenerator/clk_wiz_0/inst/clkin1_ibufg 
-Resolution: The tool has removed redundant IBUF. To resolve this warning, check for redundant IBUF in the input design.
 WARNING: [Opt 31-32] Removing redundant IBUF since it is not being driven by a top-level port. system_i/clk_wiz_0/inst/clkin1_ibufg 
 Resolution: The tool has removed redundant IBUF. To resolve this warning, check for redundant IBUF in the input design.
 INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1229.027 ; gain = 0.000
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1216.086 ; gain = 0.000
 INFO: [Project 1-111] Unisim Transformation Summary:
   A total of 268 instances were transformed.
   FDR => FDRE: 264 instances
@@ -2103,11 +2073,11 @@ INFO: [Project 1-111] Unisim Transformation Summary:
   SRL16 => SRL16E: 1 instance 
 
 INFO: [Common 17-83] Releasing license: Synthesis
-386 Infos, 129 Warnings, 0 Critical Warnings and 0 Errors encountered.
+339 Infos, 104 Warnings, 31 Critical Warnings and 0 Errors encountered.
 synth_design completed successfully
-synth_design: Time (s): cpu = 00:00:25 ; elapsed = 00:00:27 . Memory (MB): peak = 1229.027 ; gain = 197.309
+synth_design: Time (s): cpu = 00:00:22 ; elapsed = 00:00:24 . Memory (MB): peak = 1216.086 ; gain = 184.840
 WARNING: [Constraints 18-5210] No constraints selected for write.
 Resolution: This message can indicate that there are no constraints for the design, or it can indicate that the used_in flags are set such that the constraints are ignored. This later case is used when running synth_design to not write synthesis constraints to the resulting checkpoint. Instead, project constraints are read when the synthesized design is opened.
 INFO: [Common 17-1381] The checkpoint 'C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.runs/synth_1/system_wrapper.dcp' has been generated.
 INFO: [runtcl-4] Executing : report_utilization -file system_wrapper_utilization_synth.rpt -pb system_wrapper_utilization_synth.pb
-INFO: [Common 17-206] Exiting Vivado at Tue Jul  1 13:00:14 2025...
+INFO: [Common 17-206] Exiting Vivado at Tue Jul  8 21:28:02 2025...

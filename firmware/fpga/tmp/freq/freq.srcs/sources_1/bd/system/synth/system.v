@@ -1,7 +1,7 @@
 //Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
 //--------------------------------------------------------------------------------
 //Tool Version: Vivado v.2020.1 (win64) Build 2902540 Wed May 27 19:54:49 MDT 2020
-//Date        : Tue Jul  1 12:59:34 2025
+//Date        : Tue Jul  8 21:07:15 2025
 //Host        : DESKTOP-93GTNQD running 64-bit major release  (build 9200)
 //Command     : generate_target system.bd
 //Design      : system
@@ -467,75 +467,6 @@ module PS7_imp_1QJPAX8
         .slowest_sync_clk(processing_system7_0_FCLK_CLK0));
 endmodule
 
-module SignalGenerator_imp_XB4TXX
-   (Din,
-    clk_in1,
-    dac_clk_o,
-    dac_dat_o,
-    dac_rst_o,
-    dac_sel_o,
-    dac_wrt_o);
-  input [31:0]Din;
-  input clk_in1;
-  output dac_clk_o;
-  output [13:0]dac_dat_o;
-  output dac_rst_o;
-  output dac_sel_o;
-  output dac_wrt_o;
-
-  wire [31:0]axis_constant_0_M_AXIS_TDATA;
-  wire axis_constant_0_M_AXIS_TVALID;
-  wire axis_red_pitaya_adc_0_adc_clk;
-  wire axis_red_pitaya_dac_0_dac_clk;
-  wire [13:0]axis_red_pitaya_dac_0_dac_dat;
-  wire axis_red_pitaya_dac_0_dac_rst;
-  wire axis_red_pitaya_dac_0_dac_sel;
-  wire axis_red_pitaya_dac_0_dac_wrt;
-  wire clk_wiz_0_clk_out1;
-  wire clk_wiz_0_locked;
-  wire [31:0]dds_compiler_0_M_AXIS_DATA_TDATA;
-  wire dds_compiler_0_M_AXIS_DATA_TVALID;
-  wire [31:0]frequency_counter_0_counter_output;
-  wire [26:0]xls_phase_Dout;
-
-  assign axis_red_pitaya_adc_0_adc_clk = clk_in1;
-  assign dac_clk_o = axis_red_pitaya_dac_0_dac_clk;
-  assign dac_dat_o[13:0] = axis_red_pitaya_dac_0_dac_dat;
-  assign dac_rst_o = axis_red_pitaya_dac_0_dac_rst;
-  assign dac_sel_o = axis_red_pitaya_dac_0_dac_sel;
-  assign dac_wrt_o = axis_red_pitaya_dac_0_dac_wrt;
-  assign frequency_counter_0_counter_output = Din[31:0];
-  system_axis_constant_0_0 axis_constant_0
-       (.aclk(axis_red_pitaya_adc_0_adc_clk),
-        .cfg_data({1'b0,1'b0,1'b0,1'b0,1'b0,xls_phase_Dout}),
-        .m_axis_tdata(axis_constant_0_M_AXIS_TDATA),
-        .m_axis_tvalid(axis_constant_0_M_AXIS_TVALID));
-  system_axis_red_pitaya_dac_0_0 axis_red_pitaya_dac_0
-       (.aclk(axis_red_pitaya_adc_0_adc_clk),
-        .dac_clk(axis_red_pitaya_dac_0_dac_clk),
-        .dac_dat(axis_red_pitaya_dac_0_dac_dat),
-        .dac_rst(axis_red_pitaya_dac_0_dac_rst),
-        .dac_sel(axis_red_pitaya_dac_0_dac_sel),
-        .dac_wrt(axis_red_pitaya_dac_0_dac_wrt),
-        .ddr_clk(clk_wiz_0_clk_out1),
-        .locked(clk_wiz_0_locked),
-        .s_axis_tdata(dds_compiler_0_M_AXIS_DATA_TDATA),
-        .s_axis_tvalid(dds_compiler_0_M_AXIS_DATA_TVALID));
-  system_clk_wiz_0_0 clk_wiz_0
-       (.clk_in1(axis_red_pitaya_adc_0_adc_clk),
-        .clk_out1(clk_wiz_0_clk_out1),
-        .locked(clk_wiz_0_locked));
-  system_dds_compiler_0_0 dds_compiler_0
-       (.aclk(axis_red_pitaya_adc_0_adc_clk),
-        .m_axis_data_tdata(dds_compiler_0_M_AXIS_DATA_TDATA),
-        .m_axis_data_tvalid(dds_compiler_0_M_AXIS_DATA_TVALID),
-        .s_axis_phase_tdata(axis_constant_0_M_AXIS_TDATA),
-        .s_axis_phase_tvalid(axis_constant_0_M_AXIS_TVALID));
-  system_xlslice_0_0 xls_phase
-       (.Din(frequency_counter_0_counter_output),
-        .Dout(xls_phase_Dout));
-endmodule
-
 module s00_couplers_imp_15HE6GA
    (M_ACLK,
     M_ARESETN,
@@ -831,7 +762,7 @@ module s00_couplers_imp_15HE6GA
         .s_axi_wvalid(s00_couplers_to_auto_pc_WVALID));
 endmodule
 
-(* CORE_GENERATION_INFO = "system,IP_Integrator,{x_ipVendor=xilinx.com,x_ipLibrary=BlockDiagram,x_ipName=system,x_ipVersion=1.00.a,x_ipLanguage=VERILOG,numBlks=29,numReposBlks=23,numNonXlnxBlks=4,numHierBlks=6,maxHierDepth=1,numSysgenBlks=0,numHlsBlks=0,numHdlrefBlks=6,numPkgbdBlks=0,bdsource=USER,synth_mode=Global}" *) (* HW_HANDOFF = "system.hwdef" *) 
+(* CORE_GENERATION_INFO = "system,IP_Integrator,{x_ipVendor=xilinx.com,x_ipLibrary=BlockDiagram,x_ipName=system,x_ipVersion=1.00.a,x_ipLanguage=VERILOG,numBlks=20,numReposBlks=15,numNonXlnxBlks=2,numHierBlks=5,maxHierDepth=1,numSysgenBlks=0,numHlsBlks=0,numHdlrefBlks=4,numPkgbdBlks=0,bdsource=USER,synth_mode=Global}" *) (* HW_HANDOFF = "system.hwdef" *) 
 module system
    (DDR_addr,
     DDR_ba,
@@ -916,6 +847,7 @@ module system
   inout [7:0]exp_p_tri_io;
   output [7:0]led_o;
 
+  wire DataAcquisition_adc_csn_o;
   wire [31:0]FrequencyCounter_M_AXIS_OUT_TDATA;
   wire FrequencyCounter_M_AXIS_OUT_TVALID;
   wire [31:0]FrequencyCounter_counter_output;
@@ -925,7 +857,6 @@ module system
   wire [13:0]adc_dat_a_i_1;
   wire [13:0]adc_dat_b_i_1;
   wire axis_red_pitaya_adc_0_adc_clk;
-  wire axis_red_pitaya_adc_0_adc_csn;
   wire axis_red_pitaya_dac_0_dac_clk;
   wire [13:0]axis_red_pitaya_dac_0_dac_dat;
   wire axis_red_pitaya_dac_0_dac_rst;
@@ -935,7 +866,6 @@ module system
   wire clk_wiz_0_locked;
   wire [1:0]daisy_n_i_1;
   wire [1:0]daisy_p_i_1;
-  wire [13:0]freq_to_voltage_0_voltage_out;
   wire [14:0]processing_system7_0_DDR_ADDR;
   wire [2:0]processing_system7_0_DDR_BA;
   wire processing_system7_0_DDR_CAS_N;
@@ -976,19 +906,18 @@ module system
   wire [3:0]ps7_0_axi_periph_M00_AXI_WSTRB;
   wire ps7_0_axi_periph_M00_AXI_WVALID;
   wire [0:0]rst_ps7_0_125M_peripheral_aresetn;
-  wire [31:0]signal_clipper_0_M_AXIS_OUT_TDATA;
-  wire signal_clipper_0_M_AXIS_OUT_TVALID;
+  wire [31:0]signal_merge_0_M_AXIS_TDATA;
+  wire signal_merge_0_M_AXIS_TVALID;
   wire [31:0]signal_split_0_M_AXIS_PORT1_TDATA;
   wire signal_split_0_M_AXIS_PORT1_TVALID;
   wire [1:0]util_ds_buf_1_IBUF_OUT;
   wire [1:0]util_ds_buf_2_OBUF_DS_N;
   wire [1:0]util_ds_buf_2_OBUF_DS_P;
   wire [0:0]xlc_reset_dout;
-  wire [7:0]xlslice_0_Dout;
 
   assign adc_clk_n_i_1 = adc_clk_n_i;
   assign adc_clk_p_i_1 = adc_clk_p_i;
-  assign adc_csn_o = axis_red_pitaya_adc_0_adc_csn;
+  assign adc_csn_o = DataAcquisition_adc_csn_o;
   assign adc_dat_a_i_1 = adc_dat_a_i[13:0];
   assign adc_dat_b_i_1 = adc_dat_b_i[13:0];
   assign dac_clk_o = axis_red_pitaya_dac_0_dac_clk;
@@ -1000,14 +929,13 @@ module system
   assign daisy_n_o[1:0] = util_ds_buf_2_OBUF_DS_N;
   assign daisy_p_i_1 = daisy_p_i[1:0];
   assign daisy_p_o[1:0] = util_ds_buf_2_OBUF_DS_P;
-  assign led_o[7:0] = xlslice_0_Dout;
   DataAcquisition_imp_11FS564 DataAcquisition
        (.M_AXIS_PORT1_tdata(signal_split_0_M_AXIS_PORT1_TDATA),
         .M_AXIS_PORT1_tvalid(signal_split_0_M_AXIS_PORT1_TVALID),
         .adc_clk(axis_red_pitaya_adc_0_adc_clk),
         .adc_clk_n_i(adc_clk_n_i_1),
         .adc_clk_p_i(adc_clk_p_i_1),
-        .adc_csn_o(axis_red_pitaya_adc_0_adc_csn),
+        .adc_csn_o(DataAcquisition_adc_csn_o),
         .adc_dat_a_i(adc_dat_a_i_1),
         .adc_dat_b_i(adc_dat_b_i_1));
   FrequencyCounter_imp_MPHDEJ FrequencyCounter
@@ -1060,9 +988,6 @@ module system
         .M00_AXI_wstrb(ps7_0_axi_periph_M00_AXI_WSTRB),
         .M00_AXI_wvalid(ps7_0_axi_periph_M00_AXI_WVALID),
         .S00_ARESETN(rst_ps7_0_125M_peripheral_aresetn));
-  SignalGenerator_imp_XB4TXX SignalGenerator
-       (.Din(Net),
-        .clk_in1(axis_red_pitaya_adc_0_adc_clk));
   system_axi_gpio_0_0 axi_gpio_0
        (.gpio2_io_i(Net),
         .gpio2_io_o(Net),
@@ -1095,28 +1020,17 @@ module system
         .dac_wrt(axis_red_pitaya_dac_0_dac_wrt),
         .ddr_clk(clk_wiz_0_clk_out1),
         .locked(clk_wiz_0_locked),
-        .s_axis_tdata(signal_clipper_0_M_AXIS_OUT_TDATA),
-        .s_axis_tvalid(signal_clipper_0_M_AXIS_OUT_TVALID));
+        .s_axis_tdata(signal_merge_0_M_AXIS_TDATA),
+        .s_axis_tvalid(signal_merge_0_M_AXIS_TVALID));
   system_clk_wiz_0_1 clk_wiz_0
        (.clk_in1(axis_red_pitaya_adc_0_adc_clk),
         .clk_out1(clk_wiz_0_clk_out1),
         .locked(clk_wiz_0_locked));
-  system_freq_to_voltage_0_0 freq_to_voltage_0
-       (.clk(axis_red_pitaya_adc_0_adc_clk),
-        .frequency_in(FrequencyCounter_counter_output),
-        .voltage_out(freq_to_voltage_0_voltage_out));
-  system_signal_clipper_0_0 signal_clipper_0
-       (.M_AXIS_OUT_tdata(signal_clipper_0_M_AXIS_OUT_TDATA),
-        .M_AXIS_OUT_tvalid(signal_clipper_0_M_AXIS_OUT_TVALID),
-        .S_AXIS_IN_tdata(FrequencyCounter_M_AXIS_OUT_TDATA),
-        .S_AXIS_IN_tvalid(FrequencyCounter_M_AXIS_OUT_TVALID),
-        .clk(axis_red_pitaya_adc_0_adc_clk),
-        .rst(xlc_reset_dout));
-  system_signal_decoder_0_0 signal_decoder_0
-       (.S_AXIS_tdata({1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0}),
-        .S_AXIS_tvalid(1'b0),
-        .clk(axis_red_pitaya_adc_0_adc_clk),
-        .rst(xlc_reset_dout));
+  system_signal_merge_0_0 signal_merge_0
+       (.M_AXIS_tdata(signal_merge_0_M_AXIS_TDATA),
+        .M_AXIS_tvalid(signal_merge_0_M_AXIS_TVALID),
+        .S_AXIS_tdata(FrequencyCounter_M_AXIS_OUT_TDATA),
+        .S_AXIS_tvalid(FrequencyCounter_M_AXIS_OUT_TVALID));
   system_util_ds_buf_1_0 util_ds_buf_1
        (.IBUF_DS_N(daisy_n_i_1),
         .IBUF_DS_P(daisy_p_i_1),
@@ -1127,9 +1041,6 @@ module system
         .OBUF_IN(util_ds_buf_1_IBUF_OUT));
   system_xlconstant_0_0 xlc_reset
        (.dout(xlc_reset_dout));
-  system_xlslice_0_2 xlslice_0
-       (.Din(freq_to_voltage_0_voltage_out),
-        .Dout(xlslice_0_Dout));
 endmodule
 
 module system_ps7_0_axi_periph_0
