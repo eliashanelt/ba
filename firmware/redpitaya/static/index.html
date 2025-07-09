@@ -2,126 +2,758 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Red Pitaya WebSocket UI</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Red Pitaya Control System</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
         body {
-            font-family: Arial, sans-serif;
-            max-width: 800px;
-            margin: 0 auto;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #1e1e2e 0%, #2a2a3a 100%);
+            color: #e4e4e7;
+            min-height: 100vh;
+            font-size: 13px;
+            line-height: 1.4;
+        }
+        
+        .main-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
             padding: 20px;
+            max-width: 1400px;
+            margin: 0 auto;
         }
-        .control-group {
-            margin: 20px 0;
-            padding: 15px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
+        
+        /* Mobile responsive */
+        @media (max-width: 768px) {
+            .main-container {
+                grid-template-columns: 1fr;
+                padding: 10px;
+                gap: 15px;
+            }
         }
+        
+        .console-container {
+            padding: 0 20px 20px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        @media (max-width: 768px) {
+            .console-container {
+                padding: 0 10px 10px;
+            }
+        }
+        
+        .panel {
+            background: rgba(45, 45, 55, 0.95);
+            border: 1px solid rgba(100, 100, 120, 0.3);
+            border-radius: 8px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+        
+        .panel-header {
+            background: linear-gradient(90deg, #3b82f6, #6366f1);
+            color: white;
+            padding: 12px 16px;
+            border-radius: 8px 8px 0 0;
+            font-weight: 600;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+        }
+        
+        .panel-title {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .panel-title::before {
+            content: "▼";
+            font-size: 10px;
+        }
+        
+        .panel-content {
+            padding: 16px;
+        }
+        
+        @media (max-width: 768px) {
+            .panel-content {
+                padding: 12px;
+            }
+        }
+        
+        .status-indicator {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 500;
+            text-align: center;
+            border: 1px solid transparent;
+            transition: all 0.2s ease;
+        }
+        
+        .status-indicator.connected {
+            background: rgba(34, 197, 94, 0.2);
+            border-color: rgba(34, 197, 94, 0.4);
+            color: #22c55e;
+        }
+        
+        .status-indicator.disconnected {
+            background: rgba(239, 68, 68, 0.2);
+            border-color: rgba(239, 68, 68, 0.4);
+            color: #ef4444;
+        }
+        
+        @media (max-width: 480px) {
+            .status-indicator {
+                font-size: 10px;
+                padding: 3px 8px;
+            }
+        }
+        
+        .measurements-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+        
+        .measurement-card {
+            background: rgba(30, 30, 40, 0.8);
+            border: 1px solid rgba(100, 100, 120, 0.2);
+            border-radius: 6px;
+            padding: 12px;
+            text-align: center;
+        }
+        
+        .measurement-label {
+            font-size: 11px;
+            color: #9ca3af;
+            margin-bottom: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .measurement-value {
+            font-size: 16px;
+            font-weight: 600;
+            color: #3b82f6;
+            font-family: 'JetBrains Mono', monospace;
+        }
+        
+        .control-section {
+            margin-bottom: 24px;
+        }
+        
+        .control-section h4 {
+            color: #e4e4e7;
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            padding-bottom: 6px;
+            border-bottom: 1px solid rgba(100, 100, 120, 0.2);
+        }
+        
+        .control-row {
+            display: flex;
+            align-items: center;
+            margin-bottom: 16px;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        
+        @media (max-width: 480px) {
+            .control-row {
+                flex-direction: column;
+                align-items: stretch;
+            }
+        }
+        
+        .control-label {
+            min-width: 80px;
+            font-size: 12px;
+            font-weight: 500;
+            color: #d1d5db;
+        }
+        
+        @media (max-width: 480px) {
+            .control-label {
+                min-width: auto;
+            }
+        }
+        
         .slider-container {
-            margin: 10px 0;
+            flex: 1;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            min-width: 0;
         }
-        .slider-value {
-            font-weight: bold;
-            color: #333;
+        
+        @media (max-width: 480px) {
+            .slider-container {
+                flex-wrap: wrap;
+            }
         }
-        .status {
-            padding: 10px;
-            margin: 10px 0;
-            border-radius: 5px;
+        
+        .input-field {
+            width: 70px;
+            padding: 6px 8px;
+            background: rgba(20, 20, 30, 0.8);
+            border: 1px solid rgba(100, 100, 120, 0.3);
+            border-radius: 4px;
+            color: #e4e4e7;
+            font-size: 12px;
+            text-align: center;
+            font-family: 'JetBrains Mono', monospace;
         }
-        .status.connected {
-            background-color: #d4edda;
-            color: #155724;
+        
+        .input-field:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.1);
         }
-        .status.disconnected {
-            background-color: #f8d7da;
-            color: #721c24;
+        
+        .unit-label {
+            font-size: 11px;
+            color: #9ca3af;
+            min-width: 30px;
         }
-        .frequency-display {
-            font-size: 18px;
-            font-weight: bold;
-            color: #007bff;
-        }
+        
+        /* Custom slider styling */
         input[type="range"] {
-            width: 100%;
-            margin: 10px 0;
+            flex: 1;
+            height: 6px;
+            background: rgba(100, 100, 120, 0.2);
+            border-radius: 3px;
+            outline: none;
+            -webkit-appearance: none;
+            appearance: none;
+            min-width: 100px;
         }
-        button {
-            padding: 10px 20px;
-            margin: 5px;
-            border: none;
-            border-radius: 5px;
+        
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #3b82f6, #6366f1);
             cursor: pointer;
-            background-color: #007bff;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        
+        input[type="range"]::-moz-range-thumb {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #3b82f6, #6366f1);
+            cursor: pointer;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .voltage-controls {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            flex: 1;
+        }
+        
+        .voltage-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .voltage-row label {
+            min-width: 60px;
+            font-size: 11px;
+            color: #9ca3af;
+        }
+        
+        .sync-checkbox {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-top: 8px;
+        }
+        
+        .sync-checkbox input[type="checkbox"] {
+            width: 14px;
+            height: 14px;
+            accent-color: #3b82f6;
+        }
+        
+        .sync-checkbox label {
+            font-size: 11px;
+            color: #9ca3af;
+            cursor: pointer;
+        }
+        
+        .delay-mode-toggle {
+            display: flex;
+            border: 1px solid rgba(100, 100, 120, 0.3);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-left: 8px;
+        }
+        
+        @media (max-width: 480px) {
+            .delay-mode-toggle {
+                margin-left: 0;
+                margin-top: 8px;
+            }
+        }
+        
+        .delay-mode-option {
+            padding: 4px 8px;
+            background: rgba(30, 30, 40, 0.8);
+            border: none;
+            color: #9ca3af;
+            cursor: pointer;
+            font-size: 10px;
+            transition: all 0.2s ease;
+        }
+        
+        .delay-mode-option.active {
+            background: #3b82f6;
             color: white;
         }
-        button:hover {
-            background-color: #0056b3;
+        
+        .delay-mode-option:hover:not(.active) {
+            background: rgba(100, 100, 120, 0.2);
         }
-        button:disabled {
-            background-color: #6c757d;
+        
+        .btn {
+            padding: 8px 16px;
+            margin: 2px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 11px;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #3b82f6, #6366f1);
+            color: white;
+        }
+        
+        .btn-primary:hover:not(:disabled) {
+            background: linear-gradient(135deg, #2563eb, #5b21b6);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+        }
+        
+        .btn-secondary {
+            background: rgba(100, 100, 120, 0.2);
+            color: #d1d5db;
+            border: 1px solid rgba(100, 100, 120, 0.3);
+        }
+        
+        .btn-secondary:hover:not(:disabled) {
+            background: rgba(100, 100, 120, 0.3);
+        }
+        
+        .btn-success {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+        }
+        
+        .btn-success:hover:not(:disabled) {
+            background: linear-gradient(135deg, #059669, #047857);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+        }
+        
+        .btn-warning {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            color: white;
+        }
+        
+        .btn:disabled {
+            opacity: 0.5;
             cursor: not-allowed;
+            transform: none !important;
+            box-shadow: none !important;
+        }
+        
+        .button-row {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-top: 12px;
+        }
+        
+        .console {
+            background: rgba(10, 10, 15, 0.9);
+            border: 1px solid rgba(100, 100, 120, 0.2);
+            border-radius: 6px;
+            height: 400px;
+            overflow-y: auto;
+            padding: 12px;
+            font-family: 'JetBrains Mono', 'Consolas', monospace;
+            font-size: 11px;
+            line-height: 1.4;
+            color: #d1d5db;
+        }
+        
+        @media (max-width: 768px) {
+            .console {
+                height: 300px;
+            }
+        }
+        
+        .console::-webkit-scrollbar {
+            width: 6px;
+        }
+        
+        .console::-webkit-scrollbar-track {
+            background: rgba(100, 100, 120, 0.1);
+        }
+        
+        .console::-webkit-scrollbar-thumb {
+            background: rgba(100, 100, 120, 0.3);
+            border-radius: 3px;
+        }
+        
+        .range-info {
+            font-size: 10px;
+            color: #6b7280;
+            margin-top: 4px;
+            width: 100%;
+        }
+        
+        .pressure-section {
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            border-radius: 6px;
+            padding: 12px;
+            background: rgba(16, 185, 129, 0.05);
+        }
+        
+        .pressure-section h4 {
+            color: #10b981;
+        }
+        
+        .title-bar {
+            text-align: center;
+            padding: 20px;
+            background: linear-gradient(135deg, #1e1e2e 0%, #2a2a3a 100%);
+            border-bottom: 1px solid rgba(100, 100, 120, 0.2);
+        }
+        
+        .title-bar h1 {
+            font-size: 24px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #3b82f6, #6366f1, #8b5cf6);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 8px;
+        }
+        
+        @media (max-width: 480px) {
+            .title-bar h1 {
+                font-size: 20px;
+            }
+        }
+        
+        .title-bar p {
+            color: #9ca3af;
+            font-size: 13px;
         }
     </style>
 </head>
 <body>
-    <h1>Red Pitaya WebSocket Control</h1>
-    
-    <div class="status" id="connectionStatus">
-        <span id="statusText">Connecting...</span>
+    <div class="title-bar">
+        <h1>Red Pitaya Control System</h1>
+        <p>Real-time Signal Processing & Pressure Control</p>
     </div>
     
-    <div class="control-group">
-        <h3>Frequency Control</h3>
-        <div class="slider-container">
-            <label for="slider">Frequency: <span class="slider-value" id="sliderValue">1000.0</span> Hz</label>
-            <input id="slider" type="range" min="100" max="10000" step="0.1" value="1000" disabled>
+    <div class="main-container">
+        <div class="panel">
+            <div class="panel-header">
+                <div class="panel-title">Red Pitaya Signal Control</div>
+                <div class="status-indicator" id="connectionStatus">
+                    <span id="statusText">Connecting...</span>
+                </div>
+            </div>
+            <div class="panel-content">
+                <div class="measurements-grid">
+                    <div class="measurement-card">
+                        <div class="measurement-label">Frequency</div>
+                        <div class="measurement-value" id="measuredFreq">---</div>
+                    </div>
+                    <div class="measurement-card">
+                        <div class="measurement-label">Period</div>
+                        <div class="measurement-value" id="measuredPeriod">---</div>
+                    </div>
+                </div>
+                
+                <div class="control-section">
+                    <h4>Voltage Limits</h4>
+                    <div class="control-row">
+                        <div class="control-label">Limits:</div>
+                        <div class="voltage-controls">
+                            <div class="voltage-row">
+                                <label>Lower:</label>
+                                <input id="voltageLowerSlider" type="range" min="-1000" max="0" step="1" value="-1000" disabled>
+                                <input id="voltageLowerInput" type="number" class="input-field" min="-1" max="0" step="0.001" value="-1" disabled>
+                                <span class="unit-label">V</span>
+                            </div>
+                            <div class="voltage-row">
+                                <label>Upper:</label>
+                                <input id="voltageUpperSlider" type="range" min="0" max="1000" step="1" value="1000" disabled>
+                                <input id="voltageUpperInput" type="number" class="input-field" min="0" max="1" step="0.001" value="1" disabled>
+                                <span class="unit-label">V</span>
+                            </div>
+                            <div class="sync-checkbox">
+                                <input type="checkbox" id="syncVoltageCheckbox" disabled>
+                                <label for="syncVoltageCheckbox">Synchronize limits (symmetric)</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="range-info">Range: -1V to +1V (1mV accuracy)</div>
+                </div>
+                
+                <div class="control-section">
+                    <h4>Timing Control</h4>
+                    <div class="control-row">
+                        <div class="control-label">Delay:</div>
+                        <div class="slider-container">
+                            <input id="delaySlider" type="range" min="0" max="100" step="0.1" value="0" disabled>
+                            <input id="delayInput" type="number" class="input-field" min="0" max="100" step="0.1" value="0" disabled>
+                            <span class="unit-label" id="delayUnit">%</span>
+                            <div class="delay-mode-toggle">
+                                <button class="delay-mode-option active" data-mode="period">Period %</button>
+                                <button class="delay-mode-option" data-mode="timestamp">Timestamp</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="control-section">
+                    <h4>Signal Amplification</h4>
+                    <div class="control-row">
+                        <div class="control-label">Gain:</div>
+                        <div class="slider-container">
+                            <input id="gainSlider" type="range" min="-10000" max="10000" step="1" value="1000" disabled>
+                            <input id="gainInput" type="number" class="input-field" min="-10" max="10" step="0.001" value="1" disabled>
+                            <span class="unit-label">×</span>
+                        </div>
+                    </div>
+                    <div class="range-info">Range: -10 to +10 (0.001 accuracy)</div>
+                </div>
+                
+                <div class="button-row">
+                    <button id="helloBtn" class="btn btn-primary" disabled>Send Hello</button>
+                    <button id="reconnectBtn" class="btn btn-secondary" onclick="reconnect()">Reconnect</button>
+                </div>
+            </div>
         </div>
-        <div class="frequency-display">
-            Measured Frequency: <span id="measuredFreq">---</span> Hz
+        
+        <div class="panel">
+            <div class="panel-header">
+                <div class="panel-title">Pressure Control System</div>
+                <div class="status-indicator" id="pressureConnectionStatus">
+                    <span id="pressureStatusText">Connecting...</span>
+                </div>
+            </div>
+            <div class="panel-content">
+                <div class="measurements-grid">
+                    <div class="measurement-card">
+                        <div class="measurement-label">Current Pressure</div>
+                        <div class="measurement-value" id="currentPressure">---</div>
+                    </div>
+                </div>
+                
+                <div class="control-section pressure-section">
+                    <h4>Pressure Settings</h4>
+                    <div class="control-row">
+                        <div class="control-label">Set Pressure:</div>
+                        <div class="slider-container">
+                            <input id="pressureSlider" type="range" min="-1000" max="1000" step="1" value="0" disabled>
+                            <input id="pressureInput" type="number" class="input-field" min="-1000" max="1000" step="1" value="0" disabled>
+                            <span class="unit-label">mbar</span>
+                        </div>
+                    </div>
+                    <div class="range-info">Range: -1000 to +1000 mbar</div>
+                    
+                    <div class="button-row">
+                        <button id="setPressureBtn" class="btn btn-success" disabled>Set Pressure</button>
+                        <button id="zeroPressureBtn" class="btn btn-warning" disabled>Zero Pressure</button>
+                        <button id="reconnectPressureBtn" class="btn btn-secondary" onclick="reconnectPressure()">Reconnect</button>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     
-    <div class="control-group">
-        <h3>Controls</h3>
-        <button id="helloBtn" disabled>Send Hello</button>
-        <button id="reconnectBtn" onclick="reconnect()">Reconnect</button>
-    </div>
-    
-    <div class="control-group">
-        <h3>Log</h3>
-        <div id="log" style="height: 200px; overflow-y: auto; border: 1px solid #ddd; padding: 10px; font-family: monospace; font-size: 12px;"></div>
+    <div class="console-container">
+        <div class="panel">
+            <div class="panel-header">
+                <div class="panel-title">System Console</div>
+            </div>
+            <div class="panel-content">
+                <div id="log" class="console"></div>
+            </div>
+        </div>
     </div>
 
     <script>
         let ws = null;
+        let pressureWs = null;
         let reconnectTimer = null;
+        let pressureReconnectTimer = null;
+        let currentDelayMode = 'period';
+        let currentPeriod = 0;
+        let pressureMonitorInterval = null;
         
-        const slider = document.getElementById('slider');
-        const sliderValue = document.getElementById('sliderValue');
+        // DOM elements
         const statusEl = document.getElementById('connectionStatus');
         const statusText = document.getElementById('statusText');
+        const pressureStatusEl = document.getElementById('pressureConnectionStatus');
+        const pressureStatusText = document.getElementById('pressureStatusText');
         const measuredFreq = document.getElementById('measuredFreq');
+        const measuredPeriod = document.getElementById('measuredPeriod');
+        const currentPressure = document.getElementById('currentPressure');
         const helloBtn = document.getElementById('helloBtn');
         const logEl = document.getElementById('log');
         
+        // Voltage controls
+        const voltageLowerSlider = document.getElementById('voltageLowerSlider');
+        const voltageLowerInput = document.getElementById('voltageLowerInput');
+        const voltageUpperSlider = document.getElementById('voltageUpperSlider');
+        const voltageUpperInput = document.getElementById('voltageUpperInput');
+        const syncVoltageCheckbox = document.getElementById('syncVoltageCheckbox');
+        
+        // Delay controls
+        const delaySlider = document.getElementById('delaySlider');
+        const delayInput = document.getElementById('delayInput');
+        const delayUnit = document.getElementById('delayUnit');
+        const delayModeButtons = document.querySelectorAll('.delay-mode-option');
+        
+        // Gain controls
+        const gainSlider = document.getElementById('gainSlider');
+        const gainInput = document.getElementById('gainInput');
+        
+        // Pressure controls
+        const pressureSlider = document.getElementById('pressureSlider');
+        const pressureInput = document.getElementById('pressureInput');
+        const setPressureBtn = document.getElementById('setPressureBtn');
+        const zeroPressureBtn = document.getElementById('zeroPressureBtn');
+        
         function log(message) {
             const timestamp = new Date().toLocaleTimeString();
-            logEl.innerHTML += `[${timestamp}] ${message}<br>`;
+            logEl.innerHTML += `<span style="color: #6b7280;">[${timestamp}]</span> ${message}<br>`;
             logEl.scrollTop = logEl.scrollHeight;
         }
         
         function updateConnectionStatus(connected) {
+            const controls = [voltageLowerSlider, voltageLowerInput, voltageUpperSlider, voltageUpperInput,
+                            syncVoltageCheckbox, delaySlider, delayInput, gainSlider, gainInput, helloBtn];
+            
             if (connected) {
-                statusEl.className = 'status connected';
-                statusText.textContent = 'Connected to Red Pitaya';
-                slider.disabled = false;
-                helloBtn.disabled = false;
+                statusEl.className = 'status-indicator connected';
+                statusText.textContent = 'Connected';
+                controls.forEach(ctrl => ctrl.disabled = false);
             } else {
-                statusEl.className = 'status disconnected';
-                statusText.textContent = 'Disconnected from Red Pitaya';
-                slider.disabled = true;
-                helloBtn.disabled = true;
+                statusEl.className = 'status-indicator disconnected';
+                statusText.textContent = 'Disconnected';
+                controls.forEach(ctrl => ctrl.disabled = true);
                 measuredFreq.textContent = '---';
+                measuredPeriod.textContent = '---';
+            }
+        }
+        
+        function updatePressureConnectionStatus(connected) {
+            const pressureControls = [pressureSlider, pressureInput, setPressureBtn, zeroPressureBtn];
+            
+            if (connected) {
+                pressureStatusEl.className = 'status-indicator connected';
+                pressureStatusText.textContent = 'Connected';
+                pressureControls.forEach(ctrl => ctrl.disabled = false);
+            } else {
+                pressureStatusEl.className = 'status-indicator disconnected';
+                pressureStatusText.textContent = 'Disconnected';
+                pressureControls.forEach(ctrl => ctrl.disabled = true);
+                currentPressure.textContent = '---';
+            }
+        }
+        
+        function updateDelayMode(mode) {
+            currentDelayMode = mode;
+            delayModeButtons.forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.dataset.mode === mode) {
+                    btn.classList.add('active');
+                }
+            });
+            
+            if (mode === 'period') {
+                delaySlider.max = 100;
+                delayInput.max = 100;
+                delayUnit.textContent = '%';
+                delayInput.step = '0.1';
+            } else {
+                delaySlider.max = currentPeriod;
+                delayInput.max = currentPeriod;
+                delayUnit.textContent = 's';
+                delayInput.step = '0.000001';
+            }
+        }
+        
+        function formatFrequency(freq) {
+            if (freq >= 1000000) {
+                return (freq / 1000000).toFixed(3) + ' MHz';
+            } else if (freq >= 1000) {
+                return (freq / 1000).toFixed(3) + ' kHz';
+            } else {
+                return freq.toFixed(3) + ' Hz';
+            }
+        }
+        
+        function formatPeriod(period) {
+            if (period >= 1) {
+                return period.toFixed(6) + ' s';
+            } else if (period >= 0.001) {
+                return (period * 1000).toFixed(3) + ' ms';
+            } else if (period >= 0.000001) {
+                return (period * 1000000).toFixed(3) + ' μs';
+            } else {
+                return (period * 1000000000).toFixed(3) + ' ns';
+            }
+        }
+        
+        function formatPressure(pressure) {
+            return pressure.toFixed(1) + ' mbar';
+        }
+        
+        function sendMessage(message) {
+            if (ws && ws.readyState === WebSocket.OPEN) {
+                ws.send(JSON.stringify(message));
+            }
+        }
+        
+        function sendPressureMessage(message) {
+            if (pressureWs && pressureWs.readyState === WebSocket.OPEN) {
+                pressureWs.send(JSON.stringify(message));
             }
         }
         
@@ -129,11 +761,11 @@
             const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
             const wsUrl = `${protocol}//${window.location.host}/ws`;
             
-            log(`Connecting to ${wsUrl}...`);
+            log(`<span style="color: #3b82f6;">Connecting to Red Pitaya at ${wsUrl}...</span>`);
             ws = new WebSocket(wsUrl);
             
             ws.onopen = function() {
-                log('WebSocket connected');
+                log('<span style="color: #22c55e;">✓ Red Pitaya WebSocket connected</span>');
                 updateConnectionStatus(true);
                 if (reconnectTimer) {
                     clearTimeout(reconnectTimer);
@@ -146,37 +778,142 @@
                     const message = JSON.parse(event.data);
                     
                     switch (message.type) {
-                        case 'SliderUpdate':
-                            log(`Slider updated: ${message.value}`);
+                        case 'VoltageUpdate':
+                            log(`<span style="color: #f59e0b;">⚡ Voltage updated:</span> Lower: ${message.lower_limit}V, Upper: ${message.upper_limit}V`);
+                            break;
+                        case 'DelayUpdate':
+                            log(`<span style="color: #8b5cf6;">⏱️ Delay updated:</span> ${message.delay} (${message.delay_mode})`);
+                            break;
+                        case 'GainUpdate':
+                            log(`<span style="color: #06b6d4;">📈 Gain updated:</span> ${message.gain}×`);
                             break;
                         case 'FrequencyUpdate':
-                            measuredFreq.textContent = message.frequency.toFixed(5);
+                            const freq = message.frequency;
+                            const period = 1 / freq;
+                            currentPeriod = period;
+                            
+                            measuredFreq.textContent = formatFrequency(freq);
+                            measuredPeriod.textContent = formatPeriod(period);
+                            
+                            if (currentDelayMode === 'timestamp') {
+                                delaySlider.max = period;
+                                delayInput.max = period;
+                            }
                             break;
                         case 'Hello':
-                            log('Received Hello response');
+                            log('<span style="color: #22c55e;">👋 Hello response received</span>');
                             break;
                         case 'StatusUpdate':
-                            log(`Status: ${JSON.stringify(message.status)}`);
+                            log(`<span style="color: #3b82f6;">📊 Status:</span> ${JSON.stringify(message.status)}`);
+                            break;
+                        case 'Error':
+                            log(`<span style="color: #ef4444;">❌ Red Pitaya Error:</span> ${message.message}`);
                             break;
                         default:
-                            log(`Unknown message type: ${message.type}`);
+                            log(`<span style="color: #6b7280;">❓ Unknown message:</span> ${message.type}`);
                     }
                 } catch (e) {
-                    log(`Error parsing message: ${e.message}`);
+                    log(`<span style="color: #ef4444;">💥 Parse error:</span> ${e.message}`);
                 }
             };
             
             ws.onclose = function() {
-                log('WebSocket disconnected');
+                log('<span style="color: #ef4444;">❌ Red Pitaya disconnected</span>');
                 updateConnectionStatus(false);
-                // Auto-reconnect after 3 seconds
                 reconnectTimer = setTimeout(connect, 3000);
             };
             
             ws.onerror = function(error) {
-                log(`WebSocket error: ${error}`);
+                log(`<span style="color: #ef4444;">🚨 Red Pitaya error:</span> ${error}`);
                 updateConnectionStatus(false);
             };
+        }
+        
+        function connectPressure() {
+            const wsUrl = 'ws://localhost:8081/pressure';
+            
+            log(`<span style="color: #10b981;">Connecting to Pressure Controller at ${wsUrl}...</span>`);
+            pressureWs = new WebSocket(wsUrl);
+            
+            pressureWs.onopen = function() {
+                log('<span style="color: #22c55e;">✓ Pressure Controller connected</span>');
+                updatePressureConnectionStatus(true);
+                if (pressureReconnectTimer) {
+                    clearTimeout(pressureReconnectTimer);
+                    pressureReconnectTimer = null;
+                }
+                
+                sendPressureMessage({
+                    type: 'ReadPressureRange'
+                });
+                
+                startPressureMonitoring();
+            };
+            
+            pressureWs.onmessage = function(event) {
+                receivePressureMessage(event.data);
+            };
+            
+            pressureWs.onclose = function() {
+                log('<span style="color: #ef4444;">❌ Pressure Controller disconnected</span>');
+                updatePressureConnectionStatus(false);
+                stopPressureMonitoring();
+                pressureReconnectTimer = setTimeout(connectPressure, 3000);
+            };
+            
+            pressureWs.onerror = function(error) {
+                log(`<span style="color: #ef4444;">🚨 Pressure error:</span> ${error}`);
+                updatePressureConnectionStatus(false);
+            };
+        }
+        
+        function receivePressureMessage(data) {
+            try {
+                const message = JSON.parse(data);
+                
+                switch (message.type) {
+                    case 'PressureReading':
+                        currentPressure.textContent = formatPressure(message.pressure);
+                        break;
+                    case 'PressureRangeReading':
+                        log(`<span style="color: #10b981;">📏 Pressure range:</span> ${message.min} to ${message.max} mbar`);
+                        pressureSlider.min = message.min;
+                        pressureSlider.max = message.max;
+                        pressureInput.min = message.min;
+                        pressureInput.max = message.max;
+                        break;
+                    case 'PressureSet':
+                        log(`<span style="color: #10b981;">✅ Pressure set to:</span> ${message.pressure} mbar`);
+                        break;
+                    case 'Error':
+                        log(`<span style="color: #ef4444;">❌ Pressure Error:</span> ${message.message}`);
+                        break;
+                    default:
+                        log(`<span style="color: #6b7280;">❓ Unknown pressure message:</span> ${message.type}`);
+                }
+            } catch (e) {
+                log(`<span style="color: #ef4444;">💥 Pressure parse error:</span> ${e.message}`);
+            }
+        }
+        
+        function startPressureMonitoring() {
+            stopPressureMonitoring();
+            
+            const readPressure = () => {
+                sendPressureMessage({
+                    type: 'ReadPressure'
+                });
+            };
+            
+            readPressure();
+            pressureMonitorInterval = setInterval(readPressure, 1000);
+        }
+        
+        function stopPressureMonitoring() {
+            if (pressureMonitorInterval) {
+                clearInterval(pressureMonitorInterval);
+                pressureMonitorInterval = null;
+            }
         }
         
         function reconnect() {
@@ -186,59 +923,181 @@
             connect();
         }
         
-        function sendMessage(message) {
-            if (ws && ws.readyState === WebSocket.OPEN) {
-                ws.send(JSON.stringify(message));
-            } else {
-                log('WebSocket not connected, cannot send message');
+        function reconnectPressure() {
+            if (pressureWs) {
+                pressureWs.close();
             }
+            connectPressure();
         }
         
-        // Event listeners
-        slider.oninput = function() {
-            const value = parseFloat(slider.value);
-            sliderValue.textContent = value.toFixed(1);
-            sendMessage({
-                type: 'SliderUpdate',
-                value: value
-            });
-        };
-        
+        // Event handlers
         helloBtn.onclick = function() {
             sendMessage({ type: 'Hello' });
+            log('<span style="color: #3b82f6;">📤 Sending Hello...</span>');
         };
         
-        // Initialize
-        updateConnectionStatus(false);
-        connect();
+        // Voltage control synchronization
+        function updateVoltage() {
+            const lower = parseFloat(voltageLowerInput.value);
+            const upper = parseFloat(voltageUpperInput.value);
+            
+            sendMessage({
+                type: 'SetVoltageLimits',
+                lower_limit: lower,
+                upper_limit: upper
+            });
+        }
         
-        // Cleanup on page unload
-        window.addEventListener('beforeunload', function() {
-            if (ws) {
-                ws.close();
+        voltageLowerSlider.oninput = function() {
+            const value = this.value / 1000;
+            voltageLowerInput.value = value.toFixed(3);
+            
+            if (syncVoltageCheckbox.checked) {
+                const absValue = Math.abs(value);
+                voltageUpperSlider.value = absValue * 1000;
+                voltageUpperInput.value = absValue.toFixed(3);
             }
+        };
+        
+        voltageLowerInput.oninput = function() {
+            const value = parseFloat(this.value);
+            voltageLowerSlider.value = value * 1000;
+            
+            if (syncVoltageCheckbox.checked) {
+                const absValue = Math.abs(value);
+                voltageUpperSlider.value = absValue * 1000;
+                voltageUpperInput.value = absValue.toFixed(3);
+            }
+        };
+        
+        voltageUpperSlider.oninput = function() {
+            const value = this.value / 1000;
+            voltageUpperInput.value = value.toFixed(3);
+            
+            if (syncVoltageCheckbox.checked) {
+                const negValue = -value;
+                voltageLowerSlider.value = negValue * 1000;
+                voltageLowerInput.value = negValue.toFixed(3);
+            }
+        };
+        
+        voltageUpperInput.oninput = function() {
+            const value = parseFloat(this.value);
+            voltageUpperSlider.value = value * 1000;
+            
+            if (syncVoltageCheckbox.checked) {
+                const negValue = -value;
+                voltageLowerSlider.value = negValue * 1000;
+                voltageLowerInput.value = negValue.toFixed(3);
+            }
+        };
+        
+        voltageLowerSlider.onchange = updateVoltage;
+        voltageLowerInput.onchange = updateVoltage;
+        voltageUpperSlider.onchange = updateVoltage;
+        voltageUpperInput.onchange = updateVoltage;
+        
+        syncVoltageCheckbox.onchange = function() {
+            if (this.checked) {
+                const upperValue = parseFloat(voltageUpperInput.value);
+                const lowerValue = -upperValue;
+                voltageLowerSlider.value = lowerValue * 1000;
+                voltageLowerInput.value = lowerValue.toFixed(3);
+                updateVoltage();
+            }
+        };
+        
+        // Delay control
+        function updateDelay() {
+            const value = parseFloat(delayInput.value);
+            sendMessage({
+                type: 'SetDelay',
+                delay: value,
+                delay_mode: currentDelayMode
+            });
+        }
+        
+        delaySlider.oninput = function() {
+            delayInput.value = this.value;
+        };
+        
+        delayInput.oninput = function() {
+            delaySlider.value = this.value;
+        };
+        
+        delaySlider.onchange = updateDelay;
+        delayInput.onchange = updateDelay;
+        
+        delayModeButtons.forEach(btn => {
+            btn.onclick = function() {
+                updateDelayMode(this.dataset.mode);
+                updateDelay();
+            };
         });
+        
+        // Gain control
+        function updateGain() {
+            const value = parseFloat(gainInput.value);
+            sendMessage({
+                type: 'SetGain',
+                gain: value
+            });
+        }
+        
+        gainSlider.oninput = function() {
+            const value = this.value / 1000;
+            gainInput.value = value.toFixed(3);
+        };
+        
+        gainInput.oninput = function() {
+            const value = parseFloat(this.value);
+            gainSlider.value = value * 1000;
+        };
+        
+        gainSlider.onchange = updateGain;
+        gainInput.onchange = updateGain;
+        
+        // Pressure controls
+        pressureSlider.oninput = function() {
+            pressureInput.value = this.value;
+        };
+        
+        pressureInput.oninput = function() {
+            pressureSlider.value = this.value;
+        };
+        
+        setPressureBtn.onclick = function() {
+            const pressure = parseInt(pressureInput.value);
+            sendPressureMessage({
+                type: 'SetPressure',
+                pressure: pressure
+            });
+            log(`<span style="color: #10b981;">📤 Setting pressure to ${pressure} mbar...</span>`);
+        };
+        
+        zeroPressureBtn.onclick = function() {
+            pressureSlider.value = 0;
+            pressureInput.value = 0;
+            sendPressureMessage({
+                type: 'SetPressure',
+                pressure: 0
+            });
+            log('<span style="color: #f59e0b;">📤 Zeroing pressure...</span>');
+        };
+        
+        // Initialize connections
+        window.onload = function() {
+            log('<span style="color: #6b7280;">🚀 System initializing...</span>');
+            connect();
+            connectPressure();
+        };
+        
+        // Clean up on page unload
+        window.onbeforeunload = function() {
+            if (ws) ws.close();
+            if (pressureWs) pressureWs.close();
+            stopPressureMonitoring();
+        };
     </script>
-</body>
-</html>
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8">
-  <title>Red Pitaya Axum UI</title>
-</head>
-<body>
-  <h1>Control Slider</h1>
-  <input id="slider" type="range" min="0" max="1" step="0.01">
-  <script>
-    const slider = document.getElementById("slider");
-    slider.oninput = () => {
-      fetch("/api/input", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ value: parseFloat(slider.value) })
-      });
-    };
-  </script>
 </body>
 </html>

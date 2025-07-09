@@ -54,20 +54,65 @@ struct RpRegs {
 struct UiInput {
     value: f32,
 }
+
+#[derive(serde::Deserialize)]
+struct VoltageInput {
+    voltage: f32,
+}
+
+#[derive(serde::Deserialize)]
+struct DelayInput {
+    delay: f32,
+    delay_mode: DelayMode,
+}
+
+#[derive(serde::Deserialize)]
+struct GainInput {
+    gain: f32,
+}
+
+#[derive(Serialize, Deserialize, Debug, Clone, Copy)]
+enum DelayMode {
+    Period,
+    Timestamp,
+}
+
 async fn handle_input(Json(payload): Json<UiInput>) -> impl IntoResponse {
     println!("Received slider value: {}", payload.value);
-    // TODO: call into RP’s C‐API via FFI, or manipulate GPIO/DAC here.
+    // TODO: call into RP's C‐API via FFI, or manipulate GPIO/DAC here.
+    (StatusCode::OK, Json(serde_json::json!({ "status": "ok" })))
+}
+
+async fn handle_voltage(Json(payload): Json<VoltageInput>) -> impl IntoResponse {
+    println!("Received voltage value: {}V", payload.voltage);
+    // TODO: call into RP's C‐API via FFI, or manipulate GPIO/DAC here.
+    (StatusCode::OK, Json(serde_json::json!({ "status": "ok" })))
+}
+
+async fn handle_delay(Json(payload): Json<DelayInput>) -> impl IntoResponse {
+    println!(
+        "Received delay value: {} (mode: {:?})",
+        payload.delay, payload.delay_mode
+    );
+    // TODO: call into RP's C‐API via FFI, or manipulate GPIO/DAC here.
+    (StatusCode::OK, Json(serde_json::json!({ "status": "ok" })))
+}
+
+async fn handle_gain(Json(payload): Json<GainInput>) -> impl IntoResponse {
+    println!("Received gain value: {}", payload.gain);
+    // TODO: call into RP's C‐API via FFI, or manipulate GPIO/DAC here.
     (StatusCode::OK, Json(serde_json::json!({ "status": "ok" })))
 }
 
 async fn hello() -> impl IntoResponse {
-    // TODO: call into RP’s C‐API via FFI, or manipulate GPIO/DAC here.
+    // TODO: call into RP's C‐API via FFI, or manipulate GPIO/DAC here.
     (StatusCode::OK, "Hello World!")
 }
 
 async fn handler_404() -> (StatusCode, Html<&'static str>) {
     (StatusCode::NOT_FOUND, Html("<h1>404 Not Found</h1>"))
 }
+
 #[tokio::main]
 async fn main() {
     /*let output = Command::new("fpgautil")
@@ -91,12 +136,25 @@ async fn main() {
 
     let (tx, _rx) = broadcast::channel(100);
     let current_frequency = Arc::new(Mutex::new(1000.0f32));
+    let current_voltage = Arc::new(Mutex::new(0.0f32));
+    let current_delay = Arc::new(Mutex::new(0.0f32));
+    let current_delay_mode = Arc::new(Mutex::new(DelayMode::Period));
+    let current_gain = Arc::new(Mutex::new(1.0f32));
 
     let tx_monitor = tx.clone();
     let freq_monitor = current_frequency.clone();
+    let voltage_monitor = current_voltage.clone();
+    let delay_monitor = current_delay.clone();
+    let delay_mode_monitor = current_delay_mode.clone();
+    let gain_monitor = current_gain.clone();
+
     let app_state = AppState {
         tx: tx.clone(),
         current_frequency: current_frequency.clone(),
+        current_voltage: current_voltage.clone(),
+        current_delay: current_delay.clone(),
+        current_delay_mode: current_delay_mode.clone(),
+        current_gain: current_gain.clone(),
     };
 
     std::thread::spawn(move || {
@@ -121,13 +179,22 @@ async fn main() {
         let regs = map.as_ptr() as *mut RpRegs;
         let cfg_word = (log2_ncycles & 0x1F) | (phase_inc << 5);
         unsafe { core::ptr::write_volatile(&mut (*regs).config, cfg_word) };
+
         loop {
             let count: u32 = unsafe { core::ptr::read_volatile(&(*regs).count) };
             let freq_est = (ncycles as f64 / count as f64) * FREQ_HZ;
+
+            // Get current values for printing
+            let voltage = voltage_monitor.lock().unwrap().clone();
+            let delay = delay_monitor.lock().unwrap().clone();
+            let delay_mode = delay_mode_monitor.lock().unwrap().clone();
+            let gain = gain_monitor.lock().unwrap().clone();
+
             print!(
-                "\rCounts: {count:5} | cycles/avg: {ncycles:5} | est. frequency: {freq_est:10.5} Hz",
+                "\rCounts: {count:5} | cycles/avg: {ncycles:5} | est. frequency: {freq_est:10.5} Hz | Voltage: {voltage:+.3}V | Delay: {delay:.3} ({delay_mode:?}) | Gain: {gain:+.3}",
             );
             io::stdout().flush().ok();
+
             let _ = tx_monitor.send(WebSocketMessage::FrequencyUpdate {
                 frequency: freq_est,
             });
@@ -148,6 +215,9 @@ async fn main() {
     // Build our app with a route for the API and the static assets
     let app = Router::new()
         .route("/api/input", post(handle_input))
+        .route("/api/voltage", post(handle_voltage))
+        .route("/api/delay", post(handle_delay))
+        .route("/api/gain", post(handle_gain))
         .route("/api/hello", get(hello))
         .route("/ws", get(websocket_handler))
         .fallback_service(static_files) // Serve static assets like CSS, JS, images
@@ -198,6 +268,9 @@ struct SystemStatus {}
 #[serde(tag = "type")]
 enum WebSocketMessage {
     SliderUpdate { value: f32 },
+    VoltageUpdate { voltage: f32 },
+    DelayUpdate { delay: f32, delay_mode: DelayMode },
+    GainUpdate { gain: f32 },
     StatusUpdate { status: RedpitayaStatus },
     FrequencyUpdate { frequency: f64 },
     Hello,
@@ -207,6 +280,10 @@ enum WebSocketMessage {
 struct AppState {
     tx: broadcast::Sender<WebSocketMessage>,
     current_frequency: Arc<Mutex<f32>>,
+    current_voltage: Arc<Mutex<f32>>,
+    current_delay: Arc<Mutex<f32>>,
+    current_delay_mode: Arc<Mutex<DelayMode>>,
+    current_gain: Arc<Mutex<f32>>,
 }
 
 async fn websocket_handler(
@@ -223,6 +300,11 @@ async fn handle_socket(socket: WebSocket, state: AppState) {
     // Spawn a task to handle incoming messages from this client
     let tx_clone = state.tx.clone();
     let freq_clone = state.current_frequency.clone();
+    let voltage_clone = state.current_voltage.clone();
+    let delay_clone = state.current_delay.clone();
+    let delay_mode_clone = state.current_delay_mode.clone();
+    let gain_clone = state.current_gain.clone();
+
     tokio::spawn(async move {
         while let Some(msg) = receiver.next().await {
             if let Ok(Message::Text(text)) = msg {
@@ -234,10 +316,36 @@ async fn handle_socket(socket: WebSocket, state: AppState) {
                             if let Ok(mut freq) = freq_clone.lock() {
                                 *freq = value;
                             }
-
                             // TODO: call into RP's C‐API via FFI, or manipulate GPIO/DAC here.
-                            // For now, just broadcast the update to all clients
                             let _ = tx_clone.send(WebSocketMessage::SliderUpdate { value });
+                        }
+                        WebSocketMessage::VoltageUpdate { voltage } => {
+                            println!("Received voltage value: {}V", voltage);
+                            if let Ok(mut v) = voltage_clone.lock() {
+                                *v = voltage;
+                            }
+                            // TODO: call into RP's C‐API via FFI, or manipulate GPIO/DAC here.
+                            let _ = tx_clone.send(WebSocketMessage::VoltageUpdate { voltage });
+                        }
+                        WebSocketMessage::DelayUpdate { delay, delay_mode } => {
+                            println!("Received delay value: {} (mode: {:?})", delay, delay_mode);
+                            if let Ok(mut d) = delay_clone.lock() {
+                                *d = delay;
+                            }
+                            if let Ok(mut dm) = delay_mode_clone.lock() {
+                                *dm = delay_mode;
+                            }
+                            // TODO: call into RP's C‐API via FFI, or manipulate GPIO/DAC here.
+                            let _ =
+                                tx_clone.send(WebSocketMessage::DelayUpdate { delay, delay_mode });
+                        }
+                        WebSocketMessage::GainUpdate { gain } => {
+                            println!("Received gain value: {}", gain);
+                            if let Ok(mut g) = gain_clone.lock() {
+                                *g = gain;
+                            }
+                            // TODO: call into RP's C‐API via FFI, or manipulate GPIO/DAC here.
+                            let _ = tx_clone.send(WebSocketMessage::GainUpdate { gain });
                         }
                         WebSocketMessage::Hello => {
                             let _ = tx_clone.send(WebSocketMessage::Hello);
