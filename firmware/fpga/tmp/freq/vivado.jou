@@ -11,3 +11,16 @@
 #-----------------------------------------------------------
 start_gui
 open_project C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.xpr
+update_compile_order -fileset sources_1
+update_module_reference system_frequency_counter_0_0
+update_module_reference system_frequency_counter_0_0
+update_compile_order -fileset sources_1
+update_module_reference system_frequency_counter_0_0
+update_module_reference system_freq_mapper_0_0
+update_compile_order -fileset sources_1
+update_module_reference system_frequency_counter_0_0
+reset_run synth_1
+launch_runs impl_1 -to_step write_bitstream -jobs 12
+wait_on_run impl_1
+update_module_reference system_freq_mapper_0_0
+update_module_reference system_freq_mapper_0_0

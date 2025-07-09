@@ -1,7 +1,7 @@
 Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version     : Vivado v.2020.1 (win64) Build 2902540 Wed May 27 19:54:49 MDT 2020
-| Date             : Wed Jul  9 05:28:41 2025
+| Date             : Wed Jul  9 05:42:26 2025
 | Host             : DESKTOP-93GTNQD running 64-bit major release  (build 9200)
 | Command          : report_power -file system_wrapper_power_routed.rpt -pb system_wrapper_power_summary_routed.pb -rpx system_wrapper_power_routed.rpx
 | Design           : system_wrapper
@@ -53,13 +53,13 @@ Table of Contents
 | On-Chip                 | Power (W) | Used     | Available | Utilization (%) |
 +-------------------------+-----------+----------+-----------+-----------------+
 | Clocks                  |     0.014 |        8 |       --- |             --- |
-| Slice Logic             |     0.029 |     6295 |       --- |             --- |
-|   LUT as Logic          |     0.023 |     3421 |     17600 |           19.44 |
+| Slice Logic             |     0.028 |     6216 |       --- |             --- |
+|   LUT as Logic          |     0.022 |     3364 |     17600 |           19.11 |
 |   CARRY4                |     0.006 |      736 |      4400 |           16.73 |
-|   Register              |    <0.001 |     1679 |     35200 |            4.77 |
+|   Register              |    <0.001 |     1656 |     35200 |            4.70 |
 |   LUT as Shift Register |    <0.001 |       46 |      6000 |            0.77 |
-|   Others                |     0.000 |      236 |       --- |             --- |
-| Signals                 |     0.043 |     5445 |       --- |             --- |
+|   Others                |     0.000 |      237 |       --- |             --- |
+| Signals                 |     0.043 |     5364 |       --- |             --- |
 | MMCM                    |     0.107 |        1 |         2 |           50.00 |
 | I/O                     |     0.237 |       57 |       100 |           57.00 |
 | PS7                     |     1.282 |        1 |       --- |             --- |
@@ -74,7 +74,7 @@ Table of Contents
 +-----------+-------------+-----------+-------------+------------+-------------+-------------+------------+
 | Source    | Voltage (V) | Total (A) | Dynamic (A) | Static (A) | Powerup (A) | Budget (A)  | Margin (A) |
 +-----------+-------------+-----------+-------------+------------+-------------+-------------+------------+
-| Vccint    |       1.000 |     0.097 |       0.090 |      0.007 |       NA    | Unspecified | NA         |
+| Vccint    |       1.000 |     0.097 |       0.089 |      0.007 |       NA    | Unspecified | NA         |
 | Vccaux    |       1.800 |     0.075 |       0.067 |      0.008 |       NA    | Unspecified | NA         |
 | Vcco33    |       3.300 |     0.061 |       0.060 |      0.001 |       NA    | Unspecified | NA         |
 | Vcco25    |       2.500 |     0.000 |       0.000 |      0.000 |       NA    | Unspecified | NA         |
@@ -156,9 +156,9 @@ Table of Contents
 | Name                       | Power (W) |
 +----------------------------+-----------+
 | system_wrapper             |     1.711 |
-|   system_i                 |     1.507 |
-|     FrequencyCounter       |     0.072 |
-|       freq_mapper_0        |     0.067 |
+|   system_i                 |     1.506 |
+|     FrequencyCounter       |     0.071 |
+|       freq_mapper_0        |     0.066 |
 |       frequency_counter_0  |     0.005 |
 |     PS7                    |     1.289 |
 |       processing_system7_0 |     1.283 |
