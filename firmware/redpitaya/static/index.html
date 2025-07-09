@@ -572,12 +572,12 @@
                     <h4>Frequency Range for Voltage Output</h4>
                     <div class="freq-range-row">
                         <label>Min:</label>
-                        <input id="freqMinInput" type="number" class="input-field freq-input" min="0" step="0.1" value="100" disabled>
+                        <input id="freqMinInput" type="number" class="input-field freq-input" min="1" step="1" value="1000" disabled>
                         <span class="unit-label">Hz</span>
                     </div>
                     <div class="freq-range-row">
                         <label>Max:</label>
-                        <input id="freqMaxInput" type="number" class="input-field freq-input" min="0" step="0.1" value="10000" disabled>
+                        <input id="freqMaxInput" type="number" class="input-field freq-input" min="1" step="1" value="100000" disabled>
                         <span class="unit-label">Hz</span>
                     </div>
                     <div class="range-info">Voltage output will scale linearly between these frequency bounds</div>
@@ -932,18 +932,36 @@
             freqMinInput.onchange = updateFrequencyRange;
             freqMaxInput.onchange = updateFrequencyRange;
 
-            
             function updateFrequencyRange() {
-                const minFreq = parseFloat(freqMinInput.value);
-                const maxFreq = parseFloat(freqMaxInput.value);
-        
+                let minFreq = Math.round(parseFloat(freqMinInput.value));
+                let maxFreq = Math.round(parseFloat(freqMaxInput.value));
+
+                // Clamp minFreq to at least 1 Hz
+                if (isNaN(minFreq) || minFreq < 1) {
+                    minFreq = 1;
+                }
+
+                // Clamp maxFreq to no more than 5 MHz
+                if (isNaN(maxFreq) || maxFreq > 5000000) {
+                    maxFreq = 5000000;
+                }
+
+                // Ensure minFreq is not greater than maxFreq
+                if (minFreq > maxFreq) {
+                    minFreq = maxFreq;
+                }
+
+                // Update the input fields with cleaned integer values
+                freqMinInput.value = minFreq;
+                freqMaxInput.value = maxFreq;
+
                 sendMessage({
                     type: 'SetFrequencyRange',
                     min_freq: minFreq,
                     max_freq: maxFreq
                 });
             }
-                      
+            
             ws.onclose = function() {
                 log('<span style="color: #ef4444;">❌ Red Pitaya disconnected</span>');
                 updateConnectionStatus(false);
