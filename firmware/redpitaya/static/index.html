@@ -1,4 +1,226 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Red Pitaya WebSocket UI</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .control-group {
+            margin: 20px 0;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .slider-container {
+            margin: 10px 0;
+        }
+        .slider-value {
+            font-weight: bold;
+            color: #333;
+        }
+        .status {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+        .status.connected {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        .status.disconnected {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+        .frequency-display {
+            font-size: 18px;
+            font-weight: bold;
+            color: #007bff;
+        }
+        input[type="range"] {
+            width: 100%;
+            margin: 10px 0;
+        }
+        button {
+            padding: 10px 20px;
+            margin: 5px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            background-color: #007bff;
+            color: white;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        button:disabled {
+            background-color: #6c757d;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body>
+    <h1>Red Pitaya WebSocket Control</h1>
+    
+    <div class="status" id="connectionStatus">
+        <span id="statusText">Connecting...</span>
+    </div>
+    
+    <div class="control-group">
+        <h3>Frequency Control</h3>
+        <div class="slider-container">
+            <label for="slider">Frequency: <span class="slider-value" id="sliderValue">1000.0</span> Hz</label>
+            <input id="slider" type="range" min="100" max="10000" step="0.1" value="1000" disabled>
+        </div>
+        <div class="frequency-display">
+            Measured Frequency: <span id="measuredFreq">---</span> Hz
+        </div>
+    </div>
+    
+    <div class="control-group">
+        <h3>Controls</h3>
+        <button id="helloBtn" disabled>Send Hello</button>
+        <button id="reconnectBtn" onclick="reconnect()">Reconnect</button>
+    </div>
+    
+    <div class="control-group">
+        <h3>Log</h3>
+        <div id="log" style="height: 200px; overflow-y: auto; border: 1px solid #ddd; padding: 10px; font-family: monospace; font-size: 12px;"></div>
+    </div>
 
+    <script>
+        let ws = null;
+        let reconnectTimer = null;
+        
+        const slider = document.getElementById('slider');
+        const sliderValue = document.getElementById('sliderValue');
+        const statusEl = document.getElementById('connectionStatus');
+        const statusText = document.getElementById('statusText');
+        const measuredFreq = document.getElementById('measuredFreq');
+        const helloBtn = document.getElementById('helloBtn');
+        const logEl = document.getElementById('log');
+        
+        function log(message) {
+            const timestamp = new Date().toLocaleTimeString();
+            logEl.innerHTML += `[${timestamp}] ${message}<br>`;
+            logEl.scrollTop = logEl.scrollHeight;
+        }
+        
+        function updateConnectionStatus(connected) {
+            if (connected) {
+                statusEl.className = 'status connected';
+                statusText.textContent = 'Connected to Red Pitaya';
+                slider.disabled = false;
+                helloBtn.disabled = false;
+            } else {
+                statusEl.className = 'status disconnected';
+                statusText.textContent = 'Disconnected from Red Pitaya';
+                slider.disabled = true;
+                helloBtn.disabled = true;
+                measuredFreq.textContent = '---';
+            }
+        }
+        
+        function connect() {
+            const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+            const wsUrl = `${protocol}//${window.location.host}/ws`;
+            
+            log(`Connecting to ${wsUrl}...`);
+            ws = new WebSocket(wsUrl);
+            
+            ws.onopen = function() {
+                log('WebSocket connected');
+                updateConnectionStatus(true);
+                if (reconnectTimer) {
+                    clearTimeout(reconnectTimer);
+                    reconnectTimer = null;
+                }
+            };
+            
+            ws.onmessage = function(event) {
+                try {
+                    const message = JSON.parse(event.data);
+                    
+                    switch (message.type) {
+                        case 'SliderUpdate':
+                            log(`Slider updated: ${message.value}`);
+                            break;
+                        case 'FrequencyUpdate':
+                            measuredFreq.textContent = message.frequency.toFixed(5);
+                            break;
+                        case 'Hello':
+                            log('Received Hello response');
+                            break;
+                        case 'StatusUpdate':
+                            log(`Status: ${JSON.stringify(message.status)}`);
+                            break;
+                        default:
+                            log(`Unknown message type: ${message.type}`);
+                    }
+                } catch (e) {
+                    log(`Error parsing message: ${e.message}`);
+                }
+            };
+            
+            ws.onclose = function() {
+                log('WebSocket disconnected');
+                updateConnectionStatus(false);
+                // Auto-reconnect after 3 seconds
+                reconnectTimer = setTimeout(connect, 3000);
+            };
+            
+            ws.onerror = function(error) {
+                log(`WebSocket error: ${error}`);
+                updateConnectionStatus(false);
+            };
+        }
+        
+        function reconnect() {
+            if (ws) {
+                ws.close();
+            }
+            connect();
+        }
+        
+        function sendMessage(message) {
+            if (ws && ws.readyState === WebSocket.OPEN) {
+                ws.send(JSON.stringify(message));
+            } else {
+                log('WebSocket not connected, cannot send message');
+            }
+        }
+        
+        // Event listeners
+        slider.oninput = function() {
+            const value = parseFloat(slider.value);
+            sliderValue.textContent = value.toFixed(1);
+            sendMessage({
+                type: 'SliderUpdate',
+                value: value
+            });
+        };
+        
+        helloBtn.onclick = function() {
+            sendMessage({ type: 'Hello' });
+        };
+        
+        // Initialize
+        updateConnectionStatus(false);
+        connect();
+        
+        // Cleanup on page unload
+        window.addEventListener('beforeunload', function() {
+            if (ws) {
+                ws.close();
+            }
+        });
+    </script>
+</body>
+</html>
 <!DOCTYPE html>
 <html>
 <head>

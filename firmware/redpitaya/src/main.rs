@@ -1,26 +1,27 @@
 use std::{
-    env,
     fs::OpenOptions,
     io::{self, Read, Write},
-    net::IpAddr,
+    sync::{Arc, Mutex},
     thread::sleep,
     time::Duration,
 };
 
-use axum::http::StatusCode;
-use axum::routing::get_service;
+use axum::{
+    extract::{
+        State, WebSocketUpgrade,
+        ws::{Message, WebSocket},
+    },
+    http::StatusCode,
+};
 use memmap2::{MmapMut, MmapOptions};
-use std::convert::Infallible;
-use std::f32::consts::PI;
-use std::process::Command;
 
-use axum::handler::HandlerWithoutStateExt;
 use axum::response::Html;
 use axum::{
     Json, Router,
     response::{IntoResponse, Redirect},
     routing::{get, post},
 };
+use tokio::sync::broadcast;
 use tower_http::services::ServeFile;
 
 use embedded_hal::spi::SpiBus;
@@ -28,8 +29,10 @@ use embedded_hal::spi::SpiDevice;
 use linux_embedded_hal::spidev::{SpiModeFlags, Spidev, SpidevOptions, SpidevTransfer};
 use tower_http::services::ServeDir;
 
-use rand_distr::{Distribution, Uniform};
-use tower::ServiceExt;
+use futures_util::{
+    sink::SinkExt,
+    stream::{SplitSink, SplitStream, StreamExt},
+};
 
 use serde::{Deserialize, Serialize};
 
@@ -86,7 +89,17 @@ async fn main() {
 
     return Ok(());*/
 
-    std::thread::spawn(|| {
+    let (tx, _rx) = broadcast::channel(100);
+    let current_frequency = Arc::new(Mutex::new(1000.0f32));
+
+    let tx_monitor = tx.clone();
+    let freq_monitor = current_frequency.clone();
+    let app_state = AppState {
+        tx: tx.clone(),
+        current_frequency: current_frequency.clone(),
+    };
+
+    std::thread::spawn(move || {
         let (log2_ncycles, freq_in) = (10, 1000.0);
 
         let phase_inc: u32 = (2.147_482 * freq_in) as u32; // same constant factor
@@ -112,29 +125,15 @@ async fn main() {
             let count: u32 = unsafe { core::ptr::read_volatile(&(*regs).count) };
             let freq_est = (ncycles as f64 / count as f64) * FREQ_HZ;
             print!(
-                "\rCounts: {:5} | cycles/avg: {:5} | est. frequency: {:10.5} Hz",
-                count, ncycles, freq_est
+                "\rCounts: {count:5} | cycles/avg: {ncycles:5} | est. frequency: {freq_est:10.5} Hz",
             );
             io::stdout().flush().ok();
+            let _ = tx_monitor.send(WebSocketMessage::FrequencyUpdate {
+                frequency: freq_est,
+            });
             sleep(Duration::from_secs(3));
         }
     });
-    /*let (log2_ncycles, freq_in) = (10, 1000.0);
-
-    let phase_inc: u32 = (2.147_482 * freq_in) as u32; // same constant factor
-    let ncycles: u32 = 1 << log2_ncycles;
-    // ─────────────────── open /dev/mem and mmap it ───────────────────
-    let file = OpenOptions::new().read(true).write(true).open("/dev/mem")?;
-
-    let map: MmapMut = unsafe {
-        MmapOptions::new()
-            .offset(BASE_ADDR)
-            .len(PAGE_SIZE)
-            .map_mut(&file)?
-    };
-    let regs = map.as_ptr() as *mut RpRegs;
-    let cfg_word = (log2_ncycles & 0x1F) | (phase_inc << 5);
-    unsafe { core::ptr::write_volatile(&mut (*regs).config, cfg_word) };*/
 
     /*let mut spi = Spidev::open("/dev/spidev1.0")?;
     let options = SpidevOptions::new()
@@ -150,68 +149,25 @@ async fn main() {
     let app = Router::new()
         .route("/api/input", post(handle_input))
         .route("/api/hello", get(hello))
-        .fallback_service(static_files); // Serve static assets like CSS, JS, images
+        .route("/ws", get(websocket_handler))
+        .fallback_service(static_files) // Serve static assets like CSS, JS, images
+        .with_state(app_state);
     // Serve all other static files
     // Fallback for 404sk
 
     let listener = tokio::net::TcpListener::bind("0.0.0.0:3030").await.unwrap();
     axum::serve(listener, app).await.unwrap();
-    /*let Ok(ethernet_connected) = is_ethernet_connected(ETHERNET_INTERFACE) else {
-        continue;
-    };
-
-    let connection_status = if ethernet_connected {
-        ConnectionStatus::EthernetConnected
-    } else {
-        ConnectionStatus::EthernetDisconnected
-    };
-
-    let wave_form = random_array();
-    let msg = RedpitayaStatus {
-        connection_status,
-        fpga_status: FpgaStatus::BinNotFound,
-        frequency: 69.0,
-        wave_form,
-    };
-    let msg_bytes = postcard::to_stdvec(&msg)?;
-    let receive_buffer = Vec::with_capacity(1024);
-    let mut transfers = [
-        &mut SpidevTransfer::write(&msg_bytes),
-        &mut SpidevTransfer::read(&mut receive_buffer),
-    ];
-    spi.transfer(&mut SpidevTransfer::write(&msg_bytes))?;
-
-        //print!("\x1B[2J\x1B[H");
-        let count: u32 = unsafe { core::ptr::read_volatile(&(*regs).count) };
-        let freq_est = (ncycles as f64 / count as f64) * FREQ_HZ;
-        print!(
-            "\rCounts: {:5} | cycles/avg: {:5} | est. frequency: {:10.5} Hz | count: {}",
-            count, ncycles, freq_est, count
-        );
-
-        //let sine = sinus_period(I14_MIN, I14_MAX, 0);
-        //print_graph(&sine, freq_est as f32);
-        io::stdout().flush().ok();
-        sleep(Duration::from_secs(3));
-    }
-    println!("{receive_buffer:?}");*/
-}
-
-fn random_array() -> [i16; 128] {
-    let mut rng = rand::thread_rng();
-    let uniform = Uniform::new(I14_MIN, I14_MAX).expect("try create uniform");
-    std::array::from_fn(|_| uniform.sample(&mut rng))
 }
 
 const I14_MAX: i16 = 8191;
 const I14_MIN: i16 = -8192;
 fn is_ethernet_connected(interface: &str) -> io::Result<bool> {
-    let path = format!("/sys/class/net/{}/carrier", interface);
+    let path = format!("/sys/class/net/{interface}/carrier");
     let contents = std::fs::read_to_string(path)?;
     Ok(contents.trim() == "1")
 }
 
-#[derive(Serialize, Deserialize, Debug, PartialEq)]
+#[derive(Serialize, Deserialize, Debug, PartialEq, Clone)]
 struct RedpitayaStatus {
     connection_status: ConnectionStatus,
     fpga_status: FpgaStatus,
@@ -220,13 +176,13 @@ struct RedpitayaStatus {
     wave_form: [u32; 128],
 }
 
-#[derive(Serialize, Deserialize, Debug, PartialEq)]
+#[derive(Serialize, Deserialize, Debug, PartialEq, Clone, Copy)]
 enum ConnectionStatus {
     EthernetConnected,
     EthernetDisconnected,
 }
 
-#[derive(Serialize, Deserialize, Debug, PartialEq)]
+#[derive(Serialize, Deserialize, Debug, PartialEq, Clone, Copy)]
 enum FpgaStatus {
     BinNotFound,
     ProgrammingError,
@@ -238,131 +194,66 @@ struct ButtonSettings {}
 #[derive(Serialize, Deserialize, Debug, PartialEq)]
 struct SystemStatus {}
 
-fn sinus_period(limit_min: i16, limit_max: i16, offset: i16) -> [i16; 128] {
-    let mid = (I14_MAX as f32 + I14_MIN as f32) * 0.5;
-    let amplitude = (I14_MAX as f32 - I14_MIN as f32) * 0.5;
-
-    std::array::from_fn(|i| {
-        // 0..127 sample index + offset, wrapped into [0..128)
-        let phase = ((i as i16 + offset).rem_euclid(128) as f32) / 128.0;
-        let angle = 2.0 * PI * phase;
-        // full ±14-bit sample
-        let raw = (mid + amplitude * angle.sin()).round() as i16;
-        // clamp into your window
-        raw.clamp(limit_min, limit_max)
-    })
+#[derive(Serialize, Deserialize, Debug, Clone)]
+#[serde(tag = "type")]
+enum WebSocketMessage {
+    SliderUpdate { value: f32 },
+    StatusUpdate { status: RedpitayaStatus },
+    FrequencyUpdate { frequency: f64 },
+    Hello,
 }
 
-/// Print a text-mode graph of the data and display frequency & period
-fn print_graph(data: &[i16; 128], frequency_hz: f32) {
-    // Compute period in seconds
-    let period_s = 1.0 / frequency_hz;
-    // Choose appropriate time unit
-    let (period_val, unit) = if period_s >= 1.0 {
-        (period_s, "s")
-    } else if period_s * 1e3 >= 1.0 {
-        (period_s * 1e3, "ms")
-    } else if period_s * 1e6 >= 1.0 {
-        (period_s * 1e6, "us")
-    } else {
-        (period_s * 1e9, "ns")
-    };
+#[derive(Clone)]
+struct AppState {
+    tx: broadcast::Sender<WebSocketMessage>,
+    current_frequency: Arc<Mutex<f32>>,
+}
 
-    // Header with frequency and period
-    println!(
-        "Frequency: {:.3} Hz   Period: {:.3} {}",
-        frequency_hz, period_val, unit
-    );
+async fn websocket_handler(
+    ws: WebSocketUpgrade,
+    State(state): State<AppState>,
+) -> impl IntoResponse {
+    ws.on_upgrade(|socket| handle_socket(socket, state))
+}
 
-    // Determine data range
-    let min_v = *data.iter().min().unwrap() as f32;
-    let max_v = *data.iter().max().unwrap() as f32;
-    let range = max_v - min_v;
+async fn handle_socket(socket: WebSocket, state: AppState) {
+    let (mut sender, mut receiver) = socket.split();
+    let mut rx = state.tx.subscribe();
 
-    // Graph dimensions
-    let height: usize = 20;
-    let width = data.len();
+    // Spawn a task to handle incoming messages from this client
+    let tx_clone = state.tx.clone();
+    let freq_clone = state.current_frequency.clone();
+    tokio::spawn(async move {
+        while let Some(msg) = receiver.next().await {
+            if let Ok(Message::Text(text)) = msg {
+                if let Ok(ws_msg) = serde_json::from_str::<WebSocketMessage>(&text) {
+                    match ws_msg {
+                        WebSocketMessage::SliderUpdate { value } => {
+                            println!("Received slider value: {value}");
+                            // Update the current frequency
+                            if let Ok(mut freq) = freq_clone.lock() {
+                                *freq = value;
+                            }
 
-    // Compute which rows correspond to max, zero, and min
-    let row_of = |value: f32| -> usize {
-        let norm = if range > 0.0 {
-            (value - min_v) / range
-        } else {
-            0.5
-        };
-        let r = (norm * (height as f32 - 1.0)).round() as isize;
-        // invert so 0 is bottom
-        (height as isize - 1 - r) as usize
-    };
-    let row_max = row_of(max_v);
-    let row_zero = if min_v <= 0.0 && max_v >= 0.0 {
-        Some(row_of(0.0))
-    } else {
-        None
-    };
-    let row_min = row_of(min_v);
-
-    // Prepare empty canvas
-    let mut canvas = vec![vec![' '; width]; height];
-
-    // Plot data
-    for (x, &v) in data.iter().enumerate() {
-        let y = row_of(v as f32);
-        canvas[y][x] = '*';
-    }
-
-    // Overlay reference lines (but don't overwrite data points)
-    for x in 0..width {
-        // max
-        if canvas[row_max][x] == ' ' {
-            canvas[row_max][x] = '─';
-        }
-        // zero
-        if let Some(rz) = row_zero {
-            if canvas[rz][x] == ' ' {
-                canvas[rz][x] = '─';
+                            // TODO: call into RP's C‐API via FFI, or manipulate GPIO/DAC here.
+                            // For now, just broadcast the update to all clients
+                            let _ = tx_clone.send(WebSocketMessage::SliderUpdate { value });
+                        }
+                        WebSocketMessage::Hello => {
+                            let _ = tx_clone.send(WebSocketMessage::Hello);
+                        }
+                        _ => {}
+                    }
+                }
             }
         }
-        // min
-        if canvas[row_min][x] == ' ' {
-            canvas[row_min][x] = '─';
-        }
-    }
+    });
 
-    // Print each row with a y-axis label
-    for row in 0..height {
-        let value = max_v - (row as f32) * (range / (height as f32 - 1.0));
-        print!("{:>7.1} | ", value);
-        for &ch in &canvas[row] {
-            print!("{}", ch);
-        }
-        println!();
-    }
-
-    // x-axis
-    print!("{:>7} +", "");
-    for _ in 0..width {
-        print!("-");
-    }
-    println!();
-
-    // tick marks every 16 samples
-    print!("{:>7}   ", "");
-    for i in 0..width {
-        if i % 16 == 0 {
-            print!("│");
-        } else {
-            print!(" ");
+    // Handle outgoing messages to this client
+    while let Ok(msg) = rx.recv().await {
+        let json = serde_json::to_string(&msg).unwrap();
+        if sender.send(Message::Text(json.into())).await.is_err() {
+            break;
         }
     }
-    println!();
-    print!("{:>7}   ", "");
-    for i in 0..width {
-        if i % 16 == 0 {
-            print!("{:^1}", i / 16);
-        } else {
-            print!(" ");
-        }
-    }
-    println!();
 }
