@@ -2,19 +2,34 @@ use std::{
     env,
     fs::OpenOptions,
     io::{self, Read, Write},
+    net::IpAddr,
     thread::sleep,
     time::Duration,
 };
 
+use axum::http::StatusCode;
+use axum::routing::get_service;
 use memmap2::{MmapMut, MmapOptions};
+use std::convert::Infallible;
 use std::f32::consts::PI;
 use std::process::Command;
+
+use axum::handler::HandlerWithoutStateExt;
+use axum::response::Html;
+use axum::{
+    Json, Router,
+    response::{IntoResponse, Redirect},
+    routing::{get, post},
+};
+use tower_http::services::ServeFile;
 
 use embedded_hal::spi::SpiBus;
 use embedded_hal::spi::SpiDevice;
 use linux_embedded_hal::spidev::{SpiModeFlags, Spidev, SpidevOptions, SpidevTransfer};
+use tower_http::services::ServeDir;
 
 use rand_distr::{Distribution, Uniform};
+use tower::ServiceExt;
 
 use serde::{Deserialize, Serialize};
 
@@ -32,6 +47,24 @@ struct RpRegs {
     config: u32,    // 0x08 – R/W   {phase_inc[31:5], log2_Ncycles[4:0]}
 }
 
+#[derive(serde::Deserialize)]
+struct UiInput {
+    value: f32,
+}
+async fn handle_input(Json(payload): Json<UiInput>) -> impl IntoResponse {
+    println!("Received slider value: {}", payload.value);
+    // TODO: call into RP’s C‐API via FFI, or manipulate GPIO/DAC here.
+    (StatusCode::OK, Json(serde_json::json!({ "status": "ok" })))
+}
+
+async fn hello() -> impl IntoResponse {
+    // TODO: call into RP’s C‐API via FFI, or manipulate GPIO/DAC here.
+    (StatusCode::OK, "Hello World!")
+}
+
+async fn handler_404() -> (StatusCode, Html<&'static str>) {
+    (StatusCode::NOT_FOUND, Html("<h1>404 Not Found</h1>"))
+}
 #[tokio::main]
 async fn main() {
     /*let output = Command::new("fpgautil")
@@ -59,17 +92,22 @@ async fn main() {
         let phase_inc: u32 = (2.147_482 * freq_in) as u32; // same constant factor
         let ncycles: u32 = 1 << log2_ncycles;
         // ─────────────────── open /dev/mem and mmap it ───────────────────
-        let file = OpenOptions::new().read(true).write(true).open("/dev/mem")?;
+        let file = OpenOptions::new()
+            .read(true)
+            .write(true)
+            .open("/dev/mem")
+            .unwrap();
 
         let map: MmapMut = unsafe {
             MmapOptions::new()
                 .offset(BASE_ADDR)
                 .len(PAGE_SIZE)
-                .map_mut(&file)?
+                .map_mut(&file)
+                .unwrap()
         };
         let regs = map.as_ptr() as *mut RpRegs;
         let cfg_word = (log2_ncycles & 0x1F) | (phase_inc << 5);
-        unsafe { core::ptr::write_volatile(&mut (*regs).config, cfg_word) }; 
+        unsafe { core::ptr::write_volatile(&mut (*regs).config, cfg_word) };
         loop {
             let count: u32 = unsafe { core::ptr::read_volatile(&(*regs).count) };
             let freq_est = (ncycles as f64 / count as f64) * FREQ_HZ;
@@ -81,7 +119,7 @@ async fn main() {
             sleep(Duration::from_secs(3));
         }
     });
-    let (log2_ncycles, freq_in) = (10, 1000.0);
+    /*let (log2_ncycles, freq_in) = (10, 1000.0);
 
     let phase_inc: u32 = (2.147_482 * freq_in) as u32; // same constant factor
     let ncycles: u32 = 1 << log2_ncycles;
@@ -96,7 +134,7 @@ async fn main() {
     };
     let regs = map.as_ptr() as *mut RpRegs;
     let cfg_word = (log2_ncycles & 0x1F) | (phase_inc << 5);
-    unsafe { core::ptr::write_volatile(&mut (*regs).config, cfg_word) };
+    unsafe { core::ptr::write_volatile(&mut (*regs).config, cfg_word) };*/
 
     /*let mut spi = Spidev::open("/dev/spidev1.0")?;
     let options = SpidevOptions::new()
@@ -106,34 +144,42 @@ async fn main() {
         .build();
     spi.configure(&options)?;*/
 
-    println!("transfered");
-    loop {
-        /*let Ok(ethernet_connected) = is_ethernet_connected(ETHERNET_INTERFACE) else {
-            continue;
-        };
+    let static_files =
+        ServeDir::new("static").not_found_service(ServeFile::new("static/index.html"));
+    // Build our app with a route for the API and the static assets
+    let app = Router::new()
+        .route("/api/input", post(handle_input))
+        .route("/api/hello", get(hello))
+        .fallback_service(static_files); // Serve static assets like CSS, JS, images
+    // Serve all other static files
+    // Fallback for 404sk
 
-        let connection_status = if ethernet_connected {
-            ConnectionStatus::EthernetConnected
-        } else {
-            ConnectionStatus::EthernetDisconnected
-        };
+    let listener = tokio::net::TcpListener::bind("0.0.0.0:3030").await.unwrap();
+    axum::serve(listener, app).await.unwrap();
+    /*let Ok(ethernet_connected) = is_ethernet_connected(ETHERNET_INTERFACE) else {
+        continue;
+    };
 
-        let wave_form = random_array();
-        let msg = RedpitayaStatus {
-            connection_status,
-            fpga_status: FpgaStatus::BinNotFound,
-            frequency: 69.0,
-            wave_form,
-        };
-        let msg_bytes = postcard::to_stdvec(&msg)?;
-        let receive_buffer = Vec::with_capacity(1024);
-        let mut transfers = [
-            &mut SpidevTransfer::write(&msg_bytes),
-            &mut SpidevTransfer::read(&mut receive_buffer),
-        ];
-        spi.transfer(&mut SpidevTransfer::write(&msg_bytes))?;
+    let connection_status = if ethernet_connected {
+        ConnectionStatus::EthernetConnected
+    } else {
+        ConnectionStatus::EthernetDisconnected
+    };
 
-        println!("{receive_buffer:?}");*/
+    let wave_form = random_array();
+    let msg = RedpitayaStatus {
+        connection_status,
+        fpga_status: FpgaStatus::BinNotFound,
+        frequency: 69.0,
+        wave_form,
+    };
+    let msg_bytes = postcard::to_stdvec(&msg)?;
+    let receive_buffer = Vec::with_capacity(1024);
+    let mut transfers = [
+        &mut SpidevTransfer::write(&msg_bytes),
+        &mut SpidevTransfer::read(&mut receive_buffer),
+    ];
+    spi.transfer(&mut SpidevTransfer::write(&msg_bytes))?;
 
         //print!("\x1B[2J\x1B[H");
         let count: u32 = unsafe { core::ptr::read_volatile(&(*regs).count) };
@@ -148,6 +194,7 @@ async fn main() {
         io::stdout().flush().ok();
         sleep(Duration::from_secs(3));
     }
+    println!("{receive_buffer:?}");*/
 }
 
 fn random_array() -> [i16; 128] {
