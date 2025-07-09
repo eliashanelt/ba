@@ -105,16 +105,23 @@
         }
         
         .status-indicator.connected {
-            background: rgba(34, 197, 94, 0.2);
-            border-color: rgba(34, 197, 94, 0.4);
-            color: #22c55e;
+            background: rgba(34, 197, 94, 0.4);
+            border-color: rgba(34, 197, 94, 0.6);
+            color: white;
+        }
+        
+        .status-indicator.connecting {
+            background: rgba(239, 153, 68, 0.4);
+            border-color: rgba(239, 154, 68, 0.6);
+            color: white;
         }
         
         .status-indicator.disconnected {
-            background: rgba(239, 68, 68, 0.2);
-            border-color: rgba(239, 68, 68, 0.4);
-            color: #ef4444;
+            background: rgba(239, 68, 68, 0.4);
+            border-color: rgba(239, 68, 68, 0.6);
+            color: white;
         }
+
         
         @media (max-width: 480px) {
             .status-indicator {
@@ -482,7 +489,7 @@
 </head>
 <body>
     <div class="title-bar">
-        <h1>Red Pitaya Control System</h1>
+        <h1>FluidFM Control System</h1>
         <p>Real-time Signal Processing & Pressure Control</p>
     </div>
     
@@ -490,7 +497,7 @@
         <div class="panel">
             <div class="panel-header">
                 <div class="panel-title">Red Pitaya Signal Control</div>
-                <div class="status-indicator" id="connectionStatus">
+                <div class="status-indicator connecting" id="connectionStatus">
                     <span id="statusText">Connecting...</span>
                 </div>
             </div>
