@@ -53,6 +53,15 @@ set_property DONT_TOUCH TRUE [get_cells -hier -filter {REF_NAME==system_clk_wiz_
 # IP: bd/system/ip/system_signal_merge_0_0/system_signal_merge_0_0.xci
 set_property DONT_TOUCH TRUE [get_cells -hier -filter {REF_NAME==system_signal_merge_0_0 || ORIG_REF_NAME==system_signal_merge_0_0} -quiet] -quiet
 
+# IP: bd/system/ip/system_freq_mapper_0_0/system_freq_mapper_0_0.xci
+set_property DONT_TOUCH TRUE [get_cells -hier -filter {REF_NAME==system_freq_mapper_0_0 || ORIG_REF_NAME==system_freq_mapper_0_0} -quiet] -quiet
+
+# IP: bd/system/ip/system_xlconstant_0_2/system_xlconstant_0_2.xci
+set_property DONT_TOUCH TRUE [get_cells -hier -filter {REF_NAME==system_xlconstant_0_2 || ORIG_REF_NAME==system_xlconstant_0_2} -quiet] -quiet
+
+# IP: bd/system/ip/system_xlconstant_0_3/system_xlconstant_0_3.xci
+set_property DONT_TOUCH TRUE [get_cells -hier -filter {REF_NAME==system_xlconstant_0_3 || ORIG_REF_NAME==system_xlconstant_0_3} -quiet] -quiet
+
 # IP: bd/system/ip/system_auto_pc_0/system_auto_pc_0.xci
 set_property DONT_TOUCH TRUE [get_cells -hier -filter {REF_NAME==system_auto_pc_0 || ORIG_REF_NAME==system_auto_pc_0} -quiet] -quiet
 

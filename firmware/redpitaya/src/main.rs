@@ -135,16 +135,16 @@ async fn main() {
 
         println!("{receive_buffer:?}");*/
 
-        print!("\x1B[2J\x1B[H");
+        //print!("\x1B[2J\x1B[H");
         let count: u32 = unsafe { core::ptr::read_volatile(&(*regs).count) };
         let freq_est = (ncycles as f64 / count as f64) * FREQ_HZ;
-        /*print!(
-            "\rCounts: {:5} | cycles/avg: {:5} | est. frequency: {:10.5} Hz",
-            count, ncycles, freq_est
-        );*/
+        print!(
+            "\rCounts: {:5} | cycles/avg: {:5} | est. frequency: {:10.5} Hz | count: {}",
+            count, ncycles, freq_est, count
+        );
 
-        let sine = sinus_period(I14_MIN, I14_MAX, 0);
-        print_graph(&sine, freq_est as f32);
+        //let sine = sinus_period(I14_MIN, I14_MAX, 0);
+        //print_graph(&sine, freq_est as f32);
         io::stdout().flush().ok();
         sleep(Duration::from_secs(3));
     }

@@ -2,18 +2,12 @@
 # Vivado v2020.1 (64-bit)
 # SW Build 2902540 on Wed May 27 19:54:49 MDT 2020
 # IP Build 2902112 on Wed May 27 22:43:36 MDT 2020
-# Start of session at: Tue Jul  8 16:38:20 2025
-# Process ID: 7892
+# Start of session at: Wed Jul  9 05:00:42 2025
+# Process ID: 20824
 # Current directory: C:/Users/elias/dev/ba/firmware/fpga/tmp/freq
-# Command line: vivado.exe -gui_launcher_event rodinguilauncherevent14472 C:\Users\elias\dev\ba\firmware\fpga\tmp\freq\freq.xpr
+# Command line: vivado.exe -gui_launcher_event rodinguilauncherevent12916 C:\Users\elias\dev\ba\firmware\fpga\tmp\freq\freq.xpr
 # Log file: C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/vivado.log
 # Journal file: C:/Users/elias/dev/ba/firmware/fpga/tmp/freq\vivado.jou
 #-----------------------------------------------------------
 start_gui
 open_project C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.xpr
-open_bd_design {C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/system.bd}
-update_compile_order -fileset sources_1
-delete_bd_objs [get_bd_intf_nets signal_clipper_0_M_AXIS_OUT] [get_bd_intf_nets FrequencyCounter_M_AXIS_OUT] [get_bd_cells signal_clipper_0]
-update_compile_order -fileset sources_1
-connect_bd_intf_net -boundary_type upper [get_bd_intf_pins FrequencyCounter/M_AXIS_OUT] [get_bd_intf_pins adc_to_dual_dac_0/S_AXIS_IN]
-save_bd_design

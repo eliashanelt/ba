@@ -1,0 +1,2302 @@
+/*
+
+Xilinx Vivado v2020.1 (64-bit) [Major: 2020, Minor: 1]
+SW Build: 2902540 on Wed May 27 19:54:49 MDT 2020
+IP Build: 2902112 on Wed May 27 22:43:36 MDT 2020
+
+Process ID (PID): 18252
+License: Customer
+
+Current time: 	Wed Jul 09 03:00:47 CEST 2025
+Time zone: 	Central European Standard Time (Europe/Berlin)
+
+OS: Windows 10
+OS Version: 10.0
+OS Architecture: amd64
+Available processors (cores): 24
+
+Screen size: 3440x1440
+Screen resolution (DPI): 100
+Available screens: 1
+Default font: family=Dialog,name=Dialog,style=plain,size=12
+
+Java version: 	9.0.4 64-bit
+Java home: 	C:/Xilinx/Vivado/2020.1/tps/win64/jre9.0.4
+Java executable location: 	C:/Xilinx/Vivado/2020.1/tps/win64/jre9.0.4/bin/java.exe
+Java initial memory (-Xms): 	128 MB
+Java maximum memory (-Xmx):	 3 GB
+
+
+User name: 	elias
+User home directory: C:/Users/elias
+User working directory: C:/Users/elias/dev/ba/firmware/fpga/tmp/freq
+User country: 	US
+User language: 	en
+User locale: 	en_US
+
+RDI_BASEROOT: C:/Xilinx/Vivado
+HDI_APPROOT: C:/Xilinx/Vivado/2020.1
+RDI_DATADIR: C:/Xilinx/Vivado/2020.1/data
+RDI_BINDIR: C:/Xilinx/Vivado/2020.1/bin
+
+Vivado preferences file location: C:/Users/elias/AppData/Roaming/Xilinx/Vivado/2020.1/vivado.xml
+Vivado preferences directory: C:/Users/elias/AppData/Roaming/Xilinx/Vivado/2020.1/
+Vivado layouts directory: C:/Users/elias/AppData/Roaming/Xilinx/Vivado/2020.1/data/layouts
+PlanAhead jar file location: 	C:/Xilinx/Vivado/2020.1/lib/classes/planAhead.jar
+Vivado log file location: 	C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/vivado.log
+Vivado journal file location: 	C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/vivado.jou
+Engine tmp dir: 	C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/.Xil/Vivado-18252-DESKTOP-93GTNQD
+
+Xilinx Environment Variables
+----------------------------
+XILINX: C:/Xilinx/Vivado/2020.1/ids_lite/ISE
+XILINX_DSP: C:/Xilinx/Vivado/2020.1/ids_lite/ISE
+XILINX_PLANAHEAD: C:/Xilinx/Vivado/2020.1
+XILINX_VIVADO: C:/Xilinx/Vivado/2020.1
+XILINX_VIVADO_HLS: C:/Xilinx/Vivado/2020.1
+
+
+GUI allocated memory:	171 MB
+GUI max memory:		3,072 MB
+Engine allocated memory: 1,000 MB
+
+Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
+
+*/
+
+// TclEventType: START_GUI
+// TclEventType: PROJECT_OPEN_DIALOG
+// Tcl Message: start_gui 
+// TclEventType: PROJECT_OPEN_DIALOG
+// bz (cs):  Open Project : addNotify
+// Opening Vivado Project: C:\Users\elias\dev\ba\firmware\fpga\tmp\freq\freq.xpr. Version: Vivado v2020.1 
+// TclEventType: DEBUG_PROBE_SET_CHANGE
+// TclEventType: MSGMGR_MOVEMSG
+// TclEventType: FILE_SET_NEW
+// TclEventType: RUN_STATUS_CHANGE
+// TclEventType: RUN_CURRENT
+// TclEventType: PROJECT_DASHBOARD_NEW
+// TclEventType: PROJECT_DASHBOARD_GADGET_NEW
+// TclEventType: PROJECT_DASHBOARD_GADGET_CHANGE
+// TclEventType: PROJECT_DASHBOARD_GADGET_NEW
+// TclEventType: PROJECT_DASHBOARD_GADGET_CHANGE
+// TclEventType: PROJECT_DASHBOARD_GADGET_NEW
+// TclEventType: PROJECT_DASHBOARD_GADGET_CHANGE
+// TclEventType: PROJECT_DASHBOARD_GADGET_NEW
+// TclEventType: PROJECT_DASHBOARD_GADGET_CHANGE
+// TclEventType: PROJECT_DASHBOARD_GADGET_NEW
+// TclEventType: PROJECT_DASHBOARD_GADGET_CHANGE
+// TclEventType: PROJECT_DASHBOARD_GADGET_NEW
+// TclEventType: PROJECT_DASHBOARD_GADGET_CHANGE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: IP_LOCK_CHANGE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: IP_LOCK_CHANGE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: IP_LOCK_CHANGE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: IP_LOCK_CHANGE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: IP_LOCK_CHANGE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: PROJECT_NEW
+// [GUI Memory]: 127 MB (+131140kb) [00:00:05]
+// [Engine Memory]: 1,000 MB (+896993kb) [00:00:05]
+// WARNING: HEventQueue.dispatchEvent() is taking  1217 ms.
+// Tcl Message: open_project C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.xpr 
+// Tcl Message: Scanning sources... Finished scanning sources 
+// Tcl Message: INFO: [IP_Flow 19-234] Refreshing IP repositories INFO: [IP_Flow 19-1700] Loaded user IP repository 'c:/Users/elias/dev/ba/firmware/fpga/tmp/cores'. INFO: [IP_Flow 19-2313] Loaded Vivado IP repository 'C:/Xilinx/Vivado/2020.1/data/ip'. 
+// Project name: freq; location: C:/Users/elias/dev/ba/firmware/fpga/tmp/freq; part: xc7z010clg400-1
+dismissDialog("Open Project"); // bz (cs)
+// Tcl Command: 'rdi::info_commands {device::*}'
+// Tcl Command: 'rdi::info_commands {debug::*}'
+// Tcl Command: 'rdi::info_commands {*}'
+// HMemoryUtils.trashcanNow. Engine heap size: 1,000 MB. GUI used memory: 82 MB. Current time: 7/9/25, 3:00:48 AM CEST
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: IP_LOCK_CHANGE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: IP_LOCK_CHANGE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: IP_LOCK_CHANGE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: IP_LOCK_CHANGE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: IP_LOCK_CHANGE
+// TclEventType: DG_GRAPH_STALE
+// Tcl Message: update_compile_order -fileset sources_1 
+// [GUI Memory]: 140 MB (+6286kb) [00:01:29]
+// Elapsed time: 104 seconds
+selectTree(PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE, "[root, Design Sources, system_wrapper (system_wrapper.v)]", 1, true); // B (F, cs) - Node
+selectTree(PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE, "[root, Design Sources, system_wrapper (system_wrapper.v)]", 1, true, false, false, false, false, true); // B (F, cs) - Double Click - Node
+collapseTree(PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE, "[root, Design Sources, system_wrapper (system_wrapper.v), system_i : system (system.bd)]", 2); // B (F, cs)
+collapseTree(PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE, "[root, Design Sources, system_wrapper (system_wrapper.v)]", 1); // B (F, cs)
+// Elapsed time: 43 seconds
+selectTree(PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE, "[root, Design Sources, freq_mapper (freq_mapper.v)]", 3, false); // B (F, cs)
+selectTree(PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE, "[root, Design Sources, freq_mapper (freq_mapper.v)]", 3, false, false, false, false, false, true); // B (F, cs) - Double Click
+selectTree(PAResourceEtoH.FlowNavigatorTreePanel_FLOW_NAVIGATOR_TREE, "[, IP Integrator, Open Block Design]", 7, false); // u (J, cs)
+// Run Command: PAResourceCommand.PACommandNames_OPEN_BLOCK_DESIGN
+// bz (cs):  Open Block Design : addNotify
+// TclEventType: LOAD_FEATURE
+// Tcl Message: open_bd_design {C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/system.bd} 
+// TclEventType: RSB_CHANGE_CURRENT_DIAGRAM
+// TclEventType: RSB_PROPERTY_CHANGE
+// TclEventType: LOAD_FEATURE
+// TclEventType: RSB_PROPERTY_CHANGE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_PROPERTY_CHANGE
+// TclEventType: RSB_OPEN_DIAGRAM
+// Tcl Message: Adding component instance block -- xilinx.com:ip:util_ds_buf:2.1 - util_ds_buf_1 Adding component instance block -- xilinx.com:ip:util_ds_buf:2.1 - util_ds_buf_2 Adding component instance block -- xilinx.com:ip:axi_gpio:2.0 - axi_gpio_0 Adding component instance block -- xilinx.com:ip:processing_system7:5.5 - processing_system7_0 
+// TclEventType: RSB_OPEN_DIAGRAM
+// TclEventType: RSB_CONNECTION_CHANGE
+// [GUI Memory]: 152 MB (+5577kb) [00:02:47]
+closeView(PAResourceOtoP.PAViews_PROJECT_SUMMARY, "Project Summary"); // v
+// TclEventType: RSB_CONNECTION_CHANGE
+// TclEventType: RSB_LOCK_CHANGE
+// 'bJ' command handler elapsed time: 3 seconds
+dismissDialog("Open Block Design"); // bz (cs)
+// Run Command: PAResourceCommand.PACommandNames_CUSTOMIZE_RSB_BLOC
+// r (cs): Re-customize Module Reference: addNotify
+// Elapsed time: 10 seconds
+selectButton(RDIResource.BaseDialog_CANCEL, "Cancel"); // a (r)
+dismissDialog("Re-customize Module Reference"); // r (cs)
+selectTab((HResource) null, (HResource) null, "Sources", 0); // aL (aI, cs)
+selectTree(PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE, "[root, Design Sources, freq_mapper (freq_mapper.v)]", 23, false); // B (F, cs)
+selectTree(PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE, "[root, Design Sources, freq_mapper (freq_mapper.v)]", 23, false, false, false, false, false, true); // B (F, cs) - Double Click
+selectCodeEditor("freq_mapper.v", 430, 267); // bP (w, cs)
+typeControlKey((HResource) null, "freq_mapper.v", 'c'); // bP (w, cs)
+// Elapsed time: 60 seconds
+selectCodeEditor("freq_mapper.v", 257, 432); // bP (w, cs)
+selectCodeEditor("freq_mapper.v", 450, 514); // bP (w, cs)
+typeControlKey((HResource) null, "freq_mapper.v", 'v'); // bP (w, cs)
+selectCodeEditor("freq_mapper.v", 50, 519); // bP (w, cs)
+selectCodeEditor("freq_mapper.v", 26, 519); // bP (w, cs)
+selectCodeEditor("freq_mapper.v", 16, 521); // bP (w, cs)
+selectCodeEditor("freq_mapper.v", 21, 514); // bP (w, cs)
+// TclEventType: IP_LOCK_CHANGE
+// TclEventType: REPORT_IP_STATUS_STALE
+// TclEventType: DG_GRAPH_STALE
+// TclEventType: FILE_SET_CHANGE
+selectCodeEditor("freq_mapper.v", 392, 526); // bP (w, cs)
+selectCodeEditor("freq_mapper.v", 392, 526, false, false, false, false, true); // bP (w, cs) - Double Click
+selectCodeEditor("freq_mapper.v", 390, 538); // bP (w, cs)
+selectCodeEditor("freq_mapper.v", 390, 538, false, false, false, false, true); // bP (w, cs) - Double Click
+selectCodeEditor("freq_mapper.v", 390, 538); // bP (w, cs)
+// TclEventType: DG_GRAPH_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: DG_GRAPH_STALE
+selectCodeEditor("freq_mapper.v", 205, 512); // bP (w, cs)
+selectCodeEditor("freq_mapper.v", 205, 512, false, false, false, false, true); // bP (w, cs) - Double Click
+selectCodeEditor("freq_mapper.v", 205, 512); // bP (w, cs)
+typeControlKey(null, null, 'z');
+typeControlKey(null, null, 'z');
+typeControlKey(null, null, 'z');
+typeControlKey(null, null, 'z');
+typeControlKey(null, null, 'z');
+// TclEventType: FILE_SET_CHANGE
+selectCodeEditor("freq_mapper.v", 441, 408); // bP (w, cs)
+selectCodeEditor("freq_mapper.v", 289, 523); // bP (w, cs)
+selectCodeEditor("freq_mapper.v", 324, 520); // bP (w, cs)
+selectCodeEditor("freq_mapper.v", 278, 523); // bP (w, cs)
+selectCodeEditor("freq_mapper.v", 278, 523, false, false, false, false, true); // bP (w, cs) - Double Click
+selectCodeEditor("freq_mapper.v", 355, 512); // bP (w, cs)
+selectCodeEditor("freq_mapper.v", 355, 512, false, false, false, false, true); // bP (w, cs) - Double Click
+selectCodeEditor("freq_mapper.v", 485, 524); // bP (w, cs)
+closeView(PAResourceOtoP.PAViews_CODE, "Code"); // F
+selectButton(PAResourceTtoZ.TaskBanner_CLOSE, (String) null); // k (aB, cs)
+closeTask("IP Integrator", "Block Design", "DesignTask.IP_INTEGRATOR");
+// A (cs): Confirm Close: addNotify
+selectButton(RDIResource.BaseDialog_CANCEL, "Cancel"); // a (A)
+dismissDialog("Confirm Close"); // A (cs)
+selectButton(PAResourceQtoS.SyntheticaStateMonitor_CANCEL, "Cancel"); // h (Q, cs)
+selectButton("OptionPane.button", "Do Not Cancel Process"); // JButton (v, B)
+selectButton(PAResourceTtoZ.TaskBanner_CLOSE, (String) null); // k (aB, cs)
+closeTask("IP Integrator", "Block Design", "DesignTask.IP_INTEGRATOR");
+// A (cs): Confirm Close: addNotify
+selectButton(RDIResource.BaseDialog_CANCEL, "Cancel"); // a (A)
+dismissDialog("Confirm Close"); // A (cs)
+selectCodeEditor("system_wrapper.v", 490, 100); // bP (w, cs)
+selectButton(PAResourceOtoP.PlanAheadTab_REFRESH_CHANGED_MODULES, "Refresh Changed Modules"); // h (ds, cs)
+// TclEventType: IP_LOCK_CHANGE
+// TclEventType: PACKAGER_OBJECT_ADD
+// TclEventType: PACKAGER_MESSAGE_RESET
+// TclEventType: PACKAGER_MESSAGE_UPDATE
+// TclEventType: BDCELL_LOCK_CHANGE
+// TclEventType: RSB_OPEN_DIAGRAM
+// TclEventType: RSB_SCRIPT_TASK
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: DG_GRAPH_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_REMOVE_OBJECT
+// TclEventType: RSB_SCRIPT_TASK
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_SAVE_DIAGRAM
+// bz (cs):  Refresh Changed Modules : addNotify
+// Tcl Message: update_module_reference system_freq_mapper_0_0 
+// Tcl Message: INFO: [IP_Flow 19-1976] HDL Parser: Replacing 'LOGICAL_WIDTH' by 14 for port or parameter 'amp_u' INFO: [IP_Flow 19-5107] Inferred bus interface 'rst' of definition 'xilinx.com:signal:reset:1.0' (from Xilinx Repository). INFO: [IP_Flow 19-5107] Inferred bus interface 'clk' of definition 'xilinx.com:signal:clock:1.0' (from Xilinx Repository). INFO: [IP_Flow 19-4728] Bus Interface 'clk': Added interface parameter 'ASSOCIATED_RESET' with value 'rst'. 
+// Tcl Message: INFO: [IP_Flow 19-234] Refreshing IP repositories INFO: [IP_Flow 19-1700] Loaded user IP repository 'c:/Users/elias/dev/ba/firmware/fpga/tmp/cores'. 
+// Tcl Message: Upgrading 'C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/system.bd' 
+// Tcl Message: INFO: [IP_Flow 19-1972] Upgraded system_freq_mapper_0_0 from freq_mapper_v1_0 1.0 to freq_mapper_v1_0 1.0 
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_SAVE_DIAGRAM
+// TclEventType: FILESET_UPDATE_IP
+// TclEventType: IP_UPGRADE_COMPLETE
+// Tcl Message: Wrote  : <C:\Users\elias\dev\ba\firmware\fpga\tmp\freq\freq.srcs\sources_1\bd\system\system.bd>  Wrote  : <C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ui/bd_c954508f.ui>  
+dismissDialog("Refresh Changed Modules"); // bz (cs)
+// Run Command: PAResourceCommand.PACommandNames_CUSTOMIZE_RSB_BLOC
+// r (cs): Re-customize Module Reference: addNotify
+selectButton(RDIResource.BaseDialog_CANCEL, "Cancel"); // a (r)
+dismissDialog("Re-customize Module Reference"); // r (cs)
+// Elapsed time: 53 seconds
+selectButton(PAResourceQtoS.SyntheticaStateMonitor_CANCEL, "Cancel"); // h (Q, cs)
+// bz (cs):  Resetting Runs : addNotify
+selectButton("OptionPane.button", "Cancel Process"); // JButton (v, B)
+// TclEventType: RUN_MODIFY
+// TclEventType: RUN_RESET
+// TclEventType: RUN_STATUS_CHANGE
+// TclEventType: RUN_RESET
+// Tcl Message: reset_run synth_1 
+// TclEventType: RUN_STATUS_CHANGE
+// TclEventType: RUN_RESET
+// TclEventType: RUN_MODIFY
+dismissDialog("Resetting Runs"); // bz (cs)
+selectTree(PAResourceEtoH.FlowNavigatorTreePanel_FLOW_NAVIGATOR_TREE, "[, Program and Debug, Generate Bitstream]", 20, false); // u (J, cs)
+// Run Command: PAResourceCommand.PACommandNames_RUN_BITGEN
+// A (cs): No Implementation Results Available: addNotify
+selectButton(RDIResource.BaseDialog_YES, "Yes"); // a (A)
+// bz (cs):  Resetting Runs : addNotify
+dismissDialog("No Implementation Results Available"); // A (cs)
+// TclEventType: RSB_SCRIPT_TASK
+dismissDialog("Resetting Runs"); // bz (cs)
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_SCRIPT_TASK
+// TclEventType: RSB_REMOVE_OBJECT
+// TclEventType: RSB_SCRIPT_TASK
+// TclEventType: RSB_REMOVE_OBJECT
+// TclEventType: RSB_SCRIPT_TASK
+// TclEventType: RSB_REMOVE_OBJECT
+// TclEventType: DG_GRAPH_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: REPORT_IP_STATUS_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_REMOVE_OBJECT
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_REMOVE_OBJECT
+// TclEventType: REPORT_IP_STATUS_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: REPORT_IP_STATUS_STALE
+// TclEventType: FILE_SET_CHANGE
+// bz (cs):  Generate Bitstream : addNotify
+// TclEventType: RSB_SCRIPT_TASK
+// TclEventType: RSB_SAVE_DIAGRAM
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_SAVE_DIAGRAM
+// Tcl Message: launch_runs impl_1 -to_step write_bitstream -jobs 12 
+// Tcl Message: INFO: [xilinx.com:ip:clk_wiz:6.0-1] /clk_wiz_0 clk_wiz propagate 
+// Tcl Message: Wrote  : <C:\Users\elias\dev\ba\firmware\fpga\tmp\freq\freq.srcs\sources_1\bd\system\system.bd>  Wrote  : <C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ui/bd_c954508f.ui>  
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_SAVE_DIAGRAM
+// TclEventType: RSB_SCRIPT_TASK
+// TclEventType: FILE_SET_CHANGE
+// Tcl Message: VHDL Output written to : C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/synth/system.v VHDL Output written to : C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/sim/system.v VHDL Output written to : C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/hdl/system_wrapper.v 
+// Tcl Message: INFO: [BD 41-1029] Generation completed for the IP Integrator block FrequencyCounter/freq_mapper_0 . 
+// Tcl Message: INFO: [BD 41-1029] Generation completed for the IP Integrator block PS7/ps7_0_axi_periph/s00_couplers/auto_pc . 
+// Tcl Message: Exporting to file C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/hw_handoff/system.hwh Generated Block Design Tcl file C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/hw_handoff/system_bd.tcl Generated Hardware Definition File C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/synth/system.hwdef 
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RUN_LAUNCH
+// TclEventType: RUN_MODIFY
+// Tcl Message: [Wed Jul  9 03:06:58 2025] Launched synth_1... Run output will be captured here: C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.runs/synth_1/runme.log [Wed Jul  9 03:06:58 2025] Launched impl_1... Run output will be captured here: C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.runs/impl_1/runme.log 
+// Tcl Message: launch_runs: Time (s): cpu = 00:00:02 ; elapsed = 00:00:10 . Memory (MB): peak = 1019.605 ; gain = 7.023 
+dismissDialog("Generate Bitstream"); // bz (cs)
+// TclEventType: RUN_STATUS_CHANGE
+// TclEventType: RUN_COMPLETED
+// TclEventType: RUN_STATUS_CHANGE
+// TclEventType: RUN_STEP_COMPLETED
+// TclEventType: RUN_STATUS_CHANGE
+// TclEventType: RUN_STEP_COMPLETED
+// TclEventType: RUN_COMPLETED
+// TclEventType: RUN_STATUS_CHANGE
+// Run Command: PAResourceCommand.PACommandNames_CUSTOMIZE_RSB_BLOC
+// r (cs): Re-customize Module Reference: addNotify
+// Elapsed time: 276 seconds
+selectButton(RDIResource.BaseDialog_CANCEL, "Cancel"); // a (r)
+dismissDialog("Re-customize Module Reference"); // r (cs)
+selectTree(PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE, "[root, Design Sources, freq_mapper (freq_mapper.v)]", 5, false); // B (F, cs)
+selectTree(PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE, "[root, Design Sources, signal_merge (signal_merge.v)]", 12, false); // B (F, cs)
+selectTree(PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE, "[root, Design Sources, signal_merge (signal_merge.v)]", 12, false, false, false, false, false, true); // B (F, cs) - Double Click
+selectTab("PlanAheadTabBaseWorkspace_JideTabbedPane", (HResource) null, "System", 0); // m (l, cs)
+selectView(PAResourceOtoP.PAViews_SYSTEM, "System", 2382, 154, 2726, 872, false, false, false, true, false); // hq (m, cs) - Popup Trigger
+selectMenu(PAResourceQtoS.SelectMenu_HIGHLIGHT, "Highlight"); // af (ao, cs)
+selectMenu(PAResourceQtoS.SystemBuilderView_ORIENTATION, "Orientation"); // af (ao, cs)
+selectMenu(PAResourceQtoS.SystemBuilderView_PINNING, "Pinning"); // af (ao, cs)
+selectMenu(PAResourceQtoS.SystemBuilderView_EXPAND_COLLAPSE, "Expand/Collapse"); // af (ao, cs)
+selectMenu(PAResourceQtoS.SystemBuilderView_EXPAND_COLLAPSE, "Expand/Collapse"); // af (ao, cs)
+selectMenu(PAResourceQtoS.SystemBuilderView_EXPAND_COLLAPSE, "Expand/Collapse"); // af (ao, cs)
+selectMenu(PAResourceQtoS.SystemBuilderView_EXPAND_COLLAPSE, "Expand/Collapse"); // af (ao, cs)
+selectMenu(PAResourceQtoS.SystemBuilderView_PINNING, "Pinning"); // af (ao, cs)
+selectMenu(PAResourceQtoS.SystemBuilderView_EXPAND_COLLAPSE, "Expand/Collapse"); // af (ao, cs)
+selectMenu(PAResourceQtoS.SystemBuilderView_EXPAND_COLLAPSE, "Expand/Collapse"); // af (ao, cs)
+selectMenu(PAResourceQtoS.SystemBuilderView_PINNING, "Pinning"); // af (ao, cs)
+selectMenu(PAResourceQtoS.SystemBuilderView_ORIENTATION, "Orientation"); // af (ao, cs)
+selectMenu(PAResourceQtoS.SystemBuilderView_ORIENTATION, "Orientation"); // af (ao, cs)
+selectMenu(PAResourceQtoS.SystemBuilderView_PINNING, "Pinning"); // af (ao, cs)
+selectMenu(PAResourceQtoS.SystemBuilderView_PINNING, "Pinning"); // af (ao, cs)
+selectMenu(PAResourceQtoS.SystemBuilderView_ORIENTATION, "Orientation"); // af (ao, cs)
+selectMenuItem(PAResourceCommand.PACommandNames_REFRESH_RSB_BLOCK, "Refresh Module"); // ai (ao, cs)
+// Run Command: PAResourceCommand.PACommandNames_REFRESH_RSB_BLOCK
+// TclEventType: PACKAGER_OBJECT_ADD
+// TclEventType: PACKAGER_MESSAGE_RESET
+// TclEventType: BDCELL_LOCK_CHANGE
+// TclEventType: RSB_OPEN_DIAGRAM
+// TclEventType: RSB_SCRIPT_TASK
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: DG_GRAPH_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_REMOVE_OBJECT
+// TclEventType: RSB_SCRIPT_TASK
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_SAVE_DIAGRAM
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_SAVE_DIAGRAM
+// TclEventType: FILESET_UPDATE_IP
+// TclEventType: IP_UPGRADE_COMPLETE
+// Tcl Message: update_module_reference system_signal_merge_0_0 
+// Tcl Message: INFO: [IP_Flow 19-5107] Inferred bus interface 'M_AXIS' of definition 'xilinx.com:interface:axis:1.0' (from Xilinx Repository). INFO: [IP_Flow 19-5107] Inferred bus interface 'S_AXIS' of definition 'xilinx.com:interface:axis:1.0' (from Xilinx Repository). INFO: [IP_Flow 19-4728] Bus Interface 'M_AXIS': Added interface parameter 'FREQ_HZ' with value '125000000'. INFO: [IP_Flow 19-4728] Bus Interface 'S_AXIS': Added interface parameter 'FREQ_HZ' with value '125000000'. INFO: [IP_Flow 19-234] Refreshing IP repositories INFO: [IP_Flow 19-1700] Loaded user IP repository 'c:/Users/elias/dev/ba/firmware/fpga/tmp/cores'. 
+// Tcl Message: Upgrading 'C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/system.bd' 
+// Tcl Message: INFO: [IP_Flow 19-1972] Upgraded system_signal_merge_0_0 from signal_merge_v1_0 1.0 to signal_merge_v1_0 1.0 
+// Tcl Message: Wrote  : <C:\Users\elias\dev\ba\firmware\fpga\tmp\freq\freq.srcs\sources_1\bd\system\system.bd>  Wrote  : <C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ui/bd_c954508f.ui>  
+selectButton("OptionPane.button", "OK"); // JButton (v, B)
+selectTree(PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE, "[root, Design Sources, freq_mapper (freq_mapper.v)]", 5, false); // B (F, cs)
+selectTree(PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE, "[root, Design Sources, freq_mapper (freq_mapper.v)]", 5, false, false, false, false, false, true); // B (F, cs) - Double Click
+// [GUI Memory]: 160 MB (+740kb) [00:11:19]
+selectCodeEditor("freq_mapper.v", 101, 472); // bP (w, cs)
+selectCodeEditor("freq_mapper.v", 101, 471, false, false, false, false, true); // bP (w, cs) - Double Click
+selectCodeEditor("freq_mapper.v", 101, 471); // bP (w, cs)
+typeControlKey((HResource) null, "freq_mapper.v", 'c'); // bP (w, cs)
+selectCodeEditor("freq_mapper.v", 163, 622); // bP (w, cs)
+typeControlKey((HResource) null, "freq_mapper.v", 'v'); // bP (w, cs)
+selectCodeEditor("freq_mapper.v", 43, 643); // bP (w, cs)
+selectCodeEditor("freq_mapper.v", 43, 643, false, false, false, false, true); // bP (w, cs) - Double Click
+selectCodeEditor("freq_mapper.v", 43, 643); // bP (w, cs)
+// TclEventType: IP_LOCK_CHANGE
+// TclEventType: REPORT_IP_STATUS_STALE
+// TclEventType: DG_GRAPH_STALE
+// TclEventType: FILE_SET_CHANGE
+selectCodeEditor("freq_mapper.v", 74, 636); // bP (w, cs)
+selectCodeEditor("freq_mapper.v", 81, 634); // bP (w, cs)
+// TclEventType: DG_GRAPH_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: DG_GRAPH_STALE
+selectCodeEditor("freq_mapper.v", 0, 250); // bP (w, cs)
+typeControlKey((HResource) null, "freq_mapper.v", 'c'); // bP (w, cs)
+// HMemoryUtils.trashcanNow. Engine heap size: 1,038 MB. GUI used memory: 96 MB. Current time: 7/9/25, 3:12:29 AM CEST
+// Elapsed time: 98 seconds
+selectCodeEditor("freq_mapper.v", 376, 501); // bP (w, cs)
+selectTab("PlanAheadTabBaseWorkspace_JideTabbedPane", (HResource) null, "System", 0); // m (l, cs)
+// Run Command: PAResourceCommand.PACommandNames_CUSTOMIZE_RSB_BLOC
+// r (cs): Re-customize Module Reference: addNotify
+dismissDialog("Re-customize Module Reference"); // r (cs)
+// Elapsed time: 43 seconds
+selectTab("PlanAheadTabBaseWorkspace_JideTabbedPane", (HResource) null, "System", 0); // m (l, cs)
+selectTab("PlanAheadTabBaseWorkspace_JideTabbedPane", (HResource) null, "Address Editor", 1); // m (l, cs)
+selectTab("PlanAheadTabBaseWorkspace_JideTabbedPane", (HResource) null, "System", 0); // m (l, cs)
+collapseTree(PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE, "[root, Design Sources, system_wrapper (system_wrapper.v)]", 1); // B (F, cs)
+selectTree(PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE, "[root, Design Sources, freq_mapper (freq_mapper.v)]", 3, false); // B (F, cs)
+selectTree(PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE, "[root, Design Sources, freq_mapper (freq_mapper.v)]", 3, false, false, false, false, false, true); // B (F, cs) - Double Click
+selectCodeEditor("freq_mapper.v", 325, 274); // bP (w, cs)
+selectCodeEditor("freq_mapper.v", 586, 299); // bP (w, cs)
+// Elapsed time: 17 seconds
+selectCodeEditor("freq_mapper.v", 262, 389); // bP (w, cs)
+selectCodeEditor("freq_mapper.v", 130, 690); // bP (w, cs)
+// TclEventType: DG_GRAPH_STALE
+// TclEventType: FILE_SET_CHANGE
+// Elapsed time: 29 seconds
+selectCodeEditor("freq_mapper.v", 25, 656); // bP (w, cs)
+selectCodeEditor("freq_mapper.v", 103, 615); // bP (w, cs)
+selectCodeEditor("freq_mapper.v", 246, 618); // bP (w, cs)
+selectCodeEditor("freq_mapper.v", 616, 607); // bP (w, cs)
+typeControlKey((HResource) null, "freq_mapper.v", 'v'); // bP (w, cs)
+// HMemoryUtils.trashcanNow. Engine heap size: 1,063 MB. GUI used memory: 97 MB. Current time: 7/9/25, 3:16:09 AM CEST
+// TclEventType: DG_GRAPH_STALE
+// TclEventType: FILE_SET_CHANGE
+// [Engine Memory]: 1,063 MB (+13893kb) [00:15:29]
+selectCodeEditor("freq_mapper.v", 297, 625); // bP (w, cs)
+selectCodeEditor("freq_mapper.v", 297, 625, false, false, false, false, true); // bP (w, cs) - Double Click
+selectCodeEditor("freq_mapper.v", 295, 621); // bP (w, cs)
+selectCodeEditor("freq_mapper.v", 314, 617); // bP (w, cs)
+selectCodeEditor("freq_mapper.v", 314, 616, false, false, false, false, true); // bP (w, cs) - Double Click
+selectCodeEditor("freq_mapper.v", 360, 632); // bP (w, cs)
+selectCodeEditor("freq_mapper.v", 252, 603); // bP (w, cs)
+typeControlKey(null, null, 'z');
+typeControlKey(null, null, 'z');
+typeControlKey(null, null, 'z');
+typeControlKey(null, null, 'z');
+selectCodeEditor("freq_mapper.v", 276, 602); // bP (w, cs)
+selectCodeEditor("freq_mapper.v", 276, 602, false, false, false, false, true); // bP (w, cs) - Double Click
+selectCodeEditor("freq_mapper.v", 356, 598); // bP (w, cs)
+selectCodeEditor("freq_mapper.v", 356, 598, false, false, false, false, true); // bP (w, cs) - Double Click
+// TclEventType: DG_GRAPH_STALE
+// TclEventType: FILE_SET_CHANGE
+selectCodeEditor("freq_mapper.v", 290, 606); // bP (w, cs)
+selectCodeEditor("freq_mapper.v", 290, 606, false, false, false, false, true); // bP (w, cs) - Double Click
+selectCodeEditor("freq_mapper.v", 191, 605); // bP (w, cs)
+selectCodeEditor("freq_mapper.v", 196, 603); // bP (w, cs)
+selectCodeEditor("freq_mapper.v", 188, 604); // bP (w, cs)
+selectCodeEditor("freq_mapper.v", 188, 604, false, false, false, false, true); // bP (w, cs) - Double Click
+// TclEventType: DG_GRAPH_STALE
+// TclEventType: FILE_SET_CHANGE
+selectCodeEditor("freq_mapper.v", 265, 599); // bP (w, cs)
+selectCodeEditor("freq_mapper.v", 265, 599, false, false, false, false, true); // bP (w, cs) - Double Click
+typeControlKey((HResource) null, "freq_mapper.v", 'c'); // bP (w, cs)
+selectCodeEditor("freq_mapper.v", 149, 688); // bP (w, cs)
+selectCodeEditor("freq_mapper.v", 149, 688, false, false, false, false, true); // bP (w, cs) - Double Click
+selectCodeEditor("freq_mapper.v", 200, 609); // bP (w, cs)
+selectCodeEditor("freq_mapper.v", 200, 609, false, false, false, false, true); // bP (w, cs) - Double Click
+typeControlKey((HResource) null, "freq_mapper.v", 'c'); // bP (w, cs)
+selectCodeEditor("freq_mapper.v", 158, 691); // bP (w, cs)
+selectCodeEditor("freq_mapper.v", 158, 691, false, false, false, false, true); // bP (w, cs) - Double Click
+typeControlKey((HResource) null, "freq_mapper.v", 'v'); // bP (w, cs)
+// TclEventType: DG_GRAPH_STALE
+// TclEventType: FILE_SET_CHANGE
+selectButton(PAResourceOtoP.PlanAheadTab_REFRESH_CHANGED_MODULES, "Refresh Changed Modules"); // h (ds, cs)
+// TclEventType: IP_LOCK_CHANGE
+// TclEventType: PACKAGER_OBJECT_ADD
+// TclEventType: PACKAGER_MESSAGE_RESET
+// TclEventType: PACKAGER_MESSAGE_UPDATE
+// TclEventType: BDCELL_LOCK_CHANGE
+// TclEventType: RSB_OPEN_DIAGRAM
+// TclEventType: RSB_SCRIPT_TASK
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: DG_GRAPH_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_REMOVE_OBJECT
+// TclEventType: RSB_SCRIPT_TASK
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_SAVE_DIAGRAM
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_SAVE_DIAGRAM
+// TclEventType: FILESET_UPDATE_IP
+// TclEventType: IP_UPGRADE_COMPLETE
+// Tcl Message: update_module_reference system_freq_mapper_0_0 
+// Tcl Message: INFO: [IP_Flow 19-1976] HDL Parser: Replacing 'LOGICAL_WIDTH' by 14 for port or parameter 'amp_u' INFO: [IP_Flow 19-5107] Inferred bus interface 'rst' of definition 'xilinx.com:signal:reset:1.0' (from Xilinx Repository). INFO: [IP_Flow 19-5107] Inferred bus interface 'clk' of definition 'xilinx.com:signal:clock:1.0' (from Xilinx Repository). INFO: [IP_Flow 19-4728] Bus Interface 'clk': Added interface parameter 'ASSOCIATED_RESET' with value 'rst'. 
+// Tcl Message: INFO: [IP_Flow 19-234] Refreshing IP repositories INFO: [IP_Flow 19-1700] Loaded user IP repository 'c:/Users/elias/dev/ba/firmware/fpga/tmp/cores'. 
+// Tcl Message: Upgrading 'C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/system.bd' 
+// Tcl Message: INFO: [IP_Flow 19-1972] Upgraded system_freq_mapper_0_0 from freq_mapper_v1_0 1.0 to freq_mapper_v1_0 1.0 
+// Tcl Message: Wrote  : <C:\Users\elias\dev\ba\firmware\fpga\tmp\freq\freq.srcs\sources_1\bd\system\system.bd>  
+selectView(PAResourceOtoP.PAViews_SYSTEM, "System", 624, 426, 2726, 872, false, false, false, true, false); // hq (m, cs) - Popup Trigger
+selectMenu(PAResourceQtoS.SelectMenu_HIGHLIGHT, "Highlight"); // af (ao, cs)
+selectMenu(PAResourceQtoS.SystemBuilderView_ORIENTATION, "Orientation"); // af (ao, cs)
+selectMenuItem(PAResourceCommand.PACommandNames_REFRESH_RSB_BLOCK, "Refresh Module"); // ai (ao, cs)
+// Run Command: PAResourceCommand.PACommandNames_REFRESH_RSB_BLOCK
+// TclEventType: PACKAGER_OBJECT_ADD
+// TclEventType: PACKAGER_MESSAGE_RESET
+// TclEventType: PACKAGER_MESSAGE_UPDATE
+// TclEventType: BDCELL_LOCK_CHANGE
+// TclEventType: RSB_OPEN_DIAGRAM
+// TclEventType: RSB_SCRIPT_TASK
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: DG_GRAPH_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_REMOVE_OBJECT
+// TclEventType: RSB_SCRIPT_TASK
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_SAVE_DIAGRAM
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_SAVE_DIAGRAM
+// TclEventType: FILESET_UPDATE_IP
+// TclEventType: IP_UPGRADE_COMPLETE
+// Tcl Message: update_module_reference system_freq_mapper_0_0 
+// Tcl Message: INFO: [IP_Flow 19-1976] HDL Parser: Replacing 'LOGICAL_WIDTH' by 14 for port or parameter 'amp_u' INFO: [IP_Flow 19-5107] Inferred bus interface 'rst' of definition 'xilinx.com:signal:reset:1.0' (from Xilinx Repository). INFO: [IP_Flow 19-5107] Inferred bus interface 'clk' of definition 'xilinx.com:signal:clock:1.0' (from Xilinx Repository). INFO: [IP_Flow 19-4728] Bus Interface 'clk': Added interface parameter 'ASSOCIATED_RESET' with value 'rst'. 
+// Tcl Message: INFO: [IP_Flow 19-234] Refreshing IP repositories INFO: [IP_Flow 19-1700] Loaded user IP repository 'c:/Users/elias/dev/ba/firmware/fpga/tmp/cores'. 
+// Tcl Message: Upgrading 'C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/system.bd' 
+// Tcl Message: INFO: [IP_Flow 19-1972] Upgraded system_freq_mapper_0_0 from freq_mapper_v1_0 1.0 to freq_mapper_v1_0 1.0 
+// Tcl Message: Wrote  : <C:\Users\elias\dev\ba\firmware\fpga\tmp\freq\freq.srcs\sources_1\bd\system\system.bd>  Wrote  : <C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ui/bd_c954508f.ui>  
+selectButton("OptionPane.button", "OK"); // JButton (v, B)
+selectTree(PAResourceEtoH.FlowNavigatorTreePanel_FLOW_NAVIGATOR_TREE, "[, Program and Debug, Generate Bitstream]", 20, false); // u (J, cs)
+// Run Command: PAResourceCommand.PACommandNames_RUN_BITGEN
+// A (cs): Synthesis is Out-of-date: addNotify
+selectButton(RDIResource.BaseDialog_YES, "Yes"); // a (A)
+// bz (cs):  Resetting Runs : addNotify
+// TclEventType: RUN_MODIFY
+dismissDialog("Synthesis is Out-of-date"); // A (cs)
+// TclEventType: RUN_RESET
+// TclEventType: RUN_STATUS_CHANGE
+// TclEventType: RUN_RESET
+// TclEventType: RUN_STATUS_CHANGE
+// TclEventType: RUN_RESET
+// TclEventType: RUN_MODIFY
+// Tcl Message: reset_run synth_1 
+// TclEventType: RSB_SCRIPT_TASK
+dismissDialog("Resetting Runs"); // bz (cs)
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_SCRIPT_TASK
+// TclEventType: RSB_REMOVE_OBJECT
+// TclEventType: RSB_SCRIPT_TASK
+// TclEventType: RSB_REMOVE_OBJECT
+// TclEventType: RSB_SCRIPT_TASK
+// TclEventType: RSB_REMOVE_OBJECT
+// TclEventType: DG_GRAPH_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: REPORT_IP_STATUS_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_REMOVE_OBJECT
+// TclEventType: FILE_SET_CHANGE
+// Tcl Message: launch_runs impl_1 -to_step write_bitstream -jobs 12 
+// TclEventType: RSB_REMOVE_OBJECT
+// TclEventType: REPORT_IP_STATUS_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: REPORT_IP_STATUS_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_SCRIPT_TASK
+// TclEventType: RSB_SAVE_DIAGRAM
+// bz (cs):  Generate Bitstream : addNotify
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_SAVE_DIAGRAM
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_SAVE_DIAGRAM
+// TclEventType: RSB_SCRIPT_TASK
+// TclEventType: FILE_SET_CHANGE
+// Tcl Message: INFO: [xilinx.com:ip:clk_wiz:6.0-1] /clk_wiz_0 clk_wiz propagate 
+// Tcl Message: Wrote  : <C:\Users\elias\dev\ba\firmware\fpga\tmp\freq\freq.srcs\sources_1\bd\system\system.bd>  Wrote  : <C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ui/bd_c954508f.ui>  VHDL Output written to : C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/synth/system.v VHDL Output written to : C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/sim/system.v VHDL Output written to : C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/hdl/system_wrapper.v 
+// Tcl Message: INFO: [BD 41-1029] Generation completed for the IP Integrator block signal_merge_0 . INFO: [BD 41-1029] Generation completed for the IP Integrator block FrequencyCounter/freq_mapper_0 . 
+// Tcl Message: INFO: [BD 41-1029] Generation completed for the IP Integrator block PS7/ps7_0_axi_periph/s00_couplers/auto_pc . 
+// Tcl Message: Exporting to file C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/hw_handoff/system.hwh Generated Block Design Tcl file C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/hw_handoff/system_bd.tcl Generated Hardware Definition File C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/synth/system.hwdef 
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RUN_LAUNCH
+// TclEventType: RUN_MODIFY
+// Tcl Message: [Wed Jul  9 03:17:10 2025] Launched synth_1... Run output will be captured here: C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.runs/synth_1/runme.log [Wed Jul  9 03:17:10 2025] Launched impl_1... Run output will be captured here: C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.runs/impl_1/runme.log 
+// Tcl Message: launch_runs: Time (s): cpu = 00:00:02 ; elapsed = 00:00:05 . Memory (MB): peak = 1069.832 ; gain = 0.000 
+dismissDialog("Generate Bitstream"); // bz (cs)
+// TclEventType: RUN_STATUS_CHANGE
+// TclEventType: RUN_COMPLETED
+// TclEventType: RUN_STATUS_CHANGE
+// TclEventType: RUN_STEP_COMPLETED
+// TclEventType: RUN_STATUS_CHANGE
+// Run Command: PAResourceCommand.PACommandNames_CUSTOMIZE_RSB_BLOC
+// r (cs): Re-customize Module Reference: addNotify
+// Elapsed time: 59 seconds
+selectButton(RDIResource.BaseDialog_CANCEL, "Cancel"); // a (r)
+dismissDialog("Re-customize Module Reference"); // r (cs)
+// TclEventType: RUN_STEP_COMPLETED
+selectTab("PlanAheadTabBaseWorkspace_JideTabbedPane", (HResource) null, "Address Editor", 1); // m (l, cs)
+selectTab("PlanAheadTabBaseWorkspace_JideTabbedPane", (HResource) null, "System", 0); // m (l, cs)
+// TclEventType: RUN_COMPLETED
+// TclEventType: RUN_STATUS_CHANGE
+// Run Command: PAResourceCommand.PACommandNames_CUSTOMIZE_RSB_BLOC
+// r (cs): Re-customize Module Reference: addNotify
+// Elapsed time: 90 seconds
+selectButton(RDIResource.BaseDialog_CANCEL, "Cancel"); // a (r)
+dismissDialog("Re-customize Module Reference"); // r (cs)
+selectTree(PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE, "[root, Design Sources, freq_mapper (freq_mapper.v)]", 3, false); // B (F, cs)
+selectTree(PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE, "[root, Design Sources, freq_mapper (freq_mapper.v)]", 3, false, false, false, false, false, true); // B (F, cs) - Double Click
+selectCodeEditor("freq_mapper.v", 152, 696); // bP (w, cs)
+selectCodeEditor("freq_mapper.v", 179, 728); // bP (w, cs)
+selectCodeEditor("freq_mapper.v", 179, 728, false, false, false, false, true); // bP (w, cs) - Double Click
+typeControlKey((HResource) null, "freq_mapper.v", 'c'); // bP (w, cs)
+selectCodeEditor("freq_mapper.v", 164, 690); // bP (w, cs)
+selectCodeEditor("freq_mapper.v", 164, 690, false, false, false, false, true); // bP (w, cs) - Double Click
+typeControlKey((HResource) null, "freq_mapper.v", 'v'); // bP (w, cs)
+// TclEventType: IP_LOCK_CHANGE
+// TclEventType: REPORT_IP_STATUS_STALE
+// TclEventType: DG_GRAPH_STALE
+// TclEventType: FILE_SET_CHANGE
+selectButton(PAResourceOtoP.PlanAheadTab_REFRESH_CHANGED_MODULES, "Refresh Changed Modules"); // h (ds, cs)
+// TclEventType: IP_LOCK_CHANGE
+// TclEventType: PACKAGER_OBJECT_ADD
+// TclEventType: PACKAGER_MESSAGE_RESET
+// TclEventType: PACKAGER_MESSAGE_UPDATE
+// TclEventType: BDCELL_LOCK_CHANGE
+// TclEventType: RSB_OPEN_DIAGRAM
+// TclEventType: RSB_SCRIPT_TASK
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: DG_GRAPH_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_REMOVE_OBJECT
+// TclEventType: RSB_SCRIPT_TASK
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_SAVE_DIAGRAM
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_SAVE_DIAGRAM
+// TclEventType: FILESET_UPDATE_IP
+// TclEventType: IP_UPGRADE_COMPLETE
+// Tcl Message: update_module_reference system_freq_mapper_0_0 
+// Tcl Message: INFO: [IP_Flow 19-1976] HDL Parser: Replacing 'LOGICAL_WIDTH' by 14 for port or parameter 'amp_u' INFO: [IP_Flow 19-5107] Inferred bus interface 'rst' of definition 'xilinx.com:signal:reset:1.0' (from Xilinx Repository). INFO: [IP_Flow 19-5107] Inferred bus interface 'clk' of definition 'xilinx.com:signal:clock:1.0' (from Xilinx Repository). INFO: [IP_Flow 19-4728] Bus Interface 'clk': Added interface parameter 'ASSOCIATED_RESET' with value 'rst'. 
+// Tcl Message: INFO: [IP_Flow 19-234] Refreshing IP repositories INFO: [IP_Flow 19-1700] Loaded user IP repository 'c:/Users/elias/dev/ba/firmware/fpga/tmp/cores'. 
+// Tcl Message: Upgrading 'C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/system.bd' 
+// Tcl Message: INFO: [IP_Flow 19-1972] Upgraded system_freq_mapper_0_0 from freq_mapper_v1_0 1.0 to freq_mapper_v1_0 1.0 
+// Tcl Message: Wrote  : <C:\Users\elias\dev\ba\firmware\fpga\tmp\freq\freq.srcs\sources_1\bd\system\system.bd>  Wrote  : <C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ui/bd_c954508f.ui>  
+selectButton(PAResourceTtoZ.TaskBanner_CLOSE, (String) null); // k (aB, cs)
+closeTask("IP Integrator", "Block Design", "DesignTask.IP_INTEGRATOR");
+// A (cs): Confirm Close: addNotify
+selectButton(RDIResource.BaseDialog_CANCEL, "Cancel"); // a (A)
+dismissDialog("Confirm Close"); // A (cs)
+selectView(PAResourceOtoP.PAViews_SYSTEM, "System", 716, 519, 2726, 872, false, false, false, true, false); // hq (m, cs) - Popup Trigger
+selectMenu(PAResourceQtoS.SelectMenu_HIGHLIGHT, "Highlight"); // af (ao, cs)
+selectMenuItem(PAResourceCommand.PACommandNames_REFRESH_RSB_BLOCK, "Refresh Module"); // ai (ao, cs)
+// Run Command: PAResourceCommand.PACommandNames_REFRESH_RSB_BLOCK
+// TclEventType: PACKAGER_OBJECT_ADD
+// TclEventType: PACKAGER_MESSAGE_RESET
+// TclEventType: PACKAGER_MESSAGE_UPDATE
+// TclEventType: BDCELL_LOCK_CHANGE
+// TclEventType: RSB_OPEN_DIAGRAM
+// TclEventType: RSB_SCRIPT_TASK
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: DG_GRAPH_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_REMOVE_OBJECT
+// TclEventType: RSB_SCRIPT_TASK
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_SAVE_DIAGRAM
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_SAVE_DIAGRAM
+// TclEventType: FILESET_UPDATE_IP
+// TclEventType: IP_UPGRADE_COMPLETE
+// Tcl Message: update_module_reference system_freq_mapper_0_0 
+// Tcl Message: INFO: [IP_Flow 19-1976] HDL Parser: Replacing 'LOGICAL_WIDTH' by 14 for port or parameter 'amp_u' INFO: [IP_Flow 19-5107] Inferred bus interface 'rst' of definition 'xilinx.com:signal:reset:1.0' (from Xilinx Repository). INFO: [IP_Flow 19-5107] Inferred bus interface 'clk' of definition 'xilinx.com:signal:clock:1.0' (from Xilinx Repository). INFO: [IP_Flow 19-4728] Bus Interface 'clk': Added interface parameter 'ASSOCIATED_RESET' with value 'rst'. 
+// Tcl Message: INFO: [IP_Flow 19-234] Refreshing IP repositories INFO: [IP_Flow 19-1700] Loaded user IP repository 'c:/Users/elias/dev/ba/firmware/fpga/tmp/cores'. 
+// Tcl Message: Upgrading 'C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/system.bd' 
+// Tcl Message: INFO: [IP_Flow 19-1972] Upgraded system_freq_mapper_0_0 from freq_mapper_v1_0 1.0 to freq_mapper_v1_0 1.0 
+// Tcl Message: Wrote  : <C:\Users\elias\dev\ba\firmware\fpga\tmp\freq\freq.srcs\sources_1\bd\system\system.bd>  
+selectButton("OptionPane.button", "OK"); // JButton (v, B)
+selectView(PAResourceOtoP.PAViews_SYSTEM, "System", 397, 411, 2726, 872, false, false, false, true, false); // hq (m, cs) - Popup Trigger
+selectMenu(PAResourceQtoS.SelectMenu_HIGHLIGHT, "Highlight"); // af (ao, cs)
+selectMenu(PAResourceQtoS.SystemBuilderView_ORIENTATION, "Orientation"); // af (ao, cs)
+selectButton(PAResourceTtoZ.TaskBanner_CLOSE, (String) null); // k (aB, cs)
+closeTask("IP Integrator", "Block Design", "DesignTask.IP_INTEGRATOR");
+// A (cs): Confirm Close: addNotify
+selectButton(RDIResource.BaseDialog_CANCEL, "Cancel"); // a (A)
+dismissDialog("Confirm Close"); // A (cs)
+selectTree(PAResourceEtoH.FlowNavigatorTreePanel_FLOW_NAVIGATOR_TREE, "[, Program and Debug, Generate Bitstream]", 20, false); // u (J, cs)
+// Run Command: PAResourceCommand.PACommandNames_RUN_BITGEN
+// A (cs): Synthesis is Out-of-date: addNotify
+selectButton(RDIResource.BaseDialog_YES, "Yes"); // a (A)
+// bz (cs):  Resetting Runs : addNotify
+// TclEventType: RUN_MODIFY
+dismissDialog("Synthesis is Out-of-date"); // A (cs)
+// TclEventType: RUN_RESET
+// TclEventType: RUN_STATUS_CHANGE
+// TclEventType: RUN_RESET
+// TclEventType: RUN_STATUS_CHANGE
+// TclEventType: RUN_RESET
+// TclEventType: RUN_MODIFY
+// Tcl Message: reset_run synth_1 
+// TclEventType: RSB_SCRIPT_TASK
+dismissDialog("Resetting Runs"); // bz (cs)
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_SCRIPT_TASK
+// TclEventType: RSB_REMOVE_OBJECT
+// TclEventType: RSB_SCRIPT_TASK
+// TclEventType: RSB_REMOVE_OBJECT
+// TclEventType: RSB_SCRIPT_TASK
+// TclEventType: RSB_REMOVE_OBJECT
+// TclEventType: DG_GRAPH_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: REPORT_IP_STATUS_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_REMOVE_OBJECT
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_REMOVE_OBJECT
+// TclEventType: REPORT_IP_STATUS_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: REPORT_IP_STATUS_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_SCRIPT_TASK
+// TclEventType: RSB_SAVE_DIAGRAM
+// bz (cs):  Generate Bitstream : addNotify
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_SAVE_DIAGRAM
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_SAVE_DIAGRAM
+// TclEventType: RSB_SCRIPT_TASK
+// TclEventType: FILE_SET_CHANGE
+// Tcl Message: launch_runs impl_1 -to_step write_bitstream -jobs 12 
+// Tcl Message: INFO: [xilinx.com:ip:clk_wiz:6.0-1] /clk_wiz_0 clk_wiz propagate 
+// Tcl Message: Wrote  : <C:\Users\elias\dev\ba\firmware\fpga\tmp\freq\freq.srcs\sources_1\bd\system\system.bd>  Wrote  : <C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ui/bd_c954508f.ui>  VHDL Output written to : C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/synth/system.v VHDL Output written to : C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/sim/system.v VHDL Output written to : C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/hdl/system_wrapper.v 
+// Tcl Message: INFO: [BD 41-1029] Generation completed for the IP Integrator block FrequencyCounter/freq_mapper_0 . 
+// Tcl Message: INFO: [BD 41-1029] Generation completed for the IP Integrator block PS7/ps7_0_axi_periph/s00_couplers/auto_pc . 
+// Tcl Message: Exporting to file C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/hw_handoff/system.hwh Generated Block Design Tcl file C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/hw_handoff/system_bd.tcl Generated Hardware Definition File C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/synth/system.hwdef 
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RUN_LAUNCH
+// TclEventType: RUN_MODIFY
+// Tcl Message: [Wed Jul  9 03:20:33 2025] Launched synth_1... Run output will be captured here: C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.runs/synth_1/runme.log [Wed Jul  9 03:20:33 2025] Launched impl_1... Run output will be captured here: C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.runs/impl_1/runme.log 
+// Tcl Message: launch_runs: Time (s): cpu = 00:00:01 ; elapsed = 00:00:05 . Memory (MB): peak = 1077.578 ; gain = 7.746 
+dismissDialog("Generate Bitstream"); // bz (cs)
+// TclEventType: RUN_STATUS_CHANGE
+// TclEventType: RUN_COMPLETED
+// TclEventType: RUN_STATUS_CHANGE
+// TclEventType: RUN_STEP_COMPLETED
+// TclEventType: RUN_STATUS_CHANGE
+// TclEventType: RUN_STEP_COMPLETED
+// TclEventType: RUN_COMPLETED
+// TclEventType: RUN_STATUS_CHANGE
+// Elapsed time: 195 seconds
+selectTree(PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE, "[root, Design Sources, freq_to_voltage (freq_to_voltage.v)]", 4, false); // B (F, cs)
+selectTree(PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE, "[root, Design Sources, frequency_counter (frequency_counter.v)]", 5, false); // B (F, cs)
+selectTree(PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE, "[root, Design Sources, frequency_counter (frequency_counter.v)]", 5, false); // B (F, cs)
+selectTree(PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE, "[root, Design Sources, frequency_counter (frequency_counter.v)]", 5, false, false, false, false, false, true); // B (F, cs) - Double Click
+selectTree(PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE, "[root, Design Sources, freq_mapper (freq_mapper.v)]", 3, false); // B (F, cs)
+selectTree(PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE, "[root, Design Sources, freq_mapper (freq_mapper.v)]", 3, false, false, false, false, false, true); // B (F, cs) - Double Click
+selectCodeEditor("freq_mapper.v", 139, 724); // bP (w, cs)
+selectCodeEditor("freq_mapper.v", 166, 753); // bP (w, cs)
+selectCodeEditor("freq_mapper.v", 75, 744); // bP (w, cs)
+selectCodeEditor("freq_mapper.v", 151, 745); // bP (w, cs)
+selectCodeEditor("freq_mapper.v", 315, 696); // bP (w, cs)
+selectCodeEditor("freq_mapper.v", 174, 695); // bP (w, cs)
+selectCodeEditor("freq_mapper.v", 196, 710); // bP (w, cs)
+selectCodeEditor("freq_mapper.v", 55, 706); // bP (w, cs)
+selectCodeEditor("freq_mapper.v", 201, 726); // bP (w, cs)
+// TclEventType: IP_LOCK_CHANGE
+// TclEventType: REPORT_IP_STATUS_STALE
+// TclEventType: DG_GRAPH_STALE
+// TclEventType: FILE_SET_CHANGE
+// Elapsed time: 11 seconds
+selectTab("PlanAheadTabBaseWorkspace_JideTabbedPane", (HResource) null, "System", 0); // m (l, cs)
+selectButton(PAResourceOtoP.PlanAheadTab_REFRESH_CHANGED_MODULES, "Refresh Changed Modules"); // h (ds, cs)
+// TclEventType: IP_LOCK_CHANGE
+// TclEventType: PACKAGER_OBJECT_ADD
+// TclEventType: PACKAGER_MESSAGE_RESET
+// TclEventType: PACKAGER_MESSAGE_UPDATE
+// TclEventType: BDCELL_LOCK_CHANGE
+// TclEventType: RSB_OPEN_DIAGRAM
+// TclEventType: RSB_SCRIPT_TASK
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: DG_GRAPH_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_REMOVE_OBJECT
+// TclEventType: RSB_SCRIPT_TASK
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_SAVE_DIAGRAM
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_SAVE_DIAGRAM
+// TclEventType: FILESET_UPDATE_IP
+// TclEventType: IP_UPGRADE_COMPLETE
+// Tcl Message: update_module_reference system_freq_mapper_0_0 
+// Tcl Message: INFO: [IP_Flow 19-1976] HDL Parser: Replacing 'LOGICAL_WIDTH' by 14 for port or parameter 'amp_u' INFO: [IP_Flow 19-5107] Inferred bus interface 'rst' of definition 'xilinx.com:signal:reset:1.0' (from Xilinx Repository). INFO: [IP_Flow 19-5107] Inferred bus interface 'clk' of definition 'xilinx.com:signal:clock:1.0' (from Xilinx Repository). INFO: [IP_Flow 19-4728] Bus Interface 'clk': Added interface parameter 'ASSOCIATED_RESET' with value 'rst'. 
+// Tcl Message: INFO: [IP_Flow 19-234] Refreshing IP repositories INFO: [IP_Flow 19-1700] Loaded user IP repository 'c:/Users/elias/dev/ba/firmware/fpga/tmp/cores'. 
+// Tcl Message: Upgrading 'C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/system.bd' 
+// Tcl Message: INFO: [IP_Flow 19-1972] Upgraded system_freq_mapper_0_0 from freq_mapper_v1_0 1.0 to freq_mapper_v1_0 1.0 
+// Tcl Message: Wrote  : <C:\Users\elias\dev\ba\firmware\fpga\tmp\freq\freq.srcs\sources_1\bd\system\system.bd>  Wrote  : <C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ui/bd_c954508f.ui>  
+selectButton(PAResourceOtoP.PlanAheadTab_REFRESH_IP_CATALOG, "Refresh IP Catalog"); // h (ds, cs)
+selectView(PAResourceOtoP.PAViews_SYSTEM, "System", 660, 453, 2726, 872, false, false, false, true, false); // hq (m, cs) - Popup Trigger
+selectMenu(PAResourceQtoS.SelectMenu_HIGHLIGHT, "Highlight"); // af (ao, cs)
+selectMenuItem(PAResourceCommand.PACommandNames_REFRESH_RSB_BLOCK, "Refresh Module"); // ai (ao, cs)
+// Run Command: PAResourceCommand.PACommandNames_REFRESH_RSB_BLOCK
+// TclEventType: DG_GRAPH_STALE
+// TclEventType: PACKAGER_OBJECT_ADD
+// TclEventType: PACKAGER_MESSAGE_RESET
+// TclEventType: PACKAGER_MESSAGE_UPDATE
+// TclEventType: BDCELL_LOCK_CHANGE
+// TclEventType: RSB_OPEN_DIAGRAM
+// TclEventType: RSB_SCRIPT_TASK
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: DG_GRAPH_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_REMOVE_OBJECT
+// TclEventType: RSB_SCRIPT_TASK
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_SAVE_DIAGRAM
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_SAVE_DIAGRAM
+// TclEventType: FILESET_UPDATE_IP
+// TclEventType: IP_UPGRADE_COMPLETE
+// Tcl Message: update_module_reference system_freq_mapper_0_0 
+// Tcl Message: INFO: [IP_Flow 19-1976] HDL Parser: Replacing 'LOGICAL_WIDTH' by 14 for port or parameter 'amp_u' INFO: [IP_Flow 19-5107] Inferred bus interface 'rst' of definition 'xilinx.com:signal:reset:1.0' (from Xilinx Repository). INFO: [IP_Flow 19-5107] Inferred bus interface 'clk' of definition 'xilinx.com:signal:clock:1.0' (from Xilinx Repository). INFO: [IP_Flow 19-4728] Bus Interface 'clk': Added interface parameter 'ASSOCIATED_RESET' with value 'rst'. 
+// Tcl Message: INFO: [IP_Flow 19-234] Refreshing IP repositories INFO: [IP_Flow 19-1700] Loaded user IP repository 'c:/Users/elias/dev/ba/firmware/fpga/tmp/cores'. 
+// Tcl Message: Upgrading 'C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/system.bd' 
+// Tcl Message: INFO: [IP_Flow 19-1972] Upgraded system_freq_mapper_0_0 from freq_mapper_v1_0 1.0 to freq_mapper_v1_0 1.0 
+// Tcl Message: Wrote  : <C:\Users\elias\dev\ba\firmware\fpga\tmp\freq\freq.srcs\sources_1\bd\system\system.bd>  
+selectButton("OptionPane.button", "OK"); // JButton (v, B)
+selectTree(PAResourceEtoH.FlowNavigatorTreePanel_FLOW_NAVIGATOR_TREE, "[, Program and Debug, Generate Bitstream]", 20, false); // u (J, cs)
+// Run Command: PAResourceCommand.PACommandNames_RUN_BITGEN
+// A (cs): Synthesis is Out-of-date: addNotify
+selectButton(RDIResource.BaseDialog_YES, "Yes"); // a (A)
+// bz (cs):  Resetting Runs : addNotify
+// TclEventType: RUN_MODIFY
+dismissDialog("Synthesis is Out-of-date"); // A (cs)
+// TclEventType: RUN_RESET
+// TclEventType: RUN_STATUS_CHANGE
+// TclEventType: RUN_RESET
+// TclEventType: RUN_STATUS_CHANGE
+// TclEventType: RUN_RESET
+// TclEventType: RUN_MODIFY
+// Tcl Message: reset_run synth_1 
+// TclEventType: RSB_SCRIPT_TASK
+dismissDialog("Resetting Runs"); // bz (cs)
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_SCRIPT_TASK
+// TclEventType: RSB_REMOVE_OBJECT
+// TclEventType: RSB_SCRIPT_TASK
+// TclEventType: RSB_REMOVE_OBJECT
+// TclEventType: RSB_SCRIPT_TASK
+// TclEventType: RSB_REMOVE_OBJECT
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: REPORT_IP_STATUS_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_REMOVE_OBJECT
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_REMOVE_OBJECT
+// TclEventType: REPORT_IP_STATUS_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: REPORT_IP_STATUS_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_SCRIPT_TASK
+// TclEventType: RSB_SAVE_DIAGRAM
+// bz (cs):  Generate Bitstream : addNotify
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_SAVE_DIAGRAM
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_SAVE_DIAGRAM
+// TclEventType: RSB_SCRIPT_TASK
+// TclEventType: FILE_SET_CHANGE
+// Tcl Message: launch_runs impl_1 -to_step write_bitstream -jobs 12 
+// Tcl Message: INFO: [xilinx.com:ip:clk_wiz:6.0-1] /clk_wiz_0 clk_wiz propagate 
+// Tcl Message: Wrote  : <C:\Users\elias\dev\ba\firmware\fpga\tmp\freq\freq.srcs\sources_1\bd\system\system.bd>  Wrote  : <C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ui/bd_c954508f.ui>  VHDL Output written to : C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/synth/system.v VHDL Output written to : C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/sim/system.v VHDL Output written to : C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/hdl/system_wrapper.v 
+// Tcl Message: INFO: [BD 41-1029] Generation completed for the IP Integrator block FrequencyCounter/freq_mapper_0 . 
+// Tcl Message: INFO: [BD 41-1029] Generation completed for the IP Integrator block PS7/ps7_0_axi_periph/s00_couplers/auto_pc . 
+// Tcl Message: Exporting to file C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/hw_handoff/system.hwh Generated Block Design Tcl file C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/hw_handoff/system_bd.tcl Generated Hardware Definition File C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/synth/system.hwdef 
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RUN_LAUNCH
+// TclEventType: RUN_MODIFY
+// Tcl Message: [Wed Jul  9 03:24:36 2025] Launched synth_1... Run output will be captured here: C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.runs/synth_1/runme.log [Wed Jul  9 03:24:36 2025] Launched impl_1... Run output will be captured here: C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.runs/impl_1/runme.log 
+// Tcl Message: launch_runs: Time (s): cpu = 00:00:01 ; elapsed = 00:00:05 . Memory (MB): peak = 1077.578 ; gain = 0.000 
+dismissDialog("Generate Bitstream"); // bz (cs)
+// TclEventType: RUN_STATUS_CHANGE
+// TclEventType: RUN_COMPLETED
+// TclEventType: RUN_STATUS_CHANGE
+// TclEventType: RUN_STEP_COMPLETED
+// TclEventType: RUN_STATUS_CHANGE
+// [GUI Memory]: 170 MB (+1128kb) [00:24:29]
+// TclEventType: RUN_STEP_COMPLETED
+// TclEventType: RUN_COMPLETED
+// TclEventType: RUN_STATUS_CHANGE
+// Elapsed time: 141 seconds
+selectTab("PlanAheadTabBaseWorkspace_JideTabbedPane", (HResource) null, "Address Editor", 1); // m (l, cs)
+selectTab("PlanAheadTabBaseWorkspace_JideTabbedPane", (HResource) null, "System", 0); // m (l, cs)
+selectTree(PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE, "[root, Design Sources, system_wrapper (system_wrapper.v)]", 1, true); // B (F, cs) - Node
+selectTree(PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE, "[root, Design Sources]", 0, true); // B (F, cs) - Node
+selectTree(PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE, "[root, Design Sources, system_wrapper (system_wrapper.v)]", 1, true); // B (F, cs) - Node
+selectTree(PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE, "[root, Design Sources, system_wrapper (system_wrapper.v)]", 1, true, false, false, false, false, true); // B (F, cs) - Double Click - Node
+selectTab("PlanAheadTabBaseWorkspace_JideTabbedPane", (HResource) null, "System", 0); // m (l, cs)
+selectTree(PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE, "[root, Design Sources, freq_mapper (freq_mapper.v)]", 3, false); // B (F, cs)
+selectTree(PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE, "[root, Design Sources, freq_mapper (freq_mapper.v)]", 3, false, false, false, false, false, true); // B (F, cs) - Double Click
+selectCodeEditor("freq_mapper.v", 123, 446); // bP (w, cs)
+selectCodeEditor("freq_mapper.v", 123, 446, false, false, false, false, true); // bP (w, cs) - Double Click
+typeControlKey((HResource) null, "freq_mapper.v", 'c'); // bP (w, cs)
+// Elapsed time: 103 seconds
+selectCodeEditor("freq_mapper.v", 107, 454); // bP (w, cs)
+selectCodeEditor("freq_mapper.v", 107, 454, false, false, false, false, true); // bP (w, cs) - Double Click
+selectCodeEditor("freq_mapper.v", 122, 450); // bP (w, cs)
+selectCodeEditor("freq_mapper.v", 122, 450, false, false, false, false, true); // bP (w, cs) - Double Click
+// TclEventType: IP_LOCK_CHANGE
+// TclEventType: REPORT_IP_STATUS_STALE
+// TclEventType: DG_GRAPH_STALE
+// TclEventType: FILE_SET_CHANGE
+// Elapsed time: 12 seconds
+selectButton(PAResourceOtoP.PlanAheadTab_REFRESH_CHANGED_MODULES, "Refresh Changed Modules"); // h (ds, cs)
+// TclEventType: IP_LOCK_CHANGE
+// TclEventType: PACKAGER_OBJECT_ADD
+// TclEventType: PACKAGER_MESSAGE_RESET
+// TclEventType: PACKAGER_MESSAGE_UPDATE
+// TclEventType: BDCELL_LOCK_CHANGE
+// TclEventType: RSB_OPEN_DIAGRAM
+// TclEventType: RSB_SCRIPT_TASK
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: DG_GRAPH_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_REMOVE_OBJECT
+// TclEventType: RSB_SCRIPT_TASK
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_SAVE_DIAGRAM
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_SAVE_DIAGRAM
+// TclEventType: FILESET_UPDATE_IP
+// TclEventType: IP_UPGRADE_COMPLETE
+// Tcl Message: update_module_reference system_freq_mapper_0_0 
+// Tcl Message: INFO: [IP_Flow 19-1976] HDL Parser: Replacing 'LOGICAL_WIDTH' by 14 for port or parameter 'amp_u' INFO: [IP_Flow 19-5107] Inferred bus interface 'rst' of definition 'xilinx.com:signal:reset:1.0' (from Xilinx Repository). INFO: [IP_Flow 19-5107] Inferred bus interface 'clk' of definition 'xilinx.com:signal:clock:1.0' (from Xilinx Repository). INFO: [IP_Flow 19-4728] Bus Interface 'clk': Added interface parameter 'ASSOCIATED_RESET' with value 'rst'. 
+// Tcl Message: INFO: [IP_Flow 19-234] Refreshing IP repositories INFO: [IP_Flow 19-1700] Loaded user IP repository 'c:/Users/elias/dev/ba/firmware/fpga/tmp/cores'. 
+// Tcl Message: Upgrading 'C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/system.bd' 
+// Tcl Message: INFO: [IP_Flow 19-1972] Upgraded system_freq_mapper_0_0 from freq_mapper_v1_0 1.0 to freq_mapper_v1_0 1.0 
+// Tcl Message: Wrote  : <C:\Users\elias\dev\ba\firmware\fpga\tmp\freq\freq.srcs\sources_1\bd\system\system.bd>  Wrote  : <C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ui/bd_c954508f.ui>  
+selectView(PAResourceOtoP.PAViews_SYSTEM, "System", 685, 461, 2726, 872, false, false, false, true, false); // hq (m, cs) - Popup Trigger
+selectMenu(PAResourceQtoS.SelectMenu_HIGHLIGHT, "Highlight"); // af (ao, cs)
+selectMenu(PAResourceQtoS.SystemBuilderView_ORIENTATION, "Orientation"); // af (ao, cs)
+selectMenu(PAResourceQtoS.SystemBuilderView_ORIENTATION, "Orientation"); // af (ao, cs)
+selectMenu(PAResourceQtoS.SystemBuilderView_PINNING, "Pinning"); // af (ao, cs)
+selectMenu(PAResourceQtoS.SystemBuilderView_PINNING, "Pinning"); // af (ao, cs)
+selectMenu(PAResourceQtoS.SystemBuilderView_ORIENTATION, "Orientation"); // af (ao, cs)
+selectMenu(PAResourceQtoS.SystemBuilderView_PINNING, "Pinning"); // af (ao, cs)
+selectMenu(PAResourceQtoS.SystemBuilderView_PINNING, "Pinning"); // af (ao, cs)
+selectMenu(PAResourceQtoS.SystemBuilderView_ORIENTATION, "Orientation"); // af (ao, cs)
+selectMenu(PAResourceQtoS.SystemBuilderView_ORIENTATION, "Orientation"); // af (ao, cs)
+selectMenu(PAResourceQtoS.SystemBuilderView_ORIENTATION, "Orientation"); // af (ao, cs)
+selectMenu(PAResourceQtoS.SystemBuilderView_PINNING, "Pinning"); // af (ao, cs)
+selectMenu(PAResourceQtoS.SystemBuilderView_PINNING, "Pinning"); // af (ao, cs)
+selectMenu(PAResourceQtoS.SystemBuilderView_ORIENTATION, "Orientation"); // af (ao, cs)
+selectMenu(PAResourceQtoS.SystemBuilderView_ORIENTATION, "Orientation"); // af (ao, cs)
+selectMenuItem(PAResourceCommand.PACommandNames_REFRESH_RSB_BLOCK, "Refresh Module"); // ai (ao, cs)
+// Run Command: PAResourceCommand.PACommandNames_REFRESH_RSB_BLOCK
+// TclEventType: PACKAGER_OBJECT_ADD
+// TclEventType: PACKAGER_MESSAGE_RESET
+// TclEventType: PACKAGER_MESSAGE_UPDATE
+// TclEventType: BDCELL_LOCK_CHANGE
+// TclEventType: RSB_OPEN_DIAGRAM
+// TclEventType: RSB_SCRIPT_TASK
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: DG_GRAPH_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_REMOVE_OBJECT
+// TclEventType: RSB_SCRIPT_TASK
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_SAVE_DIAGRAM
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_SAVE_DIAGRAM
+// TclEventType: FILESET_UPDATE_IP
+// TclEventType: IP_UPGRADE_COMPLETE
+// Tcl Message: update_module_reference system_freq_mapper_0_0 
+// Tcl Message: INFO: [IP_Flow 19-1976] HDL Parser: Replacing 'LOGICAL_WIDTH' by 14 for port or parameter 'amp_u' INFO: [IP_Flow 19-5107] Inferred bus interface 'rst' of definition 'xilinx.com:signal:reset:1.0' (from Xilinx Repository). INFO: [IP_Flow 19-5107] Inferred bus interface 'clk' of definition 'xilinx.com:signal:clock:1.0' (from Xilinx Repository). INFO: [IP_Flow 19-4728] Bus Interface 'clk': Added interface parameter 'ASSOCIATED_RESET' with value 'rst'. 
+// Tcl Message: INFO: [IP_Flow 19-234] Refreshing IP repositories INFO: [IP_Flow 19-1700] Loaded user IP repository 'c:/Users/elias/dev/ba/firmware/fpga/tmp/cores'. 
+// Tcl Message: Upgrading 'C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/system.bd' 
+// Tcl Message: INFO: [IP_Flow 19-1972] Upgraded system_freq_mapper_0_0 from freq_mapper_v1_0 1.0 to freq_mapper_v1_0 1.0 
+// Tcl Message: Wrote  : <C:\Users\elias\dev\ba\firmware\fpga\tmp\freq\freq.srcs\sources_1\bd\system\system.bd>  
+selectButton("OptionPane.button", "OK"); // JButton (v, B)
+selectTree(PAResourceEtoH.FlowNavigatorTreePanel_FLOW_NAVIGATOR_TREE, "[, Program and Debug, Generate Bitstream]", 20, false); // u (J, cs)
+// Run Command: PAResourceCommand.PACommandNames_RUN_BITGEN
+// A (cs): Synthesis is Out-of-date: addNotify
+selectButton(RDIResource.BaseDialog_YES, "Yes"); // a (A)
+// bz (cs):  Resetting Runs : addNotify
+// TclEventType: RUN_MODIFY
+dismissDialog("Synthesis is Out-of-date"); // A (cs)
+// TclEventType: RUN_RESET
+// TclEventType: RUN_STATUS_CHANGE
+// TclEventType: RUN_RESET
+// TclEventType: RUN_STATUS_CHANGE
+// TclEventType: RUN_RESET
+// TclEventType: RUN_MODIFY
+// Tcl Message: reset_run synth_1 
+// TclEventType: RSB_SCRIPT_TASK
+dismissDialog("Resetting Runs"); // bz (cs)
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_SCRIPT_TASK
+// TclEventType: RSB_REMOVE_OBJECT
+// TclEventType: RSB_SCRIPT_TASK
+// TclEventType: RSB_REMOVE_OBJECT
+// TclEventType: RSB_SCRIPT_TASK
+// TclEventType: RSB_REMOVE_OBJECT
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: REPORT_IP_STATUS_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_REMOVE_OBJECT
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_REMOVE_OBJECT
+// TclEventType: REPORT_IP_STATUS_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: REPORT_IP_STATUS_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_SCRIPT_TASK
+// TclEventType: RSB_SAVE_DIAGRAM
+// bz (cs):  Generate Bitstream : addNotify
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_SAVE_DIAGRAM
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_SAVE_DIAGRAM
+// TclEventType: RSB_SCRIPT_TASK
+// TclEventType: DG_GRAPH_STALE
+// TclEventType: FILE_SET_CHANGE
+// Tcl Message: launch_runs impl_1 -to_step write_bitstream -jobs 12 
+// Tcl Message: INFO: [xilinx.com:ip:clk_wiz:6.0-1] /clk_wiz_0 clk_wiz propagate 
+// Tcl Message: Wrote  : <C:\Users\elias\dev\ba\firmware\fpga\tmp\freq\freq.srcs\sources_1\bd\system\system.bd>  Wrote  : <C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ui/bd_c954508f.ui>  VHDL Output written to : C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/synth/system.v VHDL Output written to : C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/sim/system.v VHDL Output written to : C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/hdl/system_wrapper.v 
+// Tcl Message: INFO: [BD 41-1029] Generation completed for the IP Integrator block FrequencyCounter/freq_mapper_0 . 
+// Tcl Message: INFO: [BD 41-1029] Generation completed for the IP Integrator block PS7/ps7_0_axi_periph/s00_couplers/auto_pc . 
+// Tcl Message: Exporting to file C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/hw_handoff/system.hwh Generated Block Design Tcl file C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/hw_handoff/system_bd.tcl Generated Hardware Definition File C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/synth/system.hwdef 
+// TclEventType: DG_GRAPH_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RUN_LAUNCH
+// TclEventType: RUN_MODIFY
+// Tcl Message: [Wed Jul  9 03:29:25 2025] Launched synth_1... Run output will be captured here: C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.runs/synth_1/runme.log [Wed Jul  9 03:29:25 2025] Launched impl_1... Run output will be captured here: C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.runs/impl_1/runme.log 
+// Tcl Message: launch_runs: Time (s): cpu = 00:00:01 ; elapsed = 00:00:08 . Memory (MB): peak = 1082.223 ; gain = 0.402 
+dismissDialog("Generate Bitstream"); // bz (cs)
+// TclEventType: RUN_STATUS_CHANGE
+// TclEventType: RUN_COMPLETED
+// TclEventType: RUN_STATUS_CHANGE
+// TclEventType: RUN_STEP_COMPLETED
+// TclEventType: RUN_STATUS_CHANGE
+// TclEventType: RUN_STEP_COMPLETED
+// TclEventType: RUN_COMPLETED
+// TclEventType: RUN_STATUS_CHANGE
+// Elapsed time: 157 seconds
+selectTree(PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE, "[root, Design Sources, freq_mapper (freq_mapper.v)]", 3, false); // B (F, cs)
+selectTree(PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE, "[root, Design Sources, freq_mapper (freq_mapper.v)]", 3, false, false, false, false, false, true); // B (F, cs) - Double Click
+selectCodeEditor("freq_mapper.v", 136, 677); // bP (w, cs)
+selectCodeEditor("freq_mapper.v", 77, 690); // bP (w, cs)
+selectCodeEditor("freq_mapper.v", 70, 663); // bP (w, cs)
+selectCodeEditor("freq_mapper.v", 59, 712); // bP (w, cs)
+selectCodeEditor("freq_mapper.v", 50, 722); // bP (w, cs)
+selectCodeEditor("freq_mapper.v", 61, 717); // bP (w, cs)
+selectCodeEditor("freq_mapper.v", 59, 717, false, false, false, false, true); // bP (w, cs) - Double Click
+selectCodeEditor("freq_mapper.v", 57, 719); // bP (w, cs)
+selectCodeEditor("freq_mapper.v", 204, 684); // bP (w, cs)
+// TclEventType: IP_LOCK_CHANGE
+// TclEventType: REPORT_IP_STATUS_STALE
+// TclEventType: DG_GRAPH_STALE
+// TclEventType: FILE_SET_CHANGE
+selectCodeEditor("freq_mapper.v", 196, 688); // bP (w, cs)
+typeControlKey((HResource) null, "freq_mapper.v", 'c'); // bP (w, cs)
+selectCodeEditor("freq_mapper.v", 550, 655); // bP (w, cs)
+typeControlKey((HResource) null, "freq_mapper.v", 'v'); // bP (w, cs)
+// TclEventType: DG_GRAPH_STALE
+// TclEventType: FILE_SET_CHANGE
+typeControlKey(null, null, 'z');
+typeControlKey(null, null, 'z');
+// TclEventType: DG_GRAPH_STALE
+// [GUI Memory]: 178 MB (+329kb) [00:31:52]
+// TclEventType: DG_GRAPH_STALE
+selectCodeEditor("freq_mapper.v", 133, 214); // bP (w, cs)
+selectCodeEditor("freq_mapper.v", 133, 214, false, false, false, false, true); // bP (w, cs) - Double Click
+// TclEventType: FILE_SET_CHANGE
+selectButton(PAResourceOtoP.PlanAheadTab_REFRESH_CHANGED_MODULES, "Refresh Changed Modules"); // h (ds, cs)
+// TclEventType: IP_LOCK_CHANGE
+// Tcl Message: update_module_reference system_freq_mapper_0_0 
+// bz (cs):  Refresh Changed Modules : addNotify
+// TclEventType: PACKAGER_OBJECT_ADD
+// TclEventType: PACKAGER_MESSAGE_RESET
+// TclEventType: PACKAGER_MESSAGE_UPDATE
+// TclEventType: BDCELL_LOCK_CHANGE
+// TclEventType: RSB_OPEN_DIAGRAM
+// TclEventType: RSB_SCRIPT_TASK
+// TclEventType: DG_GRAPH_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_REMOVE_OBJECT
+// TclEventType: RSB_SCRIPT_TASK
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_SAVE_DIAGRAM
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_SAVE_DIAGRAM
+// TclEventType: FILESET_UPDATE_IP
+// TclEventType: IP_UPGRADE_COMPLETE
+// Tcl Message: INFO: [IP_Flow 19-1976] HDL Parser: Replacing 'LOGICAL_WIDTH' by 14 for port or parameter 'amp_u' INFO: [IP_Flow 19-5107] Inferred bus interface 'rst' of definition 'xilinx.com:signal:reset:1.0' (from Xilinx Repository). INFO: [IP_Flow 19-5107] Inferred bus interface 'clk' of definition 'xilinx.com:signal:clock:1.0' (from Xilinx Repository). INFO: [IP_Flow 19-4728] Bus Interface 'clk': Added interface parameter 'ASSOCIATED_RESET' with value 'rst'. 
+// Tcl Message: INFO: [IP_Flow 19-234] Refreshing IP repositories INFO: [IP_Flow 19-1700] Loaded user IP repository 'c:/Users/elias/dev/ba/firmware/fpga/tmp/cores'. 
+// Tcl Message: Upgrading 'C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/system.bd' 
+// Tcl Message: INFO: [IP_Flow 19-1972] Upgraded system_freq_mapper_0_0 from freq_mapper_v1_0 1.0 to freq_mapper_v1_0 1.0 
+// Tcl Message: Wrote  : <C:\Users\elias\dev\ba\firmware\fpga\tmp\freq\freq.srcs\sources_1\bd\system\system.bd>  Wrote  : <C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ui/bd_c954508f.ui>  
+dismissDialog("Refresh Changed Modules"); // bz (cs)
+// TclEventType: DG_GRAPH_STALE
+// Elapsed time: 17 seconds
+selectTree(PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE, "[root, Design Sources, freq_mapper (freq_mapper.v)]", 3, false); // B (F, cs)
+selectTree(PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE, "[root, Design Sources, freq_mapper (freq_mapper.v)]", 3, false, false, false, false, false, true); // B (F, cs) - Double Click
+selectCodeEditor("freq_mapper.v", 471, 426); // bP (w, cs)
+selectTree(PAResourceEtoH.FlowNavigatorTreePanel_FLOW_NAVIGATOR_TREE, "[, Program and Debug, Generate Bitstream]", 20, false); // u (J, cs)
+// Run Command: PAResourceCommand.PACommandNames_RUN_BITGEN
+// A (cs): Synthesis is Out-of-date: addNotify
+selectButton(RDIResource.BaseDialog_YES, "Yes"); // a (A)
+// bz (cs):  Resetting Runs : addNotify
+// TclEventType: RUN_MODIFY
+dismissDialog("Synthesis is Out-of-date"); // A (cs)
+// TclEventType: RUN_RESET
+// TclEventType: RUN_STATUS_CHANGE
+// TclEventType: RUN_RESET
+// TclEventType: RUN_STATUS_CHANGE
+// TclEventType: RUN_RESET
+// TclEventType: RUN_MODIFY
+// Tcl Message: reset_run synth_1 
+// TclEventType: RSB_SCRIPT_TASK
+dismissDialog("Resetting Runs"); // bz (cs)
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_SCRIPT_TASK
+// TclEventType: RSB_REMOVE_OBJECT
+// TclEventType: RSB_SCRIPT_TASK
+// TclEventType: RSB_REMOVE_OBJECT
+// TclEventType: RSB_SCRIPT_TASK
+// TclEventType: RSB_REMOVE_OBJECT
+// TclEventType: DG_GRAPH_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: REPORT_IP_STATUS_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_REMOVE_OBJECT
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_REMOVE_OBJECT
+// TclEventType: REPORT_IP_STATUS_STALE
+// TclEventType: FILE_SET_CHANGE
+// Tcl Message: launch_runs impl_1 -to_step write_bitstream -jobs 12 
+// TclEventType: REPORT_IP_STATUS_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_SCRIPT_TASK
+// TclEventType: RSB_SAVE_DIAGRAM
+// bz (cs):  Generate Bitstream : addNotify
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_SAVE_DIAGRAM
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_SAVE_DIAGRAM
+// TclEventType: RSB_SCRIPT_TASK
+// TclEventType: FILE_SET_CHANGE
+// Tcl Message: INFO: [xilinx.com:ip:clk_wiz:6.0-1] /clk_wiz_0 clk_wiz propagate 
+// Tcl Message: Wrote  : <C:\Users\elias\dev\ba\firmware\fpga\tmp\freq\freq.srcs\sources_1\bd\system\system.bd>  Wrote  : <C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ui/bd_c954508f.ui>  VHDL Output written to : C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/synth/system.v VHDL Output written to : C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/sim/system.v VHDL Output written to : C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/hdl/system_wrapper.v 
+// Tcl Message: INFO: [BD 41-1029] Generation completed for the IP Integrator block FrequencyCounter/freq_mapper_0 . 
+// Tcl Message: INFO: [BD 41-1029] Generation completed for the IP Integrator block PS7/ps7_0_axi_periph/s00_couplers/auto_pc . 
+// Tcl Message: Exporting to file C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/hw_handoff/system.hwh Generated Block Design Tcl file C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/hw_handoff/system_bd.tcl Generated Hardware Definition File C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/synth/system.hwdef 
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RUN_LAUNCH
+// TclEventType: RUN_MODIFY
+// Tcl Message: [Wed Jul  9 03:33:14 2025] Launched synth_1... Run output will be captured here: C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.runs/synth_1/runme.log [Wed Jul  9 03:33:14 2025] Launched impl_1... Run output will be captured here: C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.runs/impl_1/runme.log 
+// Tcl Message: launch_runs: Time (s): cpu = 00:00:01 ; elapsed = 00:00:05 . Memory (MB): peak = 1094.598 ; gain = 2.590 
+dismissDialog("Generate Bitstream"); // bz (cs)
+// HMemoryUtils.trashcanNow. Engine heap size: 1,087 MB. GUI used memory: 102 MB. Current time: 7/9/25, 3:33:14 AM CEST
+// TclEventType: RUN_STATUS_CHANGE
+// TclEventType: RUN_COMPLETED
+// TclEventType: RUN_STATUS_CHANGE
+// TclEventType: RUN_STEP_COMPLETED
+// TclEventType: RUN_STATUS_CHANGE
+// TclEventType: RUN_STEP_COMPLETED
+// TclEventType: RUN_COMPLETED
+// TclEventType: RUN_STATUS_CHANGE
+// Elapsed time: 216 seconds
+selectCodeEditor("freq_mapper.v", 76, 669); // bP (w, cs)
+selectCodeEditor("freq_mapper.v", 233, 680); // bP (w, cs)
+selectCodeEditor("freq_mapper.v", 146, 682); // bP (w, cs)
+selectCodeEditor("freq_mapper.v", 146, 682, false, false, false, false, true); // bP (w, cs) - Double Click
+selectCodeEditor("freq_mapper.v", 192, 727); // bP (w, cs)
+selectCodeEditor("freq_mapper.v", 192, 727, false, false, false, false, true); // bP (w, cs) - Double Click
+selectCodeEditor("freq_mapper.v", 145, 723); // bP (w, cs)
+selectCodeEditor("freq_mapper.v", 145, 723, false, false, false, false, true); // bP (w, cs) - Double Click
+// TclEventType: IP_LOCK_CHANGE
+// TclEventType: REPORT_IP_STATUS_STALE
+// TclEventType: DG_GRAPH_STALE
+// TclEventType: FILE_SET_CHANGE
+selectCodeEditor("freq_mapper.v", 200, 597); // bP (w, cs)
+selectCodeEditor("freq_mapper.v", 200, 597, false, false, false, false, true); // bP (w, cs) - Double Click
+selectCodeEditor("freq_mapper.v", 200, 597); // bP (w, cs)
+selectCodeEditor("freq_mapper.v", 122, 598); // bP (w, cs)
+selectCodeEditor("freq_mapper.v", 91, 209); // bP (w, cs)
+selectCodeEditor("freq_mapper.v", 91, 209, false, false, false, false, true); // bP (w, cs) - Double Click
+selectCodeEditor("freq_mapper.v", 91, 209); // bP (w, cs)
+// TclEventType: DG_GRAPH_STALE
+// TclEventType: FILE_SET_CHANGE
+selectButton(PAResourceOtoP.PlanAheadTab_REFRESH_CHANGED_MODULES, "Refresh Changed Modules"); // h (ds, cs)
+// TclEventType: IP_LOCK_CHANGE
+// TclEventType: PACKAGER_OBJECT_ADD
+// TclEventType: PACKAGER_MESSAGE_RESET
+// TclEventType: PACKAGER_MESSAGE_UPDATE
+// TclEventType: BDCELL_LOCK_CHANGE
+// TclEventType: RSB_OPEN_DIAGRAM
+// TclEventType: RSB_SCRIPT_TASK
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: DG_GRAPH_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_REMOVE_OBJECT
+// TclEventType: RSB_SCRIPT_TASK
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_SAVE_DIAGRAM
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_SAVE_DIAGRAM
+// TclEventType: FILESET_UPDATE_IP
+// TclEventType: IP_UPGRADE_COMPLETE
+// Tcl Message: update_module_reference system_freq_mapper_0_0 
+// Tcl Message: INFO: [IP_Flow 19-1976] HDL Parser: Replacing 'LOGICAL_WIDTH' by 14 for port or parameter 'amp_u' INFO: [IP_Flow 19-5107] Inferred bus interface 'rst' of definition 'xilinx.com:signal:reset:1.0' (from Xilinx Repository). INFO: [IP_Flow 19-5107] Inferred bus interface 'clk' of definition 'xilinx.com:signal:clock:1.0' (from Xilinx Repository). INFO: [IP_Flow 19-4728] Bus Interface 'clk': Added interface parameter 'ASSOCIATED_RESET' with value 'rst'. 
+// Tcl Message: INFO: [IP_Flow 19-234] Refreshing IP repositories INFO: [IP_Flow 19-1700] Loaded user IP repository 'c:/Users/elias/dev/ba/firmware/fpga/tmp/cores'. 
+// Tcl Message: Upgrading 'C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/system.bd' 
+// Tcl Message: INFO: [IP_Flow 19-1972] Upgraded system_freq_mapper_0_0 from freq_mapper_v1_0 1.0 to freq_mapper_v1_0 1.0 
+// Tcl Message: Wrote  : <C:\Users\elias\dev\ba\firmware\fpga\tmp\freq\freq.srcs\sources_1\bd\system\system.bd>  Wrote  : <C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ui/bd_c954508f.ui>  
+selectTree(PAResourceEtoH.FlowNavigatorTreePanel_FLOW_NAVIGATOR_TREE, "[, Program and Debug, Generate Bitstream]", 20, false); // u (J, cs)
+// Run Command: PAResourceCommand.PACommandNames_RUN_BITGEN
+// A (cs): Synthesis is Out-of-date: addNotify
+selectButton(RDIResource.BaseDialog_YES, "Yes"); // a (A)
+// bz (cs):  Resetting Runs : addNotify
+// TclEventType: RUN_MODIFY
+dismissDialog("Synthesis is Out-of-date"); // A (cs)
+// TclEventType: RUN_RESET
+// TclEventType: RUN_STATUS_CHANGE
+// TclEventType: RUN_RESET
+// TclEventType: RUN_STATUS_CHANGE
+// TclEventType: RUN_RESET
+// TclEventType: RUN_MODIFY
+// Tcl Message: reset_run synth_1 
+// TclEventType: RSB_SCRIPT_TASK
+dismissDialog("Resetting Runs"); // bz (cs)
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_SCRIPT_TASK
+// TclEventType: RSB_REMOVE_OBJECT
+// TclEventType: RSB_SCRIPT_TASK
+// TclEventType: RSB_REMOVE_OBJECT
+// TclEventType: RSB_SCRIPT_TASK
+// TclEventType: RSB_REMOVE_OBJECT
+// TclEventType: DG_GRAPH_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: REPORT_IP_STATUS_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_REMOVE_OBJECT
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_REMOVE_OBJECT
+// TclEventType: REPORT_IP_STATUS_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: REPORT_IP_STATUS_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_SCRIPT_TASK
+// TclEventType: RSB_SAVE_DIAGRAM
+// TclEventType: FILE_SET_CHANGE
+// bz (cs):  Generate Bitstream : addNotify
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_SAVE_DIAGRAM
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_SAVE_DIAGRAM
+// TclEventType: RSB_SCRIPT_TASK
+// TclEventType: FILE_SET_CHANGE
+// Tcl Message: launch_runs impl_1 -to_step write_bitstream -jobs 12 
+// Tcl Message: INFO: [xilinx.com:ip:clk_wiz:6.0-1] /clk_wiz_0 clk_wiz propagate 
+// Tcl Message: Wrote  : <C:\Users\elias\dev\ba\firmware\fpga\tmp\freq\freq.srcs\sources_1\bd\system\system.bd>  Wrote  : <C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ui/bd_c954508f.ui>  VHDL Output written to : C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/synth/system.v VHDL Output written to : C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/sim/system.v VHDL Output written to : C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/hdl/system_wrapper.v 
+// Tcl Message: INFO: [BD 41-1029] Generation completed for the IP Integrator block FrequencyCounter/freq_mapper_0 . 
+// Tcl Message: INFO: [BD 41-1029] Generation completed for the IP Integrator block PS7/ps7_0_axi_periph/s00_couplers/auto_pc . 
+// Tcl Message: Exporting to file C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/hw_handoff/system.hwh Generated Block Design Tcl file C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/hw_handoff/system_bd.tcl Generated Hardware Definition File C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/synth/system.hwdef 
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RUN_LAUNCH
+// TclEventType: RUN_MODIFY
+// Tcl Message: [Wed Jul  9 03:37:33 2025] Launched synth_1... Run output will be captured here: C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.runs/synth_1/runme.log [Wed Jul  9 03:37:33 2025] Launched impl_1... Run output will be captured here: C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.runs/impl_1/runme.log 
+// Tcl Message: launch_runs: Time (s): cpu = 00:00:01 ; elapsed = 00:00:05 . Memory (MB): peak = 1103.180 ; gain = 0.211 
+dismissDialog("Generate Bitstream"); // bz (cs)
+// TclEventType: RUN_STATUS_CHANGE
+// TclEventType: RUN_COMPLETED
+// TclEventType: RUN_STATUS_CHANGE
+// TclEventType: RUN_STEP_COMPLETED
+// TclEventType: RUN_STATUS_CHANGE
+// TclEventType: RUN_STEP_COMPLETED
+// TclEventType: RUN_COMPLETED
+// TclEventType: RUN_STATUS_CHANGE
+// Elapsed time: 723 seconds
+selectTab("PlanAheadTabBaseWorkspace_JideTabbedPane", (HResource) null, "Address Editor", 1); // m (l, cs)
+selectTab("PlanAheadTabBaseWorkspace_JideTabbedPane", (HResource) null, "System", 0); // m (l, cs)
+selectTree(PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE, "[root, Design Sources, freq_mapper (freq_mapper.v)]", 3, false); // B (F, cs)
+selectTree(PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE, "[root, Design Sources, freq_mapper (freq_mapper.v)]", 3, false, false, false, false, false, true); // B (F, cs) - Double Click
+// HMemoryUtils.trashcanNow. Engine heap size: 1,108 MB. GUI used memory: 110 MB. Current time: 7/9/25, 3:49:40 AM CEST
+// Elapsed time: 12 seconds
+selectCodeEditor("freq_mapper.v", 90, 398); // bP (w, cs)
+selectCodeEditor("freq_mapper.v", 64, 764); // bP (w, cs)
+typeControlKey((HResource) null, "freq_mapper.v", 'c'); // bP (w, cs)
+// Elapsed time: 44 seconds
+selectCodeEditor("freq_mapper.v", 124, 721); // bP (w, cs)
+selectCodeEditor("freq_mapper.v", 195, 693); // bP (w, cs)
+typeControlKey((HResource) null, "freq_mapper.v", 'c'); // bP (w, cs)
+selectCodeEditor("freq_mapper.v", 113, 520); // bP (w, cs)
+selectCodeEditor("freq_mapper.v", 198, 519); // bP (w, cs)
+selectCodeEditor("freq_mapper.v", 377, 525); // bP (w, cs)
+selectCodeEditor("freq_mapper.v", 450, 517); // bP (w, cs)
+selectCodeEditor("freq_mapper.v", 655, 527); // bP (w, cs)
+typeControlKey((HResource) null, "freq_mapper.v", 'v'); // bP (w, cs)
+// TclEventType: IP_LOCK_CHANGE
+// TclEventType: REPORT_IP_STATUS_STALE
+// TclEventType: DG_GRAPH_STALE
+// TclEventType: FILE_SET_CHANGE
+selectCodeEditor("freq_mapper.v", 104, 697); // bP (w, cs)
+selectCodeEditor("freq_mapper.v", 129, 717); // bP (w, cs)
+selectCodeEditor("freq_mapper.v", 125, 706); // bP (w, cs)
+selectCodeEditor("freq_mapper.v", 34, 601); // bP (w, cs)
+selectCodeEditor("freq_mapper.v", 28, 604); // bP (w, cs)
+selectCodeEditor("freq_mapper.v", 136, 707); // bP (w, cs)
+// TclEventType: DG_GRAPH_STALE
+// TclEventType: FILE_SET_CHANGE
+// Elapsed time: 53 seconds
+selectCodeEditor("freq_mapper.v", 129, 716); // bP (w, cs)
+selectCodeEditor("freq_mapper.v", 444, 730); // bP (w, cs)
+selectCodeEditor("freq_mapper.v", 411, 693); // bP (w, cs)
+selectCodeEditor("freq_mapper.v", 318, 712); // bP (w, cs)
+// TclEventType: DG_GRAPH_STALE
+// TclEventType: FILE_SET_CHANGE
+// Elapsed time: 14 seconds
+selectTab("PlanAheadTabBaseWorkspace_JideTabbedPane", (HResource) null, "System", 0); // m (l, cs)
+selectTree(PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE, "[root, Design Sources, system_wrapper (system_wrapper.v)]", 1, true); // B (F, cs) - Node
+selectTree(PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE, "[root, Design Sources, system_wrapper (system_wrapper.v)]", 1, true); // B (F, cs) - Node
+selectTree(PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE, "[root, Design Sources, system_wrapper (system_wrapper.v)]", 1, true, false, false, false, false, true); // B (F, cs) - Double Click - Node
+selectTab("PlanAheadTabBaseWorkspace_JideTabbedPane", (HResource) null, "System", 0); // m (l, cs)
+selectTree(PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE, "[root, Design Sources, frequency_counter (frequency_counter.v)]", 7, false); // B (F, cs)
+selectTree(PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE, "[root, Design Sources, frequency_counter (frequency_counter.v)]", 7, false, false, false, false, false, true); // B (F, cs) - Double Click
+selectTab("PlanAheadTabBaseWorkspace_JideTabbedPane", (HResource) null, "System", 0); // m (l, cs)
+// Run Command: PAResourceCommand.PACommandNames_CUSTOMIZE_RSB_BLOC
+// r (cs): Re-customize Module Reference: addNotify
+// Elapsed time: 10 seconds
+selectButton(RDIResource.BaseDialog_CANCEL, "Cancel"); // a (r)
+dismissDialog("Re-customize Module Reference"); // r (cs)
+selectTree(PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE, "[root, Design Sources, frequency_counter (frequency_counter.v)]", 7, false); // B (F, cs)
+selectTree(PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE, "[root, Design Sources, frequency_counter (frequency_counter.v)]", 7, false, false, false, false, false, true); // B (F, cs) - Double Click
+// Elapsed time: 10 seconds
+selectCodeEditor("frequency_counter.v", 87, 485); // bP (w, cs)
+selectCodeEditor("frequency_counter.v", 86, 483); // bP (w, cs)
+selectCodeEditor("frequency_counter.v", 86, 483, false, false, false, false, true); // bP (w, cs) - Double Click
+selectCodeEditor("frequency_counter.v", 159, 484); // bP (w, cs)
+selectCodeEditor("frequency_counter.v", 94, 482); // bP (w, cs)
+typeControlKey((HResource) null, "frequency_counter.v", 'c'); // bP (w, cs)
+selectCodeEditor("frequency_counter.v", 87, 499); // bP (w, cs)
+typeControlKey((HResource) null, "frequency_counter.v", 'c'); // bP (w, cs)
+// Elapsed time: 22 seconds
+selectTree(PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE, "[root, Design Sources, freq_mapper (freq_mapper.v)]", 5, false); // B (F, cs)
+selectTree(PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE, "[root, Design Sources, freq_mapper (freq_mapper.v)]", 5, false); // B (F, cs)
+selectTree(PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE, "[root, Design Sources, freq_mapper (freq_mapper.v)]", 5, false, false, false, false, false, true); // B (F, cs) - Double Click
+selectCodeEditor("freq_mapper.v", 81, 638); // bP (w, cs)
+selectCodeEditor("freq_mapper.v", 158, 687); // bP (w, cs)
+selectCodeEditor("freq_mapper.v", 158, 687, false, false, false, false, true); // bP (w, cs) - Double Click
+selectCodeEditor("freq_mapper.v", 174, 658); // bP (w, cs)
+selectCodeEditor("freq_mapper.v", 174, 658, false, false, false, false, true); // bP (w, cs) - Double Click
+selectCodeEditor("freq_mapper.v", 136, 684); // bP (w, cs)
+selectCodeEditor("freq_mapper.v", 136, 684, false, false, false, false, true); // bP (w, cs) - Double Click
+selectCodeEditor("freq_mapper.v", 162, 681); // bP (w, cs)
+selectCodeEditor("freq_mapper.v", 162, 681, false, false, false, false, true); // bP (w, cs) - Double Click
+// TclEventType: DG_GRAPH_STALE
+// TclEventType: FILE_SET_CHANGE
+selectCodeEditor("freq_mapper.v", 172, 502); // bP (w, cs)
+selectCodeEditor("freq_mapper.v", 172, 502, false, false, false, false, true); // bP (w, cs) - Double Click
+selectCodeEditor("freq_mapper.v", 172, 502); // bP (w, cs)
+// TclEventType: DG_GRAPH_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: DG_GRAPH_STALE
+// Elapsed time: 82 seconds
+selectCodeEditor("freq_mapper.v", 187, 515); // bP (w, cs)
+selectTab("PlanAheadTabBaseWorkspace_JideTabbedPane", (HResource) null, "System", 0); // m (l, cs)
+// Run Command: PAResourceCommand.PACommandNames_CUSTOMIZE_RSB_BLOC
+// r (cs): Re-customize IP: addNotify
+// Elapsed time: 10 seconds
+selectButton(RDIResource.BaseDialog_CANCEL, "Cancel"); // a (r)
+dismissDialog("Re-customize IP"); // r (cs)
+// Run Command: PAResourceCommand.PACommandNames_CUSTOMIZE_RSB_BLOC
+// TclEventType: IP_LOCK_CHANGE
+// r (cs): Re-customize Module Reference: addNotify
+// Elapsed time: 24 seconds
+selectButton(RDIResource.BaseDialog_CANCEL, "Cancel"); // a (r)
+dismissDialog("Re-customize Module Reference"); // r (cs)
+// Run Command: PAResourceCommand.PACommandNames_CUSTOMIZE_RSB_BLOC
+// r (cs): Re-customize Module Reference: addNotify
+selectButton(RDIResource.BaseDialog_CANCEL, "Cancel"); // a (r)
+dismissDialog("Re-customize Module Reference"); // r (cs)
+selectTab("PlanAheadTabBaseWorkspace_JideTabbedPane", (HResource) null, "Address Editor", 1); // m (l, cs)
+selectTab("PlanAheadTabBaseWorkspace_JideTabbedPane", (HResource) null, "System", 0); // m (l, cs)
+selectTree(PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE, "[root, Design Sources, frequency_counter (frequency_counter.v)]", 7, false); // B (F, cs)
+selectTree(PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE, "[root, Design Sources, frequency_counter (frequency_counter.v)]", 7, false, false, false, false, false, true); // B (F, cs) - Double Click
+selectCodeEditor("frequency_counter.v", 429, 326); // bP (w, cs)
+selectCodeEditor("frequency_counter.v", 327, 316); // bP (w, cs)
+selectCodeEditor("frequency_counter.v", 327, 316, false, false, false, false, true); // bP (w, cs) - Double Click
+typeControlKey((HResource) null, "frequency_counter.v", 'c'); // bP (w, cs)
+// Elapsed time: 35 seconds
+selectCodeEditor("frequency_counter.v", 254, 522); // bP (w, cs)
+typeControlKey((HResource) null, "frequency_counter.v", 'c'); // bP (w, cs)
+// Elapsed time: 34 seconds
+selectTree(PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE, "[root, Design Sources, freq_mapper (freq_mapper.v)]", 5, false); // B (F, cs)
+selectTree(PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE, "[root, Design Sources, freq_mapper (freq_mapper.v)]", 5, false, false, false, false, false, true); // B (F, cs) - Double Click
+selectCodeEditor("freq_mapper.v", 266, 351); // bP (w, cs)
+typeControlKey((HResource) null, "freq_mapper.v", 'c'); // bP (w, cs)
+// Elapsed time: 48 seconds
+selectCodeEditor("freq_mapper.v", 268, 550); // bP (w, cs)
+selectCodeEditor("freq_mapper.v", 229, 689); // bP (w, cs)
+selectCodeEditor("freq_mapper.v", 124, 682); // bP (w, cs)
+selectCodeEditor("freq_mapper.v", 134, 686); // bP (w, cs)
+selectCodeEditor("freq_mapper.v", 136, 684, false, false, false, false, true); // bP (w, cs) - Double Click
+selectCodeEditor("freq_mapper.v", 166, 687); // bP (w, cs)
+selectCodeEditor("freq_mapper.v", 141, 687); // bP (w, cs)
+// TclEventType: DG_GRAPH_STALE
+// TclEventType: FILE_SET_CHANGE
+// [Engine Memory]: 1,118 MB (+2007kb) [00:57:43]
+// Elapsed time: 21 seconds
+selectCodeEditor("freq_mapper.v", 195, 682); // bP (w, cs)
+typeControlKey((HResource) null, "freq_mapper.v", 'c'); // bP (w, cs)
+selectCodeEditor("freq_mapper.v", 243, 619); // bP (w, cs)
+typeControlKey((HResource) null, "freq_mapper.v", 'v'); // bP (w, cs)
+selectCodeEditor("freq_mapper.v", 24, 632); // bP (w, cs)
+selectCodeEditor("freq_mapper.v", 22, 638); // bP (w, cs)
+selectCodeEditor("freq_mapper.v", 30, 634); // bP (w, cs)
+selectCodeEditor("freq_mapper.v", 54, 656); // bP (w, cs)
+selectCodeEditor("freq_mapper.v", 98, 724); // bP (w, cs)
+// TclEventType: DG_GRAPH_STALE
+// TclEventType: FILE_SET_CHANGE
+// Elapsed time: 17 seconds
+selectButton(PAResourceOtoP.PlanAheadTab_REFRESH_CHANGED_MODULES, "Refresh Changed Modules"); // h (ds, cs)
+// TclEventType: IP_LOCK_CHANGE
+// TclEventType: PACKAGER_OBJECT_ADD
+// TclEventType: PACKAGER_MESSAGE_RESET
+// TclEventType: PACKAGER_MESSAGE_UPDATE
+// TclEventType: BDCELL_LOCK_CHANGE
+// TclEventType: RSB_OPEN_DIAGRAM
+// TclEventType: RSB_SCRIPT_TASK
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: DG_GRAPH_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_REMOVE_OBJECT
+// TclEventType: RSB_SCRIPT_TASK
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_SAVE_DIAGRAM
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_SAVE_DIAGRAM
+// TclEventType: FILESET_UPDATE_IP
+// TclEventType: IP_UPGRADE_COMPLETE
+// Tcl Message: update_module_reference system_freq_mapper_0_0 
+// Tcl Message: INFO: [IP_Flow 19-1976] HDL Parser: Replacing 'LOGICAL_WIDTH' by 14 for port or parameter 'amp_u' INFO: [IP_Flow 19-5107] Inferred bus interface 'rst' of definition 'xilinx.com:signal:reset:1.0' (from Xilinx Repository). INFO: [IP_Flow 19-5107] Inferred bus interface 'clk' of definition 'xilinx.com:signal:clock:1.0' (from Xilinx Repository). INFO: [IP_Flow 19-4728] Bus Interface 'clk': Added interface parameter 'ASSOCIATED_RESET' with value 'rst'. 
+// Tcl Message: INFO: [IP_Flow 19-234] Refreshing IP repositories INFO: [IP_Flow 19-1700] Loaded user IP repository 'c:/Users/elias/dev/ba/firmware/fpga/tmp/cores'. 
+// Tcl Message: Upgrading 'C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/system.bd' 
+// Tcl Message: INFO: [IP_Flow 19-1972] Upgraded system_freq_mapper_0_0 from freq_mapper_v1_0 1.0 to freq_mapper_v1_0 1.0 
+// Tcl Message: Wrote  : <C:\Users\elias\dev\ba\firmware\fpga\tmp\freq\freq.srcs\sources_1\bd\system\system.bd>  Wrote  : <C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ui/bd_c954508f.ui>  
+// Elapsed time: 10 seconds
+selectView(PAResourceOtoP.PAViews_SYSTEM, "System", 1889, 486, 2726, 872, false, false, false, true, false); // hq (m, cs) - Popup Trigger
+selectMenu(PAResourceQtoS.SelectMenu_HIGHLIGHT, "Highlight"); // af (ao, cs)
+selectMenuItem(PAResourceCommand.PACommandNames_REFRESH_RSB_BLOCK, "Refresh Module"); // ai (ao, cs)
+// Run Command: PAResourceCommand.PACommandNames_REFRESH_RSB_BLOCK
+// TclEventType: PACKAGER_OBJECT_ADD
+// TclEventType: PACKAGER_MESSAGE_RESET
+// TclEventType: PACKAGER_MESSAGE_UPDATE
+// TclEventType: BDCELL_LOCK_CHANGE
+// TclEventType: RSB_OPEN_DIAGRAM
+// TclEventType: RSB_SCRIPT_TASK
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: DG_GRAPH_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_REMOVE_OBJECT
+// TclEventType: RSB_SCRIPT_TASK
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_SAVE_DIAGRAM
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_SAVE_DIAGRAM
+// TclEventType: FILESET_UPDATE_IP
+// TclEventType: IP_UPGRADE_COMPLETE
+// Tcl Message: update_module_reference system_freq_mapper_0_0 
+// Tcl Message: INFO: [IP_Flow 19-1976] HDL Parser: Replacing 'LOGICAL_WIDTH' by 14 for port or parameter 'amp_u' INFO: [IP_Flow 19-5107] Inferred bus interface 'rst' of definition 'xilinx.com:signal:reset:1.0' (from Xilinx Repository). INFO: [IP_Flow 19-5107] Inferred bus interface 'clk' of definition 'xilinx.com:signal:clock:1.0' (from Xilinx Repository). INFO: [IP_Flow 19-4728] Bus Interface 'clk': Added interface parameter 'ASSOCIATED_RESET' with value 'rst'. 
+// Tcl Message: INFO: [IP_Flow 19-234] Refreshing IP repositories INFO: [IP_Flow 19-1700] Loaded user IP repository 'c:/Users/elias/dev/ba/firmware/fpga/tmp/cores'. 
+// Tcl Message: Upgrading 'C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/system.bd' 
+// Tcl Message: INFO: [IP_Flow 19-1972] Upgraded system_freq_mapper_0_0 from freq_mapper_v1_0 1.0 to freq_mapper_v1_0 1.0 
+// Tcl Message: Wrote  : <C:\Users\elias\dev\ba\firmware\fpga\tmp\freq\freq.srcs\sources_1\bd\system\system.bd>  Wrote  : <C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ui/bd_c954508f.ui>  
+selectButton("OptionPane.button", "OK"); // JButton (v, B)
+selectTree(PAResourceEtoH.FlowNavigatorTreePanel_FLOW_NAVIGATOR_TREE, "[, Program and Debug, Generate Bitstream]", 20, false); // u (J, cs)
+// Run Command: PAResourceCommand.PACommandNames_RUN_BITGEN
+// A (cs): Synthesis is Out-of-date: addNotify
+selectButton(RDIResource.BaseDialog_YES, "Yes"); // a (A)
+// bz (cs):  Resetting Runs : addNotify
+// TclEventType: RUN_MODIFY
+dismissDialog("Synthesis is Out-of-date"); // A (cs)
+// TclEventType: RUN_RESET
+// TclEventType: RUN_STATUS_CHANGE
+// TclEventType: RUN_RESET
+// TclEventType: RUN_STATUS_CHANGE
+// TclEventType: RUN_RESET
+// TclEventType: RUN_MODIFY
+// Tcl Message: reset_run synth_1 
+// TclEventType: RSB_SCRIPT_TASK
+dismissDialog("Resetting Runs"); // bz (cs)
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_SCRIPT_TASK
+// TclEventType: RSB_REMOVE_OBJECT
+// TclEventType: RSB_SCRIPT_TASK
+// TclEventType: RSB_REMOVE_OBJECT
+// TclEventType: RSB_SCRIPT_TASK
+// TclEventType: RSB_REMOVE_OBJECT
+// TclEventType: DG_GRAPH_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: REPORT_IP_STATUS_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_REMOVE_OBJECT
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_REMOVE_OBJECT
+// TclEventType: REPORT_IP_STATUS_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: REPORT_IP_STATUS_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_SCRIPT_TASK
+// TclEventType: RSB_SAVE_DIAGRAM
+// bz (cs):  Generate Bitstream : addNotify
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_SAVE_DIAGRAM
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_SAVE_DIAGRAM
+// TclEventType: RSB_SCRIPT_TASK
+// TclEventType: FILE_SET_CHANGE
+// Tcl Message: launch_runs impl_1 -to_step write_bitstream -jobs 12 
+// Tcl Message: INFO: [xilinx.com:ip:clk_wiz:6.0-1] /clk_wiz_0 clk_wiz propagate 
+// Tcl Message: Wrote  : <C:\Users\elias\dev\ba\firmware\fpga\tmp\freq\freq.srcs\sources_1\bd\system\system.bd>  Wrote  : <C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ui/bd_c954508f.ui>  VHDL Output written to : C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/synth/system.v VHDL Output written to : C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/sim/system.v VHDL Output written to : C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/hdl/system_wrapper.v 
+// Tcl Message: INFO: [BD 41-1029] Generation completed for the IP Integrator block FrequencyCounter/freq_mapper_0 . 
+// Tcl Message: INFO: [BD 41-1029] Generation completed for the IP Integrator block PS7/ps7_0_axi_periph/s00_couplers/auto_pc . 
+// Tcl Message: Exporting to file C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/hw_handoff/system.hwh Generated Block Design Tcl file C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/hw_handoff/system_bd.tcl Generated Hardware Definition File C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/synth/system.hwdef 
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RUN_LAUNCH
+// TclEventType: RUN_MODIFY
+// Tcl Message: [Wed Jul  9 03:59:25 2025] Launched synth_1... Run output will be captured here: C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.runs/synth_1/runme.log [Wed Jul  9 03:59:25 2025] Launched impl_1... Run output will be captured here: C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.runs/impl_1/runme.log 
+// Tcl Message: launch_runs: Time (s): cpu = 00:00:01 ; elapsed = 00:00:05 . Memory (MB): peak = 1124.004 ; gain = 0.000 
+dismissDialog("Generate Bitstream"); // bz (cs)
+// TclEventType: RUN_STATUS_CHANGE
+// TclEventType: RUN_COMPLETED
+// TclEventType: RUN_STATUS_CHANGE
+// TclEventType: RUN_STEP_COMPLETED
+// TclEventType: RUN_STATUS_CHANGE
+// TclEventType: RUN_STEP_COMPLETED
+// TclEventType: RUN_COMPLETED
+// TclEventType: RUN_STATUS_CHANGE
+// Elapsed time: 839 seconds
+selectTree(PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE, "[root, Design Sources, freq_mapper (freq_mapper.v)]", 5, false); // B (F, cs)
+selectTree(PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE, "[root, Design Sources, freq_mapper (freq_mapper.v)]", 5, false, false, false, false, false, true); // B (F, cs) - Double Click
+selectCodeEditor("freq_mapper.v", 66, 674); // bP (w, cs)
+// TclEventType: IP_LOCK_CHANGE
+// TclEventType: REPORT_IP_STATUS_STALE
+// TclEventType: DG_GRAPH_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: DG_GRAPH_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: DG_GRAPH_STALE
+// TclEventType: FILE_SET_CHANGE
+// Elapsed time: 37 seconds
+typeControlKey(null, null, 'z');
+typeControlKey(null, null, 'z');
+typeControlKey(null, null, 'z');
+typeControlKey(null, null, 'z');
+typeControlKey(null, null, 'z');
+typeControlKey(null, null, 'z');
+typeControlKey(null, null, 'z');
+typeControlKey(null, null, 'z');
+typeControlKey(null, null, 'z');
+typeControlKey(null, null, 'z');
+typeControlKey(null, null, 'z');
+typeControlKey(null, null, 'z');
+typeControlKey(null, null, 'z');
+typeControlKey(null, null, 'z');
+typeControlKey(null, null, 'z');
+typeControlKey(null, null, 'z');
+typeControlKey(null, null, 'z');
+typeControlKey(null, null, 'z');
+typeControlKey(null, null, 'z');
+typeControlKey(null, null, 'z');
+typeControlKey(null, null, 'z');
+typeControlKey(null, null, 'z');
+typeControlKey(null, null, 'z');
+typeControlKey(null, null, 'z');
+typeControlKey(null, null, 'z');
+typeControlKey(null, null, 'z');
+typeControlKey(null, null, 'z');
+typeControlKey(null, null, 'z');
+typeControlKey(null, null, 'z');
+typeControlKey(null, null, 'z');
+typeControlKey(null, null, 'z');
+selectCodeEditor("freq_mapper.v", 128, 656); // bP (w, cs)
+selectCodeEditor("freq_mapper.v", 125, 733); // bP (w, cs)
+typeControlKey((HResource) null, "freq_mapper.v", 'c'); // bP (w, cs)
+// Elapsed time: 32 seconds
+selectCodeEditor("freq_mapper.v", 161, 368); // bP (w, cs)
+selectCodeEditor("freq_mapper.v", 396, 299); // bP (w, cs)
+selectCodeEditor("freq_mapper.v", 325, 399); // bP (w, cs)
+// Elapsed time: 83 seconds
+selectCodeEditor("freq_mapper.v", 209, 551); // bP (w, cs)
+selectCodeEditor("freq_mapper.v", 645, 558); // bP (w, cs)
+typeControlKey((HResource) null, "freq_mapper.v", 'v'); // bP (w, cs)
+// TclEventType: DG_GRAPH_STALE
+// TclEventType: FILE_SET_CHANGE
+selectCodeEditor("freq_mapper.v", 66, 640); // bP (w, cs)
+selectCodeEditor("freq_mapper.v", 176, 621); // bP (w, cs)
+selectCodeEditor("freq_mapper.v", 225, 672); // bP (w, cs)
+// TclEventType: DG_GRAPH_STALE
+// TclEventType: FILE_SET_CHANGE
+selectCodeEditor("freq_mapper.v", 21, 584); // bP (w, cs)
+// TclEventType: DG_GRAPH_STALE
+// Elapsed time: 20 seconds
+selectCodeEditor("freq_mapper.v", 123, 209); // bP (w, cs)
+selectCodeEditor("freq_mapper.v", 91, 207); // bP (w, cs)
+typeControlKey((HResource) null, "freq_mapper.v", 'v'); // bP (w, cs)
+selectCodeEditor("freq_mapper.v", 64, 222); // bP (w, cs)
+selectCodeEditor("freq_mapper.v", 53, 229); // bP (w, cs)
+selectCodeEditor("freq_mapper.v", 236, 131); // bP (w, cs)
+// TclEventType: FILE_SET_CHANGE
+selectCodeEditor("freq_mapper.v", 127, 77); // bP (w, cs)
+selectCodeEditor("freq_mapper.v", 127, 76, false, false, false, false, true); // bP (w, cs) - Double Click
+typeControlKey((HResource) null, "freq_mapper.v", 'c'); // bP (w, cs)
+selectCodeEditor("freq_mapper.v", 103, 162); // bP (w, cs)
+selectCodeEditor("freq_mapper.v", 103, 162, false, false, false, false, true); // bP (w, cs) - Double Click
+typeControlKey((HResource) null, "freq_mapper.v", 'v'); // bP (w, cs)
+selectCodeEditor("freq_mapper.v", 130, 197); // bP (w, cs)
+selectCodeEditor("freq_mapper.v", 130, 197, false, false, false, false, true); // bP (w, cs) - Double Click
+typeControlKey((HResource) null, "freq_mapper.v", 'v'); // bP (w, cs)
+// TclEventType: DG_GRAPH_STALE
+// Elapsed time: 17 seconds
+selectCodeEditor("freq_mapper.v", 257, 219); // bP (w, cs)
+selectCodeEditor("freq_mapper.v", 249, 212); // bP (w, cs)
+selectCodeEditor("freq_mapper.v", 249, 212, false, false, false, false, true); // bP (w, cs) - Double Click
+selectCodeEditor("freq_mapper.v", 249, 212); // bP (w, cs)
+// TclEventType: FILE_SET_CHANGE
+selectButton(PAResourceOtoP.PlanAheadTab_REFRESH_CHANGED_MODULES, "Refresh Changed Modules"); // h (ds, cs)
+// TclEventType: IP_LOCK_CHANGE
+// Tcl Message: update_module_reference system_freq_mapper_0_0 
+// bz (cs):  Refresh Changed Modules : addNotify
+// TclEventType: PACKAGER_OBJECT_ADD
+// TclEventType: PACKAGER_MESSAGE_RESET
+// TclEventType: PACKAGER_MESSAGE_UPDATE
+// TclEventType: BDCELL_LOCK_CHANGE
+// TclEventType: RSB_OPEN_DIAGRAM
+// TclEventType: RSB_SCRIPT_TASK
+// TclEventType: DG_GRAPH_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_REMOVE_OBJECT
+// TclEventType: RSB_SCRIPT_TASK
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_SAVE_DIAGRAM
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_SAVE_DIAGRAM
+// TclEventType: FILESET_UPDATE_IP
+// TclEventType: IP_UPGRADE_COMPLETE
+// Tcl Message: INFO: [IP_Flow 19-1976] HDL Parser: Replacing 'LOGICAL_WIDTH' by 14 for port or parameter 'amp_u' INFO: [IP_Flow 19-5107] Inferred bus interface 'rst' of definition 'xilinx.com:signal:reset:1.0' (from Xilinx Repository). INFO: [IP_Flow 19-5107] Inferred bus interface 'clk' of definition 'xilinx.com:signal:clock:1.0' (from Xilinx Repository). INFO: [IP_Flow 19-4728] Bus Interface 'clk': Added interface parameter 'ASSOCIATED_RESET' with value 'rst'. 
+// Tcl Message: INFO: [IP_Flow 19-234] Refreshing IP repositories INFO: [IP_Flow 19-1700] Loaded user IP repository 'c:/Users/elias/dev/ba/firmware/fpga/tmp/cores'. 
+// Tcl Message: Upgrading 'C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/system.bd' 
+// Tcl Message: INFO: [IP_Flow 19-1972] Upgraded system_freq_mapper_0_0 from freq_mapper_v1_0 1.0 to freq_mapper_v1_0 1.0 
+// Tcl Message: Wrote  : <C:\Users\elias\dev\ba\firmware\fpga\tmp\freq\freq.srcs\sources_1\bd\system\system.bd>  Wrote  : <C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ui/bd_c954508f.ui>  
+dismissDialog("Refresh Changed Modules"); // bz (cs)
+// TclEventType: DG_GRAPH_STALE
+selectTree(PAResourceEtoH.FlowNavigatorTreePanel_FLOW_NAVIGATOR_TREE, "[, Program and Debug, Generate Bitstream]", 20, false); // u (J, cs)
+// Run Command: PAResourceCommand.PACommandNames_RUN_BITGEN
+// A (cs): Synthesis is Out-of-date: addNotify
+selectButton(RDIResource.BaseDialog_YES, "Yes"); // a (A)
+// bz (cs):  Resetting Runs : addNotify
+// TclEventType: RUN_MODIFY
+dismissDialog("Synthesis is Out-of-date"); // A (cs)
+// TclEventType: RUN_RESET
+// TclEventType: RUN_STATUS_CHANGE
+// TclEventType: RUN_RESET
+// TclEventType: RUN_STATUS_CHANGE
+// TclEventType: RUN_RESET
+// TclEventType: RUN_MODIFY
+// Tcl Message: reset_run synth_1 
+// TclEventType: RSB_SCRIPT_TASK
+dismissDialog("Resetting Runs"); // bz (cs)
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_SCRIPT_TASK
+// TclEventType: RSB_REMOVE_OBJECT
+// TclEventType: RSB_SCRIPT_TASK
+// TclEventType: RSB_REMOVE_OBJECT
+// TclEventType: RSB_SCRIPT_TASK
+// TclEventType: RSB_REMOVE_OBJECT
+// TclEventType: DG_GRAPH_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: REPORT_IP_STATUS_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_REMOVE_OBJECT
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_REMOVE_OBJECT
+// TclEventType: REPORT_IP_STATUS_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: REPORT_IP_STATUS_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_SCRIPT_TASK
+// TclEventType: RSB_SAVE_DIAGRAM
+// bz (cs):  Generate Bitstream : addNotify
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_SAVE_DIAGRAM
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_SAVE_DIAGRAM
+// TclEventType: RSB_SCRIPT_TASK
+// TclEventType: FILE_SET_CHANGE
+// Tcl Message: launch_runs impl_1 -to_step write_bitstream -jobs 12 
+// Tcl Message: INFO: [xilinx.com:ip:clk_wiz:6.0-1] /clk_wiz_0 clk_wiz propagate 
+// Tcl Message: Wrote  : <C:\Users\elias\dev\ba\firmware\fpga\tmp\freq\freq.srcs\sources_1\bd\system\system.bd>  Wrote  : <C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ui/bd_c954508f.ui>  VHDL Output written to : C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/synth/system.v VHDL Output written to : C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/sim/system.v VHDL Output written to : C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/hdl/system_wrapper.v 
+// Tcl Message: INFO: [BD 41-1029] Generation completed for the IP Integrator block FrequencyCounter/freq_mapper_0 . 
+// Tcl Message: INFO: [BD 41-1029] Generation completed for the IP Integrator block PS7/ps7_0_axi_periph/s00_couplers/auto_pc . 
+// Tcl Message: Exporting to file C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/hw_handoff/system.hwh Generated Block Design Tcl file C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/hw_handoff/system_bd.tcl Generated Hardware Definition File C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/synth/system.hwdef 
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RUN_LAUNCH
+// HMemoryUtils.trashcanNow. Engine heap size: 1,133 MB. GUI used memory: 98 MB. Current time: 7/9/25, 4:17:45 AM CEST
+// TclEventType: RUN_LAUNCH
+// TclEventType: RUN_MODIFY
+// Tcl Message: [Wed Jul  9 04:17:46 2025] Launched synth_1... Run output will be captured here: C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.runs/synth_1/runme.log [Wed Jul  9 04:17:46 2025] Launched impl_1... Run output will be captured here: C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.runs/impl_1/runme.log 
+// Tcl Message: launch_runs: Time (s): cpu = 00:00:02 ; elapsed = 00:00:05 . Memory (MB): peak = 1136.141 ; gain = 0.000 
+dismissDialog("Generate Bitstream"); // bz (cs)
+// TclEventType: RUN_STATUS_CHANGE
+// TclEventType: RUN_COMPLETED
+// TclEventType: RUN_STATUS_CHANGE
+// TclEventType: RUN_STEP_COMPLETED
+// TclEventType: RUN_STATUS_CHANGE
+// TclEventType: RUN_STEP_COMPLETED
+// TclEventType: RUN_COMPLETED
+// TclEventType: RUN_STATUS_CHANGE
+// Elapsed time: 199 seconds
+selectView(PAResourceOtoP.PAViews_SYSTEM, "System", 1920, 379, 2726, 872, false, false, false, true, false); // hq (m, cs) - Popup Trigger
+selectMenu(PAResourceQtoS.SelectMenu_HIGHLIGHT, "Highlight"); // af (ao, cs)
+selectMenuItem(PAResourceCommand.PACommandNames_REFRESH_RSB_BLOCK, "Refresh Module"); // ai (ao, cs)
+// Run Command: PAResourceCommand.PACommandNames_REFRESH_RSB_BLOCK
+// TclEventType: PACKAGER_OBJECT_ADD
+// TclEventType: PACKAGER_MESSAGE_RESET
+// TclEventType: PACKAGER_MESSAGE_UPDATE
+// TclEventType: BDCELL_LOCK_CHANGE
+// TclEventType: RSB_OPEN_DIAGRAM
+// TclEventType: RSB_SCRIPT_TASK
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: DG_GRAPH_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_REMOVE_OBJECT
+// TclEventType: RSB_SCRIPT_TASK
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_SAVE_DIAGRAM
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_SAVE_DIAGRAM
+// TclEventType: FILESET_UPDATE_IP
+// TclEventType: IP_UPGRADE_COMPLETE
+// Tcl Message: update_module_reference system_freq_mapper_0_0 
+// Tcl Message: INFO: [IP_Flow 19-1976] HDL Parser: Replacing 'LOGICAL_WIDTH' by 14 for port or parameter 'amp_u' INFO: [IP_Flow 19-5107] Inferred bus interface 'rst' of definition 'xilinx.com:signal:reset:1.0' (from Xilinx Repository). INFO: [IP_Flow 19-5107] Inferred bus interface 'clk' of definition 'xilinx.com:signal:clock:1.0' (from Xilinx Repository). INFO: [IP_Flow 19-4728] Bus Interface 'clk': Added interface parameter 'ASSOCIATED_RESET' with value 'rst'. 
+// Tcl Message: INFO: [IP_Flow 19-234] Refreshing IP repositories INFO: [IP_Flow 19-1700] Loaded user IP repository 'c:/Users/elias/dev/ba/firmware/fpga/tmp/cores'. 
+// Tcl Message: Upgrading 'C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/system.bd' 
+// Tcl Message: INFO: [IP_Flow 19-1972] Upgraded system_freq_mapper_0_0 from freq_mapper_v1_0 1.0 to freq_mapper_v1_0 1.0 
+// Tcl Message: Wrote  : <C:\Users\elias\dev\ba\firmware\fpga\tmp\freq\freq.srcs\sources_1\bd\system\system.bd>  Wrote  : <C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ui/bd_c954508f.ui>  
+selectButton("OptionPane.button", "OK"); // JButton (v, B)
+selectTree(PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE, "[root, Design Sources, freq_mapper (freq_mapper.v)]", 5, false); // B (F, cs)
+selectTree(PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE, "[root, Design Sources, freq_mapper (freq_mapper.v)]", 5, false, false, false, false, false, true); // B (F, cs) - Double Click
+selectCodeEditor("freq_mapper.v", 199, 722); // bP (w, cs)
+selectCodeEditor("freq_mapper.v", 85, 193); // bP (w, cs)
+selectTab("PlanAheadTabBaseWorkspace_JideTabbedPane", (HResource) null, "System", 0); // m (l, cs)
+// Run Command: PAResourceCommand.PACommandNames_CUSTOMIZE_RSB_BLOC
+// r (cs): Re-customize Module Reference: addNotify
+dismissDialog("Re-customize Module Reference"); // r (cs)
+selectTree(PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE, "[root, Design Sources, system_wrapper (system_wrapper.v)]", 1, true); // B (F, cs) - Node
+selectTree(PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE, "[root, Design Sources, system_wrapper (system_wrapper.v)]", 1, true, false, false, false, false, true); // B (F, cs) - Double Click - Node
+selectTree(PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE, "[root, Design Sources, frequency_counter (frequency_counter.v)]", 5, false); // B (F, cs)
+selectTree(PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE, "[root, Design Sources, frequency_counter (frequency_counter.v)]", 5, false); // B (F, cs)
+selectTree(PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE, "[root, Design Sources, frequency_counter (frequency_counter.v)]", 5, false, false, false, false, false, true); // B (F, cs) - Double Click
+selectCodeEditor("frequency_counter.v", 95, 487); // bP (w, cs)
+selectCodeEditor("frequency_counter.v", 96, 478); // bP (w, cs)
+selectTab("PlanAheadTabBaseWorkspace_JideTabbedPane", (HResource) null, "System", 0); // m (l, cs)
+selectTree(PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE, "[root, Design Sources, freq_mapper (freq_mapper.v)]", 3, false); // B (F, cs)
+selectTree(PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE, "[root, Design Sources, freq_mapper (freq_mapper.v)]", 3, false, false, false, false, false, true); // B (F, cs) - Double Click
+selectCodeEditor("freq_mapper.v", 75, 504); // bP (w, cs)
+selectCodeEditor("freq_mapper.v", 83, 501); // bP (w, cs)
+// TclEventType: IP_LOCK_CHANGE
+// TclEventType: REPORT_IP_STATUS_STALE
+// TclEventType: DG_GRAPH_STALE
+// TclEventType: FILE_SET_CHANGE
+// Elapsed time: 11 seconds
+selectButton(PAResourceOtoP.PlanAheadTab_REFRESH_CHANGED_MODULES, "Refresh Changed Modules"); // h (ds, cs)
+// TclEventType: IP_LOCK_CHANGE
+// TclEventType: PACKAGER_OBJECT_ADD
+// TclEventType: PACKAGER_MESSAGE_RESET
+// TclEventType: PACKAGER_MESSAGE_UPDATE
+// TclEventType: BDCELL_LOCK_CHANGE
+// TclEventType: RSB_OPEN_DIAGRAM
+// TclEventType: RSB_SCRIPT_TASK
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: DG_GRAPH_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_REMOVE_OBJECT
+// TclEventType: RSB_SCRIPT_TASK
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_SAVE_DIAGRAM
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_SAVE_DIAGRAM
+// TclEventType: FILESET_UPDATE_IP
+// TclEventType: IP_UPGRADE_COMPLETE
+// Tcl Message: update_module_reference system_freq_mapper_0_0 
+// Tcl Message: INFO: [IP_Flow 19-1976] HDL Parser: Replacing 'LOGICAL_WIDTH' by 14 for port or parameter 'amp_u' INFO: [IP_Flow 19-5107] Inferred bus interface 'rst' of definition 'xilinx.com:signal:reset:1.0' (from Xilinx Repository). INFO: [IP_Flow 19-5107] Inferred bus interface 'clk' of definition 'xilinx.com:signal:clock:1.0' (from Xilinx Repository). INFO: [IP_Flow 19-4728] Bus Interface 'clk': Added interface parameter 'ASSOCIATED_RESET' with value 'rst'. 
+// Tcl Message: INFO: [IP_Flow 19-234] Refreshing IP repositories INFO: [IP_Flow 19-1700] Loaded user IP repository 'c:/Users/elias/dev/ba/firmware/fpga/tmp/cores'. 
+// Tcl Message: Upgrading 'C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/system.bd' 
+// Tcl Message: INFO: [IP_Flow 19-1972] Upgraded system_freq_mapper_0_0 from freq_mapper_v1_0 1.0 to freq_mapper_v1_0 1.0 
+// Tcl Message: Wrote  : <C:\Users\elias\dev\ba\firmware\fpga\tmp\freq\freq.srcs\sources_1\bd\system\system.bd>  Wrote  : <C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ui/bd_c954508f.ui>  
+selectButton(PAResourceOtoP.PlanAheadTab_REFRESH_IP_CATALOG, "Refresh IP Catalog"); // h (ds, cs)
+selectView(PAResourceOtoP.PAViews_SYSTEM, "System", 1673, 373, 2726, 872, false, false, false, true, false); // hq (m, cs) - Popup Trigger
+selectMenu(PAResourceQtoS.SelectMenu_HIGHLIGHT, "Highlight"); // af (ao, cs)
+selectMenuItem(PAResourceCommand.PACommandNames_REFRESH_RSB_BLOCK, "Refresh Module"); // ai (ao, cs)
+// Run Command: PAResourceCommand.PACommandNames_REFRESH_RSB_BLOCK
+// TclEventType: PACKAGER_OBJECT_ADD
+// TclEventType: PACKAGER_MESSAGE_RESET
+// TclEventType: PACKAGER_MESSAGE_UPDATE
+// TclEventType: BDCELL_LOCK_CHANGE
+// TclEventType: RSB_OPEN_DIAGRAM
+// TclEventType: RSB_SCRIPT_TASK
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: DG_GRAPH_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_REMOVE_OBJECT
+// TclEventType: RSB_SCRIPT_TASK
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_SAVE_DIAGRAM
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_SAVE_DIAGRAM
+// TclEventType: FILESET_UPDATE_IP
+// TclEventType: IP_UPGRADE_COMPLETE
+// Tcl Message: update_module_reference system_freq_mapper_0_0 
+// Tcl Message: INFO: [IP_Flow 19-1976] HDL Parser: Replacing 'LOGICAL_WIDTH' by 14 for port or parameter 'amp_u' INFO: [IP_Flow 19-5107] Inferred bus interface 'rst' of definition 'xilinx.com:signal:reset:1.0' (from Xilinx Repository). INFO: [IP_Flow 19-5107] Inferred bus interface 'clk' of definition 'xilinx.com:signal:clock:1.0' (from Xilinx Repository). INFO: [IP_Flow 19-4728] Bus Interface 'clk': Added interface parameter 'ASSOCIATED_RESET' with value 'rst'. 
+// Tcl Message: INFO: [IP_Flow 19-234] Refreshing IP repositories INFO: [IP_Flow 19-1700] Loaded user IP repository 'c:/Users/elias/dev/ba/firmware/fpga/tmp/cores'. 
+// Tcl Message: Upgrading 'C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/system.bd' 
+// Tcl Message: INFO: [IP_Flow 19-1972] Upgraded system_freq_mapper_0_0 from freq_mapper_v1_0 1.0 to freq_mapper_v1_0 1.0 
+// Tcl Message: Wrote  : <C:\Users\elias\dev\ba\firmware\fpga\tmp\freq\freq.srcs\sources_1\bd\system\system.bd>  
+selectButton("OptionPane.button", "OK"); // JButton (v, B)
+// Elapsed time: 11 seconds
+selectTree(PAResourceEtoH.FlowNavigatorTreePanel_FLOW_NAVIGATOR_TREE, "[, Program and Debug, Generate Bitstream]", 20, false); // u (J, cs)
+// Run Command: PAResourceCommand.PACommandNames_RUN_BITGEN
+// A (cs): Synthesis is Out-of-date: addNotify
+selectButton(RDIResource.BaseDialog_YES, "Yes"); // a (A)
+// bz (cs):  Resetting Runs : addNotify
+// TclEventType: RUN_MODIFY
+dismissDialog("Synthesis is Out-of-date"); // A (cs)
+// TclEventType: RUN_RESET
+// TclEventType: RUN_STATUS_CHANGE
+// TclEventType: RUN_RESET
+// TclEventType: RUN_STATUS_CHANGE
+// TclEventType: RUN_RESET
+// TclEventType: RUN_MODIFY
+// Tcl Message: reset_run synth_1 
+// TclEventType: RSB_SCRIPT_TASK
+dismissDialog("Resetting Runs"); // bz (cs)
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_SCRIPT_TASK
+// TclEventType: RSB_REMOVE_OBJECT
+// TclEventType: RSB_SCRIPT_TASK
+// TclEventType: RSB_REMOVE_OBJECT
+// TclEventType: RSB_SCRIPT_TASK
+// TclEventType: RSB_REMOVE_OBJECT
+// TclEventType: DG_GRAPH_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: REPORT_IP_STATUS_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_REMOVE_OBJECT
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_REMOVE_OBJECT
+// TclEventType: REPORT_IP_STATUS_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: REPORT_IP_STATUS_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_SCRIPT_TASK
+// TclEventType: RSB_SAVE_DIAGRAM
+// bz (cs):  Generate Bitstream : addNotify
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_SAVE_DIAGRAM
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_SAVE_DIAGRAM
+// TclEventType: RSB_SCRIPT_TASK
+// TclEventType: FILE_SET_CHANGE
+// Tcl Message: launch_runs impl_1 -to_step write_bitstream -jobs 12 
+// Tcl Message: INFO: [xilinx.com:ip:clk_wiz:6.0-1] /clk_wiz_0 clk_wiz propagate 
+// Tcl Message: Wrote  : <C:\Users\elias\dev\ba\firmware\fpga\tmp\freq\freq.srcs\sources_1\bd\system\system.bd>  Wrote  : <C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ui/bd_c954508f.ui>  VHDL Output written to : C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/synth/system.v VHDL Output written to : C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/sim/system.v VHDL Output written to : C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/hdl/system_wrapper.v 
+// Tcl Message: INFO: [BD 41-1029] Generation completed for the IP Integrator block FrequencyCounter/freq_mapper_0 . 
+// Tcl Message: INFO: [BD 41-1029] Generation completed for the IP Integrator block PS7/ps7_0_axi_periph/s00_couplers/auto_pc . 
+// Tcl Message: Exporting to file C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/hw_handoff/system.hwh Generated Block Design Tcl file C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/hw_handoff/system_bd.tcl Generated Hardware Definition File C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/synth/system.hwdef 
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RUN_LAUNCH
+// TclEventType: RUN_MODIFY
+// TclEventType: RUN_STATUS_CHANGE
+// TclEventType: RUN_MODIFY
+// Tcl Message: [Wed Jul  9 04:22:20 2025] Launched synth_1... Run output will be captured here: C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.runs/synth_1/runme.log [Wed Jul  9 04:22:20 2025] Launched impl_1... Run output will be captured here: C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.runs/impl_1/runme.log 
+// Tcl Message: launch_runs: Time (s): cpu = 00:00:00 ; elapsed = 00:00:05 . Memory (MB): peak = 1136.566 ; gain = 0.039 
+dismissDialog("Generate Bitstream"); // bz (cs)
+// TclEventType: RUN_STATUS_CHANGE
+// TclEventType: RUN_COMPLETED
+// TclEventType: RUN_STATUS_CHANGE
+// TclEventType: RUN_STEP_COMPLETED
+// TclEventType: RUN_STATUS_CHANGE
+// TclEventType: RUN_STEP_COMPLETED
+// TclEventType: RUN_COMPLETED
+// TclEventType: RUN_STATUS_CHANGE
+// Elapsed time: 138 seconds
+selectView(PAResourceOtoP.PAViews_SYSTEM, "System", 1664, 424, 2726, 872, false, false, false, true, false); // hq (m, cs) - Popup Trigger
+selectMenu(PAResourceQtoS.SelectMenu_HIGHLIGHT, "Highlight"); // af (ao, cs)
+selectMenuItem(PAResourceCommand.PACommandNames_REFRESH_RSB_BLOCK, "Refresh Module"); // ai (ao, cs)
+// Run Command: PAResourceCommand.PACommandNames_REFRESH_RSB_BLOCK
+// TclEventType: PACKAGER_OBJECT_ADD
+// TclEventType: PACKAGER_MESSAGE_RESET
+// TclEventType: PACKAGER_MESSAGE_UPDATE
+// TclEventType: BDCELL_LOCK_CHANGE
+// TclEventType: RSB_OPEN_DIAGRAM
+// TclEventType: RSB_SCRIPT_TASK
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: DG_GRAPH_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_REMOVE_OBJECT
+// TclEventType: RSB_SCRIPT_TASK
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_SAVE_DIAGRAM
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_SAVE_DIAGRAM
+// TclEventType: FILESET_UPDATE_IP
+// TclEventType: IP_UPGRADE_COMPLETE
+// Tcl Message: update_module_reference system_freq_mapper_0_0 
+// Tcl Message: INFO: [IP_Flow 19-1976] HDL Parser: Replacing 'LOGICAL_WIDTH' by 14 for port or parameter 'amp_u' INFO: [IP_Flow 19-5107] Inferred bus interface 'rst' of definition 'xilinx.com:signal:reset:1.0' (from Xilinx Repository). INFO: [IP_Flow 19-5107] Inferred bus interface 'clk' of definition 'xilinx.com:signal:clock:1.0' (from Xilinx Repository). INFO: [IP_Flow 19-4728] Bus Interface 'clk': Added interface parameter 'ASSOCIATED_RESET' with value 'rst'. 
+// Tcl Message: INFO: [IP_Flow 19-234] Refreshing IP repositories INFO: [IP_Flow 19-1700] Loaded user IP repository 'c:/Users/elias/dev/ba/firmware/fpga/tmp/cores'. 
+// Tcl Message: Upgrading 'C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/system.bd' 
+// Tcl Message: INFO: [IP_Flow 19-1972] Upgraded system_freq_mapper_0_0 from freq_mapper_v1_0 1.0 to freq_mapper_v1_0 1.0 
+// Tcl Message: Wrote  : <C:\Users\elias\dev\ba\firmware\fpga\tmp\freq\freq.srcs\sources_1\bd\system\system.bd>  Wrote  : <C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ui/bd_c954508f.ui>  
+selectButton("OptionPane.button", "OK"); // JButton (v, B)
+selectTree(PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE, "[root, Design Sources, freq_mapper (freq_mapper.v)]", 5, false); // B (F, cs)
+selectTree(PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE, "[root, Design Sources, freq_mapper (freq_mapper.v)]", 5, false, false, false, false, false, true); // B (F, cs) - Double Click
+// Elapsed time: 25 seconds
+selectCodeEditor("freq_mapper.v", 255, 576); // bP (w, cs)
+// Elapsed time: 48 seconds
+selectCodeEditor("freq_mapper.v", 50, 389); // bP (w, cs)
+collapseTree(PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE, "[root, Design Sources, system_wrapper (system_wrapper.v)]", 1); // B (F, cs)
+selectTab("PlanAheadTabBaseWorkspace_JideTabbedPane", (HResource) null, "System", 0); // m (l, cs)
+// Run Command: PAResourceCommand.PACommandNames_CUSTOMIZE_RSB_BLOC
+// r (cs): Re-customize Module Reference: addNotify
+selectButton(RDIResource.BaseDialog_CANCEL, "Cancel"); // a (r)
+dismissDialog("Re-customize Module Reference"); // r (cs)
+selectTree(PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE, "[root, Design Sources, frequency_counter (frequency_counter.v)]", 5, false); // B (F, cs)
+selectTree(PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE, "[root, Design Sources, frequency_counter (frequency_counter.v)]", 5, false, false, false, false, false, true); // B (F, cs) - Double Click
+selectCodeEditor("frequency_counter.v", 392, 357); // bP (w, cs)
+typeControlKey((HResource) null, "frequency_counter.v", 'c'); // bP (w, cs)
+// Elapsed time: 14 seconds
+selectCodeEditor("frequency_counter.v", 256, 438); // bP (w, cs)
+selectCodeEditor("frequency_counter.v", 79, 441); // bP (w, cs)
+selectCodeEditor("frequency_counter.v", 281, 452); // bP (w, cs)
+selectCodeEditor("frequency_counter.v", 133, 483); // bP (w, cs)
+selectCodeEditor("frequency_counter.v", 182, 482); // bP (w, cs)
+// Elapsed time: 31 seconds
+selectCodeEditor("frequency_counter.v", 200, 410); // bP (w, cs)
+selectCodeEditor("frequency_counter.v", 364, 383); // bP (w, cs)
+typeControlKey((HResource) null, "frequency_counter.v", 'v'); // bP (w, cs)
+// TclEventType: IP_LOCK_CHANGE
+// TclEventType: REPORT_IP_STATUS_STALE
+// TclEventType: DG_GRAPH_STALE
+// TclEventType: FILE_SET_CHANGE
+// Elapsed time: 10 seconds
+selectCodeEditor("frequency_counter.v", 370, 372); // bP (w, cs)
+selectCodeEditor("frequency_counter.v", 366, 378); // bP (w, cs)
+// TclEventType: DG_GRAPH_STALE
+// TclEventType: FILE_SET_CHANGE
+// Tcl Message: update_compile_order -fileset sources_1 
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: DG_GRAPH_STALE
+selectCodeEditor("frequency_counter.v", 466, 534); // bP (w, cs)
+selectCodeEditor("frequency_counter.v", 453, 525); // bP (w, cs)
+typeControlKey((HResource) null, "frequency_counter.v", 'v'); // bP (w, cs)
+// TclEventType: FILE_SET_CHANGE
+// Tcl Message: update_compile_order -fileset sources_1 
+// TclEventType: FILE_SET_CHANGE
+// Elapsed time: 34 seconds
+selectCodeEditor("frequency_counter.v", 186, 657); // bP (w, cs)
+selectCodeEditor("frequency_counter.v", 202, 640); // bP (w, cs)
+typeControlKey((HResource) null, "frequency_counter.v", 'v'); // bP (w, cs)
+// TclEventType: DG_GRAPH_STALE
+// TclEventType: FILE_SET_CHANGE
+// Elapsed time: 11 seconds
+selectCodeEditor("frequency_counter.v", 238, 709); // bP (w, cs)
+selectCodeEditor("frequency_counter.v", 284, 705); // bP (w, cs)
+typeControlKey((HResource) null, "frequency_counter.v", 'v'); // bP (w, cs)
+// TclEventType: DG_GRAPH_STALE
+// TclEventType: FILE_SET_CHANGE
+// Elapsed time: 53 seconds
+selectCodeEditor("frequency_counter.v", 374, 318); // bP (w, cs)
+typeControlKey((HResource) null, "frequency_counter.v", 'v'); // bP (w, cs)
+// TclEventType: DG_GRAPH_STALE
+// TclEventType: FILE_SET_CHANGE
+// Elapsed time: 24 seconds
+selectCodeEditor("frequency_counter.v", 202, 316); // bP (w, cs)
+typeControlKey((HResource) null, "frequency_counter.v", 'v'); // bP (w, cs)
+selectCodeEditor("frequency_counter.v", 137, 336); // bP (w, cs)
+// TclEventType: DG_GRAPH_STALE
+// TclEventType: FILE_SET_CHANGE
+selectCodeEditor("frequency_counter.v", 239, 425); // bP (w, cs)
+selectCodeEditor("frequency_counter.v", 225, 434); // bP (w, cs)
+typeControlKey((HResource) null, "frequency_counter.v", 'v'); // bP (w, cs)
+// TclEventType: DG_GRAPH_STALE
+// TclEventType: FILE_SET_CHANGE
+// Elapsed time: 10 seconds
+selectCodeEditor("frequency_counter.v", 361, 399); // bP (w, cs)
+// Elapsed time: 64 seconds
+selectCodeEditor("frequency_counter.v", 305, 389); // bP (w, cs)
+selectTree(PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE, "[root, Design Sources, freq_mapper (freq_mapper.v)]", 3, false); // B (F, cs)
+selectTree(PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE, "[root, Design Sources, freq_mapper (freq_mapper.v)]", 3, false, false, false, false, false, true); // B (F, cs) - Double Click
+selectCodeEditor("freq_mapper.v", 78, 466); // bP (w, cs)
+typeControlKey((HResource) null, "freq_mapper.v", 'v'); // bP (w, cs)
+// TclEventType: IP_LOCK_CHANGE
+// TclEventType: REPORT_IP_STATUS_STALE
+// TclEventType: DG_GRAPH_STALE
+// TclEventType: FILE_SET_CHANGE
+selectCodeEditor("freq_mapper.v", 1, 383); // bP (w, cs)
+selectCodeEditor("freq_mapper.v", 50, 400); // bP (w, cs)
+selectCodeEditor("freq_mapper.v", 58, 398); // bP (w, cs)
+// TclEventType: DG_GRAPH_STALE
+// TclEventType: FILE_SET_CHANGE
+// Tcl Message: update_compile_order -fileset sources_1 
+// TclEventType: FILE_SET_CHANGE
+// Elapsed time: 35 seconds
+selectCodeEditor("freq_mapper.v", 277, 313); // bP (w, cs)
+selectCodeEditor("freq_mapper.v", 240, 530); // bP (w, cs)
+// Elapsed time: 17 seconds
+selectCodeEditor("freq_mapper.v", 89, 536); // bP (w, cs)
+selectCodeEditor("freq_mapper.v", 692, 492); // bP (w, cs)
+// TclEventType: DG_GRAPH_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: DG_GRAPH_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: DG_GRAPH_STALE
+selectCodeEditor("freq_mapper.v", 753, 315); // bP (w, cs)
+typeControlKey((HResource) null, "freq_mapper.v", 'v'); // bP (w, cs)
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: DG_GRAPH_STALE
+// TclEventType: FILE_SET_CHANGE
+// Tcl Message: update_compile_order -fileset sources_1 
+selectCodeEditor("freq_mapper.v", 115, 434); // bP (w, cs)
+selectCodeEditor("freq_mapper.v", 115, 434, false, false, false, false, true); // bP (w, cs) - Double Click
+selectCodeEditor("freq_mapper.v", 72, 437); // bP (w, cs)
+selectCodeEditor("freq_mapper.v", 72, 437, false, false, false, false, true); // bP (w, cs) - Double Click
+typeControlKey((HResource) null, "freq_mapper.v", 'c'); // bP (w, cs)
+selectCodeEditor("freq_mapper.v", 116, 496); // bP (w, cs)
+selectCodeEditor("freq_mapper.v", 116, 495, false, false, false, false, true); // bP (w, cs) - Double Click
+typeControlKey((HResource) null, "freq_mapper.v", 'v'); // bP (w, cs)
+selectCodeEditor("freq_mapper.v", 107, 541); // bP (w, cs)
+selectCodeEditor("freq_mapper.v", 107, 541, false, false, false, false, true); // bP (w, cs) - Double Click
+typeControlKey((HResource) null, "freq_mapper.v", 'v'); // bP (w, cs)
+// TclEventType: DG_GRAPH_STALE
+// TclEventType: FILE_SET_CHANGE
+selectButton(PAResourceOtoP.PlanAheadTab_REFRESH_CHANGED_MODULES, "Refresh Changed Modules"); // h (ds, cs)
+// TclEventType: IP_LOCK_CHANGE
+// TclEventType: PACKAGER_OBJECT_ADD
+// TclEventType: PACKAGER_MESSAGE_RESET
+// TclEventType: IP_LOCK_CHANGE
+// TclEventType: BDCELL_LOCK_CHANGE
+// TclEventType: RSB_OPEN_DIAGRAM
+// TclEventType: RSB_SCRIPT_TASK
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: DG_GRAPH_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_REMOVE_OBJECT
+// TclEventType: RSB_SCRIPT_TASK
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_SAVE_DIAGRAM
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_SAVE_DIAGRAM
+// TclEventType: FILESET_UPDATE_IP
+// TclEventType: IP_UPGRADE_COMPLETE
+// Tcl Message: update_module_reference system_frequency_counter_0_0 
+// Tcl Message: Upgrading 'C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/system.bd' 
+// Tcl Message: INFO: [IP_Flow 19-1972] Upgraded system_frequency_counter_0_0 from frequency_counter_v1_0 1.0 to frequency_counter_v1_0 1.0 
+// Tcl Message: Wrote  : <C:\Users\elias\dev\ba\firmware\fpga\tmp\freq\freq.srcs\sources_1\bd\system\system.bd>  Wrote  : <C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ui/bd_c954508f.ui>  
+// bz (cs):  Refresh Changed Modules : addNotify
+// Tcl Message: update_module_reference system_freq_mapper_0_0 
+// TclEventType: PACKAGER_OBJECT_ADD
+// TclEventType: PACKAGER_MESSAGE_RESET
+// TclEventType: PACKAGER_MESSAGE_UPDATE
+// TclEventType: BDCELL_LOCK_CHANGE
+// TclEventType: RSB_OPEN_DIAGRAM
+// TclEventType: RSB_SCRIPT_TASK
+// TclEventType: DG_GRAPH_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_REMOVE_OBJECT
+// TclEventType: RSB_SCRIPT_TASK
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_SAVE_DIAGRAM
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_SAVE_DIAGRAM
+// TclEventType: FILESET_UPDATE_IP
+// TclEventType: IP_UPGRADE_COMPLETE
+// Tcl Message: INFO: [IP_Flow 19-1976] HDL Parser: Replacing 'LOGICAL_WIDTH' by 14 for port or parameter 'amp_u' INFO: [IP_Flow 19-5107] Inferred bus interface 'rst' of definition 'xilinx.com:signal:reset:1.0' (from Xilinx Repository). INFO: [IP_Flow 19-5107] Inferred bus interface 'clk' of definition 'xilinx.com:signal:clock:1.0' (from Xilinx Repository). INFO: [IP_Flow 19-4728] Bus Interface 'clk': Added interface parameter 'ASSOCIATED_RESET' with value 'rst'. 
+// Tcl Message: INFO: [IP_Flow 19-234] Refreshing IP repositories INFO: [IP_Flow 19-1700] Loaded user IP repository 'c:/Users/elias/dev/ba/firmware/fpga/tmp/cores'. 
+// Tcl Message: Upgrading 'C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/system.bd' 
+// Tcl Message: INFO: [IP_Flow 19-1972] Upgraded system_freq_mapper_0_0 from freq_mapper_v1_0 1.0 to freq_mapper_v1_0 1.0 
+// Tcl Message: Wrote  : <C:\Users\elias\dev\ba\firmware\fpga\tmp\freq\freq.srcs\sources_1\bd\system\system.bd>  Wrote  : <C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ui/bd_c954508f.ui>  
+// a (cs): Critical Messages: addNotify
+dismissDialog("Refresh Changed Modules"); // bz (cs)
+selectButton(PAResourceAtoD.CmdMsgDialog_OK, "OK"); // f (a)
+dismissDialog("Critical Messages"); // a (cs)
+// TclEventType: RSB_CONNECTION_CHANGE
+// Tcl Message: connect_bd_net [get_bd_pins FrequencyCounter/frequency_counter_0/sample_done] [get_bd_pins FrequencyCounter/freq_mapper_0/sample_done] 
+// Run Command: PAResourceCommand.PACommandNames_SAVE_RSB_DESIGN
+// TclEventType: RSB_SAVE_DIAGRAM
+// TclEventType: DG_GRAPH_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_SAVE_DIAGRAM
+// Tcl Message: save_bd_design 
+// Tcl Message: Wrote  : <C:\Users\elias\dev\ba\firmware\fpga\tmp\freq\freq.srcs\sources_1\bd\system\system.bd>  Wrote  : <C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ui/bd_c954508f.ui>  
+// Elapsed time: 12 seconds
+selectTree(PAResourceEtoH.FlowNavigatorTreePanel_FLOW_NAVIGATOR_TREE, "[, Program and Debug, Generate Bitstream]", 20, false); // u (J, cs)
+// Run Command: PAResourceCommand.PACommandNames_RUN_BITGEN
+// A (cs): Synthesis is Out-of-date: addNotify
+selectButton(RDIResource.BaseDialog_YES, "Yes"); // a (A)
+// bz (cs):  Resetting Runs : addNotify
+// TclEventType: RUN_MODIFY
+dismissDialog("Synthesis is Out-of-date"); // A (cs)
+// TclEventType: RUN_RESET
+// TclEventType: RUN_STATUS_CHANGE
+// TclEventType: RUN_RESET
+// TclEventType: RUN_STATUS_CHANGE
+// TclEventType: RUN_RESET
+// TclEventType: RUN_MODIFY
+// Tcl Message: reset_run synth_1 
+// TclEventType: RSB_SCRIPT_TASK
+dismissDialog("Resetting Runs"); // bz (cs)
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_SCRIPT_TASK
+// TclEventType: RSB_REMOVE_OBJECT
+// TclEventType: RSB_SCRIPT_TASK
+// TclEventType: RSB_REMOVE_OBJECT
+// TclEventType: RSB_SCRIPT_TASK
+// TclEventType: RSB_REMOVE_OBJECT
+// TclEventType: DG_GRAPH_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: REPORT_IP_STATUS_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_REMOVE_OBJECT
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_REMOVE_OBJECT
+// TclEventType: REPORT_IP_STATUS_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: REPORT_IP_STATUS_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_SCRIPT_TASK
+// TclEventType: RSB_SAVE_DIAGRAM
+// bz (cs):  Generate Bitstream : addNotify
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_SAVE_DIAGRAM
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_SAVE_DIAGRAM
+// TclEventType: RSB_SCRIPT_TASK
+// TclEventType: FILE_SET_CHANGE
+// Tcl Message: launch_runs impl_1 -to_step write_bitstream -jobs 12 
+// Tcl Message: INFO: [xilinx.com:ip:clk_wiz:6.0-1] /clk_wiz_0 clk_wiz propagate 
+// Tcl Message: Wrote  : <C:\Users\elias\dev\ba\firmware\fpga\tmp\freq\freq.srcs\sources_1\bd\system\system.bd>  Wrote  : <C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ui/bd_c954508f.ui>  VHDL Output written to : C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/synth/system.v VHDL Output written to : C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/sim/system.v VHDL Output written to : C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/hdl/system_wrapper.v 
+// Tcl Message: INFO: [BD 41-1029] Generation completed for the IP Integrator block FrequencyCounter/frequency_counter_0 . INFO: [BD 41-1029] Generation completed for the IP Integrator block FrequencyCounter/freq_mapper_0 . 
+// Tcl Message: INFO: [BD 41-1029] Generation completed for the IP Integrator block PS7/ps7_0_axi_periph/s00_couplers/auto_pc . 
+// Tcl Message: Exporting to file C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/hw_handoff/system.hwh Generated Block Design Tcl file C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/hw_handoff/system_bd.tcl Generated Hardware Definition File C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/synth/system.hwdef 
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RUN_LAUNCH
+// TclEventType: RUN_MODIFY
+// Tcl Message: [Wed Jul  9 04:33:05 2025] Launched synth_1... Run output will be captured here: C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.runs/synth_1/runme.log [Wed Jul  9 04:33:05 2025] Launched impl_1... Run output will be captured here: C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.runs/impl_1/runme.log 
+// Tcl Message: launch_runs: Time (s): cpu = 00:00:00 ; elapsed = 00:00:05 . Memory (MB): peak = 1142.844 ; gain = 0.617 
+dismissDialog("Generate Bitstream"); // bz (cs)
+// TclEventType: RUN_STATUS_CHANGE
+// TclEventType: RUN_COMPLETED
+// TclEventType: RUN_STATUS_CHANGE
+// TclEventType: RUN_STEP_COMPLETED
+// TclEventType: RUN_STATUS_CHANGE
+// TclEventType: RUN_STEP_COMPLETED
+// TclEventType: RUN_COMPLETED
+// TclEventType: RUN_STATUS_CHANGE
+// Elapsed time: 632 seconds
+selectTab("PlanAheadTabBaseWorkspace_JideTabbedPane", (HResource) null, "system_wrapper.v", 2); // m (l, cs)
+selectTree(PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE, "[root, Design Sources, freq_mapper (freq_mapper.v)]", 3, false); // B (F, cs)
+selectTree(PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE, "[root, Design Sources, freq_mapper (freq_mapper.v)]", 3, false, false, false, false, false, true); // B (F, cs) - Double Click
+// Elapsed time: 10 seconds
+selectCodeEditor("freq_mapper.v", 132, 239); // bP (w, cs)
+selectCodeEditor("freq_mapper.v", 120, 266); // bP (w, cs)
+selectCodeEditor("freq_mapper.v", 62, 400); // bP (w, cs)
+selectCodeEditor("freq_mapper.v", 383, 315); // bP (w, cs)
+selectCodeEditor("freq_mapper.v", 252, 298); // bP (w, cs)
+selectCodeEditor("freq_mapper.v", 240, 279); // bP (w, cs)
+selectCodeEditor("freq_mapper.v", 74, 298); // bP (w, cs)
+selectCodeEditor("freq_mapper.v", 268, 292); // bP (w, cs)
+selectCodeEditor("freq_mapper.v", 450, 296); // bP (w, cs)
+selectCodeEditor("freq_mapper.v", 449, 296, false, false, false, false, true); // bP (w, cs) - Double Click
+// TclEventType: IP_LOCK_CHANGE
+// TclEventType: REPORT_IP_STATUS_STALE
+// TclEventType: DG_GRAPH_STALE
+// TclEventType: FILE_SET_CHANGE
+// Elapsed time: 19 seconds
+selectCodeEditor("freq_mapper.v", 271, 636); // bP (w, cs)
+typeControlKey((HResource) null, "freq_mapper.v", 'c'); // bP (w, cs)
+// Elapsed time: 160 seconds
+selectCodeEditor("freq_mapper.v", 352, 374); // bP (w, cs)
+selectCodeEditor("freq_mapper.v", 298, 347); // bP (w, cs)
+selectCodeEditor("freq_mapper.v", 529, 558); // bP (w, cs)
+selectCodeEditor("freq_mapper.v", 140, 374); // bP (w, cs)
+selectCodeEditor("freq_mapper.v", 140, 374, false, false, false, false, true); // bP (w, cs) - Double Click
+selectCodeEditor("freq_mapper.v", 140, 374); // bP (w, cs)
+// TclEventType: DG_GRAPH_STALE
+// TclEventType: FILE_SET_CHANGE
+selectButton(PAResourceOtoP.PlanAheadTab_REFRESH_CHANGED_MODULES, "Refresh Changed Modules"); // h (ds, cs)
+// TclEventType: IP_LOCK_CHANGE
+// TclEventType: PACKAGER_OBJECT_ADD
+// TclEventType: PACKAGER_MESSAGE_RESET
+// TclEventType: PACKAGER_MESSAGE_UPDATE
+// TclEventType: BDCELL_LOCK_CHANGE
+// TclEventType: RSB_OPEN_DIAGRAM
+// TclEventType: RSB_SCRIPT_TASK
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: DG_GRAPH_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_REMOVE_OBJECT
+// TclEventType: RSB_SCRIPT_TASK
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_SAVE_DIAGRAM
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_SAVE_DIAGRAM
+// TclEventType: FILESET_UPDATE_IP
+// TclEventType: IP_UPGRADE_COMPLETE
+// Tcl Message: update_module_reference system_freq_mapper_0_0 
+// Tcl Message: INFO: [IP_Flow 19-1976] HDL Parser: Replacing 'LOGICAL_WIDTH' by 14 for port or parameter 'amp_u' INFO: [IP_Flow 19-5107] Inferred bus interface 'rst' of definition 'xilinx.com:signal:reset:1.0' (from Xilinx Repository). INFO: [IP_Flow 19-5107] Inferred bus interface 'clk' of definition 'xilinx.com:signal:clock:1.0' (from Xilinx Repository). INFO: [IP_Flow 19-4728] Bus Interface 'clk': Added interface parameter 'ASSOCIATED_RESET' with value 'rst'. 
+// Tcl Message: INFO: [IP_Flow 19-234] Refreshing IP repositories INFO: [IP_Flow 19-1700] Loaded user IP repository 'c:/Users/elias/dev/ba/firmware/fpga/tmp/cores'. 
+// Tcl Message: Upgrading 'C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/system.bd' 
+// Tcl Message: INFO: [IP_Flow 19-1972] Upgraded system_freq_mapper_0_0 from freq_mapper_v1_0 1.0 to freq_mapper_v1_0 1.0 
+// Tcl Message: Wrote  : <C:\Users\elias\dev\ba\firmware\fpga\tmp\freq\freq.srcs\sources_1\bd\system\system.bd>  Wrote  : <C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ui/bd_c954508f.ui>  
+selectButton(PAResourceOtoP.PlanAheadTab_REFRESH_IP_CATALOG, "Refresh IP Catalog"); // h (ds, cs)
+selectView(PAResourceOtoP.PAViews_SYSTEM, "System", 1675, 568, 2726, 872, false, false, false, true, false); // hq (m, cs) - Popup Trigger
+selectMenu(PAResourceQtoS.SelectMenu_HIGHLIGHT, "Highlight"); // af (ao, cs)
+selectMenu(PAResourceQtoS.SystemBuilderView_ORIENTATION, "Orientation"); // af (ao, cs)
+selectMenu(PAResourceQtoS.SystemBuilderView_PINNING, "Pinning"); // af (ao, cs)
+selectMenu(PAResourceQtoS.SystemBuilderView_PINNING, "Pinning"); // af (ao, cs)
+selectMenu(PAResourceQtoS.SystemBuilderView_ORIENTATION, "Orientation"); // af (ao, cs)
+selectMenuItem(PAResourceCommand.PACommandNames_REFRESH_RSB_BLOCK, "Refresh Module"); // ai (ao, cs)
+// Run Command: PAResourceCommand.PACommandNames_REFRESH_RSB_BLOCK
+// TclEventType: PACKAGER_OBJECT_ADD
+// TclEventType: PACKAGER_MESSAGE_RESET
+// TclEventType: PACKAGER_MESSAGE_UPDATE
+// TclEventType: BDCELL_LOCK_CHANGE
+// TclEventType: RSB_OPEN_DIAGRAM
+// TclEventType: RSB_SCRIPT_TASK
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: DG_GRAPH_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_REMOVE_OBJECT
+// TclEventType: RSB_SCRIPT_TASK
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_SAVE_DIAGRAM
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_SAVE_DIAGRAM
+// TclEventType: FILESET_UPDATE_IP
+// TclEventType: IP_UPGRADE_COMPLETE
+// Tcl Message: update_module_reference system_freq_mapper_0_0 
+// Tcl Message: INFO: [IP_Flow 19-1976] HDL Parser: Replacing 'LOGICAL_WIDTH' by 14 for port or parameter 'amp_u' INFO: [IP_Flow 19-5107] Inferred bus interface 'rst' of definition 'xilinx.com:signal:reset:1.0' (from Xilinx Repository). INFO: [IP_Flow 19-5107] Inferred bus interface 'clk' of definition 'xilinx.com:signal:clock:1.0' (from Xilinx Repository). INFO: [IP_Flow 19-4728] Bus Interface 'clk': Added interface parameter 'ASSOCIATED_RESET' with value 'rst'. 
+// Tcl Message: INFO: [IP_Flow 19-234] Refreshing IP repositories INFO: [IP_Flow 19-1700] Loaded user IP repository 'c:/Users/elias/dev/ba/firmware/fpga/tmp/cores'. 
+// Tcl Message: Upgrading 'C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/system.bd' 
+// Tcl Message: INFO: [IP_Flow 19-1972] Upgraded system_freq_mapper_0_0 from freq_mapper_v1_0 1.0 to freq_mapper_v1_0 1.0 
+// Tcl Message: Wrote  : <C:\Users\elias\dev\ba\firmware\fpga\tmp\freq\freq.srcs\sources_1\bd\system\system.bd>  
+selectButton("OptionPane.button", "OK"); // JButton (v, B)
+// HMemoryUtils.trashcanNow. Engine heap size: 1,141 MB. GUI used memory: 105 MB. Current time: 7/9/25, 4:47:46 AM CEST
+selectTree(PAResourceEtoH.FlowNavigatorTreePanel_FLOW_NAVIGATOR_TREE, "[, Program and Debug, Generate Bitstream]", 20, false); // u (J, cs)
+// Run Command: PAResourceCommand.PACommandNames_RUN_BITGEN
+// A (cs): Synthesis is Out-of-date: addNotify
+selectButton(RDIResource.BaseDialog_YES, "Yes"); // a (A)
+// bz (cs):  Resetting Runs : addNotify
+// TclEventType: RUN_MODIFY
+dismissDialog("Synthesis is Out-of-date"); // A (cs)
+// TclEventType: RUN_RESET
+// TclEventType: RUN_STATUS_CHANGE
+// TclEventType: RUN_RESET
+// TclEventType: RUN_STATUS_CHANGE
+// TclEventType: RUN_RESET
+// TclEventType: RUN_MODIFY
+// Tcl Message: reset_run synth_1 
+// TclEventType: RSB_SCRIPT_TASK
+dismissDialog("Resetting Runs"); // bz (cs)
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_SCRIPT_TASK
+// TclEventType: RSB_REMOVE_OBJECT
+// TclEventType: RSB_SCRIPT_TASK
+// TclEventType: RSB_REMOVE_OBJECT
+// TclEventType: RSB_SCRIPT_TASK
+// TclEventType: RSB_REMOVE_OBJECT
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: REPORT_IP_STATUS_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_REMOVE_OBJECT
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_REMOVE_OBJECT
+// TclEventType: REPORT_IP_STATUS_STALE
+// TclEventType: DG_GRAPH_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: REPORT_IP_STATUS_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_SCRIPT_TASK
+// TclEventType: RSB_SAVE_DIAGRAM
+// TclEventType: FILE_SET_CHANGE
+// bz (cs):  Generate Bitstream : addNotify
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_SAVE_DIAGRAM
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_SAVE_DIAGRAM
+// TclEventType: RSB_SCRIPT_TASK
+// TclEventType: FILE_SET_CHANGE
+// Tcl Message: launch_runs impl_1 -to_step write_bitstream -jobs 12 
+// Tcl Message: INFO: [xilinx.com:ip:clk_wiz:6.0-1] /clk_wiz_0 clk_wiz propagate 
+// Tcl Message: Wrote  : <C:\Users\elias\dev\ba\firmware\fpga\tmp\freq\freq.srcs\sources_1\bd\system\system.bd>  Wrote  : <C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ui/bd_c954508f.ui>  VHDL Output written to : C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/synth/system.v VHDL Output written to : C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/sim/system.v VHDL Output written to : C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/hdl/system_wrapper.v 
+// Tcl Message: INFO: [BD 41-1029] Generation completed for the IP Integrator block FrequencyCounter/freq_mapper_0 . 
+// Tcl Message: INFO: [BD 41-1029] Generation completed for the IP Integrator block PS7/ps7_0_axi_periph/s00_couplers/auto_pc . 
+// Tcl Message: Exporting to file C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/hw_handoff/system.hwh Generated Block Design Tcl file C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/hw_handoff/system_bd.tcl Generated Hardware Definition File C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/synth/system.hwdef 
+// TclEventType: DG_GRAPH_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RUN_LAUNCH
+// TclEventType: RUN_MODIFY
+// Tcl Message: [Wed Jul  9 04:47:54 2025] Launched synth_1... Run output will be captured here: C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.runs/synth_1/runme.log [Wed Jul  9 04:47:54 2025] Launched impl_1... Run output will be captured here: C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.runs/impl_1/runme.log 
+// Tcl Message: launch_runs: Time (s): cpu = 00:00:02 ; elapsed = 00:00:06 . Memory (MB): peak = 1151.223 ; gain = 3.008 
+dismissDialog("Generate Bitstream"); // bz (cs)
+// TclEventType: RUN_STATUS_CHANGE
+// TclEventType: RUN_COMPLETED
+// TclEventType: RUN_STATUS_CHANGE
+// TclEventType: RUN_STEP_COMPLETED
+// TclEventType: RUN_STATUS_CHANGE
+// TclEventType: RUN_STEP_COMPLETED
+// TclEventType: RUN_COMPLETED
+// TclEventType: RUN_STATUS_CHANGE

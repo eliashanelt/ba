@@ -1,0 +1,114 @@
+#-----------------------------------------------------------
+# Vivado v2020.1 (64-bit)
+# SW Build 2902540 on Wed May 27 19:54:49 MDT 2020
+# IP Build 2902112 on Wed May 27 22:43:36 MDT 2020
+# Start of session at: Tue Jul  8 23:26:35 2025
+# Process ID: 6264
+# Current directory: C:/Users/elias/dev/ba/firmware/fpga/tmp/freq
+# Command line: vivado.exe -gui_launcher_event rodinguilauncherevent19052 C:\Users\elias\dev\ba\firmware\fpga\tmp\freq\freq.xpr
+# Log file: C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/vivado.log
+# Journal file: C:/Users/elias/dev/ba/firmware/fpga/tmp/freq\vivado.jou
+#-----------------------------------------------------------
+start_gui
+open_project C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.xpr
+reset_run synth_1
+launch_runs impl_1 -to_step write_bitstream -jobs 12
+wait_on_run impl_1
+update_compile_order -fileset sources_1
+reset_run impl_1
+open_bd_design {C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/system.bd}
+update_module_reference system_freq_mapper_0_0
+reset_run synth_1
+launch_runs impl_1 -to_step write_bitstream -jobs 12
+update_module_reference system_freq_mapper_0_0
+update_module_reference system_freq_mapper_0_0
+reset_run synth_1
+launch_runs impl_1 -to_step write_bitstream -jobs 12
+wait_on_run impl_1
+update_module_reference system_freq_mapper_0_0
+reset_run synth_1
+update_module_reference system_freq_mapper_0_0
+launch_runs impl_1 -to_step write_bitstream -jobs 12
+wait_on_run impl_1
+reset_run impl_1
+update_module_reference system_freq_mapper_0_0
+update_module_reference system_freq_mapper_0_0
+reset_run synth_1
+launch_runs impl_1 -to_step write_bitstream -jobs 12
+wait_on_run impl_1
+update_module_reference system_freq_mapper_0_0
+update_module_reference system_freq_mapper_0_0
+reset_run synth_1
+launch_runs impl_1 -to_step write_bitstream -jobs 12
+wait_on_run impl_1
+startgroup
+set_property -dict [list CONFIG.CONST_VAL {1000}] [get_bd_cells FrequencyCounter/xlconstant_0]
+endgroup
+save_bd_design
+reset_run synth_1
+launch_runs impl_1 -to_step write_bitstream -jobs 12
+wait_on_run impl_1
+startgroup
+set_property -dict [list CONFIG.CONST_VAL {40000}] [get_bd_cells FrequencyCounter/xlconstant_1]
+endgroup
+save_bd_design
+reset_run synth_1
+launch_runs impl_1 -to_step write_bitstream -jobs 12
+wait_on_run impl_1
+update_module_reference system_freq_mapper_0_0
+reset_run synth_1
+launch_runs impl_1 -to_step write_bitstream -jobs 12
+wait_on_run impl_1
+reset_run synth_1
+launch_runs impl_1 -to_step write_bitstream -jobs 12
+wait_on_run impl_1
+reset_run synth_1
+update_module_reference system_freq_mapper_0_0
+update_module_reference system_freq_mapper_0_0
+launch_runs impl_1 -to_step write_bitstream -jobs 12
+wait_on_run impl_1
+startgroup
+create_bd_cell -type ip -vlnv xilinx.com:ip:xlconstant:1.1 xlconstant_0
+endgroup
+delete_bd_objs [get_bd_nets FrequencyCounter_amp]
+connect_bd_net [get_bd_pins xlconstant_0/dout] [get_bd_pins signal_merge_0/freq_amp]
+startgroup
+set_property -dict [list CONFIG.CONST_WIDTH {16} CONFIG.CONST_VAL {-3000}] [get_bd_cells xlconstant_0]
+endgroup
+save_bd_design
+reset_run synth_1
+launch_runs impl_1 -to_step write_bitstream -jobs 12
+wait_on_run impl_1
+startgroup
+set_property -dict [list CONFIG.CONST_VAL {-8192}] [get_bd_cells xlconstant_0]
+endgroup
+save_bd_design
+reset_run synth_1
+launch_runs impl_1 -to_step write_bitstream -jobs 12
+wait_on_run impl_1
+update_module_reference system_signal_merge_0_0
+update_module_reference system_signal_merge_0_0
+reset_run synth_1
+launch_runs impl_1 -to_step write_bitstream -jobs 12
+wait_on_run impl_1
+update_module_reference system_signal_merge_0_0
+reset_run synth_1
+launch_runs impl_1 -to_step write_bitstream -jobs 12
+wait_on_run impl_1
+delete_bd_objs [get_bd_nets xlconstant_0_dout] [get_bd_cells xlconstant_0]
+connect_bd_net [get_bd_pins FrequencyCounter/amp] [get_bd_pins signal_merge_0/freq_amp]
+save_bd_design
+update_module_reference system_signal_merge_0_0
+update_module_reference system_freq_mapper_0_0
+reset_run synth_1
+launch_runs impl_1 -to_step write_bitstream -jobs 12
+wait_on_run impl_1
+update_module_reference system_freq_mapper_0_0
+reset_run synth_1
+launch_runs impl_1 -to_step write_bitstream -jobs 12
+wait_on_run impl_1
+update_module_reference system_signal_merge_0_0
+update_module_reference system_freq_mapper_0_0
+reset_run synth_1
+launch_runs impl_1 -to_step write_bitstream -jobs 12
+wait_on_run impl_1

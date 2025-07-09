@@ -44,8 +44,7 @@ module frequency_counter #
     reg                            state, state_next;
     reg [COUNT_WIDTH-1:0]          counter=0, counter_next=0;
     reg [COUNT_WIDTH-1:0]          counter_output=0, counter_output_next=0;
-    reg [COUNT_WIDTH-1:0]          cycle=0, cycle_next=0;
-    
+    reg [COUNT_WIDTH-1:0]          cycle=0, cycle_next=0;    
     
     // Wire AXIS IN to AXIS OUT
     assign  M_AXIS_OUT_tdata[ADC_WIDTH-1:0] = S_AXIS_IN_tdata[ADC_WIDTH-1:0];
@@ -53,6 +52,7 @@ module frequency_counter #
     
     // Extract only the 14-bits of ADC data 
     assign  data = S_AXIS_IN_tdata[ADC_WIDTH-1:0];
+    
  
     
     
@@ -102,7 +102,7 @@ module frequency_counter #
         counter_next = counter + 1; // increment on each clock cycle
         counter_output_next = counter_output;
         cycle_next = cycle;
-        
+                
         if (state < state_next) // high to low signal transition
         begin
             cycle_next = cycle + 1; // increment on each signal transition

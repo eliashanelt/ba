@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<GenRun Id="impl_1" LaunchPart="xc7z010clg400-1" LaunchTime="1752002852">
+<GenRun Id="impl_1" LaunchPart="xc7z010clg400-1" LaunchTime="1752031224">
   <File Type="BITSTR-BMM" Name="system_wrapper_bd.bmm"/>
   <File Type="OPT-METHODOLOGY-DRC" Name="system_wrapper_methodology_drc_opted.rpt"/>
   <File Type="INIT-TIMING" Name="system_wrapper_timing_summary_init.rpt"/>
@@ -105,6 +105,13 @@
       </FileInfo>
     </File>
     <File Path="$PSRCDIR/sources_1/new/signal_merge.v">
+      <FileInfo>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PSRCDIR/sources_1/new/freq_mapper.v">
       <FileInfo>
         <Attr Name="UsedIn" Val="synthesis"/>
         <Attr Name="UsedIn" Val="implementation"/>

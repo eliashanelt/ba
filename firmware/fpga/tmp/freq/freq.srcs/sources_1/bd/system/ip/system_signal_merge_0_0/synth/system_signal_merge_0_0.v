@@ -52,12 +52,13 @@
 
 (* X_CORE_INFO = "signal_merge,Vivado 2020.1" *)
 (* CHECK_LICENSE_TYPE = "system_signal_merge_0_0,signal_merge,{}" *)
-(* CORE_GENERATION_INFO = "system_signal_merge_0_0,signal_merge,{x_ipProduct=Vivado 2020.1,x_ipVendor=xilinx.com,x_ipLibrary=module_ref,x_ipName=signal_merge,x_ipVersion=1.0,x_ipCoreRevision=1,x_ipLanguage=VERILOG,x_ipSimLanguage=MIXED,ADC_DATA_WIDTH=16,AXIS_TDATA_WIDTH=32}" *)
+(* CORE_GENERATION_INFO = "system_signal_merge_0_0,signal_merge,{x_ipProduct=Vivado 2020.1,x_ipVendor=xilinx.com,x_ipLibrary=module_ref,x_ipName=signal_merge,x_ipVersion=1.0,x_ipCoreRevision=1,x_ipLanguage=VERILOG,x_ipSimLanguage=MIXED,ADC_WIDTH=16,AXIS_TDATA_WIDTH=32}" *)
 (* IP_DEFINITION_SOURCE = "module_ref" *)
 (* DowngradeIPIdentifiedWarnings = "yes" *)
 module system_signal_merge_0_0 (
   S_AXIS_tdata,
   S_AXIS_tvalid,
+  freq_amp,
   M_AXIS_tdata,
   M_AXIS_tvalid
 );
@@ -67,6 +68,7 @@ input wire [31 : 0] S_AXIS_tdata;
 (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME S_AXIS, FREQ_HZ 125000000, TDATA_NUM_BYTES 4, TDEST_WIDTH 0, TID_WIDTH 0, TUSER_WIDTH 0, HAS_TREADY 0, HAS_TSTRB 0, HAS_TKEEP 0, HAS_TLAST 0, PHASE 0.000, LAYERED_METADATA undef, INSERT_VIP 0" *)
 (* X_INTERFACE_INFO = "xilinx.com:interface:axis:1.0 S_AXIS TVALID" *)
 input wire S_AXIS_tvalid;
+input wire [15 : 0] freq_amp;
 (* X_INTERFACE_INFO = "xilinx.com:interface:axis:1.0 M_AXIS TDATA" *)
 output wire [31 : 0] M_AXIS_tdata;
 (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME M_AXIS, FREQ_HZ 125000000, TDATA_NUM_BYTES 4, TDEST_WIDTH 0, TID_WIDTH 0, TUSER_WIDTH 0, HAS_TREADY 0, HAS_TSTRB 0, HAS_TKEEP 0, HAS_TLAST 0, PHASE 0.000, LAYERED_METADATA undef, INSERT_VIP 0" *)
@@ -74,11 +76,12 @@ output wire [31 : 0] M_AXIS_tdata;
 output wire M_AXIS_tvalid;
 
   signal_merge #(
-    .ADC_DATA_WIDTH(16),
+    .ADC_WIDTH(16),
     .AXIS_TDATA_WIDTH(32)
   ) inst (
     .S_AXIS_tdata(S_AXIS_tdata),
     .S_AXIS_tvalid(S_AXIS_tvalid),
+    .freq_amp(freq_amp),
     .M_AXIS_tdata(M_AXIS_tdata),
     .M_AXIS_tvalid(M_AXIS_tvalid)
   );

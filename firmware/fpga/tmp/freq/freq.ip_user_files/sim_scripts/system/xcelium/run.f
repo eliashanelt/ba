@@ -51,40 +51,37 @@
 -makelib xcelium_lib/xil_defaultlib \
   "../../../bd/system/ipshared/d32c/src/axis_red_pitaya_adc.v" \
   "../../../bd/system/ip/system_axis_red_pitaya_adc_0_0/sim/system_axis_red_pitaya_adc_0_0.v" \
-  "../../../bd/system/ipshared/8b85/src/axis_red_pitaya_dac.v" \
-  "../../../bd/system/ip/system_axis_red_pitaya_dac_0_0/sim/system_axis_red_pitaya_dac_0_0.v" \
-  "../../../bd/system/ip/system_clk_wiz_0_0/system_clk_wiz_0_0_clk_wiz.v" \
-  "../../../bd/system/ip/system_clk_wiz_0_0/system_clk_wiz_0_0.v" \
 -endlib
--makelib xcelium_lib/xbip_utils_v3_0_10 \
-  "../../../../freq.srcs/sources_1/bd/system/ipshared/d117/hdl/xbip_utils_v3_0_vh_rfs.vhd" \
--endlib
--makelib xcelium_lib/axi_utils_v2_0_6 \
-  "../../../../freq.srcs/sources_1/bd/system/ipshared/1971/hdl/axi_utils_v2_0_vh_rfs.vhd" \
--endlib
--makelib xcelium_lib/xbip_pipe_v3_0_6 \
-  "../../../../freq.srcs/sources_1/bd/system/ipshared/7468/hdl/xbip_pipe_v3_0_vh_rfs.vhd" \
--endlib
--makelib xcelium_lib/xbip_bram18k_v3_0_6 \
-  "../../../../freq.srcs/sources_1/bd/system/ipshared/d367/hdl/xbip_bram18k_v3_0_vh_rfs.vhd" \
--endlib
--makelib xcelium_lib/mult_gen_v12_0_16 \
-  "../../../../freq.srcs/sources_1/bd/system/ipshared/ce84/hdl/mult_gen_v12_0_vh_rfs.vhd" \
--endlib
--makelib xcelium_lib/xbip_dsp48_wrapper_v3_0_4 \
-  "../../../../freq.srcs/sources_1/bd/system/ipshared/cdbf/hdl/xbip_dsp48_wrapper_v3_0_vh_rfs.vhd" \
--endlib
--makelib xcelium_lib/xbip_dsp48_addsub_v3_0_6 \
-  "../../../../freq.srcs/sources_1/bd/system/ipshared/910d/hdl/xbip_dsp48_addsub_v3_0_vh_rfs.vhd" \
--endlib
--makelib xcelium_lib/xbip_dsp48_multadd_v3_0_6 \
-  "../../../../freq.srcs/sources_1/bd/system/ipshared/b0ac/hdl/xbip_dsp48_multadd_v3_0_vh_rfs.vhd" \
--endlib
--makelib xcelium_lib/dds_compiler_v6_0_20 \
-  "../../../../freq.srcs/sources_1/bd/system/ipshared/398e/hdl/dds_compiler_v6_0_vh_rfs.vhd" \
+-makelib xcelium_lib/proc_sys_reset_v5_0_13 \
+  "../../../../freq.srcs/sources_1/bd/system/ipshared/8842/hdl/proc_sys_reset_v5_0_vh_rfs.vhd" \
 -endlib
 -makelib xcelium_lib/xil_defaultlib \
-  "../../../bd/system/ip/system_dds_compiler_0_0/sim/system_dds_compiler_0_0.vhd" \
+  "../../../bd/system/ip/system_rst_ps7_0_125M_0/sim/system_rst_ps7_0_125M_0.vhd" \
+-endlib
+-makelib xcelium_lib/xil_defaultlib \
+  "../../../bd/system/ip/system_signal_split_0_0/sim/system_signal_split_0_0.v" \
+  "../../../bd/system/ip/system_frequency_counter_0_0/sim/system_frequency_counter_0_0.v" \
+-endlib
+-makelib xcelium_lib/xlconstant_v1_1_7 \
+  "../../../../freq.srcs/sources_1/bd/system/ipshared/fcfc/hdl/xlconstant_v1_1_vl_rfs.v" \
+-endlib
+-makelib xcelium_lib/xil_defaultlib \
+  "../../../bd/system/ip/system_xlconstant_0_0/sim/system_xlconstant_0_0.v" \
+  "../../../bd/system/ip/system_pow2_0_0/sim/system_pow2_0_0.v" \
+-endlib
+-makelib xcelium_lib/xlslice_v1_0_2 \
+  "../../../../freq.srcs/sources_1/bd/system/ipshared/11d0/hdl/xlslice_v1_0_vl_rfs.v" \
+-endlib
+-makelib xcelium_lib/xil_defaultlib \
+  "../../../bd/system/ip/system_xlslice_0_1/sim/system_xlslice_0_1.v" \
+  "../../../bd/system/ipshared/8b85/src/axis_red_pitaya_dac.v" \
+  "../../../bd/system/ip/system_axis_red_pitaya_dac_0_1/sim/system_axis_red_pitaya_dac_0_1.v" \
+  "../../../bd/system/ip/system_clk_wiz_0_1/system_clk_wiz_0_1_clk_wiz.v" \
+  "../../../bd/system/ip/system_clk_wiz_0_1/system_clk_wiz_0_1.v" \
+  "../../../bd/system/ip/system_signal_merge_0_0/sim/system_signal_merge_0_0.v" \
+  "../../../bd/system/ip/system_freq_mapper_0_0/sim/system_freq_mapper_0_0.v" \
+  "../../../bd/system/ip/system_xlconstant_0_2/sim/system_xlconstant_0_2.v" \
+  "../../../bd/system/ip/system_xlconstant_0_3/sim/system_xlconstant_0_3.v" \
 -endlib
 -makelib xcelium_lib/generic_baseblocks_v2_1_0 \
   "../../../../freq.srcs/sources_1/bd/system/ipshared/b752/hdl/generic_baseblocks_v2_1_vl_rfs.v" \
@@ -109,14 +106,6 @@
 -endlib
 -makelib xcelium_lib/xil_defaultlib \
   "../../../bd/system/ip/system_auto_pc_0/sim/system_auto_pc_0.v" \
--endlib
--makelib xcelium_lib/proc_sys_reset_v5_0_13 \
-  "../../../../freq.srcs/sources_1/bd/system/ipshared/8842/hdl/proc_sys_reset_v5_0_vh_rfs.vhd" \
--endlib
--makelib xcelium_lib/xil_defaultlib \
-  "../../../bd/system/ip/system_rst_ps7_0_125M_0/sim/system_rst_ps7_0_125M_0.vhd" \
--endlib
--makelib xcelium_lib/xil_defaultlib \
   "../../../bd/system/sim/system.v" \
 -endlib
 -makelib xcelium_lib/xil_defaultlib \

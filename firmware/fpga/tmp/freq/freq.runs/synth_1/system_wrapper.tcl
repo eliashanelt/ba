@@ -70,7 +70,6 @@ proc create_report { reportName command } {
   }
 }
 OPTRACE "synth_1" START { ROLLUP_AUTO }
-set_param chipscope.maxJobs 6
 set_msg_config -id {HDL-1065} -limit 10000
 OPTRACE "Creating in-memory project" START { }
 create_project -in_memory -part xc7z010clg400-1
@@ -96,6 +95,7 @@ read_verilog -library xil_defaultlib {
   C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/imports/fpga/frequency_counter.v
   C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/imports/fpga/pow2.v
   C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/new/signal_merge.v
+  C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/new/freq_mapper.v
   C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/hdl/system_wrapper.v
 }
 add_files C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/system.bd

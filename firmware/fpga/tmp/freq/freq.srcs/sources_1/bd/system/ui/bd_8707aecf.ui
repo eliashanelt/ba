@@ -1,7 +1,7 @@
 {
    "ActiveEmotionalView":"Default View",
    "Default View_ScaleFactor":"2.63902",
-   "Default View_TopLeft":"20,-106",
+   "Default View_TopLeft":"161,-106",
    "ExpandedHierarchyInLayout":"",
    "guistr":"# # String gsaved with Nlview 7.0r6  2020-01-29 bk=1.5227 VDI=41 GEI=36 GUI=JA:9.0 non-TLS
 #  -string -flagsOSRD
@@ -11,19 +11,26 @@ preplace port clk -pg 1 -lvl 0 -x -70 -y 70 -defaultsOSRD
 preplace port rst -pg 1 -lvl 0 -x -70 -y 90 -defaultsOSRD
 preplace portBus counter_output -pg 1 -lvl 4 -x 870 -y 90 -defaultsOSRD
 preplace portBus Din -pg 1 -lvl 0 -x -70 -y 150 -defaultsOSRD
+preplace portBus amp -pg 1 -lvl 4 -x 870 -y -60 -defaultsOSRD
 preplace inst xlslice_0 -pg 1 -lvl 1 -x 50 -y 150 -defaultsOSRD
 preplace inst frequency_counter_0 -pg 1 -lvl 3 -x 690 -y 80 -defaultsOSRD
 preplace inst pow2_0 -pg 1 -lvl 2 -x 340 -y 150 -defaultsOSRD
+preplace inst xlconstant_0 -pg 1 -lvl 1 -x 50 -y -10 -defaultsOSRD
+preplace inst xlconstant_1 -pg 1 -lvl 3 -x 690 -y -120 -defaultsOSRD
+preplace inst freq_mapper_0 -pg 1 -lvl 2 -x 340 -y -60 -defaultsOSRD
 preplace netloc xlslice_0_Dout 1 1 1 NJ 150
-preplace netloc pow2_0_N 1 2 1 450J 110n
-preplace netloc axis_red_pitaya_adc_0_adc_clk 1 0 3 NJ 70 NJ 70 NJ
-preplace netloc xlc_reset_dout 1 0 3 NJ 90 NJ 90 NJ
-preplace netloc frequency_counter_0_counter_output 1 3 1 NJ 90
+preplace netloc pow2_0_N 1 1 2 180 210 490J
+preplace netloc axis_red_pitaya_adc_0_adc_clk 1 0 3 NJ 70 150J 70 NJ
+preplace netloc xlc_reset_dout 1 0 3 NJ 90 170J 90 NJ
+preplace netloc frequency_counter_0_counter_output 1 1 3 190 60 490 -10 850J
 preplace netloc Net 1 0 1 NJ 150
+preplace netloc freq_mapper_0_amp 1 2 2 NJ -60 NJ
+preplace netloc xlconstant_0_dout 1 1 1 160 -30n
+preplace netloc xlconstant_1_dout 1 1 3 200 80 480J -20 850
 preplace netloc signal_split_0_M_AXIS_PORT1 1 0 3 NJ 50 NJ 50 NJ
 preplace netloc frequency_counter_0_M_AXIS_OUT 1 3 1 NJ 70
 levelinfo -pg 1 -70 50 340 690 870
-pagesize -pg 1 -db -bbox -sgen -200 -100 1050 370
+pagesize -pg 1 -db -bbox -sgen -200 -180 1050 370
 "
 }
 0
