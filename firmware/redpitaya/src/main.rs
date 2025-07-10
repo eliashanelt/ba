@@ -1,20 +1,38 @@
 use std::{
-    env,
     fs::OpenOptions,
     io::{self, Read, Write},
+    sync::{Arc, Mutex},
     thread::sleep,
     time::Duration,
 };
 
+use axum::{
+    extract::{
+        State, WebSocketUpgrade,
+        ws::{Message, WebSocket},
+    },
+    http::StatusCode,
+};
 use memmap2::{MmapMut, MmapOptions};
-use std::f32::consts::PI;
-use std::process::Command;
+
+use axum::response::Html;
+use axum::{
+    Json, Router,
+    response::{IntoResponse, Redirect},
+    routing::{get, post},
+};
+use tokio::sync::broadcast;
+use tower_http::services::ServeFile;
 
 use embedded_hal::spi::SpiBus;
 use embedded_hal::spi::SpiDevice;
 use linux_embedded_hal::spidev::{SpiModeFlags, Spidev, SpidevOptions, SpidevTransfer};
+use tower_http::services::ServeDir;
 
-use rand_distr::{Distribution, Uniform};
+use futures_util::{
+    sink::SinkExt,
+    stream::{SplitSink, SplitStream, StreamExt},
+};
 
 use serde::{Deserialize, Serialize};
 
@@ -32,139 +50,173 @@ struct RpRegs {
     config: u32,    // 0x08 – R/W   {phase_inc[31:5], log2_Ncycles[4:0]}
 }
 
+#[derive(serde::Deserialize)]
+struct UiInput {
+    value: f32,
+}
+
+#[derive(serde::Deserialize)]
+struct VoltageInput {
+    voltage: f32,
+}
+
+#[derive(serde::Deserialize)]
+struct DelayInput {
+    delay: f32,
+    delay_mode: DelayMode,
+}
+
+#[derive(serde::Deserialize)]
+struct GainInput {
+    gain: f32,
+}
+
+#[derive(Serialize, Deserialize, Debug, Clone, Copy)]
+enum DelayMode {
+    Period,
+    Timestamp,
+}
+
+async fn handle_input(Json(payload): Json<UiInput>) -> impl IntoResponse {
+    println!("Received slider value: {}", payload.value);
+    // TODO: call into RP's C‐API via FFI, or manipulate GPIO/DAC here.
+    (StatusCode::OK, Json(serde_json::json!({ "status": "ok" })))
+}
+
+async fn handle_voltage(Json(payload): Json<VoltageInput>) -> impl IntoResponse {
+    println!("Received voltage value: {}V", payload.voltage);
+    // TODO: call into RP's C‐API via FFI, or manipulate GPIO/DAC here.
+    (StatusCode::OK, Json(serde_json::json!({ "status": "ok" })))
+}
+
+async fn handle_delay(Json(payload): Json<DelayInput>) -> impl IntoResponse {
+    println!(
+        "Received delay value: {} (mode: {:?})",
+        payload.delay, payload.delay_mode
+    );
+    // TODO: call into RP's C‐API via FFI, or manipulate GPIO/DAC here.
+    (StatusCode::OK, Json(serde_json::json!({ "status": "ok" })))
+}
+
+async fn handle_gain(Json(payload): Json<GainInput>) -> impl IntoResponse {
+    println!("Received gain value: {}", payload.gain);
+    // TODO: call into RP's C‐API via FFI, or manipulate GPIO/DAC here.
+    (StatusCode::OK, Json(serde_json::json!({ "status": "ok" })))
+}
+
+async fn hello() -> impl IntoResponse {
+    // TODO: call into RP's C‐API via FFI, or manipulate GPIO/DAC here.
+    (StatusCode::OK, "Hello World!")
+}
+
+async fn handler_404() -> (StatusCode, Html<&'static str>) {
+    (StatusCode::NOT_FOUND, Html("<h1>404 Not Found</h1>"))
+}
+
 #[tokio::main]
 async fn main() {
-    /*let output = Command::new("fpgautil")
-        .args(&["-b", "/root/passthrough.bit.bin"])
-        .output() // returns io::Result<Output>
-        .expect("Failed to launch fpgautil");
+    let (tx, _rx) = broadcast::channel(100);
+    let current_frequency = Arc::new(Mutex::new(1000.0f32));
+    let voltage_lower = Arc::new(Mutex::new(-1.0f32));
+    let voltage_upper = Arc::new(Mutex::new(1.0f32));
+    let current_delay = Arc::new(Mutex::new(0.0f32));
+    let current_delay_mode = Arc::new(Mutex::new(DelayMode::Period));
+    let current_gain = Arc::new(Mutex::new(1.0f32));
+    let freq_min = Arc::new(Mutex::new(100.0f32));
+    let freq_max = Arc::new(Mutex::new(10000.0f32));
 
-    // check if the command itself returned a zero exit code
-    if output.status.success() {
-        println!("✅ FPGA programmed successfully!");
-    } else {
-        // non-zero exit code → failure
-        let code = output.status.code().map_or(-1, |c| c);
-        eprintln!("❌ fpgautil failed (exit code {})", code);
-        eprintln!("stdout:\n{}", String::from_utf8_lossy(&output.stdout));
-        eprintln!("stderr:\n{}", String::from_utf8_lossy(&output.stderr));
-        // you can also return an Err here if you want to bail out
-    }
+    let tx_monitor = tx.clone();
+    let freq_monitor = current_frequency.clone();
+    let voltage_lower_monitor = voltage_lower.clone();
+    let voltage_upper_monitor = voltage_upper.clone();
+    let delay_monitor = current_delay.clone();
+    let delay_mode_monitor = current_delay_mode.clone();
+    let gain_monitor = current_gain.clone();
 
-    return Ok(());*/
+    let app_state = AppState {
+        tx: tx.clone(),
+        current_frequency: current_frequency.clone(),
+        voltage_lower: voltage_lower.clone(),
+        voltage_upper: voltage_upper.clone(),
+        current_delay: current_delay.clone(),
+        current_delay_mode: current_delay_mode.clone(),
+        current_gain: current_gain.clone(),
+        freq_min: freq_min.clone(),
+        freq_max: freq_max.clone(),
+    };
 
-    std::thread::spawn(|| {
+    std::thread::spawn(move || {
         let (log2_ncycles, freq_in) = (10, 1000.0);
 
         let phase_inc: u32 = (2.147_482 * freq_in) as u32; // same constant factor
         let ncycles: u32 = 1 << log2_ncycles;
         // ─────────────────── open /dev/mem and mmap it ───────────────────
-        let file = OpenOptions::new().read(true).write(true).open("/dev/mem")?;
+        let file = OpenOptions::new()
+            .read(true)
+            .write(true)
+            .open("/dev/mem")
+            .unwrap();
 
         let map: MmapMut = unsafe {
             MmapOptions::new()
                 .offset(BASE_ADDR)
                 .len(PAGE_SIZE)
-                .map_mut(&file)?
+                .map_mut(&file)
+                .unwrap()
         };
         let regs = map.as_ptr() as *mut RpRegs;
         let cfg_word = (log2_ncycles & 0x1F) | (phase_inc << 5);
-        unsafe { core::ptr::write_volatile(&mut (*regs).config, cfg_word) }; 
+        unsafe { core::ptr::write_volatile(&mut (*regs).config, cfg_word) };
+
         loop {
             let count: u32 = unsafe { core::ptr::read_volatile(&(*regs).count) };
             let freq_est = (ncycles as f64 / count as f64) * FREQ_HZ;
+
+            // Get current values for printing
+            let lower = voltage_lower_monitor.lock().unwrap().clone();
+            let upper = voltage_upper_monitor.lock().unwrap().clone();
+            let delay = delay_monitor.lock().unwrap().clone();
+            let delay_mode = delay_mode_monitor.lock().unwrap().clone();
+            let gain = gain_monitor.lock().unwrap().clone();
+
             print!(
-                "\rCounts: {:5} | cycles/avg: {:5} | est. frequency: {:10.5} Hz",
-                count, ncycles, freq_est
+                "\rCounts: {count:5} | cycles/avg: {ncycles:5} | est. frequency: {freq_est:10.5} Hz | Voltage: {lower:+.3}V to {upper:+.3}V | Delay: {delay:.3} ({delay_mode:?}) | Gain: {gain:+.3}",
             );
             io::stdout().flush().ok();
+
+            let _ = tx_monitor.send(WebSocketMessage::FrequencyUpdate {
+                frequency: freq_est,
+            });
             sleep(Duration::from_secs(3));
         }
     });
-    let (log2_ncycles, freq_in) = (10, 1000.0);
 
-    let phase_inc: u32 = (2.147_482 * freq_in) as u32; // same constant factor
-    let ncycles: u32 = 1 << log2_ncycles;
-    // ─────────────────── open /dev/mem and mmap it ───────────────────
-    let file = OpenOptions::new().read(true).write(true).open("/dev/mem")?;
+    let static_files =
+        ServeDir::new("static").not_found_service(ServeFile::new("static/index.html"));
+    // Build our app with a route for the API and the static assets
+    let app = Router::new()
+        .route("/api/input", post(handle_input))
+        .route("/api/voltage", post(handle_voltage))
+        .route("/api/delay", post(handle_delay))
+        .route("/api/gain", post(handle_gain))
+        .route("/api/hello", get(hello))
+        .route("/ws", get(websocket_handler))
+        .fallback_service(static_files) // Serve static assets like CSS, JS, images
+        .with_state(app_state);
 
-    let map: MmapMut = unsafe {
-        MmapOptions::new()
-            .offset(BASE_ADDR)
-            .len(PAGE_SIZE)
-            .map_mut(&file)?
-    };
-    let regs = map.as_ptr() as *mut RpRegs;
-    let cfg_word = (log2_ncycles & 0x1F) | (phase_inc << 5);
-    unsafe { core::ptr::write_volatile(&mut (*regs).config, cfg_word) };
-
-    /*let mut spi = Spidev::open("/dev/spidev1.0")?;
-    let options = SpidevOptions::new()
-        .bits_per_word(8)
-        .max_speed_hz(1_000_000) // 1 MHz
-        .mode(SpiModeFlags::SPI_MODE_0)
-        .build();
-    spi.configure(&options)?;*/
-
-    println!("transfered");
-    loop {
-        /*let Ok(ethernet_connected) = is_ethernet_connected(ETHERNET_INTERFACE) else {
-            continue;
-        };
-
-        let connection_status = if ethernet_connected {
-            ConnectionStatus::EthernetConnected
-        } else {
-            ConnectionStatus::EthernetDisconnected
-        };
-
-        let wave_form = random_array();
-        let msg = RedpitayaStatus {
-            connection_status,
-            fpga_status: FpgaStatus::BinNotFound,
-            frequency: 69.0,
-            wave_form,
-        };
-        let msg_bytes = postcard::to_stdvec(&msg)?;
-        let receive_buffer = Vec::with_capacity(1024);
-        let mut transfers = [
-            &mut SpidevTransfer::write(&msg_bytes),
-            &mut SpidevTransfer::read(&mut receive_buffer),
-        ];
-        spi.transfer(&mut SpidevTransfer::write(&msg_bytes))?;
-
-        println!("{receive_buffer:?}");*/
-
-        //print!("\x1B[2J\x1B[H");
-        let count: u32 = unsafe { core::ptr::read_volatile(&(*regs).count) };
-        let freq_est = (ncycles as f64 / count as f64) * FREQ_HZ;
-        print!(
-            "\rCounts: {:5} | cycles/avg: {:5} | est. frequency: {:10.5} Hz | count: {}",
-            count, ncycles, freq_est, count
-        );
-
-        //let sine = sinus_period(I14_MIN, I14_MAX, 0);
-        //print_graph(&sine, freq_est as f32);
-        io::stdout().flush().ok();
-        sleep(Duration::from_secs(3));
-    }
-}
-
-fn random_array() -> [i16; 128] {
-    let mut rng = rand::thread_rng();
-    let uniform = Uniform::new(I14_MIN, I14_MAX).expect("try create uniform");
-    std::array::from_fn(|_| uniform.sample(&mut rng))
+    let listener = tokio::net::TcpListener::bind("0.0.0.0:3030").await.unwrap();
+    axum::serve(listener, app).await.unwrap();
 }
 
 const I14_MAX: i16 = 8191;
 const I14_MIN: i16 = -8192;
 fn is_ethernet_connected(interface: &str) -> io::Result<bool> {
-    let path = format!("/sys/class/net/{}/carrier", interface);
+    let path = format!("/sys/class/net/{interface}/carrier");
     let contents = std::fs::read_to_string(path)?;
     Ok(contents.trim() == "1")
 }
 
-#[derive(Serialize, Deserialize, Debug, PartialEq)]
+#[derive(Serialize, Deserialize, Debug, PartialEq, Clone)]
 struct RedpitayaStatus {
     connection_status: ConnectionStatus,
     fpga_status: FpgaStatus,
@@ -173,13 +225,13 @@ struct RedpitayaStatus {
     wave_form: [u32; 128],
 }
 
-#[derive(Serialize, Deserialize, Debug, PartialEq)]
+#[derive(Serialize, Deserialize, Debug, PartialEq, Clone, Copy)]
 enum ConnectionStatus {
     EthernetConnected,
     EthernetDisconnected,
 }
 
-#[derive(Serialize, Deserialize, Debug, PartialEq)]
+#[derive(Serialize, Deserialize, Debug, PartialEq, Clone, Copy)]
 enum FpgaStatus {
     BinNotFound,
     ProgrammingError,
@@ -191,131 +243,164 @@ struct ButtonSettings {}
 #[derive(Serialize, Deserialize, Debug, PartialEq)]
 struct SystemStatus {}
 
-fn sinus_period(limit_min: i16, limit_max: i16, offset: i16) -> [i16; 128] {
-    let mid = (I14_MAX as f32 + I14_MIN as f32) * 0.5;
-    let amplitude = (I14_MAX as f32 - I14_MIN as f32) * 0.5;
+#[derive(Serialize, Deserialize, Debug, Clone)]
+#[serde(tag = "type")]
+enum WebSocketMessage {
+    // Incoming messages
+    SetVoltageLimits { lower_limit: f32, upper_limit: f32 },
+    SetDelay { delay: f32, delay_mode: DelayMode },
+    SetGain { gain: f32 },
+    SetFrequencyRange { min_freq: f32, max_freq: f32 },
+    Hello,
 
-    std::array::from_fn(|i| {
-        // 0..127 sample index + offset, wrapped into [0..128)
-        let phase = ((i as i16 + offset).rem_euclid(128) as f32) / 128.0;
-        let angle = 2.0 * PI * phase;
-        // full ±14-bit sample
-        let raw = (mid + amplitude * angle.sin()).round() as i16;
-        // clamp into your window
-        raw.clamp(limit_min, limit_max)
-    })
+    // Outgoing messages
+    VoltageUpdate { lower_limit: f32, upper_limit: f32 },
+    DelayUpdate { delay: f32, delay_mode: DelayMode },
+    GainUpdate { gain: f32 },
+    FrequencyRangeUpdate { min_freq: f32, max_freq: f32 },
+    StatusUpdate { status: RedpitayaStatus },
+    FrequencyUpdate { frequency: f64 },
+    Error { message: String },
 }
 
-/// Print a text-mode graph of the data and display frequency & period
-fn print_graph(data: &[i16; 128], frequency_hz: f32) {
-    // Compute period in seconds
-    let period_s = 1.0 / frequency_hz;
-    // Choose appropriate time unit
-    let (period_val, unit) = if period_s >= 1.0 {
-        (period_s, "s")
-    } else if period_s * 1e3 >= 1.0 {
-        (period_s * 1e3, "ms")
-    } else if period_s * 1e6 >= 1.0 {
-        (period_s * 1e6, "us")
-    } else {
-        (period_s * 1e9, "ns")
-    };
+#[derive(Clone)]
+struct AppState {
+    tx: broadcast::Sender<WebSocketMessage>,
+    current_frequency: Arc<Mutex<f32>>,
+    voltage_lower: Arc<Mutex<f32>>,
+    voltage_upper: Arc<Mutex<f32>>,
+    current_delay: Arc<Mutex<f32>>,
+    current_delay_mode: Arc<Mutex<DelayMode>>,
+    current_gain: Arc<Mutex<f32>>,
+    freq_min: Arc<Mutex<f32>>,
+    freq_max: Arc<Mutex<f32>>,
+}
 
-    // Header with frequency and period
-    println!(
-        "Frequency: {:.3} Hz   Period: {:.3} {}",
-        frequency_hz, period_val, unit
-    );
+async fn websocket_handler(
+    ws: WebSocketUpgrade,
+    State(state): State<AppState>,
+) -> impl IntoResponse {
+    ws.on_upgrade(|socket| handle_socket(socket, state))
+}
 
-    // Determine data range
-    let min_v = *data.iter().min().unwrap() as f32;
-    let max_v = *data.iter().max().unwrap() as f32;
-    let range = max_v - min_v;
+async fn handle_socket(socket: WebSocket, state: AppState) {
+    let (mut sender, mut receiver) = socket.split();
+    let mut rx = state.tx.subscribe();
 
-    // Graph dimensions
-    let height: usize = 20;
-    let width = data.len();
+    // Send initial state to the new client
+    {
+        let lower = state.voltage_lower.lock().unwrap().clone();
+        let upper = state.voltage_upper.lock().unwrap().clone();
+        let delay = state.current_delay.lock().unwrap().clone();
+        let delay_mode = state.current_delay_mode.lock().unwrap().clone();
+        let gain = state.current_gain.lock().unwrap().clone();
+        let min_freq = state.freq_min.lock().unwrap().clone();
+        let max_freq = state.freq_max.lock().unwrap().clone();
 
-    // Compute which rows correspond to max, zero, and min
-    let row_of = |value: f32| -> usize {
-        let norm = if range > 0.0 {
-            (value - min_v) / range
-        } else {
-            0.5
-        };
-        let r = (norm * (height as f32 - 1.0)).round() as isize;
-        // invert so 0 is bottom
-        (height as isize - 1 - r) as usize
-    };
-    let row_max = row_of(max_v);
-    let row_zero = if min_v <= 0.0 && max_v >= 0.0 {
-        Some(row_of(0.0))
-    } else {
-        None
-    };
-    let row_min = row_of(min_v);
+        // Send initial values
+        let messages = vec![
+            WebSocketMessage::VoltageUpdate {
+                lower_limit: lower,
+                upper_limit: upper,
+            },
+            WebSocketMessage::DelayUpdate { delay, delay_mode },
+            WebSocketMessage::GainUpdate { gain },
+            WebSocketMessage::FrequencyRangeUpdate { min_freq, max_freq },
+        ];
 
-    // Prepare empty canvas
-    let mut canvas = vec![vec![' '; width]; height];
-
-    // Plot data
-    for (x, &v) in data.iter().enumerate() {
-        let y = row_of(v as f32);
-        canvas[y][x] = '*';
+        for msg in messages {
+            let json = serde_json::to_string(&msg).unwrap();
+            let _ = sender.send(Message::Text(json.into())).await;
+        }
     }
 
-    // Overlay reference lines (but don't overwrite data points)
-    for x in 0..width {
-        // max
-        if canvas[row_max][x] == ' ' {
-            canvas[row_max][x] = '─';
-        }
-        // zero
-        if let Some(rz) = row_zero {
-            if canvas[rz][x] == ' ' {
-                canvas[rz][x] = '─';
+    // Spawn a task to handle incoming messages from this client
+    let tx_clone = state.tx.clone();
+    let freq_clone = state.current_frequency.clone();
+    let voltage_lower_clone = state.voltage_lower.clone();
+    let voltage_upper_clone = state.voltage_upper.clone();
+    let delay_clone = state.current_delay.clone();
+    let delay_mode_clone = state.current_delay_mode.clone();
+    let gain_clone = state.current_gain.clone();
+    let freq_min_clone = state.freq_min.clone();
+    let freq_max_clone = state.freq_max.clone();
+
+    tokio::spawn(async move {
+        while let Some(msg) = receiver.next().await {
+            if let Ok(Message::Text(text)) = msg {
+                if let Ok(ws_msg) = serde_json::from_str::<WebSocketMessage>(&text) {
+                    match ws_msg {
+                        WebSocketMessage::SetVoltageLimits {
+                            lower_limit,
+                            upper_limit,
+                        } => {
+                            println!(
+                                "Received voltage limits: Lower: {}V, Upper: {}V",
+                                lower_limit, upper_limit
+                            );
+                            if let Ok(mut lower) = voltage_lower_clone.lock() {
+                                *lower = lower_limit;
+                            }
+                            if let Ok(mut upper) = voltage_upper_clone.lock() {
+                                *upper = upper_limit;
+                            }
+                            // TODO: call into RP's C‐API via FFI, or manipulate GPIO/DAC here.
+                            let _ = tx_clone.send(WebSocketMessage::VoltageUpdate {
+                                lower_limit,
+                                upper_limit,
+                            });
+                        }
+                        WebSocketMessage::SetDelay { delay, delay_mode } => {
+                            println!("Received delay value: {} (mode: {:?})", delay, delay_mode);
+                            if let Ok(mut d) = delay_clone.lock() {
+                                *d = delay;
+                            }
+                            if let Ok(mut dm) = delay_mode_clone.lock() {
+                                *dm = delay_mode;
+                            }
+                            // TODO: call into RP's C‐API via FFI, or manipulate GPIO/DAC here.
+                            let _ =
+                                tx_clone.send(WebSocketMessage::DelayUpdate { delay, delay_mode });
+                        }
+                        WebSocketMessage::SetGain { gain } => {
+                            println!("Received gain value: {}", gain);
+                            if let Ok(mut g) = gain_clone.lock() {
+                                *g = gain;
+                            }
+                            // TODO: call into RP's C‐API via FFI, or manipulate GPIO/DAC here.
+                            let _ = tx_clone.send(WebSocketMessage::GainUpdate { gain });
+                        }
+                        WebSocketMessage::SetFrequencyRange { min_freq, max_freq } => {
+                            println!("Received frequency range: {} - {} Hz", min_freq, max_freq);
+                            if let Ok(mut min) = freq_min_clone.lock() {
+                                *min = min_freq;
+                            }
+                            if let Ok(mut max) = freq_max_clone.lock() {
+                                *max = max_freq;
+                            }
+                            // TODO: Use this range to scale voltage output based on frequency
+                            let _ = tx_clone.send(WebSocketMessage::FrequencyRangeUpdate {
+                                min_freq,
+                                max_freq,
+                            });
+                        }
+                        WebSocketMessage::Hello => {
+                            let _ = tx_clone.send(WebSocketMessage::Hello);
+                        }
+                        _ => {
+                            // Ignore outgoing message types
+                        }
+                    }
+                }
             }
         }
-        // min
-        if canvas[row_min][x] == ' ' {
-            canvas[row_min][x] = '─';
-        }
-    }
+    });
 
-    // Print each row with a y-axis label
-    for row in 0..height {
-        let value = max_v - (row as f32) * (range / (height as f32 - 1.0));
-        print!("{:>7.1} | ", value);
-        for &ch in &canvas[row] {
-            print!("{}", ch);
-        }
-        println!();
-    }
-
-    // x-axis
-    print!("{:>7} +", "");
-    for _ in 0..width {
-        print!("-");
-    }
-    println!();
-
-    // tick marks every 16 samples
-    print!("{:>7}   ", "");
-    for i in 0..width {
-        if i % 16 == 0 {
-            print!("│");
-        } else {
-            print!(" ");
+    // Handle outgoing messages to this client
+    while let Ok(msg) = rx.recv().await {
+        let json = serde_json::to_string(&msg).unwrap();
+        if sender.send(Message::Text(json.into())).await.is_err() {
+            break;
         }
     }
-    println!();
-    print!("{:>7}   ", "");
-    for i in 0..width {
-        if i % 16 == 0 {
-            print!("{:^1}", i / 16);
-        } else {
-            print!(" ");
-        }
-    }
-    println!();
 }
