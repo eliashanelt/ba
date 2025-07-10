@@ -685,9 +685,9 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
             let delay_mode = delay_mode_monitor.lock().unwrap().clone();
             let gain = gain_monitor.lock().unwrap().clone();
 
-            print!(
+            /*print!(
                 "\rFreq: {freq_est:10.5} Hz | Vpp: {vpp:+.3} | Vp: {vp:+.3} | Voltage: {lower:+.3}V to {upper:+.3}V | Delay: {delay:.3} ({delay_mode:?}) | Gain: {gain:+.3}",
-            );
+            );*/
             io::stdout().flush().ok();
 
             let _ = tx_monitor.send(WebSocketMessage::FrequencyUpdate {
@@ -713,7 +713,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
                 let _ = tx_monitor.send(WebSocketMessage::StatusUpdate { status });
             }
 
-            sleep(Duration::from_secs(1));
+            sleep(Duration::from_millis(500);
         }
     });
 
