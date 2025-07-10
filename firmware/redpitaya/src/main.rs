@@ -713,7 +713,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
                 let _ = tx_monitor.send(WebSocketMessage::StatusUpdate { status });
             }
 
-            sleep(Duration::from_millis(500);
+            sleep(Duration::from_millis(500));
         }
     });
 
