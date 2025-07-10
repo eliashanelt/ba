@@ -543,7 +543,17 @@
             font-size: 11px;
             color: #9ca3af;
         }
-    </style>
+
+        #canvas {
+            /*border-radius: 10px;*/
+            background: rgba(45, 45, 55, 0.95);
+            box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.1);
+            display: block;
+            margin: 0 auto;
+            width: 100%;
+            height: 400px;
+        }
+        </style>
 </head>
 <body>
        <div class="title-bar">
@@ -687,8 +697,19 @@
             </div>
         </div>
     </div>
+   <div class="console-container">
+        <div class="panel">
+            <div class="panel-header">
+                <div class="panel-title">Wave Preview</div>
+            </div>
+            <div class="panel-content" id="canvas-container">
+                <canvas id="canvas"></canvas>
+            </div>
+        </div>
+    </div>
+
     
-    <div class="console-container">
+  <div class="console-container">
         <div class="panel">
             <div class="panel-header">
                 <div class="panel-title">System Console</div>
@@ -698,7 +719,11 @@
             </div>
         </div>
     </div>
+    
+ 
 
+
+ 
     <footer>
         <p>made by Elias Hanelt | Supervisor: Giacomo Paccagnan</p>
     </footer>
@@ -1252,6 +1277,193 @@
             if (pressureWs) pressureWs.close();
             stopPressureMonitoring();
         };
-    </script>
+
+        const container = document.getElementById('canvas-container');
+
+     
+        
+        const canvas = document.getElementById('canvas');
+
+
+        const ctx = canvas.getContext('2d');
+        // Resize canvas internal resolution to match container size
+        canvas.width = container.clientWidth;
+        canvas.height = container.clientHeight;
+
+        //ctx.scale(2.0, 2.0)
+        var width = canvas.width;
+        var height = canvas.height;
+        var centerY = height / 2;
+        const padding = 40;
+
+        
+ function drawSineCurves(amplitude1, frequency1, phase1, amplitude2, frequency2, phase2, periods) {
+            // Clear canvas
+            ctx.clearRect(0, 0, width, height);
+            
+            // Draw grid
+            drawGrid();
+            
+            // Draw axes
+            drawAxes();
+            
+            const maxX = periods * 2 * Math.PI;
+            const step = maxX / (width - 2 * padding);
+            
+            // Draw Wave 1 (Pink)
+            ctx.beginPath();
+            ctx.strokeStyle = '#e91e63';
+            ctx.lineWidth = 3;
+            
+            let firstPoint = true;
+            for (let x = 0; x <= maxX; x += step) {
+                const canvasX = padding + (x / maxX) * (width - 2 * padding);
+                const y = amplitude1 * Math.sin(frequency1 * x + phase1);
+                const canvasY = centerY - y * (centerY - padding);
+                
+                if (firstPoint) {
+                    ctx.moveTo(canvasX, canvasY);
+                    firstPoint = false;
+                } else {
+                    ctx.lineTo(canvasX, canvasY);
+                }
+            }
+            ctx.stroke();
+            
+            // Draw Wave 2 (Blue)
+            ctx.beginPath();
+            ctx.strokeStyle = '#2196f3';
+            ctx.lineWidth = 3;
+            
+            firstPoint = true;
+            for (let x = 0; x <= maxX; x += step) {
+                const canvasX = padding + (x / maxX) * (width - 2 * padding);
+                const y = amplitude2 * Math.sin(frequency2 * x + phase2);
+                const canvasY = centerY - y * (centerY - padding);
+                
+                if (firstPoint) {
+                    ctx.moveTo(canvasX, canvasY);
+                    firstPoint = false;
+                } else {
+                    ctx.lineTo(canvasX, canvasY);
+                }
+            }
+            ctx.stroke();
+            
+            // Draw Wave 1 points
+            ctx.fillStyle = '#e91e63';
+            for (let x = 0; x <= maxX; x += maxX / 20) {
+                const canvasX = padding + (x / maxX) * (width - 2 * padding);
+                const y = amplitude1 * Math.sin(frequency1 * x + phase1);
+                const canvasY = centerY - y * (centerY - padding);
+                
+                ctx.beginPath();
+                ctx.arc(canvasX, canvasY, 4, 0, 2 * Math.PI);
+                ctx.fill();
+            }
+            
+            // Draw Wave 2 points
+            ctx.fillStyle = '#2196f3';
+            for (let x = 0; x <= maxX; x += maxX / 20) {
+                const canvasX = padding + (x / maxX) * (width - 2 * padding);
+                const y = amplitude2 * Math.sin(frequency2 * x + phase2);
+                const canvasY = centerY - y * (centerY - padding);
+                
+                ctx.beginPath();
+                ctx.arc(canvasX, canvasY, 4, 0, 2 * Math.PI);
+                ctx.fill();
+            }
+            
+            // Draw labels
+            drawLabels(periods);
+        }
+        
+        function drawGrid() {
+            ctx.strokeStyle = '#a0a0a0';
+            ctx.lineWidth = 1;
+            
+            // Vertical grid lines
+            for (let i = 0; i <= 10; i++) {
+                const x = padding + (i / 10) * (width - 2 * padding);
+                ctx.beginPath();
+                ctx.moveTo(x, padding);
+                ctx.lineTo(x, height - padding);
+                ctx.stroke();
+            }
+            
+            // Horizontal grid lines
+            for (let i = 0; i <= 8; i++) {
+                const y = padding + (i / 8) * (height - 2 * padding);
+                ctx.beginPath();
+                ctx.moveTo(padding, y);
+                ctx.lineTo(width - padding, y);
+                ctx.stroke();
+            }
+        }
+        
+        function drawAxes() {
+            ctx.strokeStyle = 'eeeeee';
+            ctx.lineWidth = 2;
+            
+            // X-axis
+            ctx.beginPath();
+            ctx.moveTo(padding, centerY);
+            ctx.lineTo(width - padding, centerY);
+            ctx.stroke();
+            
+            // Y-axis
+            ctx.beginPath();
+            ctx.moveTo(padding, padding);
+            ctx.lineTo(padding, height - padding);
+            ctx.stroke();
+        }
+        
+        function drawLabels(periods) {
+            ctx.fillStyle = 'white';
+            ctx.font = '12px Arial';
+            ctx.textAlign = 'center';
+            
+            // X-axis labels
+            const maxX = periods * 2 * Math.PI;
+            for (let i = 0; i <= periods * 2; i++) {
+                const x = padding + (i / (periods * 2)) * (width - 2 * padding);
+                const label = i === 0 ? '0' : `${i}π`;
+                ctx.fillText(label, x + 15, centerY + 20);
+            }
+            
+            // Y-axis labels
+            ctx.textAlign = 'right';
+            ctx.fillText('1.0V', padding - 10, padding + 5);
+            ctx.fillText('0.0V', padding - 10, centerY + 5);
+            ctx.fillText('-1.0V', padding - 10, height - padding + 5);
+        }
+        
+
+        window.addEventListener('resize', resizeCanvas);
+
+        function resizeCanvas() {
+            
+        canvas.width = container.clientWidth;
+        canvas.height = container.clientHeight;
+
+        //ctx.scale(2.0, 2.0)
+        var width = canvas.width;
+        var height = canvas.height;
+        var centerY = height / 2;
+
+const dpr = window.devicePixelRatio || 1;
+const rect = canvas.getBoundingClientRect();
+
+        canvas.width = rect.width * dpr;
+        canvas.height = rect.height * dpr;
+
+    ctx.scale(dpr, dpr);
+
+
+
+            drawSineCurves(1.0, 1.0, 1.0, 1.0, 5.0, 3.0, 2);
+        }
+        resizeCanvas()
+     </script>
 </body>
 </html>
