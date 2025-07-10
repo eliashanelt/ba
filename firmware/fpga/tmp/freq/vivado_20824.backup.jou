@@ -1,0 +1,29 @@
+#-----------------------------------------------------------
+# Vivado v2020.1 (64-bit)
+# SW Build 2902540 on Wed May 27 19:54:49 MDT 2020
+# IP Build 2902112 on Wed May 27 22:43:36 MDT 2020
+# Start of session at: Wed Jul  9 05:00:42 2025
+# Process ID: 20824
+# Current directory: C:/Users/elias/dev/ba/firmware/fpga/tmp/freq
+# Command line: vivado.exe -gui_launcher_event rodinguilauncherevent12916 C:\Users\elias\dev\ba\firmware\fpga\tmp\freq\freq.xpr
+# Log file: C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/vivado.log
+# Journal file: C:/Users/elias/dev/ba/firmware/fpga/tmp/freq\vivado.jou
+#-----------------------------------------------------------
+start_gui
+open_project C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.xpr
+update_compile_order -fileset sources_1
+update_module_reference system_frequency_counter_0_0
+update_module_reference system_frequency_counter_0_0
+update_compile_order -fileset sources_1
+update_module_reference system_frequency_counter_0_0
+update_module_reference system_freq_mapper_0_0
+update_compile_order -fileset sources_1
+update_module_reference system_frequency_counter_0_0
+reset_run synth_1
+launch_runs impl_1 -to_step write_bitstream -jobs 12
+wait_on_run impl_1
+update_module_reference system_freq_mapper_0_0
+update_module_reference system_freq_mapper_0_0
+reset_run synth_1
+launch_runs impl_1 -to_step write_bitstream -jobs 12
+wait_on_run impl_1

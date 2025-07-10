@@ -1,0 +1,120 @@
+#-----------------------------------------------------------
+# Vivado v2020.1 (64-bit)
+# SW Build 2902540 on Wed May 27 19:54:49 MDT 2020
+# IP Build 2902112 on Wed May 27 22:43:36 MDT 2020
+# Start of session at: Thu Jul 10 17:48:06 2025
+# Process ID: 9652
+# Current directory: C:/Users/elias/dev/ba/firmware/fpga/tmp/freq
+# Command line: vivado.exe -gui_launcher_event rodinguilauncherevent9468 C:\Users\elias\dev\ba\firmware\fpga\tmp\freq\freq.xpr
+# Log file: C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/vivado.log
+# Journal file: C:/Users/elias/dev/ba/firmware/fpga/tmp/freq\vivado.jou
+#-----------------------------------------------------------
+start_gui
+open_project C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.xpr
+update_compile_order -fileset sources_1
+open_bd_design {C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/system.bd}
+close [ open C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/new/signal_gain.v w ]
+add_files C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/new/signal_gain.v
+update_compile_order -fileset sources_1
+create_bd_cell -type module -reference signal_gain signal_gain_0
+delete_bd_objs [get_bd_intf_nets FrequencyCounter_M_AXIS_OUT]
+connect_bd_intf_net -boundary_type upper [get_bd_intf_pins FrequencyCounter/M_AXIS_OUT] [get_bd_intf_pins signal_gain_0/S_AXIS]
+set_property location {4.5 1303 321} [get_bd_cells signal_gain_0]
+connect_bd_net [get_bd_pins signal_gain_0/clk] [get_bd_pins DataAcquisition/adc_clk]
+connect_bd_net [get_bd_pins signal_gain_0/rst] [get_bd_pins xlc_reset/dout]
+connect_bd_intf_net [get_bd_intf_pins signal_gain_0/M_AXIS] [get_bd_intf_pins signal_merge_0/S_AXIS]
+set_property location {4 1306 398} [get_bd_cells signal_gain_0]
+set_property location {4 1296 471} [get_bd_cells signal_gain_0]
+set_property location {4 1292 371} [get_bd_cells signal_gain_0]
+save_bd_design
+update_compile_order -fileset sources_1
+update_module_reference system_signal_gain_0_0
+startgroup
+create_bd_cell -type ip -vlnv xilinx.com:ip:xlconstant:1.1 xlconstant_0
+endgroup
+connect_bd_net [get_bd_pins xlconstant_0/dout] [get_bd_pins signal_gain_0/gain]
+startgroup
+set_property -dict [list CONFIG.CONST_WIDTH {32} CONFIG.CONST_VAL {2560}] [get_bd_cells xlconstant_0]
+endgroup
+save_bd_design
+startgroup
+set_property -dict [list CONFIG.CONST_VAL {-2560}] [get_bd_cells xlconstant_0]
+endgroup
+startgroup
+endgroup
+save_bd_design
+update_module_reference system_signal_gain_0_0
+reset_run synth_1
+launch_runs impl_1 -to_step write_bitstream -jobs 12
+wait_on_run impl_1
+create_bd_cell -type module -reference signal_clipper signal_clipper_0
+set_property location {6.5 1965 359} [get_bd_cells signal_clipper_0]
+delete_bd_objs [get_bd_intf_nets signal_gain_0_M_AXIS]
+connect_bd_intf_net [get_bd_intf_pins signal_gain_0/M_AXIS] [get_bd_intf_pins signal_clipper_0/S_AXIS_IN]
+connect_bd_net [get_bd_pins signal_clipper_0/clk] [get_bd_pins DataAcquisition/adc_clk]
+connect_bd_net [get_bd_pins signal_clipper_0/rst] [get_bd_pins xlc_reset/dout]
+connect_bd_intf_net [get_bd_intf_pins signal_clipper_0/M_AXIS_OUT] [get_bd_intf_pins signal_merge_0/S_AXIS]
+save_bd_design
+update_compile_order -fileset sources_1
+close [ open C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/new/redpitaya_mem_interface.v w ]
+add_files C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/new/redpitaya_mem_interface.v
+update_compile_order -fileset sources_1
+create_bd_cell -type module -reference redpitaya_mem_interface redpitaya_mem_interf_0
+set_property location {3 383 501} [get_bd_cells redpitaya_mem_interf_0]
+delete_bd_objs [get_bd_intf_nets ps7_0_axi_periph_M00_AXI]
+connect_bd_intf_net -boundary_type upper [get_bd_intf_pins PS7/M00_AXI] [get_bd_intf_pins redpitaya_mem_interf_0/s_axi]
+delete_bd_objs [get_bd_nets processing_system7_0_FCLK_CLK0]
+delete_bd_objs [get_bd_nets rst_ps7_0_125M_peripheral_aresetn]
+connect_bd_net [get_bd_pins redpitaya_mem_interf_0/s_axi_aclk] [get_bd_pins PS7/FCLK_CLK0]
+connect_bd_net [get_bd_pins redpitaya_mem_interf_0/s_axi_aresetn] [get_bd_pins PS7/S00_ARESETN]
+connect_bd_net [get_bd_pins redpitaya_mem_interf_0/frequency] [get_bd_pins FrequencyCounter/counter_output]
+startgroup
+create_bd_cell -type ip -vlnv xilinx.com:ip:xlconstant:1.1 xlconstant_1
+endgroup
+connect_bd_net [get_bd_pins xlconstant_1/dout] [get_bd_pins redpitaya_mem_interf_0/vpp]
+startgroup
+set_property -dict [list CONFIG.CONST_WIDTH {32} CONFIG.CONST_VAL {23233}] [get_bd_cells xlconstant_1]
+endgroup
+copy_bd_objs /  [get_bd_cells {xlconstant_1}]
+connect_bd_net [get_bd_pins xlconstant_2/dout] [get_bd_pins redpitaya_mem_interf_0/vp]
+startgroup
+set_property -dict [list CONFIG.CONST_VAL {18134}] [get_bd_cells xlconstant_2]
+endgroup
+save_bd_design
+update_compile_order -fileset sources_1
+delete_bd_objs [get_bd_nets xlconstant_0_dout]
+delete_bd_objs [get_bd_cells xlconstant_0]
+connect_bd_net [get_bd_pins signal_gain_0/gain] [get_bd_pins redpitaya_mem_interf_0/delay]
+save_bd_design
+delete_bd_objs [get_bd_nets redpitaya_mem_interf_0_delay]
+connect_bd_net [get_bd_pins redpitaya_mem_interf_0/gain] [get_bd_pins signal_gain_0/gain]
+startgroup
+create_bd_cell -type ip -vlnv xilinx.com:ip:xlslice:1.0 xlslice_0
+endgroup
+connect_bd_net [get_bd_pins xlslice_0/Dout] [get_bd_pins signal_clipper_0/max_limit]
+set_property location {4 1274 50} [get_bd_cells xlslice_0]
+copy_bd_objs /  [get_bd_cells {xlslice_0}]
+set_property location {4 1315 147} [get_bd_cells xlslice_1]
+connect_bd_net [get_bd_pins xlslice_1/Dout] [get_bd_pins signal_clipper_0/min_limit]
+startgroup
+set_property -dict [list CONFIG.DIN_FROM {13} CONFIG.DOUT_WIDTH {14}] [get_bd_cells xlslice_1]
+endgroup
+startgroup
+set_property -dict [list CONFIG.DIN_FROM {13} CONFIG.DOUT_WIDTH {14}] [get_bd_cells xlslice_0]
+endgroup
+connect_bd_net [get_bd_pins xlslice_1/Din] [get_bd_pins xlslice_0/Din]
+connect_bd_net [get_bd_pins redpitaya_mem_interf_0/limits] [get_bd_pins xlslice_1/Din]
+save_bd_design
+reset_run synth_1
+launch_runs impl_1 -to_step write_bitstream -jobs 12
+delete_bd_objs [get_bd_nets Net] [get_bd_cells axi_gpio_0]
+copy_bd_objs /  [get_bd_cells {xlc_reset}]
+set_property location {1 219 1043} [get_bd_cells xlc_reset1]
+connect_bd_net [get_bd_pins xlc_reset1/dout] [get_bd_pins FrequencyCounter/Din]
+startgroup
+set_property -dict [list CONFIG.CONST_WIDTH {32} CONFIG.CONST_VAL {10}] [get_bd_cells xlc_reset1]
+endgroup
+save_bd_design
+launch_runs impl_1 -to_step write_bitstream -jobs 12
+wait_on_run impl_1
+launch_runs impl_1 -to_step write_bitstream -jobs 12

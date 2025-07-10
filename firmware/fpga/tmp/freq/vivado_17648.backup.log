@@ -1,0 +1,16 @@
+#-----------------------------------------------------------
+# Vivado v2020.1 (64-bit)
+# SW Build 2902540 on Wed May 27 19:54:49 MDT 2020
+# IP Build 2902112 on Wed May 27 22:43:36 MDT 2020
+# Start of session at: Thu Jul 10 19:59:09 2025
+# Process ID: 17648
+# Current directory: C:/Users/elias/dev/ba/firmware/fpga/tmp/freq
+# Command line: vivado.exe -gui_launcher_event rodinguilauncherevent20228 C:\Users\elias\dev\ba\firmware\fpga\tmp\freq\freq.xpr
+# Log file: C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/vivado.log
+# Journal file: C:/Users/elias/dev/ba/firmware/fpga/tmp/freq\vivado.jou
+#-----------------------------------------------------------
+start_gui
+open_project C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.xpr
+ERROR: [filemgmt 20-794] Detected internal issue while parsing BXML file: C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/system.bxml
+exit
+INFO: [Common 17-206] Exiting Vivado at Thu Jul 10 20:11:41 2025...
