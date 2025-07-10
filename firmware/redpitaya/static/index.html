@@ -310,7 +310,7 @@
             cursor: pointer;
         }
         
-        .delay-mode-toggle {
+        .toggle {
             display: flex;
             border: 1px solid rgba(100, 100, 120, 0.3);
             border-radius: 4px;
@@ -319,13 +319,13 @@
         }
         
         @media (max-width: 480px) {
-            .delay-mode-toggle {
+            .toggle {
                 margin-left: 0;
                 margin-top: 8px;
             }
         }
         
-        .delay-mode-option {
+        .toggle-option {
             padding: 4px 8px;
             background: rgba(30, 30, 40, 0.8);
             border: none;
@@ -335,12 +335,12 @@
             transition: all 0.2s ease;
         }
         
-        .delay-mode-option.active {
+        .toggle-option.active {
             background: #3b82f6;
             color: white;
         }
         
-        .delay-mode-option:hover:not(.active) {
+        .toggle-option:hover:not(.active) {
             background: rgba(100, 100, 120, 0.2);
         }
         
@@ -582,8 +582,8 @@
                         <div class="measurement-value" id="measuredPeriod">---</div>
                     </div>
                     <div class="measurement-card">
-                        <div class="measurement-label">Amplitude</div>
-                        <div class="measurement-value" id="measuredAmplitude">---</div>
+                        <div class="measurement-label">Vpp</div>
+                        <div class="measurement-value" id="measuredVpp">---</div>
                     </div>
                 </div>
 
@@ -592,9 +592,9 @@
                     <div class="control-row">
                         <div class="control-label">Voltage Level:</div>
                         <div class="slider-container">
-                            <div class="delay-mode-toggle">
-                                <button class="delay-mode-option active" id="voltage-level-option" data-mode="high-voltage">HV</button>
-                                <button class="delay-mode-option" id="voltage-level-option" data-mode="low-voltage">LV</button>
+                            <div class="toggle">
+                                <button class="toggle-option voltage-level-option active" data-mode="high-voltage">HV</button>
+                                <button class="toggle-option voltage-level-option" data-mode="low-voltage">LV</button>
                             </div>
                         </div>
                     </div>
@@ -650,9 +650,9 @@
                             <input id="delaySlider" type="range" min="0" max="100" step="0.1" value="0" disabled>
                             <input id="delayInput" type="number" class="input-field" min="0" max="100" step="0.1" value="0" disabled>
                             <span class="unit-label" id="delayUnit">%</span>
-                            <div class="delay-mode-toggle">
-                                <button class="delay-mode-option active" id="delay-mode-option" data-mode="period">Period %</button>
-                                <button class="delay-mode-option" id="delay-mode-option" data-mode="timestamp">Timestamp</button>
+                            <div class="toggle">
+                                <button class="toggle-option delay-mode-option active" data-mode="period">Period %</button>
+                                <button class="toggle-option delay-mode-option" data-mode="timestamp">Timestamp</button>
                             </div>
                         </div>
                     </div>
@@ -761,6 +761,7 @@
         const pressureStatusText = document.getElementById('pressureStatusText');
         const measuredFreq = document.getElementById('measuredFreq');
         const measuredPeriod = document.getElementById('measuredPeriod');
+        const measuredVpp = document.getElementById('measuredVpp');
         const currentPressure = document.getElementById('currentPressure');
         const helloBtn = document.getElementById('helloBtn');
         const logEl = document.getElementById('log');
@@ -773,7 +774,7 @@
         const syncVoltageCheckbox = document.getElementById('syncVoltageCheckbox');
 
 
-        const voltageLevelButtons = document.getElementsById('voltage-level-option');
+        const voltageLevelButtons = document.querySelectorAll('.voltage-level-option');
         
         // Frequency range controls
         const freqMinInput = document.getElementById('freqMinInput');
@@ -783,7 +784,7 @@
         const delaySlider = document.getElementById('delaySlider');
         const delayInput = document.getElementById('delayInput');
         const delayUnit = document.getElementById('delayUnit');
-        const delayModeButtons = document.getElementsById('delay-mode-option');
+        const delayModeButtons = document.querySelectorAll('.delay-mode-option');
 
         
         // Gain controls
@@ -817,6 +818,7 @@
                 controls.forEach(ctrl => ctrl.disabled = true);
                 measuredFreq.textContent = '---';
                 measuredPeriod.textContent = '---';
+                measuredVpp.textContent = '---';
             }
         }
         
@@ -836,7 +838,7 @@
         }
 
         
-        function updateDelayMode(voltageLevel) {
+        function updateVoltageLevel(voltageLevel) {
             currentVoltageLevel = voltageLevel;
             voltageLevelButtons.forEach(btn => {
                 btn.classList.remove('active');
@@ -876,6 +878,10 @@
             } else {
                 return freq.toFixed(3) + ' Hz';
             }
+        }
+
+        function formatVpp(vpp) {
+            return vpp.toFixed(3) * 1000  + 'mV';
         }
         
         function formatPeriod(period) {
@@ -959,12 +965,14 @@
                             break;
                         case 'FrequencyUpdate':
                             const freq = message.frequency;
+                            const vpp = message.vpp;
                             const period = 1 / freq;
                             currentPeriod = period;
                             currentFrequency = freq;
                             
                             measuredFreq.textContent = formatFrequency(freq);
                             measuredPeriod.textContent = formatPeriod(period);
+                            measuredVpp.textContent = formatVpp(vpp);
                             
                             if (currentDelayMode === 'timestamp') {
                                 const optimalUnit = getOptimalDelayUnit(period);
@@ -1248,7 +1256,6 @@
         voltageLevelButtons.forEach(btn => {
             btn.onclick = function() {
                 updateVoltageLevel(this.dataset.mode);
-                console.log('todo update voltage level');
             };
         });
         
@@ -1477,7 +1484,7 @@
         }
         
 
-        window.addEventListener('resize', resizeCanvas);
+       /* window.addEventListener('resize', resizeCanvas);
 
         function resizeCanvas() {
             
@@ -1501,7 +1508,9 @@ const rect = canvas.getBoundingClientRect();
 
             drawSineCurves(1.0, 1.0, 1.0, 1.0, 5.0, 3.0, 2);
         }
-        resizeCanvas()
+        resizeCanvas()*/
+
+            drawSineCurves(1.0, 1.0, 1.0, 1.0, 5.0, 3.0, 2);
      </script>
 </body>
 </html>

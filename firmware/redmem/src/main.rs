@@ -44,17 +44,14 @@ fn f32_to_adc(x: f32) -> i16 {
 }
 
 fn adc_to_f32(x: i16) -> f32 {
-    assert!(
-        (-8192..=8191).contains(&x),
-        "Input must be in [-8192, 8191], got {x}",
-    );
-    if x > 0 {
+    let val = if x > 0 {
         x as f32 / 8191.0
     } else if x < 0 {
         x as f32 / 8192.0
     } else {
         0.0
-    }
+    };
+    val.clamp(-1.0, 1.0)
 }
 
 fn combine_14bit_signed(a: i16, b: i16) -> u32 {
