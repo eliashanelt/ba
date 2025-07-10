@@ -1,7 +1,7 @@
 {
    "ActiveEmotionalView":"Default View",
    "Default View_ScaleFactor":"1.16629",
-   "Default View_TopLeft":"-242,258",
+   "Default View_TopLeft":"1440,-109",
    "ExpandedHierarchyInLayout":"",
    "guistr":"# # String gsaved with Nlview 7.0r6  2020-01-29 bk=1.5227 VDI=41 GEI=36 GUI=JA:9.0 non-TLS
 #  -string -flagsOSRD
@@ -54,7 +54,7 @@ preplace netloc daisy_n_i_1 1 0 7 NJ 1210 N 1210 N 1210 N 1210 N 1210 N 1210 546
 preplace netloc util_ds_buf_2_OBUF_DS_P 1 8 2 NJ 1180 N
 preplace netloc util_ds_buf_2_OBUF_DS_N 1 8 2 NJ 1200 N
 preplace netloc util_ds_buf_1_IBUF_OUT 1 7 1 6000 1190n
-preplace netloc FrequencyCounter_counter_output 1 1 3 340 360 NJ 360 1010
+preplace netloc FrequencyCounter_counter_output 1 1 3 320 630 NJ 630 1010
 preplace netloc clk_wiz_0_locked 1 7 2 6010 820 NJ
 preplace netloc clk_wiz_0_clk_out1 1 7 2 6000 800 NJ
 preplace netloc axis_red_pitaya_dac_0_dac_clk 1 9 1 N 750
@@ -62,31 +62,31 @@ preplace netloc axis_red_pitaya_dac_0_dac_rst 1 9 1 N 770
 preplace netloc axis_red_pitaya_dac_0_dac_sel 1 9 1 N 790
 preplace netloc axis_red_pitaya_dac_0_dac_wrt 1 9 1 N 810
 preplace netloc axis_red_pitaya_dac_0_dac_dat 1 9 1 N 830
-preplace netloc xlc_reset_dout 1 1 4 330J 650 650 370 1040 370 2530
-preplace netloc axis_red_pitaya_adc_0_adc_clk 1 1 8 320 660 660J 380 1030J 380 2520 470 3160 460 5470 780 NJ 780 N
+preplace netloc xlc_reset_dout 1 1 4 300J 620 650 370 1040 370 2520
+preplace netloc axis_red_pitaya_adc_0_adc_clk 1 1 8 290 640 660J 380 1030J 380 2510 460 N 460 5470 780 NJ 780 N
 preplace netloc adc_dat_b_i_1 1 0 1 -280 768n
 preplace netloc adc_dat_a_i_1 1 0 1 -290 748n
 preplace netloc adc_clk_n_i_1 1 0 1 -300 728n
 preplace netloc adc_clk_p_i_1 1 0 1 -310 708n
-preplace netloc DataAcquisition_adc_csn_o 1 1 9 300 390 NJ 390 NJ 390 2500 460 3140 450 N 450 NJ 450 NJ 450 6590J
+preplace netloc DataAcquisition_adc_csn_o 1 1 9 310 660 NJ 660 NJ 660 N 660 N 660 N 660 NJ 660 NJ 660 NJ
 preplace netloc FrequencyCounter_amp 1 3 3 1030 540 N 540 N
-preplace netloc PS7_FCLK_CLK0 1 1 1 320 30n
-preplace netloc PS7_S00_ARESETN 1 1 1 310 50n
+preplace netloc PS7_FCLK_CLK0 1 1 1 310 30n
+preplace netloc PS7_S00_ARESETN 1 1 1 300 50n
 preplace netloc xlconstant_1_dout 1 1 1 290 440n
-preplace netloc xlconstant_2_dout 1 1 1 290 540n
+preplace netloc xlconstant_2_dout 1 1 1 300 540n
 preplace netloc redpitaya_mem_interf_0_gain 1 2 2 640 310 NJ
-preplace netloc xlslice_0_Dout 1 4 1 2540 50n
-preplace netloc xlslice_1_Dout 1 4 1 2510 150n
+preplace netloc xlslice_0_Dout 1 4 1 2530 50n
+preplace netloc xlslice_1_Dout 1 4 1 2500 150n
 preplace netloc Net1 1 2 2 630 300 1010
-preplace netloc xlc_reset1_dout 1 1 2 340 670 680J
+preplace netloc xlc_reset1_dout 1 1 2 320 670 680J
 preplace netloc FrequencyCounter_M_AXIS_OUT 1 3 1 1020 250n
 preplace netloc signal_split_0_M_AXIS_PORT1 1 1 2 N 718 670
 preplace netloc processing_system7_0_DDR 1 1 9 N -30 N -30 N -30 N -30 N -30 N -30 NJ -30 NJ -30 N
 preplace netloc processing_system7_0_FIXED_IO 1 1 9 N -10 N -10 N -10 N -10 N -10 N -10 NJ -10 NJ -10 N
 preplace netloc signal_merge_0_M_AXIS 1 6 3 NJ 530 NJ 530 6320
-preplace netloc signal_clipper_0_M_AXIS_OUT 1 5 1 3150 360n
-preplace netloc signal_gain_0_M_AXIS 1 4 1 2530 280n
-preplace netloc PS7_M00_AXI 1 1 1 330 10n
+preplace netloc signal_clipper_0_M_AXIS_OUT 1 5 1 3140 360n
+preplace netloc signal_gain_0_M_AXIS 1 4 1 2510 280n
+preplace netloc PS7_M00_AXI 1 1 1 320 10n
 levelinfo -pg 1 -330 140 490 870 2366 2986 5311 5848 6175 6465 6610
 pagesize -pg 1 -db -bbox -sgen -500 -250 6770 1700
 "

@@ -1,0 +1,27 @@
++--------------------------+--------------------------+----------------------------------------------------------------------------------------------------------+
+|       Launch Clock       |      Capture Clock       |                                                 Pin                                                      |
++--------------------------+--------------------------+----------------------------------------------------------------------------------------------------------+
+|                  adc_clk |                  adc_clk |                                                        system_i/signal_gain_0/inst/axis_data_reg_reg[1]/D|
+|                  adc_clk |                  adc_clk |                                                        system_i/signal_gain_0/inst/axis_data_reg_reg[4]/D|
+|                  adc_clk |                  adc_clk |                                                        system_i/signal_gain_0/inst/axis_data_reg_reg[2]/D|
+|                  adc_clk |                  adc_clk |                                                        system_i/signal_gain_0/inst/axis_data_reg_reg[6]/D|
+|                  adc_clk |                  adc_clk |                                                        system_i/signal_gain_0/inst/axis_data_reg_reg[7]/D|
+|                  adc_clk |                  adc_clk |                                                        system_i/signal_gain_0/inst/axis_data_reg_reg[0]/D|
+|                  adc_clk |                  adc_clk |                                                        system_i/signal_gain_0/inst/axis_data_reg_reg[8]/D|
+|                  adc_clk |                  adc_clk |                                                        system_i/signal_gain_0/inst/axis_data_reg_reg[5]/D|
+|                  adc_clk |                  adc_clk |                                                        system_i/signal_gain_0/inst/axis_data_reg_reg[3]/D|
+|               clk_fpga_0 |                  adc_clk |                                                 system_i/signal_clipper_0/inst/adc_data_clipped_reg[11]/D|
+|               clk_fpga_0 |                  adc_clk |                                                 system_i/signal_clipper_0/inst/adc_data_clipped_reg[13]/D|
+|               clk_fpga_0 |                  adc_clk |                                                  system_i/signal_clipper_0/inst/adc_data_clipped_reg[2]/D|
+|               clk_fpga_0 |                  adc_clk |                                                 system_i/signal_clipper_0/inst/adc_data_clipped_reg[10]/D|
+|               clk_fpga_0 |                  adc_clk |                                                  system_i/signal_clipper_0/inst/adc_data_clipped_reg[8]/D|
+|               clk_fpga_0 |                  adc_clk |                                                 system_i/signal_clipper_0/inst/adc_data_clipped_reg[12]/D|
+|               clk_fpga_0 |                  adc_clk |                                                  system_i/signal_clipper_0/inst/adc_data_clipped_reg[4]/D|
+|               clk_fpga_0 |                  adc_clk |                                                  system_i/signal_clipper_0/inst/adc_data_clipped_reg[3]/D|
+|               clk_fpga_0 |                  adc_clk |                                                  system_i/signal_clipper_0/inst/adc_data_clipped_reg[9]/D|
+|               clk_fpga_0 |                  adc_clk |                                                  system_i/signal_clipper_0/inst/adc_data_clipped_reg[7]/D|
+|               clk_fpga_0 |                  adc_clk |                                                  system_i/signal_clipper_0/inst/adc_data_clipped_reg[1]/D|
+|               clk_fpga_0 |                  adc_clk |                                                  system_i/signal_clipper_0/inst/adc_data_clipped_reg[5]/D|
+|               clk_fpga_0 |                  adc_clk |                                                  system_i/signal_clipper_0/inst/adc_data_clipped_reg[0]/D|
+|               clk_fpga_0 |                  adc_clk |                                                  system_i/signal_clipper_0/inst/adc_data_clipped_reg[6]/D|
++--------------------------+--------------------------+----------------------------------------------------------------------------------------------------------+

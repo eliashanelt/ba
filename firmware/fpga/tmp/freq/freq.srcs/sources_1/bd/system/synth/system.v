@@ -1,7 +1,7 @@
 //Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
 //--------------------------------------------------------------------------------
 //Tool Version: Vivado v.2020.1 (win64) Build 2902540 Wed May 27 19:54:49 MDT 2020
-//Date        : Thu Jul 10 19:53:19 2025
+//Date        : Thu Jul 10 20:58:33 2025
 //Host        : DESKTOP-93GTNQD running 64-bit major release  (build 9200)
 //Command     : generate_target system.bd
 //Design      : system
@@ -1117,16 +1117,16 @@ module system
         .OBUF_IN(util_ds_buf_1_IBUF_OUT));
   system_xlconstant_0_0 xlc_reset
        (.dout(xlc_reset_dout));
-  system_xlc_reset_0 xlc_reset1
+  system_xlc_reset1_0 xlc_reset1
        (.dout(xlc_reset1_dout));
   system_xlconstant_1_0 xlconstant_1
        (.dout(xlconstant_1_dout));
-  system_xlconstant_1_1 xlconstant_2
+  system_xlconstant_2_0 xlconstant_2
        (.dout(xlconstant_2_dout));
   system_xlslice_0_2 xlslice_0
        (.Din(Net1),
         .Dout(xlslice_0_Dout));
-  system_xlslice_0_3 xlslice_1
+  system_xlslice_1_0 xlslice_1
        (.Din(Net1),
         .Dout(xlslice_1_Dout));
 endmodule

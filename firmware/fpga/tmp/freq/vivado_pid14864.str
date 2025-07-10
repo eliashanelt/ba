@@ -107,3 +107,86 @@ Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
 // Tcl Message: INFO: [IP_Flow 19-234] Refreshing IP repositories INFO: [IP_Flow 19-1700] Loaded user IP repository 'c:/Users/elias/dev/ba/firmware/fpga/tmp/cores'. INFO: [IP_Flow 19-2313] Loaded Vivado IP repository 'C:/Xilinx/Vivado/2020.1/data/ip'. 
 // Project name: freq; location: C:/Users/elias/dev/ba/firmware/fpga/tmp/freq; part: xc7z010clg400-1
 dismissDialog("Open Project"); // bz (cs)
+// Tcl Command: 'rdi::info_commands {device::*}'
+// Tcl Command: 'rdi::info_commands {debug::*}'
+// Tcl Command: 'rdi::info_commands {*}'
+// HMemoryUtils.trashcanNow. Engine heap size: 1,000 MB. GUI used memory: 81 MB. Current time: 7/10/25, 8:12:05 PM CEST
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: IP_LOCK_CHANGE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: IP_LOCK_CHANGE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: IP_LOCK_CHANGE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: IP_LOCK_CHANGE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: IP_LOCK_CHANGE
+// TclEventType: DG_GRAPH_STALE
+selectTree(PAResourceEtoH.FlowNavigatorTreePanel_FLOW_NAVIGATOR_TREE, "[, IP Integrator, Open Block Design]", 7, false); // u (J, cs)
+selectTree(PAResourceEtoH.FlowNavigatorTreePanel_FLOW_NAVIGATOR_TREE, "[, IP Integrator, Open Block Design]", 7, false); // u (J, cs)
+// Run Command: PAResourceCommand.PACommandNames_OPEN_BLOCK_DESIGN
+// bz (cs):  Open Block Design : addNotify
+// TclEventType: LOAD_FEATURE
+// Tcl Message: open_bd_design {C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/system.bd} 
+// TclEventType: RSB_CHANGE_CURRENT_DIAGRAM
+// TclEventType: RSB_PROPERTY_CHANGE
+// TclEventType: LOAD_FEATURE
+// TclEventType: RSB_PROPERTY_CHANGE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_PROPERTY_CHANGE
+// TclEventType: REPORT_IP_STATUS_STALE
+// TclEventType: DG_GRAPH_STALE
+// TclEventType: FILE_SET_CHANGE
+// Tcl Message: Adding component instance block -- xilinx.com:ip:util_ds_buf:2.1 - util_ds_buf_1 Adding component instance block -- xilinx.com:ip:util_ds_buf:2.1 - util_ds_buf_2 Adding component instance block -- xilinx.com:ip:processing_system7:5.5 - processing_system7_0 
+// Tcl Message: INFO: [BD 41-1728] Could not find a module with name: system_signal_gain_0_0  
+// Tcl Message: Adding component instance block -- xilinx.com:module_ref:signal_clipper:1.0 - signal_clipper_0 
+// TclEventType: REPORT_IP_STATUS_STALE
+// TclEventType: DG_GRAPH_STALE
+// TclEventType: FILE_SET_CHANGE
+// Tcl Message: INFO: [BD 41-1728] Could not find a module with name: system_signal_clipper_0_0  
+// Tcl Message: Adding component instance block -- xilinx.com:module_ref:redpitaya_mem_interface:1.0 - redpitaya_mem_interf_0 
+// TclEventType: REPORT_IP_STATUS_STALE
+// TclEventType: DG_GRAPH_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: REPORT_IP_STATUS_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: REPORT_IP_STATUS_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: REPORT_IP_STATUS_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: REPORT_IP_STATUS_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: REPORT_IP_STATUS_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_OPEN_DIAGRAM
+// TclEventType: RSB_CONNECTION_CHANGE
+// Tcl Message: INFO: [BD 41-1728] Could not find a module with name: system_redpitaya_mem_interf_0_0  
+// Tcl Message: Adding component instance block -- xilinx.com:ip:xlconstant:1.1 - xlconstant_1 
+// Tcl Message: INFO: [BD 41-434] Could not find an IP with XCI file by name: system_xlconstant_1_0  
+// Tcl Message: Adding component instance block -- xilinx.com:ip:xlconstant:1.1 - xlconstant_2 
+// Tcl Message: INFO: [BD 41-434] Could not find an IP with XCI file by name: system_xlconstant_1_1  
+// Tcl Message: Adding component instance block -- xilinx.com:ip:xlslice:1.0 - xlslice_0 
+// Tcl Message: INFO: [BD 41-434] Could not find an IP with XCI file by name: system_xlslice_0_2  
+// Tcl Message: Adding component instance block -- xilinx.com:ip:xlslice:1.0 - xlslice_1 
+// Tcl Message: INFO: [BD 41-434] Could not find an IP with XCI file by name: system_xlslice_0_3  
+// Tcl Message: Adding component instance block -- xilinx.com:ip:xlconstant:1.1 - xlc_reset1 
+// Tcl Message: INFO: [BD 41-434] Could not find an IP with XCI file by name: system_xlc_reset_0  
+// Tcl Message: Successfully read diagram <system> from BD file <C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/system.bd> 
+closeView(PAResourceOtoP.PAViews_PROJECT_SUMMARY, "Project Summary"); // v
+// TclEventType: RSB_CONNECTION_CHANGE
+// TclEventType: RSB_SAVE_DIAGRAM
+// TclEventType: RSB_LOCK_CHANGE
+// Tcl Message: INFO: [BD 41-433]  Design successfully migrated to use XCI files... 
+// Tcl Message: Wrote  : <C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/ui/bd_c954508f.ui>  
+// Tcl Message: open_bd_design: Time (s): cpu = 00:00:03 ; elapsed = 00:00:07 . Memory (MB): peak = 1013.074 ; gain = 0.000 
+// 'bJ' command handler elapsed time: 7 seconds
+dismissDialog("Open Block Design"); // bz (cs)
+// [GUI Memory]: 136 MB (+2925kb) [00:00:21]
+// Tcl Message: update_compile_order -fileset sources_1 
+// [GUI Memory]: 143 MB (+179kb) [00:00:35]
+// Elapsed time: 14 seconds
+selectTree(PAResourceEtoH.FlowNavigatorTreePanel_FLOW_NAVIGATOR_TREE, "[, Program and Debug, Generate Bitstream]", 20, false); // u (J, cs)
+// Run Command: PAResourceCommand.PACommandNames_RUN_BITGEN
+// A (cs): No Implementation Results Available: addNotify
+selectButton(RDIResource.BaseDialog_NO, "No"); // a (A)
+dismissDialog("No Implementation Results Available"); // A (cs)

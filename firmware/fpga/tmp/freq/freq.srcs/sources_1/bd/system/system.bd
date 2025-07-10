@@ -1965,16 +1965,16 @@
                   }
                 },
                 "interface_nets": {
-                  "s00_couplers_to_auto_pc": {
-                    "interface_ports": [
-                      "S_AXI",
-                      "auto_pc/S_AXI"
-                    ]
-                  },
                   "auto_pc_to_s00_couplers": {
                     "interface_ports": [
                       "M_AXI",
                       "auto_pc/M_AXI"
+                    ]
+                  },
+                  "s00_couplers_to_auto_pc": {
+                    "interface_ports": [
+                      "S_AXI",
+                      "auto_pc/S_AXI"
                     ]
                   }
                 },
@@ -2037,12 +2037,6 @@
           }
         },
         "interface_nets": {
-          "processing_system7_0_DDR": {
-            "interface_ports": [
-              "DDR",
-              "processing_system7_0/DDR"
-            ]
-          },
           "processing_system7_0_M_AXI_GP0": {
             "interface_ports": [
               "processing_system7_0/M_AXI_GP0",
@@ -2059,6 +2053,12 @@
             "interface_ports": [
               "M00_AXI",
               "ps7_0_axi_periph/M00_AXI"
+            ]
+          },
+          "processing_system7_0_DDR": {
+            "interface_ports": [
+              "DDR",
+              "processing_system7_0/DDR"
             ]
           }
         },
@@ -2679,16 +2679,16 @@
           }
         },
         "interface_nets": {
-          "frequency_counter_0_M_AXIS_OUT": {
-            "interface_ports": [
-              "M_AXIS_OUT",
-              "frequency_counter_0/M_AXIS_OUT"
-            ]
-          },
           "signal_split_0_M_AXIS_PORT1": {
             "interface_ports": [
               "S_AXIS_IN",
               "frequency_counter_0/S_AXIS_IN"
+            ]
+          },
+          "frequency_counter_0_M_AXIS_OUT": {
+            "interface_ports": [
+              "M_AXIS_OUT",
+              "frequency_counter_0/M_AXIS_OUT"
             ]
           }
         },
@@ -3556,7 +3556,7 @@
       },
       "xlconstant_2": {
         "vlnv": "xilinx.com:ip:xlconstant:1.1",
-        "xci_name": "system_xlconstant_1_1",
+        "xci_name": "system_xlconstant_2_0",
         "parameters": {
           "CONST_VAL": {
             "value": "18134"
@@ -3571,7 +3571,10 @@
         "xci_name": "system_xlslice_0_2",
         "parameters": {
           "DIN_FROM": {
-            "value": "13"
+            "value": "27"
+          },
+          "DIN_TO": {
+            "value": "14"
           },
           "DOUT_WIDTH": {
             "value": "14"
@@ -3580,7 +3583,7 @@
       },
       "xlslice_1": {
         "vlnv": "xilinx.com:ip:xlslice:1.0",
-        "xci_name": "system_xlslice_0_3",
+        "xci_name": "system_xlslice_1_0",
         "parameters": {
           "DIN_FROM": {
             "value": "13"
@@ -3592,7 +3595,7 @@
       },
       "xlc_reset1": {
         "vlnv": "xilinx.com:ip:xlconstant:1.1",
-        "xci_name": "system_xlc_reset_0",
+        "xci_name": "system_xlc_reset1_0",
         "parameters": {
           "CONST_VAL": {
             "value": "10"
@@ -3604,30 +3607,6 @@
       }
     },
     "interface_nets": {
-      "FrequencyCounter_M_AXIS_OUT": {
-        "interface_ports": [
-          "FrequencyCounter/M_AXIS_OUT",
-          "signal_gain_0/S_AXIS"
-        ]
-      },
-      "signal_split_0_M_AXIS_PORT1": {
-        "interface_ports": [
-          "DataAcquisition/M_AXIS_PORT1",
-          "FrequencyCounter/S_AXIS_IN"
-        ]
-      },
-      "processing_system7_0_DDR": {
-        "interface_ports": [
-          "DDR",
-          "PS7/DDR"
-        ]
-      },
-      "processing_system7_0_FIXED_IO": {
-        "interface_ports": [
-          "FIXED_IO",
-          "PS7/FIXED_IO"
-        ]
-      },
       "signal_merge_0_M_AXIS": {
         "interface_ports": [
           "signal_merge_0/M_AXIS",
@@ -3646,10 +3625,34 @@
           "signal_clipper_0/S_AXIS_IN"
         ]
       },
+      "processing_system7_0_FIXED_IO": {
+        "interface_ports": [
+          "FIXED_IO",
+          "PS7/FIXED_IO"
+        ]
+      },
       "PS7_M00_AXI": {
         "interface_ports": [
           "PS7/M00_AXI",
           "redpitaya_mem_interf_0/s_axi"
+        ]
+      },
+      "FrequencyCounter_M_AXIS_OUT": {
+        "interface_ports": [
+          "FrequencyCounter/M_AXIS_OUT",
+          "signal_gain_0/S_AXIS"
+        ]
+      },
+      "signal_split_0_M_AXIS_PORT1": {
+        "interface_ports": [
+          "DataAcquisition/M_AXIS_PORT1",
+          "FrequencyCounter/S_AXIS_IN"
+        ]
+      },
+      "processing_system7_0_DDR": {
+        "interface_ports": [
+          "DDR",
+          "PS7/DDR"
         ]
       }
     },
@@ -3847,7 +3850,14 @@
         "address_spaces": {
           "Data": {
             "range": "4G",
-            "width": "32"
+            "width": "32",
+            "segments": {
+              "SEG_redpitaya_mem_interf_0_reg0": {
+                "address_block": "/redpitaya_mem_interf_0/s_axi/reg0",
+                "offset": "0x40000000",
+                "range": "4K"
+              }
+            }
           }
         }
       }
