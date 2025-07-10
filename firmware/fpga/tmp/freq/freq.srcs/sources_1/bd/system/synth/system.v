@@ -1,7 +1,7 @@
 //Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
 //--------------------------------------------------------------------------------
 //Tool Version: Vivado v.2020.1 (win64) Build 2902540 Wed May 27 19:54:49 MDT 2020
-//Date        : Thu Jul 10 20:58:33 2025
+//Date        : Thu Jul 10 22:08:09 2025
 //Host        : DESKTOP-93GTNQD running 64-bit major release  (build 9200)
 //Command     : generate_target system.bd
 //Design      : system
@@ -71,7 +71,9 @@ module FrequencyCounter_imp_MPHDEJ
     amp,
     clk,
     counter_output,
-    rst);
+    rst,
+    vp_output,
+    vpp_output);
   input [31:0]Din;
   output [31:0]M_AXIS_OUT_tdata;
   output M_AXIS_OUT_tvalid;
@@ -81,6 +83,8 @@ module FrequencyCounter_imp_MPHDEJ
   input clk;
   output [31:0]counter_output;
   input rst;
+  output [31:0]vp_output;
+  output [31:0]vpp_output;
 
   wire [31:0]Net;
   wire axis_red_pitaya_adc_0_adc_clk;
@@ -88,6 +92,8 @@ module FrequencyCounter_imp_MPHDEJ
   wire [31:0]frequency_counter_0_M_AXIS_OUT_TDATA;
   wire frequency_counter_0_M_AXIS_OUT_TVALID;
   wire [31:0]frequency_counter_0_counter_output;
+  wire [31:0]frequency_counter_0_vp_output;
+  wire [31:0]frequency_counter_0_vpp_output;
   wire [31:0]pow2_0_N;
   wire [31:0]signal_split_0_M_AXIS_PORT1_TDATA;
   wire signal_split_0_M_AXIS_PORT1_TVALID;
@@ -104,6 +110,8 @@ module FrequencyCounter_imp_MPHDEJ
   assign counter_output[31:0] = frequency_counter_0_counter_output;
   assign signal_split_0_M_AXIS_PORT1_TDATA = S_AXIS_IN_tdata[31:0];
   assign signal_split_0_M_AXIS_PORT1_TVALID = S_AXIS_IN_tvalid;
+  assign vp_output[31:0] = frequency_counter_0_vp_output;
+  assign vpp_output[31:0] = frequency_counter_0_vpp_output;
   assign xlc_reset_dout = rst;
   system_freq_mapper_0_0 freq_mapper_0
        (.amp(freq_mapper_0_amp),
@@ -120,7 +128,9 @@ module FrequencyCounter_imp_MPHDEJ
         .S_AXIS_IN_tvalid(signal_split_0_M_AXIS_PORT1_TVALID),
         .clk(axis_red_pitaya_adc_0_adc_clk),
         .counter_output(frequency_counter_0_counter_output),
-        .rst(xlc_reset_dout));
+        .rst(xlc_reset_dout),
+        .vp_output(frequency_counter_0_vp_output),
+        .vpp_output(frequency_counter_0_vpp_output));
   system_pow2_0_0 pow2_0
        (.N(pow2_0_N),
         .log2N(xlslice_0_Dout));
@@ -799,7 +809,7 @@ module s00_couplers_imp_15HE6GA
         .s_axi_wvalid(s00_couplers_to_auto_pc_WVALID));
 endmodule
 
-(* CORE_GENERATION_INFO = "system,IP_Integrator,{x_ipVendor=xilinx.com,x_ipLibrary=BlockDiagram,x_ipName=system,x_ipVersion=1.00.a,x_ipLanguage=VERILOG,numBlks=30,numReposBlks=25,numNonXlnxBlks=2,numHierBlks=5,maxHierDepth=1,numSysgenBlks=0,numHlsBlks=0,numHdlrefBlks=8,numPkgbdBlks=0,bdsource=USER,synth_mode=Global}" *) (* HW_HANDOFF = "system.hwdef" *) 
+(* CORE_GENERATION_INFO = "system,IP_Integrator,{x_ipVendor=xilinx.com,x_ipLibrary=BlockDiagram,x_ipName=system,x_ipVersion=1.00.a,x_ipLanguage=VERILOG,numBlks=28,numReposBlks=23,numNonXlnxBlks=2,numHierBlks=5,maxHierDepth=1,numSysgenBlks=0,numHlsBlks=0,numHdlrefBlks=8,numPkgbdBlks=0,bdsource=USER,synth_mode=Global}" *) (* HW_HANDOFF = "system.hwdef" *) 
 module system
    (DDR_addr,
     DDR_ba,
@@ -889,6 +899,8 @@ module system
   wire FrequencyCounter_M_AXIS_OUT_TVALID;
   wire [15:0]FrequencyCounter_amp;
   wire [31:0]FrequencyCounter_counter_output;
+  wire [31:0]FrequencyCounter_vp_output;
+  wire [31:0]FrequencyCounter_vpp_output;
   wire [31:0]Net1;
   wire PS7_FCLK_CLK0;
   wire [31:0]PS7_M00_AXI_ARADDR;
@@ -960,8 +972,6 @@ module system
   wire [1:0]util_ds_buf_2_OBUF_DS_P;
   wire [31:0]xlc_reset1_dout;
   wire [0:0]xlc_reset_dout;
-  wire [31:0]xlconstant_1_dout;
-  wire [31:0]xlconstant_2_dout;
   wire [13:0]xlslice_0_Dout;
   wire [13:0]xlslice_1_Dout;
 
@@ -997,7 +1007,9 @@ module system
         .amp(FrequencyCounter_amp),
         .clk(axis_red_pitaya_adc_0_adc_clk),
         .counter_output(FrequencyCounter_counter_output),
-        .rst(xlc_reset_dout));
+        .rst(xlc_reset_dout),
+        .vp_output(FrequencyCounter_vp_output),
+        .vpp_output(FrequencyCounter_vpp_output));
   PS7_imp_1QJPAX8 PS7
        (.DDR_addr(DDR_addr[14:0]),
         .DDR_ba(DDR_ba[2:0]),
@@ -1081,8 +1093,8 @@ module system
         .s_axi_wready(PS7_M00_AXI_WREADY),
         .s_axi_wstrb(PS7_M00_AXI_WSTRB),
         .s_axi_wvalid(PS7_M00_AXI_WVALID),
-        .vp(xlconstant_2_dout),
-        .vpp(xlconstant_1_dout));
+        .vp(FrequencyCounter_vp_output),
+        .vpp(FrequencyCounter_vpp_output));
   system_signal_clipper_0_0 signal_clipper_0
        (.M_AXIS_OUT_tdata(signal_clipper_0_M_AXIS_OUT_TDATA),
         .M_AXIS_OUT_tvalid(signal_clipper_0_M_AXIS_OUT_TVALID),
@@ -1119,10 +1131,6 @@ module system
        (.dout(xlc_reset_dout));
   system_xlc_reset1_0 xlc_reset1
        (.dout(xlc_reset1_dout));
-  system_xlconstant_1_0 xlconstant_1
-       (.dout(xlconstant_1_dout));
-  system_xlconstant_2_0 xlconstant_2
-       (.dout(xlconstant_2_dout));
   system_xlslice_0_2 xlslice_0
        (.Din(Net1),
         .Dout(xlslice_0_Dout));

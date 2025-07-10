@@ -31,8 +31,8 @@
         "pow2_0": "",
         "xlconstant_0": "",
         "xlconstant_1": "",
-        "frequency_counter_0": "",
-        "freq_mapper_0": ""
+        "freq_mapper_0": "",
+        "frequency_counter_0": ""
       },
       "axis_red_pitaya_dac_0": "",
       "clk_wiz_0": "",
@@ -40,8 +40,6 @@
       "signal_gain_0": "",
       "signal_clipper_0": "",
       "redpitaya_mem_interf_0": "",
-      "xlconstant_1": "",
-      "xlconstant_2": "",
       "xlslice_0": "",
       "xlslice_1": "",
       "xlc_reset1": ""
@@ -1965,16 +1963,16 @@
                   }
                 },
                 "interface_nets": {
-                  "auto_pc_to_s00_couplers": {
-                    "interface_ports": [
-                      "M_AXI",
-                      "auto_pc/M_AXI"
-                    ]
-                  },
                   "s00_couplers_to_auto_pc": {
                     "interface_ports": [
                       "S_AXI",
                       "auto_pc/S_AXI"
+                    ]
+                  },
+                  "auto_pc_to_s00_couplers": {
+                    "interface_ports": [
+                      "M_AXI",
+                      "auto_pc/M_AXI"
                     ]
                   }
                 },
@@ -1995,16 +1993,16 @@
               }
             },
             "interface_nets": {
-              "ps7_0_axi_periph_to_s00_couplers": {
-                "interface_ports": [
-                  "S00_AXI",
-                  "s00_couplers/S_AXI"
-                ]
-              },
               "s00_couplers_to_ps7_0_axi_periph": {
                 "interface_ports": [
                   "M00_AXI",
                   "s00_couplers/M_AXI"
+                ]
+              },
+              "ps7_0_axi_periph_to_s00_couplers": {
+                "interface_ports": [
+                  "S00_AXI",
+                  "s00_couplers/S_AXI"
                 ]
               }
             },
@@ -2394,6 +2392,16 @@
             "direction": "O",
             "left": "15",
             "right": "0"
+          },
+          "vp_output": {
+            "direction": "O",
+            "left": "31",
+            "right": "0"
+          },
+          "vpp_output": {
+            "direction": "O",
+            "left": "31",
+            "right": "0"
           }
         },
         "components": {
@@ -2451,6 +2459,64 @@
               },
               "CONST_WIDTH": {
                 "value": "32"
+              }
+            }
+          },
+          "freq_mapper_0": {
+            "vlnv": "xilinx.com:module_ref:freq_mapper:1.0",
+            "xci_name": "system_freq_mapper_0_0",
+            "parameters": {
+              "ADC_WIDTH": {
+                "value": "16"
+              }
+            },
+            "reference_info": {
+              "ref_type": "hdl",
+              "ref_name": "freq_mapper",
+              "boundary_crc": "0x0"
+            },
+            "ports": {
+              "clk": {
+                "type": "clk",
+                "direction": "I",
+                "parameters": {
+                  "ASSOCIATED_RESET": {
+                    "value": "rst",
+                    "value_src": "constant"
+                  },
+                  "CLK_DOMAIN": {
+                    "value": "system_axis_red_pitaya_adc_0_0_adc_clk",
+                    "value_src": "default_prop"
+                  },
+                  "FREQ_HZ": {
+                    "value": "125000000",
+                    "value_src": "const_prop"
+                  }
+                }
+              },
+              "rst": {
+                "type": "rst",
+                "direction": "I"
+              },
+              "counter_val": {
+                "direction": "I",
+                "left": "31",
+                "right": "0"
+              },
+              "f_min": {
+                "direction": "I",
+                "left": "31",
+                "right": "0"
+              },
+              "f_max": {
+                "direction": "I",
+                "left": "31",
+                "right": "0"
+              },
+              "amp": {
+                "direction": "O",
+                "left": "15",
+                "right": "0"
               }
             }
           },
@@ -2616,63 +2682,15 @@
                 "direction": "O",
                 "left": "31",
                 "right": "0"
-              }
-            }
-          },
-          "freq_mapper_0": {
-            "vlnv": "xilinx.com:module_ref:freq_mapper:1.0",
-            "xci_name": "system_freq_mapper_0_0",
-            "parameters": {
-              "ADC_WIDTH": {
-                "value": "16"
-              }
-            },
-            "reference_info": {
-              "ref_type": "hdl",
-              "ref_name": "freq_mapper",
-              "boundary_crc": "0x0"
-            },
-            "ports": {
-              "clk": {
-                "type": "clk",
-                "direction": "I",
-                "parameters": {
-                  "ASSOCIATED_RESET": {
-                    "value": "rst",
-                    "value_src": "constant"
-                  },
-                  "CLK_DOMAIN": {
-                    "value": "system_axis_red_pitaya_adc_0_0_adc_clk",
-                    "value_src": "default_prop"
-                  },
-                  "FREQ_HZ": {
-                    "value": "125000000",
-                    "value_src": "const_prop"
-                  }
-                }
               },
-              "rst": {
-                "type": "rst",
-                "direction": "I"
-              },
-              "counter_val": {
-                "direction": "I",
-                "left": "31",
-                "right": "0"
-              },
-              "f_min": {
-                "direction": "I",
-                "left": "31",
-                "right": "0"
-              },
-              "f_max": {
-                "direction": "I",
-                "left": "31",
-                "right": "0"
-              },
-              "amp": {
+              "vp_output": {
                 "direction": "O",
-                "left": "15",
+                "left": "31",
+                "right": "0"
+              },
+              "vpp_output": {
+                "direction": "O",
+                "left": "31",
                 "right": "0"
               }
             }
@@ -2708,15 +2726,15 @@
           "axis_red_pitaya_adc_0_adc_clk": {
             "ports": [
               "clk",
-              "frequency_counter_0/clk",
-              "freq_mapper_0/clk"
+              "freq_mapper_0/clk",
+              "frequency_counter_0/clk"
             ]
           },
           "xlc_reset_dout": {
             "ports": [
               "rst",
-              "frequency_counter_0/rst",
-              "freq_mapper_0/rst"
+              "freq_mapper_0/rst",
+              "frequency_counter_0/rst"
             ]
           },
           "frequency_counter_0_counter_output": {
@@ -2748,6 +2766,18 @@
             "ports": [
               "xlconstant_1/dout",
               "freq_mapper_0/f_max"
+            ]
+          },
+          "frequency_counter_0_vp_output": {
+            "ports": [
+              "frequency_counter_0/vp_output",
+              "vp_output"
+            ]
+          },
+          "frequency_counter_0_vpp_output": {
+            "ports": [
+              "frequency_counter_0/vpp_output",
+              "vpp_output"
             ]
           }
         }
@@ -3542,30 +3572,6 @@
           }
         }
       },
-      "xlconstant_1": {
-        "vlnv": "xilinx.com:ip:xlconstant:1.1",
-        "xci_name": "system_xlconstant_1_0",
-        "parameters": {
-          "CONST_VAL": {
-            "value": "23233"
-          },
-          "CONST_WIDTH": {
-            "value": "32"
-          }
-        }
-      },
-      "xlconstant_2": {
-        "vlnv": "xilinx.com:ip:xlconstant:1.1",
-        "xci_name": "system_xlconstant_2_0",
-        "parameters": {
-          "CONST_VAL": {
-            "value": "18134"
-          },
-          "CONST_WIDTH": {
-            "value": "32"
-          }
-        }
-      },
       "xlslice_0": {
         "vlnv": "xilinx.com:ip:xlslice:1.0",
         "xci_name": "system_xlslice_0_2",
@@ -3801,18 +3807,6 @@
           "redpitaya_mem_interf_0/s_axi_aresetn"
         ]
       },
-      "xlconstant_1_dout": {
-        "ports": [
-          "xlconstant_1/dout",
-          "redpitaya_mem_interf_0/vpp"
-        ]
-      },
-      "xlconstant_2_dout": {
-        "ports": [
-          "xlconstant_2/dout",
-          "redpitaya_mem_interf_0/vp"
-        ]
-      },
       "redpitaya_mem_interf_0_gain": {
         "ports": [
           "redpitaya_mem_interf_0/gain",
@@ -3842,6 +3836,18 @@
         "ports": [
           "xlc_reset1/dout",
           "FrequencyCounter/Din"
+        ]
+      },
+      "FrequencyCounter_vp_output": {
+        "ports": [
+          "FrequencyCounter/vp_output",
+          "redpitaya_mem_interf_0/vp"
+        ]
+      },
+      "FrequencyCounter_vpp_output": {
+        "ports": [
+          "FrequencyCounter/vpp_output",
+          "redpitaya_mem_interf_0/vpp"
         ]
       }
     },

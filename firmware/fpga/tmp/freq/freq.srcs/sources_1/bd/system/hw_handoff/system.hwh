@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<EDKSYSTEM EDWVERSION="1.2" TIMESTAMP="Thu Jul 10 20:58:33 2025" VIVADOVERSION="2020.1">
+<EDKSYSTEM EDWVERSION="1.2" TIMESTAMP="Thu Jul 10 22:08:09 2025" VIVADOVERSION="2020.1">
 
   <SYSTEMINFO ARCH="zynq" DEVICE="7z010" NAME="system" PACKAGE="clg400" SPEEDGRADE="-1"/>
 
@@ -263,8 +263,8 @@
           <CONNECTIONS>
             <CONNECTION INSTANCE="axis_red_pitaya_dac_0" PORT="aclk"/>
             <CONNECTION INSTANCE="clk_wiz_0" PORT="clk_in1"/>
-            <CONNECTION INSTANCE="FrequencyCounter_frequency_counter_0" PORT="clk"/>
             <CONNECTION INSTANCE="FrequencyCounter_freq_mapper_0" PORT="clk"/>
+            <CONNECTION INSTANCE="FrequencyCounter_frequency_counter_0" PORT="clk"/>
             <CONNECTION INSTANCE="signal_gain_0" PORT="clk"/>
             <CONNECTION INSTANCE="signal_clipper_0" PORT="clk"/>
           </CONNECTIONS>
@@ -514,6 +514,16 @@
           <CONNECTIONS>
             <CONNECTION INSTANCE="redpitaya_mem_interf_0" PORT="frequency"/>
             <CONNECTION INSTANCE="FrequencyCounter_freq_mapper_0" PORT="counter_val"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" LEFT="31" NAME="vp_output" RIGHT="0" SIGIS="undef" SIGNAME="FrequencyCounter_frequency_counter_0_vp_output">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="redpitaya_mem_interf_0" PORT="vp"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" LEFT="31" NAME="vpp_output" RIGHT="0" SIGIS="undef" SIGNAME="FrequencyCounter_frequency_counter_0_vpp_output">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="redpitaya_mem_interf_0" PORT="vpp"/>
           </CONNECTIONS>
         </PORT>
       </PORTS>
@@ -3772,14 +3782,14 @@
             <CONNECTION INSTANCE="FrequencyCounter_frequency_counter_0" PORT="counter_output"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="I" LEFT="31" NAME="vpp" RIGHT="0" SIGIS="undef" SIGNAME="xlconstant_1_dout">
+        <PORT DIR="I" LEFT="31" NAME="vpp" RIGHT="0" SIGIS="undef" SIGNAME="FrequencyCounter_frequency_counter_0_vpp_output">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="xlconstant_1" PORT="dout"/>
+            <CONNECTION INSTANCE="FrequencyCounter_frequency_counter_0" PORT="vpp_output"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="I" LEFT="31" NAME="vp" RIGHT="0" SIGIS="undef" SIGNAME="xlconstant_2_dout">
+        <PORT DIR="I" LEFT="31" NAME="vp" RIGHT="0" SIGIS="undef" SIGNAME="FrequencyCounter_frequency_counter_0_vp_output">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="xlconstant_2" PORT="dout"/>
+            <CONNECTION INSTANCE="FrequencyCounter_frequency_counter_0" PORT="vp_output"/>
           </CONNECTIONS>
         </PORT>
         <PORT DIR="O" LEFT="31" NAME="limits" RIGHT="0" SIGIS="undef" SIGNAME="redpitaya_mem_interf_0_limits">
@@ -4202,8 +4212,8 @@
       <PORTS>
         <PORT DIR="O" LEFT="0" NAME="dout" RIGHT="0" SIGIS="undef" SIGNAME="xlc_reset_dout">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="FrequencyCounter_frequency_counter_0" PORT="rst"/>
             <CONNECTION INSTANCE="FrequencyCounter_freq_mapper_0" PORT="rst"/>
+            <CONNECTION INSTANCE="FrequencyCounter_frequency_counter_0" PORT="rst"/>
             <CONNECTION INSTANCE="signal_gain_0" PORT="rst"/>
             <CONNECTION INSTANCE="signal_clipper_0" PORT="rst"/>
           </CONNECTIONS>
@@ -4223,40 +4233,6 @@
         <PORT DIR="O" LEFT="31" NAME="dout" RIGHT="0" SIGIS="undef" SIGNAME="xlc_reset1_dout">
           <CONNECTIONS>
             <CONNECTION INSTANCE="FrequencyCounter_xlslice_0" PORT="Din"/>
-          </CONNECTIONS>
-        </PORT>
-      </PORTS>
-      <BUSINTERFACES/>
-    </MODULE>
-    <MODULE COREREVISION="7" FULLNAME="/xlconstant_1" HWVERSION="1.1" INSTANCE="xlconstant_1" IPTYPE="PERIPHERAL" IS_ENABLE="1" MODCLASS="PERIPHERAL" MODTYPE="xlconstant" VLNV="xilinx.com:ip:xlconstant:1.1">
-      <DOCUMENTS/>
-      <PARAMETERS>
-        <PARAMETER NAME="CONST_WIDTH" VALUE="32"/>
-        <PARAMETER NAME="CONST_VAL" VALUE="0x00005AC1"/>
-        <PARAMETER NAME="Component_Name" VALUE="system_xlconstant_1_0"/>
-        <PARAMETER NAME="EDK_IPTYPE" VALUE="PERIPHERAL"/>
-      </PARAMETERS>
-      <PORTS>
-        <PORT DIR="O" LEFT="31" NAME="dout" RIGHT="0" SIGIS="undef" SIGNAME="xlconstant_1_dout">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="redpitaya_mem_interf_0" PORT="vpp"/>
-          </CONNECTIONS>
-        </PORT>
-      </PORTS>
-      <BUSINTERFACES/>
-    </MODULE>
-    <MODULE COREREVISION="7" FULLNAME="/xlconstant_2" HWVERSION="1.1" INSTANCE="xlconstant_2" IPTYPE="PERIPHERAL" IS_ENABLE="1" MODCLASS="PERIPHERAL" MODTYPE="xlconstant" VLNV="xilinx.com:ip:xlconstant:1.1">
-      <DOCUMENTS/>
-      <PARAMETERS>
-        <PARAMETER NAME="CONST_WIDTH" VALUE="32"/>
-        <PARAMETER NAME="CONST_VAL" VALUE="0x000046D6"/>
-        <PARAMETER NAME="Component_Name" VALUE="system_xlconstant_2_0"/>
-        <PARAMETER NAME="EDK_IPTYPE" VALUE="PERIPHERAL"/>
-      </PARAMETERS>
-      <PORTS>
-        <PORT DIR="O" LEFT="31" NAME="dout" RIGHT="0" SIGIS="undef" SIGNAME="xlconstant_2_dout">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="redpitaya_mem_interf_0" PORT="vp"/>
           </CONNECTIONS>
         </PORT>
       </PORTS>

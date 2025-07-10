@@ -899,6 +899,8 @@ proc create_hier_cell_FrequencyCounter { parentCell nameHier } {
   create_bd_pin -dir I -type clk clk
   create_bd_pin -dir O -from 31 -to 0 counter_output
   create_bd_pin -dir I -type rst rst
+  create_bd_pin -dir O -from 31 -to 0 vp_output
+  create_bd_pin -dir O -from 31 -to 0 vpp_output
 
   # Create instance: freq_mapper_0, and set properties
   set block_name freq_mapper
@@ -966,6 +968,8 @@ proc create_hier_cell_FrequencyCounter { parentCell nameHier } {
   connect_bd_net -net axis_red_pitaya_adc_0_adc_clk [get_bd_pins clk] [get_bd_pins freq_mapper_0/clk] [get_bd_pins frequency_counter_0/clk]
   connect_bd_net -net freq_mapper_0_amp [get_bd_pins amp] [get_bd_pins freq_mapper_0/amp]
   connect_bd_net -net frequency_counter_0_counter_output [get_bd_pins counter_output] [get_bd_pins freq_mapper_0/counter_val] [get_bd_pins frequency_counter_0/counter_output]
+  connect_bd_net -net frequency_counter_0_vp_output [get_bd_pins vp_output] [get_bd_pins frequency_counter_0/vp_output]
+  connect_bd_net -net frequency_counter_0_vpp_output [get_bd_pins vpp_output] [get_bd_pins frequency_counter_0/vpp_output]
   connect_bd_net -net pow2_0_N [get_bd_pins frequency_counter_0/Ncycles] [get_bd_pins pow2_0/N]
   connect_bd_net -net xlc_reset_dout [get_bd_pins rst] [get_bd_pins freq_mapper_0/rst] [get_bd_pins frequency_counter_0/rst]
   connect_bd_net -net xlconstant_0_dout [get_bd_pins freq_mapper_0/f_min] [get_bd_pins xlconstant_0/dout]
@@ -1220,20 +1224,6 @@ proc create_root_design { parentCell } {
    CONFIG.CONST_WIDTH {32} \
  ] $xlc_reset1
 
-  # Create instance: xlconstant_1, and set properties
-  set xlconstant_1 [ create_bd_cell -type ip -vlnv xilinx.com:ip:xlconstant:1.1 xlconstant_1 ]
-  set_property -dict [ list \
-   CONFIG.CONST_VAL {23233} \
-   CONFIG.CONST_WIDTH {32} \
- ] $xlconstant_1
-
-  # Create instance: xlconstant_2, and set properties
-  set xlconstant_2 [ create_bd_cell -type ip -vlnv xilinx.com:ip:xlconstant:1.1 xlconstant_2 ]
-  set_property -dict [ list \
-   CONFIG.CONST_VAL {18134} \
-   CONFIG.CONST_WIDTH {32} \
- ] $xlconstant_2
-
   # Create instance: xlslice_0, and set properties
   set xlslice_0 [ create_bd_cell -type ip -vlnv xilinx.com:ip:xlslice:1.0 xlslice_0 ]
   set_property -dict [ list \
@@ -1263,6 +1253,8 @@ proc create_root_design { parentCell } {
   connect_bd_net -net DataAcquisition_adc_csn_o [get_bd_ports adc_csn_o] [get_bd_pins DataAcquisition/adc_csn_o]
   connect_bd_net -net FrequencyCounter_amp [get_bd_pins FrequencyCounter/amp] [get_bd_pins signal_merge_0/freq_amp]
   connect_bd_net -net FrequencyCounter_counter_output [get_bd_pins FrequencyCounter/counter_output] [get_bd_pins redpitaya_mem_interf_0/frequency]
+  connect_bd_net -net FrequencyCounter_vp_output [get_bd_pins FrequencyCounter/vp_output] [get_bd_pins redpitaya_mem_interf_0/vp]
+  connect_bd_net -net FrequencyCounter_vpp_output [get_bd_pins FrequencyCounter/vpp_output] [get_bd_pins redpitaya_mem_interf_0/vpp]
   connect_bd_net -net Net1 [get_bd_pins redpitaya_mem_interf_0/limits] [get_bd_pins xlslice_0/Din] [get_bd_pins xlslice_1/Din]
   connect_bd_net -net PS7_FCLK_CLK0 [get_bd_pins PS7/FCLK_CLK0] [get_bd_pins redpitaya_mem_interf_0/s_axi_aclk]
   connect_bd_net -net PS7_S00_ARESETN [get_bd_pins PS7/S00_ARESETN] [get_bd_pins redpitaya_mem_interf_0/s_axi_aresetn]
@@ -1286,8 +1278,6 @@ proc create_root_design { parentCell } {
   connect_bd_net -net util_ds_buf_2_OBUF_DS_P [get_bd_ports daisy_p_o] [get_bd_pins util_ds_buf_2/OBUF_DS_P]
   connect_bd_net -net xlc_reset1_dout [get_bd_pins FrequencyCounter/Din] [get_bd_pins xlc_reset1/dout]
   connect_bd_net -net xlc_reset_dout [get_bd_pins FrequencyCounter/rst] [get_bd_pins signal_clipper_0/rst] [get_bd_pins signal_gain_0/rst] [get_bd_pins xlc_reset/dout]
-  connect_bd_net -net xlconstant_1_dout [get_bd_pins redpitaya_mem_interf_0/vpp] [get_bd_pins xlconstant_1/dout]
-  connect_bd_net -net xlconstant_2_dout [get_bd_pins redpitaya_mem_interf_0/vp] [get_bd_pins xlconstant_2/dout]
   connect_bd_net -net xlslice_0_Dout [get_bd_pins signal_clipper_0/max_limit] [get_bd_pins xlslice_0/Dout]
   connect_bd_net -net xlslice_1_Dout [get_bd_pins signal_clipper_0/min_limit] [get_bd_pins xlslice_1/Dout]
 

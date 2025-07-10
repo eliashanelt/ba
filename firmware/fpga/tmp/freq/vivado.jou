@@ -13,3 +13,19 @@ start_gui
 open_project C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.xpr
 open_bd_design {C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/system.bd}
 update_compile_order -fileset sources_1
+launch_runs impl_1 -to_step write_bitstream -jobs 12
+wait_on_run impl_1
+reset_run synth_1
+assign_bd_address [get_bd_addr_segs {redpitaya_mem_interf_0/s_axi/reg0 }]
+save_bd_design
+set_property range 4K [get_bd_addr_segs {PS7/processing_system7_0/Data/SEG_redpitaya_mem_interf_0_reg0}]
+save_bd_design
+launch_runs impl_1 -to_step write_bitstream -jobs 12
+wait_on_run impl_1
+startgroup
+set_property -dict [list CONFIG.DIN_TO {14} CONFIG.DIN_FROM {27} CONFIG.DOUT_WIDTH {14}] [get_bd_cells xlslice_0]
+endgroup
+save_bd_design
+reset_run synth_1
+launch_runs impl_1 -to_step write_bitstream -jobs 12
+wait_on_run impl_1

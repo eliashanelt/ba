@@ -68,12 +68,6 @@ set_property DONT_TOUCH TRUE [get_cells -hier -filter {REF_NAME==system_signal_c
 # IP: bd/system/ip/system_redpitaya_mem_interf_0_0_1/system_redpitaya_mem_interf_0_0.xci
 set_property DONT_TOUCH TRUE [get_cells -hier -filter {REF_NAME==system_redpitaya_mem_interf_0_0 || ORIG_REF_NAME==system_redpitaya_mem_interf_0_0} -quiet] -quiet
 
-# IP: bd/system/ip/system_xlconstant_1_0_1/system_xlconstant_1_0.xci
-set_property DONT_TOUCH TRUE [get_cells -hier -filter {REF_NAME==system_xlconstant_1_0 || ORIG_REF_NAME==system_xlconstant_1_0} -quiet] -quiet
-
-# IP: bd/system/ip/system_xlconstant_2_0/system_xlconstant_2_0.xci
-set_property DONT_TOUCH TRUE [get_cells -hier -filter {REF_NAME==system_xlconstant_2_0 || ORIG_REF_NAME==system_xlconstant_2_0} -quiet] -quiet
-
 # IP: bd/system/ip/system_xlslice_0_2_1/system_xlslice_0_2.xci
 set_property DONT_TOUCH TRUE [get_cells -hier -filter {REF_NAME==system_xlslice_0_2 || ORIG_REF_NAME==system_xlslice_0_2} -quiet] -quiet
 

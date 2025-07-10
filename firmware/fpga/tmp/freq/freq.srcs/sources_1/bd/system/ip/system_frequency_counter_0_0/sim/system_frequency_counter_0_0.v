@@ -62,7 +62,9 @@ module system_frequency_counter_0_0 (
   Ncycles,
   M_AXIS_OUT_tdata,
   M_AXIS_OUT_tvalid,
-  counter_output
+  counter_output,
+  vp_output,
+  vpp_output
 );
 
 (* X_INTERFACE_INFO = "xilinx.com:interface:axis:1.0 S_AXIS_IN TDATA" *)
@@ -83,6 +85,8 @@ output wire [31 : 0] M_AXIS_OUT_tdata;
 (* X_INTERFACE_INFO = "xilinx.com:interface:axis:1.0 M_AXIS_OUT TVALID" *)
 output wire M_AXIS_OUT_tvalid;
 output wire [31 : 0] counter_output;
+output wire [31 : 0] vp_output;
+output wire [31 : 0] vpp_output;
 
   frequency_counter #(
     .ADC_WIDTH(14),
@@ -98,6 +102,8 @@ output wire [31 : 0] counter_output;
     .Ncycles(Ncycles),
     .M_AXIS_OUT_tdata(M_AXIS_OUT_tdata),
     .M_AXIS_OUT_tvalid(M_AXIS_OUT_tvalid),
-    .counter_output(counter_output)
+    .counter_output(counter_output),
+    .vp_output(vp_output),
+    .vpp_output(vpp_output)
   );
 endmodule
