@@ -29,8 +29,6 @@
       "FrequencyCounter": {
         "xlslice_0": "",
         "pow2_0": "",
-        "xlconstant_0": "",
-        "xlconstant_1": "",
         "freq_mapper_0": "",
         "frequency_counter_0": ""
       },
@@ -39,10 +37,10 @@
       "signal_merge_0": "",
       "signal_gain_0": "",
       "signal_clipper_0": "",
-      "redpitaya_mem_interf_0": "",
       "xlslice_0": "",
       "xlslice_1": "",
-      "xlc_reset1": ""
+      "xlc_reset1": "",
+      "redpitaya_mem_interf_0": ""
     },
     "interface_ports": {
       "Vp_Vn": {
@@ -1963,16 +1961,16 @@
                   }
                 },
                 "interface_nets": {
-                  "s00_couplers_to_auto_pc": {
-                    "interface_ports": [
-                      "S_AXI",
-                      "auto_pc/S_AXI"
-                    ]
-                  },
                   "auto_pc_to_s00_couplers": {
                     "interface_ports": [
                       "M_AXI",
                       "auto_pc/M_AXI"
+                    ]
+                  },
+                  "s00_couplers_to_auto_pc": {
+                    "interface_ports": [
+                      "S_AXI",
+                      "auto_pc/S_AXI"
                     ]
                   }
                 },
@@ -2402,6 +2400,16 @@
             "direction": "O",
             "left": "31",
             "right": "0"
+          },
+          "f_min": {
+            "direction": "I",
+            "left": "31",
+            "right": "0"
+          },
+          "f_max": {
+            "direction": "I",
+            "left": "31",
+            "right": "0"
           }
         },
         "components": {
@@ -2435,30 +2443,6 @@
                 "direction": "O",
                 "left": "31",
                 "right": "0"
-              }
-            }
-          },
-          "xlconstant_0": {
-            "vlnv": "xilinx.com:ip:xlconstant:1.1",
-            "xci_name": "system_xlconstant_0_2",
-            "parameters": {
-              "CONST_VAL": {
-                "value": "1000"
-              },
-              "CONST_WIDTH": {
-                "value": "32"
-              }
-            }
-          },
-          "xlconstant_1": {
-            "vlnv": "xilinx.com:ip:xlconstant:1.1",
-            "xci_name": "system_xlconstant_0_3",
-            "parameters": {
-              "CONST_VAL": {
-                "value": "40000"
-              },
-              "CONST_WIDTH": {
-                "value": "32"
               }
             }
           },
@@ -2756,18 +2740,6 @@
               "amp"
             ]
           },
-          "xlconstant_0_dout": {
-            "ports": [
-              "xlconstant_0/dout",
-              "freq_mapper_0/f_min"
-            ]
-          },
-          "xlconstant_1_dout": {
-            "ports": [
-              "xlconstant_1/dout",
-              "freq_mapper_0/f_max"
-            ]
-          },
           "frequency_counter_0_vp_output": {
             "ports": [
               "frequency_counter_0/vp_output",
@@ -2778,6 +2750,18 @@
             "ports": [
               "frequency_counter_0/vpp_output",
               "vpp_output"
+            ]
+          },
+          "f_min_1": {
+            "ports": [
+              "f_min",
+              "freq_mapper_0/f_min"
+            ]
+          },
+          "f_max_1": {
+            "ports": [
+              "f_max",
+              "freq_mapper_0/f_max"
             ]
           }
         }
@@ -3286,6 +3270,45 @@
           }
         }
       },
+      "xlslice_0": {
+        "vlnv": "xilinx.com:ip:xlslice:1.0",
+        "xci_name": "system_xlslice_0_2",
+        "parameters": {
+          "DIN_FROM": {
+            "value": "27"
+          },
+          "DIN_TO": {
+            "value": "14"
+          },
+          "DOUT_WIDTH": {
+            "value": "14"
+          }
+        }
+      },
+      "xlslice_1": {
+        "vlnv": "xilinx.com:ip:xlslice:1.0",
+        "xci_name": "system_xlslice_1_0",
+        "parameters": {
+          "DIN_FROM": {
+            "value": "13"
+          },
+          "DOUT_WIDTH": {
+            "value": "14"
+          }
+        }
+      },
+      "xlc_reset1": {
+        "vlnv": "xilinx.com:ip:xlconstant:1.1",
+        "xci_name": "system_xlc_reset1_0",
+        "parameters": {
+          "CONST_VAL": {
+            "value": "10"
+          },
+          "CONST_WIDTH": {
+            "value": "32"
+          }
+        }
+      },
       "redpitaya_mem_interf_0": {
         "vlnv": "xilinx.com:module_ref:redpitaya_mem_interface:1.0",
         "xci_name": "system_redpitaya_mem_interf_0_0",
@@ -3569,45 +3592,16 @@
             "direction": "O",
             "left": "31",
             "right": "0"
-          }
-        }
-      },
-      "xlslice_0": {
-        "vlnv": "xilinx.com:ip:xlslice:1.0",
-        "xci_name": "system_xlslice_0_2",
-        "parameters": {
-          "DIN_FROM": {
-            "value": "27"
           },
-          "DIN_TO": {
-            "value": "14"
+          "f_min": {
+            "direction": "O",
+            "left": "31",
+            "right": "0"
           },
-          "DOUT_WIDTH": {
-            "value": "14"
-          }
-        }
-      },
-      "xlslice_1": {
-        "vlnv": "xilinx.com:ip:xlslice:1.0",
-        "xci_name": "system_xlslice_1_0",
-        "parameters": {
-          "DIN_FROM": {
-            "value": "13"
-          },
-          "DOUT_WIDTH": {
-            "value": "14"
-          }
-        }
-      },
-      "xlc_reset1": {
-        "vlnv": "xilinx.com:ip:xlconstant:1.1",
-        "xci_name": "system_xlc_reset1_0",
-        "parameters": {
-          "CONST_VAL": {
-            "value": "10"
-          },
-          "CONST_WIDTH": {
-            "value": "32"
+          "f_max": {
+            "direction": "O",
+            "left": "31",
+            "right": "0"
           }
         }
       }
@@ -3848,6 +3842,18 @@
         "ports": [
           "FrequencyCounter/vpp_output",
           "redpitaya_mem_interf_0/vpp"
+        ]
+      },
+      "redpitaya_mem_interf_0_f_min": {
+        "ports": [
+          "redpitaya_mem_interf_0/f_min",
+          "FrequencyCounter/f_min"
+        ]
+      },
+      "redpitaya_mem_interf_0_f_max": {
+        "ports": [
+          "redpitaya_mem_interf_0/f_max",
+          "FrequencyCounter/f_max"
         ]
       }
     },

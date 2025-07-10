@@ -898,6 +898,8 @@ proc create_hier_cell_FrequencyCounter { parentCell nameHier } {
   create_bd_pin -dir O -from 15 -to 0 amp
   create_bd_pin -dir I -type clk clk
   create_bd_pin -dir O -from 31 -to 0 counter_output
+  create_bd_pin -dir I -from 31 -to 0 f_max
+  create_bd_pin -dir I -from 31 -to 0 f_min
   create_bd_pin -dir I -type rst rst
   create_bd_pin -dir O -from 31 -to 0 vp_output
   create_bd_pin -dir O -from 31 -to 0 vpp_output
@@ -938,20 +940,6 @@ proc create_hier_cell_FrequencyCounter { parentCell nameHier } {
      return 1
    }
   
-  # Create instance: xlconstant_0, and set properties
-  set xlconstant_0 [ create_bd_cell -type ip -vlnv xilinx.com:ip:xlconstant:1.1 xlconstant_0 ]
-  set_property -dict [ list \
-   CONFIG.CONST_VAL {1000} \
-   CONFIG.CONST_WIDTH {32} \
- ] $xlconstant_0
-
-  # Create instance: xlconstant_1, and set properties
-  set xlconstant_1 [ create_bd_cell -type ip -vlnv xilinx.com:ip:xlconstant:1.1 xlconstant_1 ]
-  set_property -dict [ list \
-   CONFIG.CONST_VAL {40000} \
-   CONFIG.CONST_WIDTH {32} \
- ] $xlconstant_1
-
   # Create instance: xlslice_0, and set properties
   set xlslice_0 [ create_bd_cell -type ip -vlnv xilinx.com:ip:xlslice:1.0 xlslice_0 ]
   set_property -dict [ list \
@@ -966,14 +954,14 @@ proc create_hier_cell_FrequencyCounter { parentCell nameHier } {
   # Create port connections
   connect_bd_net -net Net [get_bd_pins Din] [get_bd_pins xlslice_0/Din]
   connect_bd_net -net axis_red_pitaya_adc_0_adc_clk [get_bd_pins clk] [get_bd_pins freq_mapper_0/clk] [get_bd_pins frequency_counter_0/clk]
+  connect_bd_net -net f_max_1 [get_bd_pins f_max] [get_bd_pins freq_mapper_0/f_max]
+  connect_bd_net -net f_min_1 [get_bd_pins f_min] [get_bd_pins freq_mapper_0/f_min]
   connect_bd_net -net freq_mapper_0_amp [get_bd_pins amp] [get_bd_pins freq_mapper_0/amp]
   connect_bd_net -net frequency_counter_0_counter_output [get_bd_pins counter_output] [get_bd_pins freq_mapper_0/counter_val] [get_bd_pins frequency_counter_0/counter_output]
   connect_bd_net -net frequency_counter_0_vp_output [get_bd_pins vp_output] [get_bd_pins frequency_counter_0/vp_output]
   connect_bd_net -net frequency_counter_0_vpp_output [get_bd_pins vpp_output] [get_bd_pins frequency_counter_0/vpp_output]
   connect_bd_net -net pow2_0_N [get_bd_pins frequency_counter_0/Ncycles] [get_bd_pins pow2_0/N]
   connect_bd_net -net xlc_reset_dout [get_bd_pins rst] [get_bd_pins freq_mapper_0/rst] [get_bd_pins frequency_counter_0/rst]
-  connect_bd_net -net xlconstant_0_dout [get_bd_pins freq_mapper_0/f_min] [get_bd_pins xlconstant_0/dout]
-  connect_bd_net -net xlconstant_1_dout [get_bd_pins freq_mapper_0/f_max] [get_bd_pins xlconstant_1/dout]
   connect_bd_net -net xlslice_0_Dout [get_bd_pins pow2_0/log2N] [get_bd_pins xlslice_0/Dout]
 
   # Restore current instance
@@ -1272,6 +1260,8 @@ proc create_root_design { parentCell } {
   connect_bd_net -net clk_wiz_0_locked [get_bd_pins axis_red_pitaya_dac_0/locked] [get_bd_pins clk_wiz_0/locked]
   connect_bd_net -net daisy_n_i_1 [get_bd_ports daisy_n_i] [get_bd_pins util_ds_buf_1/IBUF_DS_N]
   connect_bd_net -net daisy_p_i_1 [get_bd_ports daisy_p_i] [get_bd_pins util_ds_buf_1/IBUF_DS_P]
+  connect_bd_net -net redpitaya_mem_interf_0_f_max [get_bd_pins FrequencyCounter/f_max] [get_bd_pins redpitaya_mem_interf_0/f_max]
+  connect_bd_net -net redpitaya_mem_interf_0_f_min [get_bd_pins FrequencyCounter/f_min] [get_bd_pins redpitaya_mem_interf_0/f_min]
   connect_bd_net -net redpitaya_mem_interf_0_gain [get_bd_pins redpitaya_mem_interf_0/gain] [get_bd_pins signal_gain_0/gain]
   connect_bd_net -net util_ds_buf_1_IBUF_OUT [get_bd_pins util_ds_buf_1/IBUF_OUT] [get_bd_pins util_ds_buf_2/OBUF_IN]
   connect_bd_net -net util_ds_buf_2_OBUF_DS_N [get_bd_ports daisy_n_o] [get_bd_pins util_ds_buf_2/OBUF_DS_N]

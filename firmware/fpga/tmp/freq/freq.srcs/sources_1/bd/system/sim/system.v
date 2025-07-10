@@ -1,7 +1,7 @@
 //Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
 //--------------------------------------------------------------------------------
 //Tool Version: Vivado v.2020.1 (win64) Build 2902540 Wed May 27 19:54:49 MDT 2020
-//Date        : Thu Jul 10 22:08:09 2025
+//Date        : Fri Jul 11 00:02:34 2025
 //Host        : DESKTOP-93GTNQD running 64-bit major release  (build 9200)
 //Command     : generate_target system.bd
 //Design      : system
@@ -71,6 +71,8 @@ module FrequencyCounter_imp_MPHDEJ
     amp,
     clk,
     counter_output,
+    f_max,
+    f_min,
     rst,
     vp_output,
     vpp_output);
@@ -82,12 +84,16 @@ module FrequencyCounter_imp_MPHDEJ
   output [15:0]amp;
   input clk;
   output [31:0]counter_output;
+  input [31:0]f_max;
+  input [31:0]f_min;
   input rst;
   output [31:0]vp_output;
   output [31:0]vpp_output;
 
   wire [31:0]Net;
   wire axis_red_pitaya_adc_0_adc_clk;
+  wire [31:0]f_max_1;
+  wire [31:0]f_min_1;
   wire [15:0]freq_mapper_0_amp;
   wire [31:0]frequency_counter_0_M_AXIS_OUT_TDATA;
   wire frequency_counter_0_M_AXIS_OUT_TVALID;
@@ -98,8 +104,6 @@ module FrequencyCounter_imp_MPHDEJ
   wire [31:0]signal_split_0_M_AXIS_PORT1_TDATA;
   wire signal_split_0_M_AXIS_PORT1_TVALID;
   wire xlc_reset_dout;
-  wire [31:0]xlconstant_0_dout;
-  wire [31:0]xlconstant_1_dout;
   wire [4:0]xlslice_0_Dout;
 
   assign M_AXIS_OUT_tdata[31:0] = frequency_counter_0_M_AXIS_OUT_TDATA;
@@ -108,6 +112,8 @@ module FrequencyCounter_imp_MPHDEJ
   assign amp[15:0] = freq_mapper_0_amp;
   assign axis_red_pitaya_adc_0_adc_clk = clk;
   assign counter_output[31:0] = frequency_counter_0_counter_output;
+  assign f_max_1 = f_max[31:0];
+  assign f_min_1 = f_min[31:0];
   assign signal_split_0_M_AXIS_PORT1_TDATA = S_AXIS_IN_tdata[31:0];
   assign signal_split_0_M_AXIS_PORT1_TVALID = S_AXIS_IN_tvalid;
   assign vp_output[31:0] = frequency_counter_0_vp_output;
@@ -117,8 +123,8 @@ module FrequencyCounter_imp_MPHDEJ
        (.amp(freq_mapper_0_amp),
         .clk(axis_red_pitaya_adc_0_adc_clk),
         .counter_val(frequency_counter_0_counter_output),
-        .f_max(xlconstant_1_dout),
-        .f_min(xlconstant_0_dout),
+        .f_max(f_max_1),
+        .f_min(f_min_1),
         .rst(xlc_reset_dout));
   system_frequency_counter_0_0 frequency_counter_0
        (.M_AXIS_OUT_tdata(frequency_counter_0_M_AXIS_OUT_TDATA),
@@ -134,10 +140,6 @@ module FrequencyCounter_imp_MPHDEJ
   system_pow2_0_0 pow2_0
        (.N(pow2_0_N),
         .log2N(xlslice_0_Dout));
-  system_xlconstant_0_2 xlconstant_0
-       (.dout(xlconstant_0_dout));
-  system_xlconstant_0_3 xlconstant_1
-       (.dout(xlconstant_1_dout));
   system_xlslice_0_1 xlslice_0
        (.Din(Net),
         .Dout(xlslice_0_Dout));
@@ -809,7 +811,7 @@ module s00_couplers_imp_15HE6GA
         .s_axi_wvalid(s00_couplers_to_auto_pc_WVALID));
 endmodule
 
-(* CORE_GENERATION_INFO = "system,IP_Integrator,{x_ipVendor=xilinx.com,x_ipLibrary=BlockDiagram,x_ipName=system,x_ipVersion=1.00.a,x_ipLanguage=VERILOG,numBlks=28,numReposBlks=23,numNonXlnxBlks=2,numHierBlks=5,maxHierDepth=1,numSysgenBlks=0,numHlsBlks=0,numHdlrefBlks=8,numPkgbdBlks=0,bdsource=USER,synth_mode=Global}" *) (* HW_HANDOFF = "system.hwdef" *) 
+(* CORE_GENERATION_INFO = "system,IP_Integrator,{x_ipVendor=xilinx.com,x_ipLibrary=BlockDiagram,x_ipName=system,x_ipVersion=1.00.a,x_ipLanguage=VERILOG,numBlks=26,numReposBlks=21,numNonXlnxBlks=2,numHierBlks=5,maxHierDepth=1,numSysgenBlks=0,numHlsBlks=0,numHdlrefBlks=8,numPkgbdBlks=0,bdsource=USER,synth_mode=Global}" *) (* HW_HANDOFF = "system.hwdef" *) 
 module system
    (DDR_addr,
     DDR_ba,
@@ -958,6 +960,8 @@ module system
   wire processing_system7_0_FIXED_IO_PS_CLK;
   wire processing_system7_0_FIXED_IO_PS_PORB;
   wire processing_system7_0_FIXED_IO_PS_SRSTB;
+  wire [31:0]redpitaya_mem_interf_0_f_max;
+  wire [31:0]redpitaya_mem_interf_0_f_min;
   wire [31:0]redpitaya_mem_interf_0_gain;
   wire [31:0]signal_clipper_0_M_AXIS_OUT_TDATA;
   wire signal_clipper_0_M_AXIS_OUT_TVALID;
@@ -1007,6 +1011,8 @@ module system
         .amp(FrequencyCounter_amp),
         .clk(axis_red_pitaya_adc_0_adc_clk),
         .counter_output(FrequencyCounter_counter_output),
+        .f_max(redpitaya_mem_interf_0_f_max),
+        .f_min(redpitaya_mem_interf_0_f_min),
         .rst(xlc_reset_dout),
         .vp_output(FrequencyCounter_vp_output),
         .vpp_output(FrequencyCounter_vpp_output));
@@ -1069,7 +1075,9 @@ module system
         .clk_out1(clk_wiz_0_clk_out1),
         .locked(clk_wiz_0_locked));
   system_redpitaya_mem_interf_0_0 redpitaya_mem_interf_0
-       (.frequency(FrequencyCounter_counter_output),
+       (.f_max(redpitaya_mem_interf_0_f_max),
+        .f_min(redpitaya_mem_interf_0_f_min),
+        .frequency(FrequencyCounter_counter_output),
         .gain(redpitaya_mem_interf_0_gain),
         .limits(Net1),
         .s_axi_aclk(PS7_FCLK_CLK0),

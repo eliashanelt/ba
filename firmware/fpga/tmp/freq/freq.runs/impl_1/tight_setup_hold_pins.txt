@@ -1,12 +1,19 @@
 +--------------------------+--------------------------+----------------------------------------------------------------------------------------------------------+
 |       Launch Clock       |      Capture Clock       |                                                 Pin                                                      |
 +--------------------------+--------------------------+----------------------------------------------------------------------------------------------------------+
-|                  adc_clk |                  adc_clk |                                                        system_i/signal_gain_0/inst/axis_data_reg_reg[4]/D|
-|                  adc_clk |                  adc_clk |                                                       system_i/signal_gain_0/inst/axis_data_reg_reg[13]/D|
-|                  adc_clk |                  adc_clk |                                                        system_i/signal_gain_0/inst/axis_data_reg_reg[0]/D|
-|                  adc_clk |                  adc_clk |                                                        system_i/signal_gain_0/inst/axis_data_reg_reg[2]/D|
+|                  adc_clk |                  adc_clk |                                                 system_i/FrequencyCounter/freq_mapper_0/inst/amp_reg[0]/D|
+|                  adc_clk |                  adc_clk |                                                 system_i/FrequencyCounter/freq_mapper_0/inst/amp_reg[1]/D|
+|                  adc_clk |                  adc_clk |                                                 system_i/FrequencyCounter/freq_mapper_0/inst/amp_reg[2]/D|
+|                  adc_clk |                  adc_clk |                                                 system_i/FrequencyCounter/freq_mapper_0/inst/amp_reg[3]/D|
+|                  adc_clk |                  adc_clk |                                                 system_i/FrequencyCounter/freq_mapper_0/inst/amp_reg[4]/D|
+|                  adc_clk |                  adc_clk |                                                 system_i/FrequencyCounter/freq_mapper_0/inst/amp_reg[5]/D|
+|                  adc_clk |                  adc_clk |                                                 system_i/FrequencyCounter/freq_mapper_0/inst/amp_reg[6]/D|
+|                  adc_clk |                  adc_clk |                                                 system_i/FrequencyCounter/freq_mapper_0/inst/amp_reg[7]/D|
+|                  adc_clk |                  adc_clk |                                                 system_i/FrequencyCounter/freq_mapper_0/inst/amp_reg[8]/D|
+|                  adc_clk |                  adc_clk |                                                 system_i/FrequencyCounter/freq_mapper_0/inst/amp_reg[9]/D|
+|                  adc_clk |                  adc_clk |                                                system_i/FrequencyCounter/freq_mapper_0/inst/amp_reg[10]/D|
+|                  adc_clk |                  adc_clk |                                                system_i/FrequencyCounter/freq_mapper_0/inst/amp_reg[11]/D|
+|                  adc_clk |                  adc_clk |                                                system_i/FrequencyCounter/freq_mapper_0/inst/amp_reg[12]/D|
+|                  adc_clk |                  adc_clk |                                                system_i/FrequencyCounter/freq_mapper_0/inst/amp_reg[13]/D|
 |                  adc_clk |                  adc_clk |                                                        system_i/signal_gain_0/inst/axis_data_reg_reg[3]/D|
-|                  adc_clk |                  adc_clk |                                                        system_i/signal_gain_0/inst/axis_data_reg_reg[1]/D|
-|                  adc_clk |                  adc_clk |                                                        system_i/signal_gain_0/inst/axis_data_reg_reg[5]/D|
-|                  adc_clk |                  adc_clk |                                                        system_i/signal_gain_0/inst/axis_data_reg_reg[6]/D|
 +--------------------------+--------------------------+----------------------------------------------------------------------------------------------------------+

@@ -35,7 +35,9 @@ module redpitaya_mem_interface #(
     // User registers - outputs to your application
     output wire [31:0]                           limits,
     output wire [31:0]                           gain,
-    output wire [31:0]                           delay
+    output wire [31:0]                           delay,
+    output wire [31:0]                           f_min,
+    output wire [31:0]                           f_max
 );
 
     // AXI4LITE signals
@@ -61,13 +63,15 @@ module redpitaya_mem_interface #(
     //----------------------------------------------
     //-- Signals for user logic register space
     //----------------------------------------------
-    //-- Number of Slave Registers 6
+    //-- Number of Slave Registers 8
     reg [C_S_AXI_DATA_WIDTH-1:0]   slv_reg0;  // frequency (read-only)
     reg [C_S_AXI_DATA_WIDTH-1:0]   slv_reg1;  // vpp (read-only)
     reg [C_S_AXI_DATA_WIDTH-1:0]   slv_reg2;  // vp (read-only)
     reg [C_S_AXI_DATA_WIDTH-1:0]   slv_reg3;  // limits (writable)
     reg [C_S_AXI_DATA_WIDTH-1:0]   slv_reg4;  // gain (writable)
     reg [C_S_AXI_DATA_WIDTH-1:0]   slv_reg5;  // delay (writable)
+    reg [C_S_AXI_DATA_WIDTH-1:0]   slv_reg6;  // f_min (writable)
+    reg [C_S_AXI_DATA_WIDTH-1:0]   slv_reg7;  // f_max (writable)
     
     wire                            slv_reg_rden;
     wire                            slv_reg_wren;
@@ -89,6 +93,8 @@ module redpitaya_mem_interface #(
     assign limits = slv_reg3;
     assign gain = slv_reg4;
     assign delay = slv_reg5;
+    assign f_min = slv_reg6;
+    assign f_max = slv_reg7;
 
     // Implement axi_awready generation
     always @(posedge s_axi_aclk) begin
@@ -140,6 +146,8 @@ module redpitaya_mem_interface #(
             slv_reg3 <= 0;
             slv_reg4 <= 0;
             slv_reg5 <= 0;
+            slv_reg6 <= 0;
+            slv_reg7 <= 0;
         end else begin
             if (slv_reg_wren) begin
                 case (axi_awaddr[ADDR_LSB+OPT_MEM_ADDR_BITS:ADDR_LSB])
@@ -158,10 +166,22 @@ module redpitaya_mem_interface #(
                             if (s_axi_wstrb[byte_index] == 1) begin
                                 slv_reg5[(byte_index*8) +: 8] <= s_axi_wdata[(byte_index*8) +: 8];
                             end  
+                    3'h6:
+                        for (byte_index = 0; byte_index <= (C_S_AXI_DATA_WIDTH/8)-1; byte_index = byte_index+1)
+                            if (s_axi_wstrb[byte_index] == 1) begin
+                                slv_reg6[(byte_index*8) +: 8] <= s_axi_wdata[(byte_index*8) +: 8];
+                            end  
+                    3'h7:
+                        for (byte_index = 0; byte_index <= (C_S_AXI_DATA_WIDTH/8)-1; byte_index = byte_index+1)
+                            if (s_axi_wstrb[byte_index] == 1) begin
+                                slv_reg7[(byte_index*8) +: 8] <= s_axi_wdata[(byte_index*8) +: 8];
+                            end  
                     default : begin
                         slv_reg3 <= slv_reg3;
                         slv_reg4 <= slv_reg4;
                         slv_reg5 <= slv_reg5;
+                        slv_reg6 <= slv_reg6;
+                        slv_reg7 <= slv_reg7;
                     end
                 endcase
             end
@@ -227,6 +247,8 @@ module redpitaya_mem_interface #(
             3'h3   : reg_data_out = slv_reg3;   // limits
             3'h4   : reg_data_out = slv_reg4;   // gain
             3'h5   : reg_data_out = slv_reg5;   // delay
+            3'h6   : reg_data_out = slv_reg6;   // f_min
+            3'h7   : reg_data_out = slv_reg7;   // f_max
             default: reg_data_out = 0;
         endcase
     end

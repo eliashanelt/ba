@@ -29,3 +29,26 @@ save_bd_design
 reset_run synth_1
 launch_runs impl_1 -to_step write_bitstream -jobs 12
 wait_on_run impl_1
+update_module_reference system_frequency_counter_0_0
+delete_bd_objs [get_bd_nets xlconstant_2_dout] [get_bd_cells xlconstant_2]
+delete_bd_objs [get_bd_nets xlconstant_1_dout] [get_bd_cells xlconstant_1]
+connect_bd_net [get_bd_pins FrequencyCounter/frequency_counter_0/vp_output] [get_bd_pins redpitaya_mem_interf_0/vp]
+connect_bd_net [get_bd_pins FrequencyCounter/frequency_counter_0/vpp_output] [get_bd_pins redpitaya_mem_interf_0/vpp]
+save_bd_design
+reset_run synth_1
+launch_runs impl_1 -to_step write_bitstream -jobs 12
+wait_on_run impl_1
+update_module_reference system_frequency_counter_0_0
+update_compile_order -fileset sources_1
+update_compile_order -fileset sources_1
+open_bd_design {C:/Users/elias/dev/ba/firmware/fpga/tmp/freq/freq.srcs/sources_1/bd/system/system.bd}
+update_module_reference system_redpitaya_mem_interf_0_0
+delete_bd_objs [get_bd_nets FrequencyCounter/xlconstant_1_dout]
+delete_bd_objs [get_bd_cells FrequencyCounter/xlconstant_1]
+delete_bd_objs [get_bd_nets FrequencyCounter/xlconstant_0_dout] [get_bd_cells FrequencyCounter/xlconstant_0]
+connect_bd_net [get_bd_pins FrequencyCounter/freq_mapper_0/f_min] [get_bd_pins redpitaya_mem_interf_0/f_min]
+connect_bd_net [get_bd_pins redpitaya_mem_interf_0/f_max] [get_bd_pins FrequencyCounter/freq_mapper_0/f_max]
+save_bd_design
+reset_run synth_1
+launch_runs impl_1 -to_step write_bitstream -jobs 12
+wait_on_run impl_1

@@ -81,7 +81,9 @@ module system_redpitaya_mem_interf_0_0 (
   vp,
   limits,
   gain,
-  delay
+  delay,
+  f_min,
+  f_max
 );
 
 (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME s_axi_aclk, ASSOCIATED_BUSIF s_axi, ASSOCIATED_RESET s_axi_aresetn, FREQ_HZ 125000000, FREQ_TOLERANCE_HZ 0, PHASE 0.000, CLK_DOMAIN system_processing_system7_0_0_FCLK_CLK0, INSERT_VIP 0" *)
@@ -136,6 +138,8 @@ input wire [31 : 0] vp;
 output wire [31 : 0] limits;
 output wire [31 : 0] gain;
 output wire [31 : 0] delay;
+output wire [31 : 0] f_min;
+output wire [31 : 0] f_max;
 
   redpitaya_mem_interface #(
     .C_S_AXI_DATA_WIDTH(32),
@@ -167,6 +171,8 @@ output wire [31 : 0] delay;
     .vp(vp),
     .limits(limits),
     .gain(gain),
-    .delay(delay)
+    .delay(delay),
+    .f_min(f_min),
+    .f_max(f_max)
   );
 endmodule

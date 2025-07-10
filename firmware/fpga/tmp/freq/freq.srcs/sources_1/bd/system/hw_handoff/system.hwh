@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<EDKSYSTEM EDWVERSION="1.2" TIMESTAMP="Thu Jul 10 22:08:09 2025" VIVADOVERSION="2020.1">
+<EDKSYSTEM EDWVERSION="1.2" TIMESTAMP="Fri Jul 11 00:02:35 2025" VIVADOVERSION="2020.1">
 
   <SYSTEMINFO ARCH="zynq" DEVICE="7z010" NAME="system" PACKAGE="clg400" SPEEDGRADE="-1"/>
 
@@ -445,14 +445,14 @@
             <CONNECTION INSTANCE="FrequencyCounter_frequency_counter_0" PORT="counter_output"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="I" LEFT="31" NAME="f_min" RIGHT="0" SIGIS="undef" SIGNAME="FrequencyCounter_xlconstant_0_dout">
+        <PORT DIR="I" LEFT="31" NAME="f_min" RIGHT="0" SIGIS="undef" SIGNAME="redpitaya_mem_interf_0_f_min">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="FrequencyCounter_xlconstant_0" PORT="dout"/>
+            <CONNECTION INSTANCE="redpitaya_mem_interf_0" PORT="f_min"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="I" LEFT="31" NAME="f_max" RIGHT="0" SIGIS="undef" SIGNAME="FrequencyCounter_xlconstant_1_dout">
+        <PORT DIR="I" LEFT="31" NAME="f_max" RIGHT="0" SIGIS="undef" SIGNAME="redpitaya_mem_interf_0_f_max">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="FrequencyCounter_xlconstant_1" PORT="dout"/>
+            <CONNECTION INSTANCE="redpitaya_mem_interf_0" PORT="f_max"/>
           </CONNECTIONS>
         </PORT>
         <PORT DIR="O" LEFT="15" NAME="amp" RIGHT="0" SIGIS="undef" SIGNAME="FrequencyCounter_freq_mapper_0_amp">
@@ -585,40 +585,6 @@
         <PORT DIR="O" LEFT="31" NAME="N" RIGHT="0" SIGIS="undef" SIGNAME="FrequencyCounter_pow2_0_N">
           <CONNECTIONS>
             <CONNECTION INSTANCE="FrequencyCounter_frequency_counter_0" PORT="Ncycles"/>
-          </CONNECTIONS>
-        </PORT>
-      </PORTS>
-      <BUSINTERFACES/>
-    </MODULE>
-    <MODULE COREREVISION="7" FULLNAME="/FrequencyCounter/xlconstant_0" HWVERSION="1.1" INSTANCE="FrequencyCounter_xlconstant_0" IPTYPE="PERIPHERAL" IS_ENABLE="1" MODCLASS="PERIPHERAL" MODTYPE="xlconstant" VLNV="xilinx.com:ip:xlconstant:1.1">
-      <DOCUMENTS/>
-      <PARAMETERS>
-        <PARAMETER NAME="CONST_WIDTH" VALUE="32"/>
-        <PARAMETER NAME="CONST_VAL" VALUE="0x000003E8"/>
-        <PARAMETER NAME="Component_Name" VALUE="system_xlconstant_0_2"/>
-        <PARAMETER NAME="EDK_IPTYPE" VALUE="PERIPHERAL"/>
-      </PARAMETERS>
-      <PORTS>
-        <PORT DIR="O" LEFT="31" NAME="dout" RIGHT="0" SIGIS="undef" SIGNAME="FrequencyCounter_xlconstant_0_dout">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="FrequencyCounter_freq_mapper_0" PORT="f_min"/>
-          </CONNECTIONS>
-        </PORT>
-      </PORTS>
-      <BUSINTERFACES/>
-    </MODULE>
-    <MODULE COREREVISION="7" FULLNAME="/FrequencyCounter/xlconstant_1" HWVERSION="1.1" INSTANCE="FrequencyCounter_xlconstant_1" IPTYPE="PERIPHERAL" IS_ENABLE="1" MODCLASS="PERIPHERAL" MODTYPE="xlconstant" VLNV="xilinx.com:ip:xlconstant:1.1">
-      <DOCUMENTS/>
-      <PARAMETERS>
-        <PARAMETER NAME="CONST_WIDTH" VALUE="32"/>
-        <PARAMETER NAME="CONST_VAL" VALUE="0x00009C40"/>
-        <PARAMETER NAME="Component_Name" VALUE="system_xlconstant_0_3"/>
-        <PARAMETER NAME="EDK_IPTYPE" VALUE="PERIPHERAL"/>
-      </PARAMETERS>
-      <PORTS>
-        <PORT DIR="O" LEFT="31" NAME="dout" RIGHT="0" SIGIS="undef" SIGNAME="FrequencyCounter_xlconstant_1_dout">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="FrequencyCounter_freq_mapper_0" PORT="f_max"/>
           </CONNECTIONS>
         </PORT>
       </PORTS>
@@ -3804,6 +3770,16 @@
           </CONNECTIONS>
         </PORT>
         <PORT DIR="O" LEFT="31" NAME="delay" RIGHT="0" SIGIS="undef"/>
+        <PORT DIR="O" LEFT="31" NAME="f_min" RIGHT="0" SIGIS="undef" SIGNAME="redpitaya_mem_interf_0_f_min">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="FrequencyCounter_freq_mapper_0" PORT="f_min"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" LEFT="31" NAME="f_max" RIGHT="0" SIGIS="undef" SIGNAME="redpitaya_mem_interf_0_f_max">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="FrequencyCounter_freq_mapper_0" PORT="f_max"/>
+          </CONNECTIONS>
+        </PORT>
       </PORTS>
       <BUSINTERFACES>
         <BUSINTERFACE BUSNAME="PS7_ps7_0_axi_periph_M00_AXI" DATAWIDTH="32" NAME="s_axi" TYPE="SLAVE" VLNV="xilinx.com:interface:aximm:1.0">

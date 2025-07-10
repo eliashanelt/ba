@@ -53,12 +53,6 @@ set_property DONT_TOUCH TRUE [get_cells -hier -filter {REF_NAME==system_signal_m
 # IP: bd/system/ip/system_freq_mapper_0_0/system_freq_mapper_0_0.xci
 set_property DONT_TOUCH TRUE [get_cells -hier -filter {REF_NAME==system_freq_mapper_0_0 || ORIG_REF_NAME==system_freq_mapper_0_0} -quiet] -quiet
 
-# IP: bd/system/ip/system_xlconstant_0_2/system_xlconstant_0_2.xci
-set_property DONT_TOUCH TRUE [get_cells -hier -filter {REF_NAME==system_xlconstant_0_2 || ORIG_REF_NAME==system_xlconstant_0_2} -quiet] -quiet
-
-# IP: bd/system/ip/system_xlconstant_0_3/system_xlconstant_0_3.xci
-set_property DONT_TOUCH TRUE [get_cells -hier -filter {REF_NAME==system_xlconstant_0_3 || ORIG_REF_NAME==system_xlconstant_0_3} -quiet] -quiet
-
 # IP: bd/system/ip/system_signal_gain_0_0_1/system_signal_gain_0_0.xci
 set_property DONT_TOUCH TRUE [get_cells -hier -filter {REF_NAME==system_signal_gain_0_0 || ORIG_REF_NAME==system_signal_gain_0_0} -quiet] -quiet
 

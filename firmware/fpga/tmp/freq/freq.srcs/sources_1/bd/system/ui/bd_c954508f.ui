@@ -1,7 +1,7 @@
 {
    "ActiveEmotionalView":"Default View",
    "Default View_ScaleFactor":"1.16629",
-   "Default View_TopLeft":"358,-52",
+   "Default View_TopLeft":"226,187",
    "ExpandedHierarchyInLayout":"",
    "guistr":"# # String gsaved with Nlview 7.0r6  2020-01-29 bk=1.5227 VDI=41 GEI=36 GUI=JA:9.0 non-TLS
 #  -string -flagsOSRD
@@ -43,14 +43,12 @@ preplace inst clk_wiz_0 -pg 1 -lvl 7 -x 6854 -y 1140 -defaultsOSRD
 preplace inst signal_merge_0 -pg 1 -lvl 6 -x 6317 -y 530 -defaultsOSRD
 preplace inst signal_gain_0 -pg 1 -lvl 4 -x 3372 -y 280 -defaultsOSRD
 preplace inst signal_clipper_0 -pg 1 -lvl 5 -x 3992 -y 360 -defaultsOSRD
-preplace inst redpitaya_mem_interf_0 -pg 1 -lvl 2 -x 490 -y 500 -defaultsOSRD
 preplace inst xlslice_0 -pg 1 -lvl 4 -x 3372 -y 50 -defaultsOSRD
 preplace inst xlslice_1 -pg 1 -lvl 4 -x 3372 -y 150 -defaultsOSRD
 preplace inst xlc_reset1 -pg 1 -lvl 1 -x 140 -y 1040 -defaultsOSRD
+preplace inst redpitaya_mem_interf_0 -pg 1 -lvl 2 -x 490 -y 500 -defaultsOSRD
 preplace inst FrequencyCounter|xlslice_0 -pg 1 -lvl 1 -x 910 -y 672 -defaultsOSRD
 preplace inst FrequencyCounter|pow2_0 -pg 1 -lvl 2 -x 1130 -y 672 -defaultsOSRD
-preplace inst FrequencyCounter|xlconstant_0 -pg 1 -lvl 3 -x 1410 -y 732 -defaultsOSRD
-preplace inst FrequencyCounter|xlconstant_1 -pg 1 -lvl 3 -x 1410 -y 832 -defaultsOSRD
 preplace inst FrequencyCounter|freq_mapper_0 -pg 1 -lvl 4 -x 1750 -y 712 -defaultsOSRD
 preplace inst FrequencyCounter|frequency_counter_0 -pg 1 -lvl 3 -x 1410 -y 602 -defaultsOSRD
 preplace netloc daisy_p_i_1 1 0 7 NJ 1190 N 1190 N 1190 N 1190 N 1190 N 1190 6470
@@ -66,13 +64,13 @@ preplace netloc axis_red_pitaya_dac_0_dac_rst 1 9 1 N 770
 preplace netloc axis_red_pitaya_dac_0_dac_sel 1 9 1 N 790
 preplace netloc axis_red_pitaya_dac_0_dac_wrt 1 9 1 N 810
 preplace netloc axis_red_pitaya_dac_0_dac_dat 1 9 1 N 830
-preplace netloc xlc_reset_dout 1 1 4 340J 652 660 452 2100 370 3530
-preplace netloc axis_red_pitaya_adc_0_adc_clk 1 1 8 320 662 650J 442 2120J 470 3520 470 4170 460 6470 780 NJ 780 N
+preplace netloc xlc_reset_dout 1 1 4 340J 652 660 442 2110 370 3530
+preplace netloc axis_red_pitaya_adc_0_adc_clk 1 1 8 320 662 650J 432 2120J 470 3520 470 4170 460 6470 780 NJ 780 N
 preplace netloc adc_dat_b_i_1 1 0 1 -280 768n
 preplace netloc adc_dat_a_i_1 1 0 1 -290 748n
 preplace netloc adc_clk_n_i_1 1 0 1 -300 728n
 preplace netloc adc_clk_p_i_1 1 0 1 -310 708n
-preplace netloc DataAcquisition_adc_csn_o 1 1 9 300 360 NJ 360 2110J 460 N 460 4150 450 N 450 NJ 450 NJ 450 7600J
+preplace netloc DataAcquisition_adc_csn_o 1 1 9 300 360 NJ 360 2100J 460 N 460 4150 450 N 450 NJ 450 NJ 450 7600J
 preplace netloc FrequencyCounter_amp 1 3 3 2110 540 N 540 N
 preplace netloc PS7_FCLK_CLK0 1 1 1 310 30n
 preplace netloc PS7_S00_ARESETN 1 1 1 290 50n
@@ -83,6 +81,8 @@ preplace netloc Net1 1 2 2 630 300 2060
 preplace netloc xlc_reset1_dout 1 1 2 350 672 NJ
 preplace netloc FrequencyCounter_vp_output 1 1 3 330 380 NJ 380 2070
 preplace netloc FrequencyCounter_vpp_output 1 1 3 350 390 NJ 390 2060
+preplace netloc redpitaya_mem_interf_0_f_min 1 2 1 640 520n
+preplace netloc redpitaya_mem_interf_0_f_max 1 2 1 630 540n
 preplace netloc FrequencyCounter_M_AXIS_OUT 1 3 1 2090 250n
 preplace netloc signal_split_0_M_AXIS_PORT1 1 1 2 N 718 670
 preplace netloc processing_system7_0_DDR 1 1 9 N -30 N -30 N -30 N -30 N -30 N -30 NJ -30 NJ -30 N
@@ -92,22 +92,22 @@ preplace netloc signal_clipper_0_M_AXIS_OUT 1 5 1 4160 360n
 preplace netloc signal_gain_0_M_AXIS 1 4 1 3520 280n
 preplace netloc PS7_M00_AXI 1 1 1 320 10n
 preplace netloc FrequencyCounter|xlslice_0_Dout 1 1 1 NJ 672
-preplace netloc FrequencyCounter|pow2_0_N 1 2 1 1240 632n
-preplace netloc FrequencyCounter|axis_red_pitaya_adc_0_adc_clk 1 0 4 NJ 592 NJ 592 1240 502 1610J
-preplace netloc FrequencyCounter|xlc_reset_dout 1 0 4 NJ 612 NJ 612 1250 512 1590J
+preplace netloc FrequencyCounter|pow2_0_N 1 2 1 1250 632n
+preplace netloc FrequencyCounter|axis_red_pitaya_adc_0_adc_clk 1 0 4 NJ 592 NJ 592 1240 512 1590J
+preplace netloc FrequencyCounter|xlc_reset_dout 1 0 4 NJ 612 NJ 612 1240 692 NJ
 preplace netloc FrequencyCounter|frequency_counter_0_counter_output 1 3 2 1570 812 1910J
 preplace netloc FrequencyCounter|Net 1 0 1 NJ 672
 preplace netloc FrequencyCounter|freq_mapper_0_amp 1 4 1 N 712
-preplace netloc FrequencyCounter|xlconstant_0_dout 1 3 1 NJ 732
-preplace netloc FrequencyCounter|xlconstant_1_dout 1 3 1 1600J 752n
 preplace netloc FrequencyCounter|frequency_counter_0_vp_output 1 3 2 NJ 612 1890
 preplace netloc FrequencyCounter|frequency_counter_0_vpp_output 1 3 2 1580J 602 1900
-preplace netloc FrequencyCounter|frequency_counter_0_M_AXIS_OUT 1 3 2 1600 592 NJ
+preplace netloc FrequencyCounter|f_min_1 1 0 4 N 732 NJ 732 NJ 732 NJ
+preplace netloc FrequencyCounter|f_max_1 1 0 4 N 752 NJ 752 NJ 752 NJ
+preplace netloc FrequencyCounter|frequency_counter_0_M_AXIS_OUT 1 3 2 1580 592 NJ
 preplace netloc FrequencyCounter|signal_split_0_M_AXIS_PORT1 1 0 3 NJ 572 NJ 572 N
 levelinfo -pg 1 -330 140 490 890 3372 3992 6317 6854 7181 7471 7620
 levelinfo -hier FrequencyCounter * 910 1130 1410 1750 *
 pagesize -pg 1 -db -bbox -sgen -500 -250 7780 1700
-pagesize -hier FrequencyCounter -db -bbox -sgen 780 482 1940 892
+pagesize -hier FrequencyCounter -db -bbox -sgen 780 472 1940 822
 "
 }
 0
