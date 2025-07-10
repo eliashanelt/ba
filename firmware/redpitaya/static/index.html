@@ -581,6 +581,23 @@
                         <div class="measurement-label">Period</div>
                         <div class="measurement-value" id="measuredPeriod">---</div>
                     </div>
+                    <div class="measurement-card">
+                        <div class="measurement-label">Amplitude</div>
+                        <div class="measurement-value" id="measuredAmplitude">---</div>
+                    </div>
+                </div>
+
+                 <div class="control-section">
+                    <h4>Input Control</h4>
+                    <div class="control-row">
+                        <div class="control-label">Voltage Level:</div>
+                        <div class="slider-container">
+                            <div class="delay-mode-toggle">
+                                <button class="delay-mode-option active" id="voltage-level-option" data-mode="high-voltage">HV</button>
+                                <button class="delay-mode-option" id="voltage-level-option" data-mode="low-voltage">LV</button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 
@@ -634,8 +651,8 @@
                             <input id="delayInput" type="number" class="input-field" min="0" max="100" step="0.1" value="0" disabled>
                             <span class="unit-label" id="delayUnit">%</span>
                             <div class="delay-mode-toggle">
-                                <button class="delay-mode-option active" data-mode="period">Period %</button>
-                                <button class="delay-mode-option" data-mode="timestamp">Timestamp</button>
+                                <button class="delay-mode-option active" id="delay-mode-option" data-mode="period">Period %</button>
+                                <button class="delay-mode-option" id="delay-mode-option" data-mode="timestamp">Timestamp</button>
                             </div>
                         </div>
                     </div>
@@ -733,6 +750,7 @@
         let reconnectTimer = null;
         let pressureReconnectTimer = null;
         let currentDelayMode = 'period';
+        let currentVoltageLevel = 'low-voltage';
         let currentPeriod = 0;
         let pressureMonitorInterval = null;
         
@@ -755,6 +773,7 @@
         const syncVoltageCheckbox = document.getElementById('syncVoltageCheckbox');
 
 
+        const voltageLevelButtons = document.getElementsById('voltage-level-option');
         
         // Frequency range controls
         const freqMinInput = document.getElementById('freqMinInput');
@@ -764,7 +783,8 @@
         const delaySlider = document.getElementById('delaySlider');
         const delayInput = document.getElementById('delayInput');
         const delayUnit = document.getElementById('delayUnit');
-        const delayModeButtons = document.querySelectorAll('.delay-mode-option');
+        const delayModeButtons = document.getElementsById('delay-mode-option');
+
         
         // Gain controls
         const gainSlider = document.getElementById('gainSlider');
@@ -813,6 +833,17 @@
                 pressureControls.forEach(ctrl => ctrl.disabled = true);
                 currentPressure.textContent = '---';
             }
+        }
+
+        
+        function updateDelayMode(voltageLevel) {
+            currentVoltageLevel = voltageLevel;
+            voltageLevelButtons.forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.dataset.mode === voltageLevel) {
+                    btn.classList.add('active');
+                }
+            });
         }
         
         function updateDelayMode(mode) {
@@ -1211,6 +1242,13 @@
             btn.onclick = function() {
                 updateDelayMode(this.dataset.mode);
                 updateDelay();
+            };
+        });
+
+        voltageLevelButtons.forEach(btn => {
+            btn.onclick = function() {
+                updateVoltageLevel(this.dataset.mode);
+                console.log('todo update voltage level');
             };
         });
         
