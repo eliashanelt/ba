@@ -886,9 +886,14 @@
             }
         }
 
+ 
         function formatVpp(vpp) {
-            return (vpp.toFixed(3) * 1000) + ' mV';
-        }
+            if (currentVoltageLevel === 'low-voltage' || vpp <= 0.05) {
+                return (vpp * 1000).toFixed(3) + ' mV';
+            }
+            return (vpp * 20.0).toFixed(3) + 'V';
+        }        
+
         
         function formatPeriod(period) {
             if (period >= 1) {
