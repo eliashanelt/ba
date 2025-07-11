@@ -1,0 +1,8 @@
+Designator,Val,Package,Mid X,Mid Y,Rotation,Layer
+C1,22uF,C_0603_1608Metric,110.6,-113.8,235.0,bottom
+C2,0.1uF,C_0603_1608Metric,109.3,-114.7,235.0,bottom
+J6,LCD - FPC,Amphenol FCI FPC 8 pin 0.5 pitch,112.602337,-87.394108,45.0,bottom
+Q1,2N7002,SOT-23,115.237092,-109.181721,30.0,bottom
+R1,10k,R_0603_1608Metric,117.108376,-103.746113,195.0,bottom
+R2,22R,R_0603_1608Metric,112.3,-112.3,45.0,bottom
+R3,1M,R_0603_1608Metric,116.707278,-105.275532,15.0,bottom

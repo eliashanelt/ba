@@ -1,0 +1,8 @@
+Comment,Designator,Footprint,LCSC,Quantity
+0.1uF,C2,C_0603_1608Metric,C1591,1
+22uF,C1,C_0603_1608Metric,C59461,1
+10k,R1,R_0603_1608Metric,C98220,1
+2N7002,Q1,SOT-23,,1
+22R,R2,R_0603_1608Metric,,1
+1M,R3,R_0603_1608Metric,,1
+LCD - FPC,J6,Amphenol FCI FPC 8 pin 0.5 pitch,,1
